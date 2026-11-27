@@ -1,0 +1,25 @@
+<p>同名冲突处理决定导出资产时目标位置已有同名资产该怎么做。</p>
+<p><img src="media/shared/settings-name-conflict.webp" alt="同名冲突处理" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>在导出或创建资产遇到同名目标时，按预设策略处理，避免误覆盖。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<table><thead><tr><th>策略</th><th>行为</th></tr></thead><tbody><tr><td>每次询问</td><td>弹出对话框，当场选择自动重命名、手动输入新名称或取消</td></tr><tr><td>自动重命名</td><td>自动追加 <code>_001</code>、<code>_002</code>…</td></tr><tr><td>手动输入</td><td>弹出输入框让用户输入新名称</td></tr></tbody></table>
+<ul>
+<li>当前预设文件中的默认值为「自动重命名」（<code>name_conflict_policy.mode = auto_rename</code>）；该键缺失时界面也回退为「自动重命名」（<code>NameConflictDialog.DEFAULT_MODE</code>），整条链只有这一个默认值。</li>
+<li>「每次询问」产生的选择可勾「记住选择，不再提示」，后续按记住的策略执行。</li>
+</ul>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>只影响新建资产时目标同名的情况；已有资产不会被自动改名或删除。</li>
+<li>追加 LOD、创建新版本属于导出对话框里的显式操作，不走这套策略。</li>
+<li>保存在 <code>Assets/preset/config.json</code> 的 <code>name_conflict_policy</code>。</li>
+</ul>
+<h2 id="h-4">何时修改</h2>
+<ul>
+<li>批量导出且不希望中断时用「自动重命名」。</li>
+<li>需要每次确认命名时用「每次询问」。</li>
+<li>固定命名规范、必须人工定名时用「手动输入」。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<blockquote><p><strong>提示</strong>：自动重命名只改新资产的名称，不会影响原有资产。</p></blockquote>
+<blockquote><p><strong>提示</strong>：策略在点「应用」后写入预设文件，下一次导出即生效。</p></blockquote>

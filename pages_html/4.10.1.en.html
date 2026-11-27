@@ -1,0 +1,24 @@
+<p>A version is one content iteration of the same asset and a LOD is one geometry detail level inside a version; both are stored in the same <code>.zasset</code>.</p>
+<h2 id="h-1">Key nouns</h2>
+<ul>
+<li><strong>Main version</strong>: the content in the asset root, including <code>meta.json</code>, <code>node.*</code>, <code>textures/</code> and so on; every asset has a main version.</li>
+<li><strong>Embedded version</strong>: the <code>V1/</code>, <code>V2/</code> directories inside the main asset, each a complete self-contained asset. The main asset&#x27;s <code>meta.json</code> records <code>{id, folder, label, tag}</code> under <code>version_assets</code>.</li>
+<li><strong>LOD</strong>: <code>lod0</code> is the geometry in the root, and <code>lod1</code> onward live in <code>lod{n}/</code> sub-directories; the manifest is <code>lods.json</code>, created the first time a LOD is appended.</li>
+<li><strong>Default version / default LOD</strong>: recorded in <code>meta.json</code> and <code>lods.json</code> respectively, and read by import and version management.</li>
+</ul>
+<h2 id="h-2">Directory layout</h2>
+<pre><code class="language-text">Crate.zasset/
+├── meta.json          # includes the version_assets registry
+├── node.ma            # main version geometry (lod0)
+├── lods.json          # LOD manifest (lod1, lod2…)
+├── V1/                # embedded version (complete and self-contained)
+│   ├── meta.json
+│   └── node.ma
+└── V2/
+    ├── meta.json
+    └── node.ma</code></pre>
+<h2 id="h-3">Why it is organized this way</h2>
+<p>Different forms of one asset do not need to become separate grid assets: content iterations go into versions, distance-based detail goes into LODs, and when materials must differ a version can carry its own materials.</p>
+<h2 id="h-4">Use cases</h2>
+<table><thead><tr><th>Need</th><th>Dimension to use</th></tr></thead><tbody><tr><td>Fix damage, change UVs or reshape a model</td><td>Create a new version</td></tr><tr><td>High and low poly for games or rendering</td><td>Append a LOD</td></tr><tr><td>Different textures per version of the same model</td><td>Per-version materials</td></tr><tr><td>Several shapes under one set of textures (bricks, screws)</td><td>Variants</td></tr><tr><td>Just see what a version looks like</td><td>Version browser</td></tr></tbody></table>
+<div class="admonition note"><div class="admonition-title">注意</div><p>Variants and versions are two parallel models: variants are recorded in the <code>variants</code> section of <code>variants.json</code>, their geometry sits flat under <code>variants/</code>, and textures and materials are inherited from the asset root; embedded versions remain complete self-contained <code>V{n}/</code> directories. The <code>versions</code> section of older assets is kept for read-only compatibility and is listed together with embedded versions. See the &quot;Variants&quot; section for variant usage.</p></div>

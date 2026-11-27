@@ -1,0 +1,27 @@
+<p>A custom quick tool is simply a <code>.py</code> file placed in <code>quicktools/</code>, and the menu lists it automatically by file name.</p>
+<h2 id="h-1">Directory conventions</h2>
+<table><thead><tr><th>Location</th><th>What goes there</th></tr></thead><tbody><tr><td><code>&lt;plug-in root&gt;/quicktools/</code></td><td>Quick tool scripts; the menu scans only <code>.py</code> files at this level and never recurses into sub-directories</td></tr><tr><td><code>&lt;plug-in root&gt;/Assets/help/&lt;tool name&gt;/help.html</code></td><td>The tool&#x27;s own help page; for an English page also place a same-named <code>_en.html</code> next to <code>help.html</code></td></tr><tr><td><code>&lt;plug-in root&gt;/Assets/preset/</code></td><td>Tool configuration such as <code>model_mapping.json</code>, <code>pbr_mapping.json</code>, <code>*_expression.json</code></td></tr><tr><td><code>&lt;plug-in root&gt;/Assets/material_mapper_presets/</code></td><td>Material mapping <code>.mmap</code> and <code>.mlist</code> presets</td></tr></tbody></table>
+<h2 id="h-2">Naming conventions</h2>
+<ul>
+<li>The file must end in <code>.py</code> and its name must be unique in that directory.</li>
+<li>The menu entry name is the file name without <code>.py</code> with underscores replaced by spaces; a Chinese file name is shown as is.</li>
+<li>The menu sorts by file name and applies no hidden filter, so do not keep temporary or backup scripts in <code>quicktools/</code> or they appear in the menu too.</li>
+<li>Tools called from the script browser or the command channel should keep a stable file name, since frequent renames break favorites and mappings.</li>
+</ul>
+<h2 id="h-3">Code conventions</h2>
+<ul>
+<li>Use <code>main()</code> or <code>run()</code> as the entry, or keep an <code>if __name__ == &quot;__main__&quot;:</code> block for a plain script (see 9.7.2).</li>
+<li>Match the rest of the plug-in: prefer package-absolute imports and fall back to top-level <code>ui.*</code> / <code>utils.*</code>, so the script runs both inside the plug-in and in the Script Editor.</li>
+<li>Do not put a tool&#x27;s own configuration and presets in the root of <code>quicktools/</code>; place them in the matching directory under <code>Assets/</code> so they are not scanned as scripts.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The <code>「快捷工具」 (Quick tools)</code> menu shows the new file name (with underscores displayed as spaces).</li>
+<li>Clicking it starts the window or script normally and the Script Editor shows no <code>ImportError</code>.</li>
+<li>The help button opens <code>Assets/help/&lt;tool name&gt;/help.html</code>.</li>
+</ul>
+<h2 id="h-5">Notes</h2>
+<ul>
+<li>New files need no menu code or registry change; the menu rescans the directory every time it opens.</li>
+<li>The standalone edition dispatches quick tools to Maya by default; whether a pure file tool runs locally depends on the host allowlist (see 9.7.3).</li>
+</ul>

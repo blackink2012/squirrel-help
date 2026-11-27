@@ -1,0 +1,25 @@
+<p>Conversion first looks for a direct <code>.mmap</code> from the source type to the target type; without one it converts in two steps through an intermediate type such as <code>openPBRSurface</code>.</p>
+<p><img src="media_en/shared/quicktool-material-map.webp" alt="Material node attribute mapping tool: source type / target type and the mapping directory" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The scene already contains materials to convert, or objects using them are selected.</li>
+<li>The mapping directory has at least one direct or intermediate <code>.mmap</code>.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open <code>「材质转换工具」 (Material conversion tool)</code>.</li>
+<li>Fill in the source and target material types under <code>「材质类型映射配置」 (Material type mapping configuration)</code>; <code>「加载源」 (Load source)</code> and <code>「加载目标」 (Load target)</code> read the types from the current selection.</li>
+<li>Click <code>「浏览...」 (Browse...)</code> and pick the mapping folder (the plug-in&#x27;s built-in material mapping directory by default).</li>
+<li>Select the materials or objects in Maya and click <code>「转换选择」 (Convert selection)</code>; use <code>「转换全部」 (Convert all)</code> for the whole scene.</li>
+<li>Without a direct mapping the tool goes <code>A → openPBRSurface → B</code> automatically and deletes the intermediate materials when it finishes.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The target type&#x27;s new material appears in the Hypershade; a dialog shows the number of converted materials, succeeded / failed attributes and a failure list. Use <code>「在Maya中选中失败材质」 (Select failed materials in Maya)</code> to locate failures.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Try <code>「转换选择」 (Convert selection)</code> on one or two materials before running <code>「转换全部」 (Convert all)</code>.</li>
+<li>Intermediate materials from multi-hop conversions are cleaned up automatically, leaving only the target type.</li>
+<li>To cover several source types at once, add several rows to the configuration table, one source / target pair per row.</li>
+</ul>
+<h2 id="h-5">Warnings</h2>
+<p>Conversion creates new materials and replaces the source ones according to the options, so save the scene first; when there is neither a direct mapping nor a usable intermediate, that material counts as a failure.</p>

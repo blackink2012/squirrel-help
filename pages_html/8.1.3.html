@@ -1,0 +1,18 @@
+<p>默认情况下资产与缩略图不出本机；只有启用云端大模型、使用 Maya 在线帮助兜底，或让 dsh 连接云端模型时，相关请求才会离开这台机器。</p>
+<h2 id="h-1">留在本机的数据</h2>
+<ul>
+<li><strong>索引</strong>：文本语义索引默认在 <code>&lt;资产库&gt;\.squirrel_ai_index\&lt;official|ollama&gt;\</code>（按后端分家），图像索引在同目录 <code>img\</code>、媒体索引在 <code>media\</code>；设置了 <code>ai_asset_index_dir</code> 时，则落在该根目录下按「库 + 后端」分开的子目录。</li>
+<li><strong>图像 sidecar</strong>：<code>&lt;插件目录&gt;\.venvs\asset-vision</code> 及其缓存。</li>
+<li><strong>运行记录</strong>：<code>&lt;插件目录&gt;\dsh_home\</code>（dsh 会话、安装日志、复用记录）；AI 依赖报告与安装日志在 <code>%TEMP%\squirrel_asset_manager\</code>。</li>
+<li><strong>在线帮助缓存</strong>：<code>~\.squirrel_asset_manager\help_cache</code>（目录树 7 天、页面 30 天）。</li>
+</ul>
+<h2 id="h-2">会离开本机的数据</h2>
+<ul>
+<li>选择云端大模型时，提示词与做分析时的缩略图会发往对应服务商。</li>
+<li>本地知识库缺席或本地未命中时，「在线兜底」把查询发给 <code>help.autodesk.com</code>，只取公开帮助页。</li>
+<li>dsh 使用哪个模型由 dsh 自己的设置决定，它可能连接云端。</li>
+</ul>
+<h2 id="h-3">凭据</h2>
+<p>API Key 保存在插件设置文件 <code>~\.squirrel_asset_manager\app_settings.json</code>，不是加密保险箱，请按普通配置文件保护。AI 搜索的 Key 与全局大模型的 Key 分开存放。</p>
+<h2 id="h-4">建议</h2>
+<p>涉密项目里关闭云端模型，只保留本地 Ollama；需要断网时可在启动前设 <code>MAYA_KB_ONLINE=0</code> 关闭在线帮助兜底。</p>

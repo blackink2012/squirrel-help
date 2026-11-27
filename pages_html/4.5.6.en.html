@@ -1,0 +1,25 @@
+<p>Semantic search and search by image rely on a local index maintained per asset library; confirm that the AI dependencies and the index are usable before troubleshooting search results.</p>
+<p><img src="media_en/shared/dialog-ai-search-config.webp" alt="AI search settings" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Search-related settings</h2>
+<table><thead><tr><th>Setting</th><th>Where</th><th>Default</th><th>Effect</th></tr></thead><tbody><tr><td>AI search</td><td>Checkbox on the right of the search box</td><td>On</td><td>When off, typing filters by plain keywords and the image-search buttons are hidden; the choice is remembered</td></tr><tr><td><code>ai_search_use_global</code></td><td>Model configuration in the AI search dialog</td><td>Off</td><td>When on, AI search may use the global model from <code>Settings → AI (AI)</code> for intent analysis</td></tr><tr><td><code>ai_asset_semantic</code></td><td>Configuration key</td><td>On</td><td>Master switch for asset-library semantic retrieval; off is the same as having no semantic capability</td></tr><tr><td><code>ai_asset_semantic_sync</code></td><td>Configuration key</td><td>On</td><td>Incrementally syncs the index automatically during search</td></tr><tr><td><code>ai_asset_index_dir</code></td><td>Configuration key</td><td>Empty</td><td>Empty means the index lives in the library&#x27;s <code>.squirrel_ai_index</code>; a local directory makes each library use its own sub-directory</td></tr></tbody></table>
+<div class="admonition note"><div class="admonition-title">注意</div><p>The three <code>ai_asset_*</code> keys are configuration-file entries and are not visible controls in the Settings window today; use &quot;AI features and dependencies&quot; below to install and check the matching dependencies.</p></div>
+<h2 id="h-2">Inspecting and repairing the index</h2>
+<ol>
+<li>Open <code>Settings → AI → AI 功能与依赖 (AI features and dependencies)</code>.</li>
+<li>Click <code>「AI 依赖检查」 (AI dependency check)</code> to generate a report covering the asset-library index and the image index; it opens in Notepad.</li>
+<li>When dependencies are missing click <code>「一键安装 AI 功能与依赖」 (One-click install of AI features and dependencies)</code> and follow the steps to add Ollama, the embedding models, the index and the optional sidecar.</li>
+<li>The command <code>asset_semantic_status</code> also shows the index entry count, dimensions, model, index directory, last sync and the reason it is unavailable.</li>
+<li>When the index lags or is missing, sync it with <code>index_sync</code>: <code>kind=materials</code> runs the incremental text index, <code>kind=images</code> runs the image index (which can be rebuilt fully) and <code>both</code> does both.</li>
+</ol>
+<h2 id="h-3">How it runs</h2>
+<ul>
+<li>The index is kept per library, and switching libraries warms up that library&#x27;s index in the background; while warming up, search uses lexical results first and switches to semantic results when ready.</li>
+<li>Search performs lazy syncing and does not rescan the same library repeatedly within a short time; when no index exists, search degrades to lexical search.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li><code>asset_semantic_status</code> reports the index as usable with the right entry count and model.</li>
+<li>During semantic search the status bar shows <code>「本地嵌入」 (local embedding)</code> and a duration in milliseconds, meaning the local index was used.</li>
+<li>When the image index is usable, search by image reports <code>「图像向量检索命中」 (image vector hits)</code>.</li>
+</ul>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>The index is derived data and can safely be rebuilt; when several people share an asset library, point the index root at a local directory on each machine so the indexes do not overwrite each other. Changes to the index directory take effect after reopening the plug-in window.</p></div>

@@ -1,0 +1,48 @@
+<blockquote><p>One-line summary: <strong>connect Squirrel Asset Manager&#x27;s capabilities (skill docs plus the MCP tool entry) to external AI tools such as Claude Code, Codex and Trae, so they know you have an asset library and Maya.</strong></p></blockquote>
+<p>For an external tool to really do work, <strong>both halves</strong> are needed; with only one, &quot;the model knows this exists but cannot call it&quot;:</p>
+<ol>
+<li><strong>Skill landing</strong>: copying our skill docs into the other tool&#x27;s skill directory;</li>
+<li><strong>MCP channel</strong>: writing this plug-in&#x27;s MCP entry into the other tool&#x27;s configuration — that is what makes the <code>squirrel_*</code> tools mentioned in the skills actually exist.</li>
+</ol>
+<p>That is why the window shows the state of the two halves <strong>separately</strong> for each tool.</p>
+<h2 id="h-1">How to open it</h2>
+<p><strong>Settings → AI settings → the &quot;External AI tools…&quot; button</strong>.</p>
+<p>Note: actions in this window <strong>persist on the spot</strong> (copying skills / writing the other tool&#x27;s config) and do not follow the settings window&#x27;s OK / Cancel semantics — clicking Cancel does not roll back an install already done.</p>
+<h2 id="h-2">Window structure</h2>
+<p><img src="media_en/shared/dialog-external-agents.webp" alt="External AI tools window" loading="lazy" decoding="async"></p>
+<h3 id="h-3">Top</h3>
+<table><thead><tr><th>Control</th><th>Effect</th></tr></thead><tbody><tr><td>Title &quot;Connect Squirrel&#x27;s capabilities to external AI tools&quot;</td><td>The window&#x27;s purpose</td></tr><tr><td>Two explanatory paragraphs</td><td>Explain the &quot;two halves&quot; above</td></tr><tr><td>The line starting with ⚠ / ✓</td><td>The status of the built-in chat panel (DSH) skills; when it says &quot;skills not in place&quot;, starting the AI assistant once lands them automatically and you need not manage it here</td></tr></tbody></table>
+<h3 id="h-4">One card per tool (the bulk of the window)</h3>
+<p>The tool list includes: shared cross-tool skill directory, DeepSeek Harness (desktop), Claude Code, Codex CLI, Cursor, Doubao, Gemini CLI, QoderWork (international / China), Trae (international / China), Windsurf, WorkBuddy, custom / other tools…</p>
+<p>Every card has the same controls:</p>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Tool name</td><td>Which tool this row connects to</td><td>—</td></tr><tr><td>Status badge</td><td>Skill status: skills in place (N) / partly in place / not landed / not installed / choose a directory first / untested</td><td>Read the badge before deciding to install</td></tr><tr><td>Skill directory path</td><td>Where skills will be installed</td><td>Usually unchanged; click <strong>Choose path…</strong> if wrong</td></tr><tr><td><strong>Untested</strong> tag plus hint</td><td>This path has <strong>no official documentation or local test basis</strong>, so installing may not take effect</td><td>Confirm the path yourself before installing when you see it</td></tr><tr><td><strong>Choose path…</strong></td><td>Manually specify that tool&#x27;s skill directory (stored in settings)</td><td>For tools installed in a non-default location</td></tr><tr><td><strong>Install skills</strong></td><td>Copies the skills into that directory and creates it when missing</td><td>Asks for confirmation listing what will be written and what will be overwritten</td></tr><tr><td><strong>Remove skills</strong></td><td>Deletes only <strong>what we landed</strong> (with the <code>squirrel-</code> prefix) and leaves other tools&#x27; skills in the same directory alone</td><td>Use it to disconnect</td></tr><tr><td><strong>MCP channel</strong> checkbox</td><td>Ticked = writes this plug-in&#x27;s MCP entry into that tool&#x27;s configuration, <strong>backing up the original first</strong></td><td>Must be ticked for the other tool to really call the tools</td></tr><tr><td><strong>Copy config snippet</strong></td><td>Copies a manual configuration text for tools without a supported format (such as Trae / Doubao) into their own config</td><td>When the other tool cannot be written automatically or writing fails</td></tr><tr><td>Card status line</td><td>Whether the skill directory exists / whether MCP is connected / the config file path / whether it will be created</td><td>Tells you the real state so you need not guess</td></tr></tbody></table>
+<h3 id="h-5">The three bottom buttons</h3>
+<table><thead><tr><th>Control</th><th>Effect</th></tr></thead><tbody><tr><td><strong>Detect again</strong></td><td>Rescans which tools are installed, whether skills are present and whether MCP is connected</td></tr><tr><td><strong>Manual configuration guide</strong></td><td>Copies the <strong>complete</strong> manual guide (interpreter / entry script / per-tool paths / snippets) for people who edit configuration themselves</td></tr><tr><td><strong>Close</strong></td><td>Closes the window (installs already done are not rolled back)</td></tr></tbody></table>
+<h2 id="h-6">A complete connection flow (Claude Code as the example)</h2>
+<ol>
+<li>Settings → AI settings → <strong>External AI tools…</strong>;</li>
+<li>Click <strong>Detect again</strong> first and see whether the Claude Code card reads &quot;not installed / not found&quot; or is detected;</li>
+<li>Check the skill directory path; if it is wrong click <strong>Choose path…</strong> and pick its skill directory;</li>
+<li>Click <strong>Install skills</strong> → read the confirmation (&quot;what will be overwritten, what will be written&quot;) → continue;</li>
+<li>Tick <strong>MCP channel</strong> → it writes into that tool&#x27;s config (the original is backed up automatically and the status line shows connected plus the config path);</li>
+<li>Click <strong>Close</strong>;</li>
+<li>Start a new session in the external tool and ask it &quot;what tools can I use in this project&quot; to confirm it read the skills / tools.</li>
+</ol>
+<h2 id="h-7">What you see afterwards</h2>
+<ul>
+<li>The card badge changes from &quot;skills not landed&quot; to &quot;skills in place (N)&quot;;</li>
+<li>The MCP row becomes &quot;connected (config file at the path below)&quot;;</li>
+<li>The other tool&#x27;s configuration directory gains our skill directory / config entry.</li>
+</ul>
+<h2 id="h-8">Risks and how to undo</h2>
+<ul>
+<li><strong>Install skills overwrites</strong>: a same-named directory is <strong>deleted then copied</strong>. If you edited our skill content over there by hand, those edits are lost (the confirmation explicitly lists &quot;N will be overwritten&quot;).</li>
+<li><strong>It writes the other tool&#x27;s configuration file</strong> (when MCP is ticked). The original is backed up automatically and the status line shows the backup path; to undo, click <strong>Remove skills</strong> and delete the matching entry in the other tool&#x27;s config, or restore from the backup.</li>
+<li><strong>Remove skills</strong> only deletes directories with the <code>squirrel-</code> prefix and never touches other tools&#x27; skills in the same directory.</li>
+<li>Several <strong>untested</strong> tools (Cursor / Gemini CLI / Windsurf / Trae international and so on) may not take effect; confirm the directory really is their skill directory before installing.</li>
+</ul>
+<h2 id="h-9">Related</h2>
+<ul>
+<li>Other items on the AI page in settings: <a href="#/en/15.9.3"><code>8.9.3</code></a></li>
+<li>The install guide when the built-in chat panel (dsh) is missing: <a href="#/en/15.13.6"><code>8.13.6</code></a></li>
+</ul>

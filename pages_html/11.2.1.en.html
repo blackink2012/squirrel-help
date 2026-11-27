@@ -1,0 +1,26 @@
+<p>Font size is the base size of the plug-in interface, and all text and icons scale from it.</p>
+<p><img src="media_en/shared/settings-font.webp" alt="Font size" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>It adjusts the text size in plug-in windows and acts as the base for the <code>「有效字号」 (effective font size)</code> calculation.</p>
+<h2 id="h-2">Values and default</h2>
+<ul>
+<li>The slider ranges from 10 to 24, with <code>13</code> as the default.</li>
+<li>To the right of the slider the current base value and the effective font size are shown: effective = base × interface scaling.</li>
+<li>For example a base of 13 with 150% interface scaling gives an effective size of about 20 px.</li>
+</ul>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>Text in the main window, the Settings window and all dialogs; icons scale proportionally from the 13 px base.</li>
+<li>After a change the main window resets its style and recomputes its minimum size, and the Settings window re-fits the screen.</li>
+<li>Only the plug-in&#x27;s own interface is affected, never Maya&#x27;s native menus and toolbars.</li>
+<li>It applies after <code>「应用」 (Apply)</code> or <code>「确定」 (OK)</code>; no plug-in restart is needed.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<ul>
+<li>On a small or high-resolution screen where the default text is hard to read, raise the base font size first.</li>
+<li>To enlarge the whole interface including spacing and icons, prefer <code>「界面缩放」 (Interface scaling)</code>; the two can combine.</li>
+<li>A base of 24 plus high scaling makes windows very large; content scrolls, but adjusting the scaling step is usually better.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<blockquote><p><strong>Tip</strong>: if some text still looks small after the change, first check whether <code>「界面缩放」 (Interface scaling)</code> is set to <code>「自动」 (Automatic)</code>.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: font size and appearance theme are independent and can be set separately.</p></blockquote>

@@ -1,0 +1,26 @@
+<p>先看授权状态与错误码，再按「机器码 → 网络与时间 → 许可证文件 → 程序完整性」的顺序排查。</p>
+<h2 id="h-1">排查顺序</h2>
+<ol>
+<li>打开「设置 → 授权激活」，确认状态徽标与机器码是否正常显示。</li>
+<li>记下授权窗口显示的错误码（形如 <code>E_LIC_*</code> / <code>E_ACT_*</code>）。</li>
+<li>检查系统时间是否准确、是否被回拨。</li>
+<li>在线激活失败时，确认网络能访问激活服务器；不行就改用离线许可证。</li>
+<li>检查许可证文件是否完整、是否属于本产品与本机。</li>
+<li>仍失败时考虑程序文件完整性，必要时重新安装。</li>
+</ol>
+<h2 id="h-2">常见错误码</h2>
+<table><thead><tr><th>错误码</th><th>含义</th><th>处理</th></tr></thead><tbody><tr><td><code>E_LIC_MISSING</code></td><td>没找到许可证</td><td>输入激活码或导入许可证文件</td></tr><tr><td><code>E_LIC_MALFORMED</code></td><td>许可证文件损坏</td><td>重新获取许可证</td></tr><tr><td><code>E_LIC_BAD_SIG</code></td><td>签名校验失败，文件可能被修改</td><td>使用授权方原始文件</td></tr><tr><td><code>E_LIC_PRODUCT</code></td><td>许可证不属于本产品</td><td>更换正确产品的许可证</td></tr><tr><td><code>E_LIC_MACHINE</code></td><td>许可证绑定了其他电脑</td><td>申请换机，或先在旧机解除授权</td></tr><tr><td><code>E_LIC_EXPIRED</code></td><td>授权已到期</td><td>续期后重新激活</td></tr><tr><td><code>E_LIC_NOT_FOUND</code></td><td>服务器没有这份授权（已被删除 / 吊销，或来自其他服务器）</td><td>点「同步授权」确认；确认后本机转为只读，需要重新激活</td></tr><tr><td><code>E_LIC_NEED_KEY</code></td><td>服务器要求激活码，但没填</td><td>找销售 / 客服要激活码后重试</td></tr><tr><td><code>E_LIC_NOT_YET</code></td><td>授权尚未生效</td><td>检查系统时间或联系授权方</td></tr><tr><td><code>E_LIC_CLOCK</code></td><td>检测到系统时间回拨</td><td>校正系统时间后重试</td></tr><tr><td><code>E_LIC_VERSION</code></td><td>授权不覆盖当前版本</td><td>升级授权或使用匹配版本</td></tr><tr><td><code>E_LIC_SCHEMA</code></td><td>许可证格式比客户端新</td><td>升级客户端</td></tr><tr><td><code>E_ACT_NET</code></td><td>无法连接激活服务器</td><td>改用离线激活</td></tr><tr><td><code>E_ACT_KEY</code></td><td>激活码不存在或已失效</td><td>核对后重试</td></tr><tr><td><code>E_ACT_SEATS</code></td><td>授权席位已满</td><td>解除旧设备或联系授权方扩容</td></tr><tr><td><code>E_DEVICE_REMOVED</code></td><td>本机已被移出该授权的设备列表</td><td>重新激活；必要时联系客服重新绑定</td></tr><tr><td><code>E_ACT_LIMIT</code></td><td>24 小时内解绑 / 重绑次数已达上限（3 次）</td><td>明天再试或联系客服</td></tr><tr><td><code>E_ACT_OFFLINE</code></td><td>无法联系服务器确认解绑</td><td>检查网络后重试</td></tr><tr><td><code>E_ACT_STALE</code></td><td>本机时间与服务器相差过大</td><td>校正系统时间后重试</td></tr><tr><td><code>E_ACT_REPLAY</code></td><td>该请求已被处理过</td><td>不要重复提交</td></tr><tr><td><code>E_ACT_OFFLINE_LICENSE</code></td><td>离线签发授权不支持解绑换机</td><td>联系授权方按新机器码重新签发</td></tr><tr><td><code>E_LIC_REVOKED_FILE</code></td><td>该许可证文件已在本机解绑作废</td><td>使用激活码重新激活</td></tr><tr><td><code>E_LIC_PROMO_RETIRED</code></td><td>旧推广期授权已停止使用</td><td>使用激活码重新激活</td></tr><tr><td><code>E_ACT_SERVER</code></td><td>激活服务器异常</td><td>稍后重试或离线激活</td></tr><tr><td><code>E_ACT_CONFIG</code></td><td>未配置激活服务器</td><td>使用离线激活</td></tr><tr><td><code>E_LIC_INTEGRITY</code></td><td>程序文件完整性校验失败</td><td>重新安装</td></tr></tbody></table>
+<h2 id="h-3">仍不能解决</h2>
+<ul>
+<li>插件版：在 Maya 脚本编辑器查看以 <code>[Licensing]</code> 开头的输出，连同错误码一起反馈。</li>
+<li>独立版 / EXE：查看安装目录 <code>logs\</code> 与启动输出；具体日志文件待确认。</li>
+<li>反馈时提供：错误码、机器码、产品版本（窗口标题）、Windows 版本、已尝试的步骤。</li>
+</ul>
+<h2 id="h-4">注意</h2>
+<ul>
+<li>不要手工编辑许可证文件或修改机器码，签名校验会失败。</li>
+<li>不要把系统时间往回调，会触发 <code>E_LIC_CLOCK</code>。</li>
+<li>离线许可证必须与目标机器码匹配；在线授权的解绑只受服务器每日上限约束（每 24 小时最多 3 次），不再限制换机总次数。</li>
+<li>管理端删除 / 吊销授权后，客户端点「同步授权」会立即转为只读：服务器返回已签名拒绝，客户端验签后封存本机授权（防止换机后旧证复活）。</li>
+<li>离线签发授权不能自助解绑换机；需要换机时联系授权方重新签发。</li>
+</ul>

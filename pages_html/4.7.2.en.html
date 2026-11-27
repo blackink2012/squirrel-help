@@ -1,0 +1,26 @@
+<p>Drag a region of the screen with the mouse to use as the asset thumbnail; handy for quickly recording a viewport look or an existing reference image.</p>
+<p><img src="media_en/shared/menu-thumbnail.webp" alt="Thumbnail operation menu" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Two capture entry points</h2>
+<table><thead><tr><th>Entry</th><th>Characteristics</th></tr></thead><tbody><tr><td><code>「截取」 (Capture)</code> button in the preview panel</td><td>Full-screen marquee and immediate capture, with no toolbar and no recording; the result is saved at the default thumbnail size</td></tr><tr><td>Context menu → update thumbnail → capture</td><td>The full screenshot tool with toolbar options such as width and height, forced resolution and screen recording</td></tr></tbody></table>
+<h2 id="h-2">Steps (quick capture from the preview panel)</h2>
+<ol>
+<li>Select the asset and click <code>「截取」 (Capture)</code> at the bottom of the right-hand preview panel.</li>
+<li>The screen dims; drag a region and release to capture; hold <code>Ctrl</code> while dragging to lock a square.</li>
+<li>Press <code>Esc</code> or right-click to cancel.</li>
+<li>The screenshot is scaled proportionally by its long edge to the <code>「默认缩略图大小」 (Default thumbnail size)</code> and written as the asset&#x27;s main thumbnail.</li>
+</ol>
+<h2 id="h-3">Steps (full screenshot tool)</h2>
+<ol>
+<li>Right-click the asset and choose <code>「更新缩略图 → 截取」 (Update thumbnail → Capture)</code>.</li>
+<li>Marquee a region on the screenshot overlay; the toolbar lets you adjust width and height and check forced resolution.</li>
+<li>Click the capture button to confirm; the result becomes the main thumbnail and is copied to the system clipboard.</li>
+<li>For processing several assets in a row the tool stays open; <code>「截取添加」 (Capture and add)</code> writes into a new extra slot.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The grid card and the right-hand preview show the new image immediately.</li>
+<li>After capturing with the full screenshot tool the same image is on the system clipboard.</li>
+<li>With <code>「截取添加」 (Capture and add)</code> the thumbnail counter in the preview panel increases.</li>
+</ul>
+<div class="admonition note"><div class="admonition-title">注意</div><p>The full screenshot tool also offers a screen-recording button; the recording becomes an animated <code>.aicon</code> thumbnail and depends on the bundled ffmpeg.</p></div>
+<div class="admonition warning"><div class="admonition-title">警告</div><p><code>「截取」 (Capture)</code> replaces the main thumbnail. To keep the old main image, use <code>「截取添加」 (Capture and add)</code> to write a new slot instead.</p></div>

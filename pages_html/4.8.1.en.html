@@ -1,0 +1,30 @@
+<p>After multi-selecting assets you can move them all into another category within the same sub-library, or copy them into another category.</p>
+<p><img src="media_en/shared/batch-bar.webp" alt="Batch operation bar: batch move and batch copy (multi-select assets first)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>At least two assets are selected; the batch operation bar appears with a multi-selection.</li>
+<li>The target category must already exist in the current sub-library. The target list is based on the sub-library of the first selected asset.</li>
+<li>Batch move and copy do not work across sub-libraries.</li>
+</ul>
+<h2 id="h-2">Batch move</h2>
+<ol>
+<li>Multi-select assets in the grid.</li>
+<li>Click <code>「批量移动」 (Batch move)</code> in the batch operation bar.</li>
+<li>Choose a category in the <code>「选择目标分类」 (Choose target category)</code> list and confirm.</li>
+<li>The plug-in moves the assets one by one, then rescans and refreshes the grid.</li>
+</ol>
+<h2 id="h-3">Batch copy</h2>
+<ol>
+<li>Multi-select assets and click <code>「批量复制」 (Batch copy)</code> in the batch operation bar.</li>
+<li>Choose the target category and confirm.</li>
+<li>A copy of each asset is created in the target category; copies are renamed automatically and get new asset IDs.</li>
+<li>The originals stay in their original category.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The asset count of the target category grows.</li>
+<li>After a batch move the assets no longer appear in the original category; after a batch copy both categories hold one.</li>
+<li>The category tree and grid refresh automatically afterwards.</li>
+</ul>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Batch move and copy really move or copy <code>.zasset</code> directories. Confirm the target category before running, and never move them with Explorer.</p></div>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>An empty target list means the current sub-library has no categories yet; create one in the category tree first.</p></div>

@@ -1,0 +1,42 @@
+<div class="admonition note"><div class="admonition-title">注意</div><p><strong>About the name.</strong> The entry on the left of the search box now covers <strong>images, video and audio</strong>; &quot;search by image&quot; is the historical name. This page keeps the old title but describes the buttons that actually exist. Whether you upload an image, take a screenshot, record a section of the screen or record system audio, the plug-in finds assets in the current category by <strong>visual or acoustic similarity</strong>.</p></div>
+<p><img src="media_en/shared/dialog-ai-search.webp" alt="AI search" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>An asset library is open and <code>「AI 搜索」 (AI search)</code> is checked on the right of the search box. <strong>When unchecked, the upload / capture buttons on the left of the search box are hidden</strong>.</li>
+<li>The search scope follows the selected sub-library or category; when the current category does not cover that media type, it falls back to the whole library.</li>
+<li>The first video / audio search loads the embedding model (about 10–20 seconds, then seconds per query).</li>
+</ul>
+<h2 id="h-2">Buttons on the left of the search box change with the category</h2>
+<table><thead><tr><th>Current category</th><th>Buttons inside the box</th></tr></thead><tbody><tr><td>Materials / models / lights / textures / scenes / HDR / node trees / images</td><td>Upload, screenshot, screen recording</td></tr><tr><td><strong>Dynamics / animation data</strong></td><td>Upload, screenshot, <strong>screen recording</strong> (find similar animation by picture)</td></tr><tr><td><strong>Audio (music)</strong></td><td>Upload, screenshot, <strong>audio recording</strong> (records what this computer is playing, not the microphone)</td></tr></tbody></table>
+<p><code>「上传」 (Upload)</code> is not a single button but a small menu: <strong>upload image search / upload video search / upload audio search</strong>, and the choice decides the retrieval route.</p>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li><strong>Upload a file</strong>: click the upload icon on the left of the input box → choose <code>「上传图片搜索 / 上传视频搜索 / 上传音频搜索」 (Upload image search / video search / audio search)</code> → pick a file.<ul>
+<li>Images: png, jpg, jpeg, webp, bmp, tif, tiff</li>
+<li>Video: mp4, mov, mkv, webm, gif</li>
+<li>Audio: wav, mp3, aiff, aif, flac, ogg, m4a, aac</li>
+</ul></li>
+<li><strong>Screenshot search</strong>: click the <code>「截屏搜索」 (Screenshot search)</code> icon, drag a region on screen and release to start; hold <code>Ctrl</code> while dragging to lock a square, and press <code>Esc</code> or right-click to cancel.</li>
+<li><strong>Screen recording search</strong> (dynamics / animation data): after dragging a region a record button appears at its bottom right — click once to start recording, click again to stop, and the search runs automatically. The limit is about 10 seconds, longest edge 960 px, 15 fps; <code>Esc</code> / right-click cancels.</li>
+<li><strong>Audio recording search</strong> (audio): click <code>「录制系统声音搜索」 (Record system audio search)</code> to record <strong>what this computer is playing</strong>; the interface shows <code>「录音中 N 秒 / 上限 N 秒」 (recording N s / limit N s)</code>, and <code>「停止并搜索」 (Stop and search)</code> starts the search. A recording shorter than 0.5 seconds asks you to record again.</li>
+<li><strong>Drag in</strong>: drop a local image / video / audio file, web media or a library asset card onto the search box and the matching search is chosen by <strong>actual format</strong> (an asset card uses its thumbnail; an asset without a thumbnail shows a hint).</li>
+<li><strong>Text search for media</strong>: in the audio category typing a description such as &quot;find some rain ambience&quot; and pressing Enter runs &quot;text search for music&quot;; in the dynamics / animation data category a picture description runs &quot;text search for video&quot;. The placeholder text changes with the category.</li>
+</ol>
+<h2 id="h-4">Retrieval routes</h2>
+<table><thead><tr><th>Query type</th><th>Route</th></tr></thead><tbody><tr><td>Image</td><td>① image vector search (pixel similarity, preferred) → ② a vision model turns the image into one Chinese sentence and text semantics run → ③ a vision model extracts keywords and lexical search runs</td></tr><tr><td>Video</td><td>media vector search by picture features (frame sampling / fingerprints), hitting animation and dynamics assets with video thumbnails</td></tr><tr><td>Audio</td><td>media vector search by sound features, hitting audio assets</td></tr></tbody></table>
+<h2 id="h-5">States and results</h2>
+<p>During the search the status bar shows <code>「AI 正在分析意图…」 (AI is analyzing the intent…)</code> or that the embedding model is loading; afterwards it reports the route actually used, for example:</p>
+<ul>
+<li>Image search: <code>图片搜索：图像向量检索命中 N 个资产（xxx ms）</code> / <code>按关键词「…」找到 N 个资产</code> / <code>按「…」识别后找到 N 个资产</code>;</li>
+<li>Video / audio: <code>视频搜索：命中 N 个资产（xxx ms）</code> / <code>音频搜索：命中 N 个资产（xxx ms）</code>;</li>
+<li>Text search for media: <code>文字搜音乐：命中 N 个音频（xxx ms）</code> / <code>文字搜视频：命中 N 个动画（xxx ms）</code>;</li>
+<li>No results: <code>媒体搜索：未找到匹配资产</code> (or <code>文字搜视频：没有找到匹配的动画</code>);</li>
+<li>Environment not ready: <code>媒体搜索暂不可用：原因</code>.</li>
+</ul>
+<p>After the results arrive the grid shows only the hits and the query thumbnail / media marker appears inside the search box.</p>
+<h2 id="h-6">Cancelling</h2>
+<ul>
+<li>Click the query thumbnail / ✕ inside the input box, or press Backspace with the caret at the very front (this removes only the query and keeps the typed text);</li>
+<li>The status bar reports <code>「已取消音视频搜索（或以图搜图），恢复当前分类的全部资产」 (audio-video or image search cancelled; restoring all assets of the current category)</code>.</li>
+</ul>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>Screen recording and audio recording both rely on the bundled ffmpeg to compose the query file; when ffmpeg is missing the plug-in says so explicitly instead of failing silently.</p></div>

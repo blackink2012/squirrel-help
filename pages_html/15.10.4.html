@@ -1,0 +1,36 @@
+<blockquote><p>一句话定位：<strong>左栏第三块，决定资产卡片上那张图从哪来——你自己框选截、Maya 拍屏、还是渲染出图。</strong></p></blockquote>
+<h2 id="h-1">控件逐项</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>截屏工具</td><td>单选</td><td>点「创建资产」后弹取景框，你拖拽框选视口区域，松手即截</td><td>第一次导出、想快速拿到图时用这个（默认）</td><td>框歪了/框到无关物体，卡片图上就是歪的；可以事后右键「更新缩略图 → 截取」重来</td></tr><tr><td>Maya 拍屏</td><td>单选</td><td>用 Maya playblast 出图（走当前视口画面）</td><td>想要干净一点的视口图、又不想等渲染</td><td>拍屏期间会短暂占用视口；批量时逐张出图，慢</td></tr><tr><td>渲染图</td><td>单选</td><td>用当前渲染器正式渲染出图</td><td>要正式效果图时用（Arnold/Redshift/V-Ray）</td><td>每张要等渲染，数量多会很久；渲染器没配好会出黑图或失败</td></tr><tr><td>创建模型</td><td>下拉按钮</td><td>列出插件自带 <code>Assets/Meshes</code> 下的模型，选中即导入当前场景；悬停条目显示同名 PNG 大图</td><td>材质/贴图/灯光这类<strong>自己没有几何</strong>的资产，出图前来一个演示模型</td><td>目录为空时菜单项变灰并显示「（Meshes 目录无模型文件）」</td></tr><tr><td>创建灯光</td><td>下拉按钮</td><td>列出插件自带 <code>Assets/IBL</code> 下的 HDRI，选中即按当前渲染器建一盏穹顶灯；悬停显示同名 PNG</td><td>场景没灯、拍出来一片黑时先来一盏</td><td>当前渲染器不是 Arnold / V-Ray / Redshift 时建不出来，脚本编辑器会提示切换渲染器</td></tr></tbody></table>
+<blockquote><p>「创建模型」「创建灯光」是<strong>导入/建灯</strong>动作，不会写进资产，也不会自动帮你截图——它们只是给材质/贴图类资产造一个能看的对象。</p></blockquote>
+<p><img src="media/shared/dialog-export-thumb.webp" alt="左栏的缩略图来源与截图区" loading="lazy" decoding="async"></p>
+<h2 id="h-2">三种来源的差别</h2>
+<table><thead><tr><th>对比项</th><th>截屏工具</th><th>Maya 拍屏</th><th>渲染图</th></tr></thead><tbody><tr><td>出图方式</td><td>你框选视口区域</td><td>Maya playblast 输出</td><td>当前渲染器渲染</td></tr><tr><td>速度</td><td>秒级</td><td>数秒/张</td><td>数十秒~数分钟/张</td></tr><tr><td>画面质量</td><td>视口显示效果</td><td>视口显示效果（可带线框）</td><td>正式渲染效果</td></tr><tr><td>是否要人参与</td><td>是（每次框选）</td><td>否</td><td>否</td></tr><tr><td>全自动批量时</td><td>首个框选，后续复用同一取景框（延迟可调）</td><td>逐张自动</td><td>逐张自动</td></tr><tr><td>输出尺寸</td><td>由框选大小与设置里的「缩略图大小」决定</td><td>同左</td><td>同左</td></tr></tbody></table>
+<h2 id="h-3">截图延迟</h2>
+<p>只在「全自动」模式下出现，范围 0–60 秒，默认 2 秒（出厂值来自导出预设的 <code>delay_ms</code>）。它的作用是自动截图前先等一会儿，让视口完成刷新、渲染收尾。场景很重时调到 3–5 秒更稳；设 0 容易截到没画完的画面。</p>
+<h2 id="h-4">用截屏工具截图时的手势</h2>
+<ol>
+<li>点「创建资产」后，屏幕上出现截图覆盖层。</li>
+<li><strong>拖拽框选</strong>要当缩略图的区域。</li>
+<li>按住 <strong>Ctrl</strong> 锁定正方形选区（缩略图本来就该是方的，建议按住）。</li>
+<li><strong>松手即截取</strong>。</li>
+<li>想取消：按 <strong>Esc</strong> 或点右键。</li>
+</ol>
+<blockquote><p>这套操作和「更新缩略图 → 截取」用的是同一个截图工具，见 <a href="#/4.7.2"><code>4.1.7.2</code></a>。</p></blockquote>
+<h2 id="h-5">一次完整操作（材质资产要出演示图）</h2>
+<ol>
+<li>场景是空的或只有材质球：先确认当前渲染器（Arnold / Redshift / V-Ray），否则「创建灯光」建不出来。</li>
+<li>在导出对话框左栏点「创建模型」，挑一个球/方盒模型导入，摆好位置。</li>
+<li>点「创建灯光」，选一张 HDRI 建穹顶灯（或者自己现有灯光也行）。</li>
+<li>缩略图来源保持「截屏工具」，在视口里调好角度。</li>
+<li>点「创建资产」→ 框选（按住 Ctrl）→ 松手。</li>
+<li>看网格里新卡片的图；不满意就右键卡片 →「更新缩略图」→「截取」重框一次。</li>
+</ol>
+<h2 id="h-6">出问题怎么办</h2>
+<table><thead><tr><th>现象</th><th>可能原因</th><th>处理</th></tr></thead><tbody><tr><td>缩略图是灰底占位图</td><td>本次没出真图（渲染/拍屏失败，或直接跳过了缩略图）</td><td>右键 →「更新缩略图 → 后台渲染」（无头渲染，见 8.12.6）或「截取」重截</td></tr><tr><td>拍到的是别的物体/视口乱</td><td>取景框位置不对，或全自动模式复用了上一个资产的取景框</td><td>改成半自动/单资产重新导，或事后「更新缩略图 → 截取」</td></tr><tr><td>拍出来全黑</td><td>场景没灯、或渲染器没就绪</td><td>用「创建灯光」建穹顶灯；渲染图来源先确认渲染器能正常渲染</td></tr><tr><td>缩略图很小/很糊</td><td>「设置 → 常规 → 缩略图大小」设得太小</td><td>调大后再重新出图（见 <a href="#/4.7.6"><code>4.1.7.6</code></a>）</td></tr></tbody></table>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>左栏其他控件（模式、命名、标签）：<a href="#/15.10.2"><code>8.10.2</code></a></li>
+<li>三种来源的完整说明：<a href="#/6.2.3"><code>4.3.2.3</code></a></li>
+<li>无头出图选项窗（不在本窗口里，是右键菜单那条路）：<a href="#/15.12.6"><code>8.12.6</code></a></li>
+<li>拍屏与渲染图的区别：<a href="#/4.7.3"><code>4.1.7.3</code></a></li>
+</ul>

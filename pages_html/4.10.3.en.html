@@ -1,0 +1,29 @@
+<p>Creating a new version builds a complete self-contained <code>V{n}</code> directory inside the main asset and fills it with this export.</p>
+<p><img src="media_en/shared/dialog-export.webp" alt="Create asset / export dialog" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The modified model or material is ready in Maya.</li>
+<li>The objects to export are selected. A new version does not require geometry; exporting only materials or textures also works.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select the modified model in the Maya viewport.</li>
+<li>Right-click the asset, expand <code>「更新资产」 (Update asset)</code> and choose <code>「创建新版本」 (Create new version)</code>.</li>
+<li>In the export dialog that follows, check the content you need (geometry formats, <code>.zmetal</code> and so on).</li>
+<li>Click export.</li>
+<li>The system takes the highest existing <code>V{n}</code> number plus one, first clones the main asset into a complete self-contained version, then replaces it entirely with this export.</li>
+<li>When it finishes the interface reports the version label (for example <code>V2</code>) and captures a separate thumbnail for that version.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>A multi-version badge appears on the asset card.</li>
+<li>Double-clicking the preview on the right opens the version browser and the new <code>V{n}</code> appears in the <code>「版本」 (Versions)</code> list on the left.</li>
+<li><code>version_assets</code> in the main asset&#x27;s <code>meta.json</code> gains a <code>{id, folder, label, tag}</code> entry.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Version directory names are always <code>V{n}</code>, the label defaults to the same text, and the semantic version defaults to <code>{n}.0</code>.</li>
+<li>A new version contains exactly this export: unchecked content does not appear in that version&#x27;s directory.</li>
+<li><code>「追加 LOD」 (Append LOD)</code> follows the currently selected entry: with a <code>V{n}</code> selected the LOD goes into that version, with the main version (the asset itself) selected it goes into the main asset.</li>
+<li>When versions need different materials, check <code>.zmetal</code> to give the version its own materials; see 4.10.5.</li>
+</ul>

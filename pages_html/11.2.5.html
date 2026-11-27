@@ -1,0 +1,23 @@
+<p>界面语言切换插件自身的中英文显示，不影响资产名称、标签和 Maya 界面。</p>
+<p><img src="media/shared/settings-language.webp" alt="界面语言" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>选择插件窗口、菜单和提示文字使用的语言。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<ul>
+<li>跟随系统（默认）、中文、English。字段名显示为「Language / 语言」。</li>
+</ul>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>点「应用」后 i18n 立即切换，资产库分类树会按新语言重建内置分类的显示名。</li>
+<li>窗口会提示「设置已保存。请重启插件以完全生效。」主窗口的大部分文字需重启插件后统一。</li>
+<li>不翻译资产名、中文名、标签等用户数据，也不改 Maya 原生界面。</li>
+<li>语言设置保存在 <code>app_settings.json</code> 的 <code>language</code> 键。</li>
+</ul>
+<h2 id="h-4">何时修改</h2>
+<ul>
+<li>团队使用英文界面，或需要与英文版文档对照时。</li>
+<li>切换后若个别窗口仍显示旧语言，重启插件再确认。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<blockquote><p><strong>提示</strong>：语言与外观主题是两项独立设置，切换语言不会改变配色。</p></blockquote>
+<blockquote><p><strong>提示</strong>：分类树会立即更新，但已打开的对话框通常要重新打开才换语言。</p></blockquote>

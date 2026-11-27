@@ -1,0 +1,26 @@
+<p>These three advanced fallbacks on the <strong>Other configuration</strong> page control how files are classified when a whole folder is collected, and which nodes count as material nodes during export.</p>
+<p><img src="media_en/shared/settings-other.webp" alt="Settings → Other configuration: pick an extension category on the left, one value per line on the right" loading="lazy" decoding="async"></p>
+<h2 id="h-1">What it does</h2>
+<p><strong>Settings → Other configuration</strong> has three entries on the left, each taking one value per line on the right:</p>
+<table><thead><tr><th>Setting</th><th>JSON key</th><th>Effect</th></tr></thead><tbody><tr><td>Geometry extensions</td><td><code>geometry_extensions</code></td><td>When a whole folder is collected, root-level files matching these are treated as geometry and split into <code>node.{ext}</code></td></tr><tr><td>Image / texture extensions</td><td><code>image_extensions</code></td><td>Files matching these under the same path go into <code>textures/</code></td></tr><tr><td>Material node types</td><td><code>material_node_types</code></td><td>Used by asset export, right-click <strong>Update asset</strong> and batch export to decide which scene nodes are material nodes</td></tr></tbody></table>
+<h2 id="h-2">Values and defaults</h2>
+<ul>
+<li>Geometry: <code>.ma .mb .fbx .obj .abc .usd .usda .usdc .glb .gltf .dae .ass .proxy .vrmesh .vdb</code></li>
+<li>Images: <code>.png .jpg .jpeg .exr .hdr .tga .tiff .tif .bmp .psd</code></li>
+<li>Material nodes: <code>aiStandardSurface</code>, <code>standardSurface</code>, <code>lambert</code>, <code>blinn</code>, <code>phong</code>, <code>openPBRSurface</code>, <code>pxrSurface</code>, <code>aiHair</code>, <code>aiSkin</code>, <code>aiVolume</code>, <code>VRayMtl</code>, <code>RedshiftMaterial</code></li>
+</ul>
+<h2 id="h-3">Scope of effect</h2>
+<ul>
+<li>The first two only apply to <strong>collecting a whole folder</strong> into the library. Single-file collection and texture scanning use the built-in extension table; changing these does not affect them.</li>
+<li>Material node types are the single source of truth for the three export paths. A missing node type means that material is not recognized during export.</li>
+</ul>
+<h2 id="h-4">Steps</h2>
+<ol>
+<li>Open <strong>Settings → Other configuration</strong> and tick unlock.</li>
+<li>Pick a category on the left, then edit line by line on the right.</li>
+<li>Click <strong>Apply</strong> or <strong>OK</strong> to write back to <code>config.json</code>.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<p>Check geometry and image classification with a whole-folder collection; check material detection by exporting a scene that contains the target material.</p>
+<h2 id="h-6">Tips</h2>
+<p>These three settings take part directly in library reads and writes; a wrong value breaks import and export. Back up <code>config.json</code> before changing them.</p>

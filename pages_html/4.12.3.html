@@ -1,0 +1,28 @@
+<p>依赖扫描在导出或导入时沿场景节点收集贴图、缓存、代理与引用文件，缺失项会写进资产 <code>meta.json</code>。</p>
+<p><img src="media/shared/dialog-export-left.webp" alt="导出对话框的「收集关联文件」与缩略图来源区" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>相关物体在场景中，缓存/代理节点已连接。</li>
+<li>导出时勾选「收集关联文件」，导入外部文件时也会做文本层收集。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在导出对话框勾选「收集关联文件」。</li>
+<li>导出时扫描自动完成，只读、不改场景。</li>
+<li>打开 <code>&lt;资产&gt;.zasset/meta.json</code>，查看 <code>dependencies_missing</code>、<code>dependencies_out_of_scope</code>、<code>dependencies_unresolved_tokens</code> 与 <code>dependency_scan</code>。</li>
+<li>把缺失文件补回原路径后重新导出。</li>
+</ol>
+<h2 id="h-3">扫描内容</h2>
+<table><thead><tr><th>层级</th><th>说明</th></tr></thead><tbody><tr><td>原生登记表</td><td><code>filePathEditor</code> 的坏链清单</td></tr><tr><td>属性扫描</td><td><code>listAttr(usedAsFilename=True)</code>，不看节点白名单</td></tr><tr><td>特殊节点补丁</td><td>Bifrost、Yeti、nCache、file 序列等属性</td></tr><tr><td>展开与分类</td><td>帧序列与 UDIM 展开，按扩展名分类</td></tr><tr><td>落盘目录</td><td><code>deps/</code> 下的 textures、caches、proxies、volumes、references、audio 等子目录</td></tr></tbody></table>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li><code>meta.json</code> 中 <code>dependencies_missing</code> 为空。</li>
+<li><code>deps/</code> 下所需文件齐全。</li>
+<li>导出日志出现「依赖扫描: 命中 N 个源文件…缺失 0」。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<ul>
+<li>范围外的依赖记录到 <code>dependencies_out_of_scope</code>，不会打包。</li>
+<li>含 <code>&lt;MAYA_RESOURCES&gt;</code> 的路径进入 <code>dependencies_unresolved_tokens</code>，需人工处理。</li>
+<li>库级批量维护走顶部工具栏「维护」菜单：「补缺失缩略图…」扫整库缺图 / 占位图资产（<a href="#/15.12.8"><code>8.12.8</code></a>），「清理无效资产」扫缺 <code>meta.json</code> / 空壳条目（<a href="#/15.12.9"><code>8.12.9</code></a>），「重建资产索引」重扫清单（<a href="#/4.12.2"><code>4.1.12.2</code></a>）。</li>
+</ul>

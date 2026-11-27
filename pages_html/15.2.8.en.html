@@ -1,0 +1,51 @@
+<blockquote><p>One-line summary: <strong>four kinds of housekeeping — fix the display, fill gaps, produce evidence and roll back — live behind this one button. It never touches asset content itself, only the manifest, thumbnails, invalid entries, logs and overwrite history.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<p>On the top toolbar, between <strong>Panels and layout</strong> and <strong>Maya target</strong>, is the <strong>wrench / maintenance icon</strong> (tooltip &quot;Maintenance: rebuild index / export diagnostic log&quot;). Click to open the menu; nothing needs selecting first.</p>
+<p><img src="media_en/shared/menu-maintenance.webp" alt="Maintenance menu: rebuild asset index / fill missing thumbnails / clean invalid assets / export diagnostic log / restore historical version" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Rebuild asset index</td><td>Deletes the on-disk manifest cache, <strong>rescans the whole library</strong> and refreshes the UI</td><td>An asset library is open</td><td>When done a dialog reports &quot;N assets / M categories / took X seconds&quot;; assets that failed to load add a notice</td><td><strong>Touches no <code>.zasset</code></strong> and deletes no assets; with a large library it takes a while</td></tr><tr><td>Fill missing thumbnails…</td><td>Scans the whole library, lists assets <strong>missing a thumbnail or holding only a placeholder</strong>, and generates thumbnails headlessly for the selected ones</td><td>An asset library is open</td><td>Opens the &quot;Fill missing thumbnails&quot; window (all selected by default); <strong>Start generating</strong> leads to the background render options, then a separate mayapy process renders</td><td>Read-only scan that does not touch the scene; rendering <strong>overwrites</strong> the existing thumbnails of those assets, see <a href="#/en/15.12.8"><code>8.12.8</code></a></td></tr><tr><td>Clean invalid assets</td><td>Scans for invalid assets <strong>missing <code>meta.json</code> / holding only an empty directory</strong>, then repairs them or moves them to the recycle bin after confirmation</td><td>An asset library is open</td><td>Opens the &quot;Clean invalid assets&quot; window: open paths to check by hand, restore <code>meta.json</code>, repair all, or clean all (move to recycle bin, restorable)</td><td>It never deletes directories automatically; only <strong>Clean all</strong> moves them to the recycle bin, see <a href="#/en/15.12.9"><code>8.12.9</code></a></td></tr><tr><td>Export diagnostic log…</td><td>Packs logs, a desensitized configuration snapshot and the asset manifest into a zip</td><td>None (reproduce the issue first if possible)</td><td>Opens a save dialog (default name <code>SquirrelAssetManager-logs-&lt;timestamp&gt;.zip</code>) and reports the path after saving</td><td><strong>Contains no asset file contents</strong>; the configuration snapshot is already desensitized</td></tr><tr><td>Restore historical version…</td><td>Restores the old version kept before an overwrite export of the currently selected asset</td><td><strong>Select an asset in the grid first</strong></td><td>Opens the &quot;Restore historical version&quot; window listing history points; choose one and click <strong>Restore selected version</strong></td><td>History comes from <strong>overwrite export</strong>; restoring also creates a new history entry, so a wrong restore can be undone again</td></tr></tbody></table>
+<h2 id="h-3">Rebuild asset index: when to use it</h2>
+<ul>
+<li>Assets clearly exist on disk but are missing from the list, or the count does not match;</li>
+<li>You reorganized the library directory by hand (<strong>not recommended</strong>), or suspect the manifest cache is corrupted;</li>
+<li>First open after moving machines or copying the whole library.</li>
+</ul>
+<p>It means &quot;read the disk again&quot; — <strong>not</strong> &quot;recompute thumbnails&quot; — and it changes no asset metadata.</p>
+<h2 id="h-4">Fill missing thumbnails: render the whole library</h2>
+<p>Instead of right-clicking <strong>Background render</strong> one asset at a time, this item scans the entire library:</p>
+<ul>
+<li>Candidates are assets <strong>missing <code>thumb.sicon</code></strong> or <strong>holding only a placeholder</strong>; the two kinds are tagged &quot;Missing thumbnail&quot; and &quot;Placeholder only&quot; in the list;</li>
+<li>The list is <strong>selected entirely by default</strong>; adjust with Ctrl / Shift; right-click offers <strong>Locate asset / Open asset path / Remove from list</strong> (removal affects this list only and the item returns on a rescan);</li>
+<li><strong>Start generating</strong> first asks for renderer / preset model / environment light / size and quality (<a href="#/en/15.12.6"><code>8.12.6</code></a>), then a separate mayapy process renders in batch (progress window in <a href="#/en/15.12.7"><code>8.12.7</code></a>);</li>
+<li>Rendering overwrites those assets&#x27; existing thumbnails; the job runs in the background and does not occupy the current Maya viewport.</li>
+</ul>
+<blockquote><p>The older &quot;fill geometry formats&quot; entry has been removed: format conversion needs source geometry, so with zero geometry there is nothing to fill. Per-asset format conversion is still under right-click <strong>Format conversion</strong> (<a href="#/en/15.5.16"><code>8.5.16</code></a>).</p></blockquote>
+<h2 id="h-5">Clean invalid assets: look first, then decide</h2>
+<p>It scans two kinds: &quot;missing <code>meta.json</code>&quot; and &quot;empty shell (no meta, no valid files)&quot;:</p>
+<ul>
+<li>Right-click offers <strong>Open asset path</strong> to check by hand, <strong>Remove from list</strong> (list only, nothing on disk), and <strong>Repair: restore meta.json</strong>;</li>
+<li><strong>Repair all</strong> at the bottom only processes entries <strong>with a valid format file</strong>; empty shells are skipped and counted;</li>
+<li><strong>Clean all (move to recycle bin)</strong> at the bottom is the <strong>only action that touches the disk</strong>; after confirming, the entries go to the recycle bin and can be restored from the left column (<a href="#/en/15.8.3"><code>8.8.3</code></a>);</li>
+<li>After repairing or cleaning, the main window rescans and refreshes automatically.</li>
+</ul>
+<h2 id="h-6">Export diagnostic log: what the bundle holds</h2>
+<table><thead><tr><th>Content</th><th>Description</th></tr></thead><tbody><tr><td>Logs</td><td>Plug-in runtime logs (error stacks, command timings and so on)</td></tr><tr><td>Desensitized configuration snapshot</td><td>Structure and values of <code>app_settings.json</code> and similar, with <strong>sensitive fields desensitized</strong></td></tr><tr><td>Asset manifest</td><td>Asset / category index of the current library, used to reproduce &quot;which record is wrong&quot;</td></tr></tbody></table>
+<p>It <strong>does not include</strong> thumbnails, models, textures or any other asset file content, so it is safe to send to support.</p>
+<h2 id="h-7">Restore historical version</h2>
+<p>History comes from <strong>overwrite export</strong>: before each overwrite of the same asset, the old version is snapshotted (the last 5 versions or 30 days by default). Pick a timestamp in the window and click <strong>Restore selected version</strong>; the files return to their original place, and the restore itself creates a new history entry.</p>
+<p><img src="media_en/shared/dialog-history-restore.webp" alt="Restore historical version window (empty-state hint when no overwrite history exists)" loading="lazy" decoding="async"></p>
+<ul>
+<li>An asset that was never overwrite-exported → the window says &quot;This asset has no overwrite history yet&quot;;</li>
+<li>Opening the menu item without selecting an asset → you are asked to select one in the grid first;</li>
+<li>When several files were overwritten in several passes, restoring processes them file by file, and partial failures report success / failure counts separately.</li>
+</ul>
+<h2 id="h-8">Common questions</h2>
+<table><thead><tr><th>Symptom</th><th>What to do</th></tr></thead><tbody><tr><td>The list did not catch up after creating or moving assets</td><td>Click <strong>Rebuild asset index</strong> first; if it is still wrong, check <a href="#/en/13.5.1"><code>6.5.1</code></a></td></tr><tr><td>The asset count dropped after rebuilding</td><td>Some assets failed to load (the dialog states how many); the cache itself is fine, so look at the failure reasons</td></tr><tr><td>Card images stay gray / placeholder</td><td>Run <strong>Fill missing thumbnails…</strong> for the whole library, or right-click <strong>Background render</strong> on a single asset</td></tr><tr><td>Empty directories are mixed into the list</td><td>Run <strong>Clean invalid assets</strong>, check the paths, then repair or clean</td></tr><tr><td>Want a model back from before it was overwritten</td><td><strong>Restore historical version…</strong>, provided that asset was <strong>overwrite-exported</strong> back then</td></tr><tr><td>What to send when reporting a problem</td><td>The zip from <strong>Export diagnostic log…</strong>, the problematic asset name and the reproduction steps</td></tr></tbody></table>
+<h2 id="h-9">Related</h2>
+<ul>
+<li>Toolbar button index and positions → <a href="#/en/15.2.1"><code>8.2.1</code></a></li>
+<li>Fill missing thumbnails window → <a href="#/en/15.12.8"><code>8.12.8</code></a>; clean invalid assets window → <a href="#/en/15.12.9"><code>8.12.9</code></a></li>
+<li>Complete description of index rebuilding (including the command line) → <a href="#/en/4.12.2"><code>4.1.12.2</code></a></li>
+<li>Updating and rebuilding the search index / vector index → <a href="#/en/15.9.3"><code>8.9.3</code></a></li>
+<li>Panels and layout menu → <a href="#/en/15.2.5"><code>8.2.5</code></a></li>
+</ul>

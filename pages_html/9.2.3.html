@@ -1,0 +1,41 @@
+<p>把一组按通道命名的 PBR 贴图按材质分组，每个材质打包成一个 <code>.zasset</code>，并自动识别通道类型与多精度。</p>
+<p><img src="media/shared/quicktool-pbr.webp" alt="PBR 贴图转资产" loading="lazy" decoding="async"></p>
+<h2 id="h-1">用途</h2>
+<p>省去手工整理 BaseColor、Normal、Roughness 等贴图的工作，把 Megascans、Zoo Tools 或自建贴图目录直接变成资产。</p>
+<blockquote><p><strong>菜单里显示的是脚本名</strong>：快捷工具菜单直接扫描 <code>quicktools/</code> 下的脚本，条目名 = 文件名去掉 <code>.py</code> 后把下划线换成空格，所以菜单里看到的是 <code>pbr to zasset</code>，不是中文标题。三个转资产工具的对应关系：<code>hdr to zasset</code> = HDR 转资产、<code>model to zasset</code> = 模型转资产、<code>pbr to zasset</code> = PBR 贴图转资产。</p></blockquote>
+<h2 id="h-2">输入与输出</h2>
+<ul>
+<li>输入：包含 PBR 贴图的文件夹；勾选「批量模式」时选择父文件夹，每个子文件夹作为独立资产。</li>
+<li>输出：每个材质一个 <code>&lt;材质名&gt;.zasset</code>，默认写到输入文件夹（也可另设「输出位置」）。</li>
+<li>资产内部：<code>textures/</code> 下按通道存放贴图；多精度时按 <code>textures/2k/</code>、<code>textures/4k/</code> 等分层。<code>meta.json</code> 记录 <code>properties</code> 通道映射，以及可选的 <code>resolutions</code> 与 <code>default_resolution</code>；有缩略图时含 <code>thumb.sicon</code>。</li>
+</ul>
+<h2 id="h-3">贴图命名规则</h2>
+<p>工具用「下划线 + 通道别名」识别贴图，别名不区分大小写：</p>
+<table><thead><tr><th>通道</th><th>可用别名</th></tr></thead><tbody><tr><td>baseColor</td><td><code>basecolor</code>、<code>base_color</code>、<code>albedo</code>、<code>diffuse</code>、<code>col</code>、<code>color</code>、<code>base</code>、<code>diff</code></td></tr><tr><td>normal</td><td><code>normal</code>、<code>norm</code>、<code>nor</code>、<code>nrm</code>、<code>n</code>、<code>normalmap</code>、<code>nor_dx</code>、<code>nor_gl</code></td></tr><tr><td>roughness</td><td><code>roughness</code>、<code>rough</code>、<code>rgh</code>、<code>roughnessmap</code>、<code>rough_map</code></td></tr><tr><td>metallic</td><td><code>metal</code>、<code>mtl</code>、<code>metalness</code>、<code>metal_map</code>、<code>metallic_map</code></td></tr><tr><td>ao</td><td><code>ao</code>、<code>ambient</code>、<code>occlusion</code>、<code>ambient_occlusion</code>、<code>ao_map</code>、<code>occ</code></td></tr><tr><td>emissive</td><td><code>emissive</code>、<code>emit</code>、<code>emission</code>、<code>illumination</code>、<code>emissive_map</code>、<code>glow</code></td></tr><tr><td>height</td><td><code>height</code>、<code>heightmap</code>、<code>height_map</code>、<code>bump</code>、<code>bump_map</code>、<code>disp</code>、<code>displacement</code>、<code>disp_map</code></td></tr></tbody></table>
+<ul>
+<li>别名必须与前面的名称用 <code>_</code> 分隔，例如 <code>wood_albedo.png</code>；<code>woodcolor.png</code> 不会被识别。</li>
+<li>组合贴图 <code>arm</code> / <code>orm</code> 按 R=AO、G=Roughness、B=Metallic 处理。</li>
+<li>分辨率标记（<code>_2K_</code>、<code>_4K_</code>、<code>_8K_</code> 等）会从文件名中剥离，也可用 <code>2k/</code>、<code>4k/</code> 等子目录表达。</li>
+<li>材质名取通道别名之前的名称，例如 <code>brick_2K_Albedo</code> → <code>brick</code>。</li>
+</ul>
+<h2 id="h-4">操作步骤</h2>
+<ol>
+<li>打开「快捷工具 → pbr to zasset」。</li>
+<li>点击「浏览」选择贴图文件夹；批量模式则选父文件夹。</li>
+<li>点击「扫描贴图」，在右侧核对材质数量、通道与精度。</li>
+<li>设置输出位置，按需调整选项。</li>
+<li>点击「转换」。</li>
+</ol>
+<h2 id="h-5">结果验证</h2>
+<ul>
+<li>扫描后状态栏显示发现的材质与贴图数量。</li>
+<li>转换完成弹出统计；输出目录出现每个材质的 <code>.zasset</code>。</li>
+<li>打开资产可见 <code>meta.json</code> 的通道路径与 <code>textures/</code> 内容；资产库中能显示缩略图。</li>
+</ul>
+<h2 id="h-6">参数与注意事项</h2>
+<table><thead><tr><th>选项</th><th>默认</th><th>说明</th></tr></thead><tbody><tr><td>导出 <code>.zasset</code> 资产文件</td><td>开</td><td>关闭时只做扫描 / 预览</td></tr><tr><td>批量模式（子文件夹作为独立资产）</td><td>关</td><td>适合一个父目录下多个资产文件夹</td></tr><tr><td>转换后导入当前分类</td><td>关</td><td>转换后把 <code>.zasset</code> 拷到当前资产库分类</td></tr><tr><td>打包所有精度</td><td>开</td><td>开启时各精度分别进 <code>textures/&lt;精度&gt;/</code>；关闭只打包默认精度</td></tr><tr><td>递归扫描子文件夹</td><td>关</td><td>贴图在 <code>tex/</code> 等子目录时开启；可选自动递归或手动指定文件夹名</td></tr><tr><td>排除</td><td>空</td><td>递归时跳过的文件夹名，逗号分隔，如 <code>Thumbs, previews</code></td></tr></tbody></table>
+<ul>
+<li>扫描不到有效贴图时状态栏会提示未发现 PBR 贴图，先检查命名中的下划线与别名。</li>
+<li>缩略图与元数据来源由 <code>Assets/preset/pbr_mapping.json</code> 配置；支持 <code>{materialName}</code> / <code>{folderName}</code> 占位与 JSON/TXT 元数据源。</li>
+<li>转换需要有效的 <code>convert</code> 授权。</li>
+</ul>

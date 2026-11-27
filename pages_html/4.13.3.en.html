@@ -1,0 +1,32 @@
+<p>Select several objects and export them at once, <strong>one variant per selected root object</strong>. This suits assets such as &quot;one texture set, dozens of screw or brick types&quot;.</p>
+<p><img src="media_en/shared/menu-update-asset-variant.webp" alt="Context menu → Update asset → Batch add variants…" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The Maya plug-in edition, with several objects selected in the viewport.</li>
+<li>Marquee selecting collapses parent and child objects of the same level to the topmost root, and one root object counts as one variant.</li>
+<li>The asset is a <code>.zasset</code>.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select the objects to export in the viewport.</li>
+<li>Right-click the target asset → <code>「更新资产」 (Update asset)</code> → <code>「批量添加变体…（每个选中物体一个）」 (Batch add variants…, one per selected object)</code>.</li>
+<li>Choose a geometry format (at least one) and the thumbnail source in the export configuration, then confirm.</li>
+<li>Watch the progress dialog (cancellable): each row shows the current variant name, and with a playblast / render source the text notes that an image is being produced.</li>
+</ol>
+<h2 id="h-3">Naming rules</h2>
+<ul>
+<li>The variant name is the node&#x27;s short name (namespace and hierarchy prefixes removed).</li>
+<li>Duplicate names get a number appended automatically: <code>name</code>, <code>name_2</code>, <code>name_3</code>…</li>
+</ul>
+<h2 id="h-4">Thumbnails and selection sets</h2>
+<table><thead><tr><th>Thumbnail source</th><th>Behavior in batch mode</th></tr></thead><tbody><tr><td>Maya playblast / render</td><td><strong>Automatic images</strong> after each variant export (no per-item confirmation)</td></tr><tr><td>Screenshot</td><td>Not run automatically (needs manual framing); fill in later with <code>「更新变体」 (Update variant)</code></td></tr></tbody></table>
+<ul>
+<li>When the batch finishes your previous selection set is restored, so nothing on screen is lost.</li>
+<li>If you cancel midway, finished variants are kept and unprocessed ones are skipped.</li>
+</ul>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>The closing message reads <code>「批量添加变体完成：成功 N 个，失败 M 个」 (batch add variants finished: N succeeded, M failed)</code>.</li>
+<li><code>variants/</code> gains N <code>&lt;variant name&gt;.&lt;ext&gt;</code> files, plus matching <code>.sicon</code> files when images were produced automatically.</li>
+<li>All new variant entries appear under <code>「导入变体 / 版本」 (Import variant / version)</code> in the context menu.</li>
+</ul>

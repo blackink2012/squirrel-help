@@ -1,0 +1,32 @@
+<p>Open several <code>.ma</code> / <code>.mb</code> files in turn and run the same MEL or Python script on each, optionally saving afterwards.</p>
+<p><img src="media_en/shared/quicktool-batch-maya.webp" alt="Batch process Maya files" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Purpose</h2>
+<p>Suits repetitive work such as batch renaming, node cleanup or unifying render settings, without opening each scene by hand.</p>
+<h2 id="h-2">Input and output</h2>
+<ul>
+<li>Input: a file list (<code>.ma</code> / <code>.mb</code>) plus a MEL or Python script.</li>
+<li>Output: the modified and saved <code>.ma</code> / <code>.mb</code> files (when <code>「执行后保存文件」 (Save files after running)</code> is checked); progress is written into the <code>「执行日志」 (Execution log)</code> at the bottom of the window.</li>
+</ul>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open <code>快捷工具 (Quick tools) → 批量处理maya文件 (Batch process Maya files)</code>.</li>
+<li>Under <code>「文件选择」 (File selection)</code> click <code>「添加文件」 (Add files)</code> to add <code>.ma</code> / <code>.mb</code> files, several at a time; remove unwanted entries with <code>「移除选中」 (Remove selected)</code> or <code>「清空列表」 (Clear list)</code>.</li>
+<li>Under <code>「脚本输入」 (Script input)</code> choose MEL or Python and paste the script; <code>「MEL示例」 (MEL sample)</code> and <code>「Python示例」 (Python sample)</code> are quick starting points.</li>
+<li>Validate the script with <code>「测试执行（当前场景）」 (Test run on the current scene)</code> first.</li>
+<li>Confirm <code>「执行选项」 (Execution options)</code> and click <code>「批量执行」 (Run batch)</code>.</li>
+<li>Read the success / failure summary at the end of the log.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The log shows <code>「批量处理完成！」 (batch processing finished!)</code> with the number of succeeded and failed files.</li>
+<li>With saving checked, the target files&#x27; modification times on disk are updated.</li>
+<li>Afterwards the tool tries to reopen the scene that was saved before running.</li>
+</ul>
+<h2 id="h-5">Options and notes</h2>
+<table><thead><tr><th>Option</th><th>Default</th><th>Notes</th></tr></thead><tbody><tr><td>Save files after running</td><td>On</td><td>Each file is saved with <code>force</code> after a successful run</td></tr><tr><td>Show detailed information</td><td>On</td><td>The log lists each file being processed and its save result</td></tr><tr><td>Advanced options</td><td>Off</td><td>Expands backup before running, force save and ignore errors and continue</td></tr></tbody></table>
+<ul>
+<li>Source check: the current batch logic only reads &quot;save files after running&quot; and &quot;show detailed information&quot;; the three advanced options are not used by the execution logic yet, so checking them changes nothing (whether they are reserved for later is to be confirmed).</li>
+<li>A failing file is recorded as a failure and processing continues with the next one; the batch is never aborted.</li>
+<li>Batch runs open files one by one, so <strong>an unsaved current scene may be replaced</strong>; save the current scene before running. It is only reopened afterwards when it already had a file path.</li>
+<li>The log supports <code>「清空日志」 (Clear log)</code>, <code>「保存日志」 (Save log)</code> as <code>.txt</code> and <code>「复制日志」 (Copy log)</code>.</li>
+</ul>

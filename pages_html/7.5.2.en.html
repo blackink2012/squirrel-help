@@ -1,0 +1,28 @@
+<p>Batch conversion can process every image in a folder recursively, convert them all to the target format, and resize or preserve the directory hierarchy as needed.</p>
+<p><img src="media_en/shared/dialog-format-convert.webp" alt="Image format conversion" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li><code>opencv-python</code> and <code>numpy</code> are installed.</li>
+<li>The input directory is readable and the output directory is writable.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open <code>「图像格式转换工具」 (Image format conversion tool)</code>.</li>
+<li>Set the input mode to <code>「选择文件夹」 (Choose folder)</code> and click <code>「浏览...」 (Browse...)</code> to pick the directory; the tool collects the images inside recursively.</li>
+<li>To limit the source formats, fill <code>「输入格式过滤」 (Input format filter)</code> such as <code>exr</code> or <code>png, jpg</code>; empty means every supported format.</li>
+<li>Choose <code>「输出格式」 (Output format)</code> and set JPEG quality, PNG compression level or TIFF compression as needed.</li>
+<li>Set <code>「输出位置」 (Output location)</code>; empty means the input directory.</li>
+<li>To resize, fill the width / height under <code>「输出分辨率」 (Output resolution)</code>; empty keeps the original size. Check <code>「保持宽高比」 (Keep aspect ratio)</code> to avoid stretching.</li>
+<li>Choose <code>「保持层级结构」 (Keep hierarchy)</code> or uncheck it so every file lands in one directory.</li>
+<li>Click <code>「开始转换」 (Start conversion)</code> and watch the log and progress.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The log shows &quot;processing&quot; and the output path for each file, and the converted count at the end; the number of files in the output directory matches the filtered input count and their extensions match the target format.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Setting only the width or only the height computes the other side proportionally; setting both with keep-aspect-ratio scales by the smaller ratio.</li>
+<li>The tool creates the output folder when it does not exist.</li>
+<li>Large-resolution EXR decodes slowly; converting in batches reduces memory pressure.</li>
+</ul>
+<h2 id="h-5">Warnings</h2>
+<p>When a source file name does not follow Maya&#x27;s rules (letters, digits, underscore and dot only, starting with a letter), the interface batch conversion renames the source file and the log says <code>「源文件已重命名」 (source file renamed)</code>. The command channel <code>convert_image_format</code> explicitly does not rename; if the source must stay untouched, copy it first and then convert.</p>

@@ -1,0 +1,29 @@
+<blockquote><p>One-line summary: <strong>besides the toolbar buttons, the top row also holds two sidebar toggles and the window controls — they govern what the window looks like, and change nothing in the asset library.</strong></p></blockquote>
+<h2 id="h-1">How to open them</h2>
+<p>Nothing to open; they are always at the top of the window:</p>
+<ol>
+<li><strong>Collapse / expand left sidebar</strong>: the fold icon at the far left of the toolbar, right of the squirrel icon.</li>
+<li><strong>Collapse / expand right sidebar</strong>: the fold icon at the far right of the toolbar.</li>
+<li><strong>Minimize / maximize / close</strong>: the three square buttons outside the toolbar card, hugging the window&#x27;s right corner.</li>
+</ol>
+<p>Hovering any button shows its Chinese name (such as &quot;Collapse/expand left sidebar&quot;, &quot;Minimize (to floating icon)&quot;).</p>
+<p><img src="media_en/15.2.2-1.webp" alt="Right part of the top toolbar and the window controls: refresh, AI tools, quick tools, panels and layout, Maya target, settings, help, collapse / expand right sidebar; outside the card on the right are minimize / maximize / close" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<table><thead><tr><th>Button</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Collapse / expand left sidebar</td><td>Toggles left navigation between the full bar and a narrow icon strip</td><td>None</td><td>Collapsed shows a single column of icons (Category / Project / Favorites plus top-level category icons); click again to restore the full bar</td><td>It only narrows the panel and <strong>never closes</strong> it; the width is remembered for next time</td></tr><tr><td>Collapse / expand right sidebar</td><td>Hides the right-most column (it collapses the vertically stacked properties / preview panels together)</td><td>At least two columns remain in the layout</td><td>The right column hides and the center asset area widens; click again to restore the panels collapsed by this action</td><td>With only one column left it <strong>refuses to collapse</strong> (there would be nowhere to dock), so an unresponsive click is protection; panels you closed yourself earlier are not reopened</td></tr><tr><td>Minimize</td><td>Shrinks the window to a floating icon on the desktop</td><td>None</td><td>The window disappears and a squirrel floating icon appears on the desktop</td><td>Single-click the icon to restore; drag it anywhere; <strong>this is not quitting</strong> and background tasks keep running</td></tr><tr><td>Maximize / restore</td><td>Toggles between filling the screen and the previous size</td><td>None</td><td>The window grows or returns to its previous size</td><td>The icon changes with state (maximize ↔ restore down); double-clicking the toolbar blank area does the same</td></tr><tr><td>Close</td><td>Closes this plug-in window</td><td>None</td><td>See &quot;What closing actually closes&quot; below</td><td>It does not save the scene and does not affect the Maya scene</td></tr></tbody></table>
+<h2 id="h-3">What closing actually closes</h2>
+<p>Closing behaves differently per form (Maya-embedded / standalone), <strong>so never assume it quits the program</strong>:</p>
+<table><thead><tr><th>Form</th><th>What clicking close does</th><th>How to reopen</th></tr></thead><tbody><tr><td>Maya-embedded (opened from shelf / menu)</td><td><strong>Only the plug-in window closes</strong>; Maya and the current scene are untouched, and the AI assistant keeps following Maya</td><td>Open the plug-in again from the shelf / menu</td></tr><tr><td>Standalone with the AI assistant running (or starting)</td><td>Collapses to a floating icon while the AI assistant and its process keep running in the background</td><td>Single-click the floating icon; its right-click menu also has <strong>Open asset library</strong></td></tr><tr><td>Standalone with no AI assistant running</td><td>Ends the whole plug-in process</td><td>Start the plug-in again</td></tr></tbody></table>
+<blockquote><p><strong>How to undo</strong>: in the Maya-embedded edition closing only closes the window and you can reopen at any time; in the standalone edition collapsing to the floating icon is restored with a single click. The action that really ends the process is <strong>Quit</strong> in the floating icon&#x27;s right-click menu — it has no protection beyond a second confirmation, so avoid it while AI tasks are running.</p></blockquote>
+<h2 id="h-4">Beginner pitfalls</h2>
+<ul>
+<li><strong>The left sidebar &quot;disappeared&quot; after collapsing</strong>: it actually became a column of icons. Hover an icon to see its name, and click it to switch to the matching tab.</li>
+<li><strong>Cannot find the window after minimizing</strong>: look for the squirrel floating icon near the bottom-right of the desktop or the taskbar and single-click it. If the window was fully covered, the icon may sit at the screen edge.</li>
+<li><strong>Closing inside Maya and assuming Maya quit</strong>: it did not; only the plug-in window closed, and Maya and the scene are still there.</li>
+<li><strong>The right sidebar will not collapse</strong>: your layout has been reduced to a single column and the plug-in refuses. Restore it with the toolbar&#x27;s <strong>Panels and layout → Reset layout</strong>, see <a href="#/en/15.2.5"><code>8.2.5</code></a>.</li>
+</ul>
+<h2 id="h-5">Related</h2>
+<ul>
+<li>The overall index of the top toolbar: <a href="#/en/15.2.1"><code>8.2.1</code></a>.</li>
+<li>Floating icon and status bar behavior: <a href="#/en/3.1.7"><code>3.1.7</code></a>.</li>
+<li>Recovering a layout you dragged into a mess: <a href="#/en/15.2.5"><code>8.2.5</code></a>.</li>
+</ul>

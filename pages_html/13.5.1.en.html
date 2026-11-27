@@ -1,0 +1,28 @@
+<p>Semantic search is an optional enhancement. When it is unavailable, search falls back to lexical matching automatically and never stops working entirely.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>Search still returns results but matches literally only, so colloquial descriptions miss the target asset.</li>
+<li>The status shows <code>available=false</code> with a reason such as &quot;no index&quot;, &quot;cannot reach Ollama&quot; or &quot;circuit breaker&quot;.</li>
+<li>The first search is noticeably slow and then normal again for a while, or semantic search stays unavailable.</li>
+<li>The index was built already, but it stopped working after the model changed in settings or environment variables.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>The <code>ai_asset_semantic</code> setting is off</td><td><code>ai_asset_semantic</code> is false in <code>app_settings.json</code>, and the reason says it was turned off in settings</td><td>Set it back to true (<strong>the settings UI has no switch for this</strong>; edit the config file or use the command <code>settings_set</code>)</td></tr><tr><td>The asset library index does not exist</td><td>No <code>.squirrel_ai_index\&lt;official / ollama&gt;</code> or <code>meta.json</code> under the library root</td><td>Sync or rebuild the asset index</td></tr><tr><td>Ollama is not installed or not running</td><td>The status says the service cannot be reached</td><td>Install and start Ollama</td></tr><tr><td>The embedding model is not pulled</td><td><code>ollama list</code> does not show the model</td><td>Pull <code>embeddinggemma-2:740m</code></td></tr><tr><td>A recent failed call tripped the circuit breaker</td><td>The status reports a cooldown in seconds</td><td>Wait for the cooldown, or set the cooldown environment variable to 0 to retry immediately</td></tr><tr><td>The model from environment variables does not match the index</td><td>The status reports a model mismatch</td><td>Remove the environment variable, or rebuild with that model</td></tr><tr><td>The host lacks numpy</td><td>A notice says it still works but recall is narrow</td><td>Install numpy, or accept degraded results</td></tr><tr><td>The index lives on a shared or synced drive</td><td>Several machines write the same backend index concurrently</td><td>Move the index to a local directory (different backends are already split into <code>official</code>/<code>ollama</code> and do not overwrite each other)</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open <strong>Settings → AI</strong> and run an AI dependency check to confirm the state of Ollama and the embedding model.</li>
+<li>In a terminal run <code>ollama list</code> to confirm the service is running and the model is pulled; if missing, run <code>ollama pull embeddinggemma-2:740m</code>.</li>
+<li>Confirm the semantic search master switch is not off: it maps to the config key <code>ai_asset_semantic</code> (on by default), and <strong>the settings UI currently has no switch for it</strong> — edit <code>~/.squirrel_asset_manager/app_settings.json</code>, or have the AI assistant run <code>settings_set(updates={&quot;ai_asset_semantic&quot;: true})</code> (that command is high risk and asks for confirmation first). The same group also has <code>ai_asset_semantic_sync</code> (on by default; when off, it only builds once if no index exists).</li>
+<li>When the asset index is missing or damaged, run <code>python tools/asset_index.py --sync</code>; use <code>--rebuild</code> for a full rebuild.</li>
+<li>Check whether environment variables such as <code>SQUIRREL_EMBED_MODEL</code> are set; never let the query model differ from the index model.</li>
+<li>After moving the index to a local disk, reopen the plug-in window so the setting takes effect, then search again.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p><code>asset_semantic_status</code> returns <code>available=true</code>, the <code>match</code> field shows <code>semantic</code> or <code>both</code>, and colloquial queries hit the target asset.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Use <code>mode=keyword</code> to keep search usable while you investigate the semantic chain separately.</li>
+<li>Read <code>reason</code> and <code>index_dir</code> from <code>asset_semantic_status</code> to see whether the index, the model or the service is missing.</li>
+<li>The first query may exceed the 20-second timeout while the model cold-starts; try again afterwards, since queries are much faster once the model stays resident.</li>
+<li>Continue with 4.5.9.1 &quot;AI unavailable&quot; and 4.8.4.1 &quot;AI dependency check and install&quot;.</li>
+</ul>

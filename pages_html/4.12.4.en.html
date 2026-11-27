@@ -1,0 +1,33 @@
+<p>An asset library is &quot;the folder is the data&quot;, so copying the whole library directory is the most complete backup; deletions performed by the plug-in also leave a temporary backup for emergencies.</p>
+<p><img src="media_en/shared/settings-general.webp" alt="Restoring a library: Settings → General → Asset library management → Add asset library" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Backing up the whole library</h2>
+<ol>
+<li>Stop writing: stop import / export jobs and preferably close the plug-in window or quit Maya.</li>
+<li>Copy the whole library root, including <code>library.json</code>, <code>favorites.json</code>, every sub-library and any custom top-level categories.</li>
+<li>Put the copy on another disk or a backup location.</li>
+</ol>
+<h2 id="h-2">Restoring the whole library</h2>
+<ol>
+<li>Close the plug-in and put the backup directory back in the target location.</li>
+<li>Open <code>Settings → 常规 (General) → 资产库管理 (Asset library management) → 添加资产库 (Add asset library)</code> and register the restored directory.</li>
+<li>Go back to the <code>「分类」 (Categories)</code> page and choose that library in the dropdown.</li>
+<li>Run the library health check to confirm the asset count and the load-failure list.</li>
+</ol>
+<h2 id="h-3">Single assets and recovering a mistaken delete</h2>
+<ul>
+<li>Back up a single asset with the <code>export_assets</code> command (with <code>material_ids</code> and <code>target_dir</code>), which copies the asset as a <code>.zasset</code>; never rename or move a single <code>.zasset</code> inside the library by hand.</li>
+<li>Assets deleted through commands are backed up beforehand to <code>squirrel_ai_undo</code> under the system temp directory and can be rolled back with <code>undo_last</code>.</li>
+<li><code>version_manage op=remove_version</code> backs up the deleted version to <code>squirrel_ai_undo</code> and returns the <code>backup</code> path; copy it back into the main asset root to restore it.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>After restoring, the asset count matches the backup and collection names and counts are correct.</li>
+<li>The library health check shows <code>load_failure_count</code> at 0 and duplicate UUIDs as false.</li>
+<li>Missing thumbnails can simply be regenerated; the assets themselves are unaffected.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>The directory index cache and the semantic index are derived data and need no backup; after restoring they rebuild automatically or manually as described in 4.12.2.</li>
+<li>The library list, default library and wishlist live in user settings <code>~/.squirrel_asset_manager/app_settings.json</code> and must be backed up separately when moving machines.</li>
+<li>When several people share a library, avoid concurrent writes; the plug-in&#x27;s lock only works within a single process.</li>
+</ul>

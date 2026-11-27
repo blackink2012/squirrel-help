@@ -1,0 +1,25 @@
+<p>创建资产库会新建一个标准库目录（<code>library.json</code> 加六个子库），并把它加入库列表。</p>
+<p><img src="media/shared/settings-general.webp" alt="设置 → 常规 →「资产库管理」：创建资产库（新建标准库目录）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">操作步骤</h2>
+<ol>
+<li>打开设置窗口，进入「常规」页签的「资产库管理」分组。</li>
+<li>点击「创建资产库」。</li>
+<li>选择库的父目录。</li>
+<li>输入资产库名称，默认 <code>SquirrelLib</code>。</li>
+<li>确认后等待「创建成功」提示。</li>
+<li>点击设置窗口的「确定」保存列表。</li>
+</ol>
+<h2 id="h-2">结果验证</h2>
+<ul>
+<li>父目录下出现以库名命名的文件夹。</li>
+<li>文件夹内含 <code>library.json</code>，以及 <code>materials</code>、<code>models</code>、<code>lights</code>、<code>textures</code>、<code>scenes</code>、<code>hdr</code> 六个子库目录。</li>
+<li>每个子库目录内都有 <code>FolderMetadata.fdata</code>。</li>
+<li>设置中的库列表与主窗口库下拉框都能看到新库。</li>
+</ul>
+<h2 id="h-3">提示</h2>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>目标目录已存在时会拒绝创建，请换名称或先清理同名目录。</p></div>
+<ul>
+<li>新库首次加载时会补齐「自定义」子分类等标准结构，并按配置合并出其余<strong>内置子库</strong>（图片、音频、动画数据、节点树等）——所以建库时只有六个基础目录，加载/切库后才补齐到 11 个内置子库。</li>
+<li>命令侧 <code>library_manage op=create</code> 支持 <code>path</code> 或 <code>parent_dir + name</code>；失败时会回滚半成品目录，不会留下空库。</li>
+<li>创建完成后不会自动切库，需要在库下拉框中选择。</li>
+</ul>

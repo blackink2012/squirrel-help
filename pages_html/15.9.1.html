@@ -1,0 +1,50 @@
+<blockquote><p>一句话定位：<strong>插件所有可调的东西都在这里，分十个页签；大部分页签默认是「锁住」的，要先勾「解锁全部配置」才能改。</strong></p></blockquote>
+<p>第一次打开设置的人十有八九会卡在同一件事上：<strong>明明看到选项，却点不动、打不了字</strong>。那不是坏了，是全局锁定（见下面「最容易卡住：全局锁定」）。</p>
+<p><img src="media/shared/settings-general.webp" alt="设置窗口（常规页）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>主窗口顶部工具栏，点「设置」按钮（齿轮，见 <a href="#/15.2.4"><code>8.2.4</code></a>）；</li>
+<li>弹出「设置」窗口，默认停在「常规」页；</li>
+<li>点<strong>左侧竖排的页签</strong>切换页面（页签在窗口左边，长英文标签也放得下），改完点底部按钮保存。</li>
+</ol>
+<h2 id="h-2">十个页签的分工</h2>
+<table><thead><tr><th>页签</th><th>主要放什么</th><th>默认锁住吗</th><th>详解</th></tr></thead><tbody><tr><td>常规</td><td>字体大小、界面缩放、默认视图、拖放、语言、配色、彻底删除、缩略图大小、资产库管理、同名冲突、贴图 / 依赖导入策略、导入命名空间、设置预设</td><td>否</td><td><a href="#/15.9.2"><code>8.9.2</code></a></td></tr><tr><td>AI 设置</td><td>AI 依赖检查 / 安装 / 移除、向量索引更新与重建、全局大模型、云端服务同意、内嵌对话面（含 dsh 版本轨）、外部连接、AI / MCP 通道、外部 AI 工具</td><td>否</td><td><a href="#/15.9.3"><code>8.9.3</code></a></td></tr><tr><td>导出默认值</td><td>每种资产类型默认勾哪些导出格式、哪些格式锁定</td><td><strong>是</strong></td><td><a href="#/15.9.4"><code>8.9.4</code></a></td></tr><tr><td>右键菜单</td><td>每个子库的右键菜单项开关 + 双击命令</td><td><strong>是</strong></td><td><a href="#/15.9.5"><code>8.9.5</code></a></td></tr><tr><td>支持格式</td><td>资产库识别的文件扩展名（每行一个）</td><td><strong>是</strong></td><td><a href="#/15.9.6"><code>8.9.6</code></a></td></tr><tr><td>贴图后缀</td><td>PBR 贴图各通道的别名（每行一个）</td><td><strong>是</strong></td><td><a href="#/15.9.7"><code>8.9.7</code></a></td></tr><tr><td>子库与分类</td><td>左栏显示哪些子库、子库 ID / 显示名、默认分类列表</td><td><strong>是</strong>（「显示在主 UI」除外）</td><td><a href="#/15.9.8"><code>8.9.8</code></a></td></tr><tr><td>其它配置</td><td>几何体扩展名、图像扩展名、材质节点类型</td><td><strong>是</strong></td><td><a href="#/15.9.9"><code>8.9.9</code></a></td></tr><tr><td>授权激活</td><td>当前授权状态、机器码、激活码、状态入口、账号与我的授权</td><td>否</td><td><a href="#/15.9.10"><code>8.9.10</code></a></td></tr><tr><td>关于</td><td>软件信息、服务器通知、反馈与建议、协议与声明</td><td>否</td><td><a href="#/15.9.10"><code>8.9.10</code></a></td></tr></tbody></table>
+<h2 id="h-3">最容易卡住：全局锁定</h2>
+<h3 id="h-4">默认状态</h3>
+<p>窗口底下有一个复选框「解锁全部配置」，<strong>默认不勾</strong>。此时除了「常规」「AI 设置」「授权激活」「关于」四页，其余六个页签里的复选框、输入框、按钮全部是灰的：</p>
+<table><thead><tr><th>页签</th><th>未解锁时</th></tr></thead><tbody><tr><td>导出默认值</td><td>勾选框灰、锁定开关灰</td></tr><tr><td>右键菜单</td><td>菜单项开关灰、双击命令单选灰</td></tr><tr><td>支持格式</td><td>文本框只读</td></tr><tr><td>贴图后缀</td><td>别名文本框只读（页内「恢复默认设置」按钮也灰）</td></tr><tr><td>子库与分类</td><td>子库列表、ID / 显示名、分类列表全灰（<strong>「显示在主 UI」复选框仍可点</strong>）</td></tr><tr><td>其它配置</td><td>文本框只读</td></tr></tbody></table>
+<h3 id="h-5">解锁步骤</h3>
+<ol>
+<li>勾选「解锁全部配置」；</li>
+<li>弹出「配置修改警告」，列清哪几个页签会被解锁，并提醒「错误的配置可能导致资产库功能异常」；</li>
+<li>点「是」→ 六个页签全部可编辑；点「否」→ 复选框自动退回未勾，什么也没发生；</li>
+<li>改完记得保存；<strong>取消勾选「解锁全部配置」会重新锁上</strong>（不会自动保存）。</li>
+</ol>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>锁不是安全边界，只是防误触。解锁后改的是资产库的底层行为（导出格式、右键菜单、文件识别、贴图通道识别），改错可能导致导入导出异常。</p></div>
+<h3 id="h-6">解锁状态下的二次确认</h3>
+<p>在解锁状态下点「应用」或「确定」，还会再弹一次「配置变更确认」（当前为解锁状态，非通用配置可能已被修改…是否仍要应用当前设置？）。点「否」= 这次不保存。</p>
+<h2 id="h-7">底部按钮</h2>
+<table><thead><tr><th>按钮</th><th>作用</th><th>注意</th></tr></thead><tbody><tr><td>解锁全部配置（复选框）</td><td>解锁 / 锁定六个高级页签</td><td>默认不勾；解锁与锁定状态本身<strong>不会</strong>被保存</td></tr><tr><td>恢复默认设置</td><td>弹确认后，把一批配置恢复成默认</td><td>见下面「恢复默认到底恢复了什么」</td></tr><tr><td>设置帮助（橙色问号图标）</td><td>打开帮助中心的「设置窗口」这一页（就是本页，深链 <code>#/15.9.1</code>）</td><td>帮助中心起不来时（端口占满、老安装没有 v2 目录）会回退到 <code>Assets/help/help_settings.html</code>：那页只是一条「请从主界面打开帮助中心」的提示，不再放设置内容</td></tr><tr><td>取消</td><td>关闭窗口，<strong>丢弃</strong>本次未保存的改动</td><td>已经点过「应用」的改动不会回滚</td></tr><tr><td>应用</td><td>保存改动，窗口不关</td><td>解锁状态下会再弹确认</td></tr><tr><td>确定</td><td>保存改动并关闭窗口</td><td>常用这个</td></tr></tbody></table>
+<h2 id="h-8">恢复默认到底恢复了什么</h2>
+<p>点「恢复默认设置」并确认后，下面这些会立刻在界面上回到默认值（还需要点「应用 / 确定」才真正落盘）：</p>
+<table><thead><tr><th>恢复的项</th><th>恢复到</th></tr></thead><tbody><tr><td>字体大小 / 界面缩放 / 缩放锚</td><td>13 / 自动 / 跟随系统缩放</td></tr><tr><td>默认视图 / 同名冲突</td><td>图标网格 / 自动重命名</td></tr><tr><td>导出默认值</td><td>重新从 <code>export_preset.json</code> 读取（丢弃未保存的改动）</td></tr><tr><td>贴图后缀</td><td>重新从 <code>pbr_mapping.json</code> 读取（丢弃未保存的改动）</td></tr><tr><td>右键菜单</td><td>重新从 <code>context_menu_preset.json</code> 读取（丢弃未保存的改动）</td></tr><tr><td>其它配置</td><td>回到内置出厂列表（几何体 / 图像扩展名、材质节点类型）</td></tr></tbody></table>
+<p><strong>不会恢复</strong>的项（容易误会）：</p>
+<ul>
+<li>「支持格式」页的扩展名列表（要手动改回或从备份恢复）；</li>
+<li>「子库与分类」页的子库 ID / 显示名 / 默认分类列表；</li>
+<li>「常规」页里的资产库列表、贴图 / 依赖导入策略、导入命名空间、语言、配色、缩略图大小；</li>
+<li>「AI 设置」页的所有内容（依赖、大模型、外部连接）。</li>
+</ul>
+<p>也就是说：<strong>「恢复默认设置」≠「恢复出厂」</strong>，它重读的是磁盘上的预设文件，文件里是什么就恢复成什么。</p>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>想要真正的「恢复出厂」，用「常规」页最底下的 <strong>设置预设 → 还原预设</strong>：它把 <code>app_settings.json</code> 里的全部界面偏好写回默认值并立即生效（API Key 与资产库列表保留），范围与流程见 <a href="#/15.9.2"><code>8.9.2</code></a> 的「设置预设」。</p></div>
+<h2 id="h-9">配置文件在哪</h2>
+<p>设置分布在两类文件里（<code>&lt;插件目录&gt;</code> 指插件安装目录下的 <code>squirrel_asset_manager</code>）：</p>
+<table><thead><tr><th>文件</th><th>存什么</th></tr></thead><tbody><tr><td><code>&lt;插件目录&gt;\Assets\preset\config.json</code></td><td>资产库列表与默认库、同名冲突策略、贴图 / 依赖导入策略、支持格式、子库与分类、其它配置、常用标签等</td></tr><tr><td><code>&lt;插件目录&gt;\Assets\preset\export_preset.json</code></td><td>「导出默认值」页（按资产类型分别保存）</td></tr><tr><td><code>&lt;插件目录&gt;\Assets\preset\context_menu_preset.json</code></td><td>「右键菜单」页的菜单项开关（按子库分别保存）</td></tr><tr><td><code>&lt;插件目录&gt;\Assets\preset\double_click_preset.json</code></td><td>「右键菜单」页的双击命令（按子库分别保存）</td></tr><tr><td><code>&lt;插件目录&gt;\Assets\preset\pbr_mapping.json</code></td><td>「贴图后缀」页的通道别名</td></tr><tr><td><code>%USERPROFILE%\.squirrel_asset_manager\app_settings.json</code></td><td>字号、界面缩放、主题、语言、默认视图、缩略图输出尺寸、桥接端口开关、全局大模型、隐藏的顶级分类等界面偏好</td></tr><tr><td><code>%USERPROFILE%\.squirrel_asset_manager\settings_preset.json</code></td><td>「常规 → 设置预设」保存的整套界面偏好快照（可用「导入 / 导出预设」搬走或恢复；不存在 = 还没保存过预设）</td></tr></tbody></table>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>手改这些 JSON 前先备份，并且最好先关掉插件窗口。JSON 写坏时插件会尽量回退到默认值，但「恢复默认设置」只重读文件、不修复文件本身。</p></div>
+<h2 id="h-10">相关</h2>
+<ul>
+<li>逐页控件详解：<a href="#/15.9.2"><code>8.9.2</code></a> ~ <a href="#/15.9.10"><code>8.9.10</code></a></li>
+<li>设置的打开与保存 → <a href="#/11.1.1"><code>4.8.1.1</code></a></li>
+<li>配置文件位置的完整说明 → <a href="#/11.1.3"><code>4.8.1.3</code></a></li>
+<li>顶部工具栏的「设置」按钮 → <a href="#/15.2.4"><code>8.2.4</code></a></li>
+</ul>

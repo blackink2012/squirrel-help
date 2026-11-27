@@ -1,0 +1,28 @@
+<p>The asset library index and the Maya documentation index are two independent datasets; rebuild whichever one is missing. If you switch the embedding model, you must rebuild.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>A notice says there is no asset library semantic index yet, or that <code>kb/semantic/meta.json</code> is missing.</li>
+<li>The index directory exists but is missing <code>vectors.i8</code>, <code>scales.f32</code> or <code>meta.json</code>.</li>
+<li>The status says the index model differs from the expected model, or that the index directory belongs to another asset library.</li>
+<li>After changing models, search suddenly falls back to lexical matching, or results get clearly worse.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>The asset library index was never built</td><td>No <code>.squirrel_ai_index\&lt;official / ollama&gt;</code> under the library root</td><td>Build it on first sync or rebuild</td></tr><tr><td>Index files are incomplete</td><td><code>vectors.i8</code> or <code>scales.f32</code> is missing</td><td>Rebuild the index</td></tr><tr><td>Model, text template, primary-key scheme or backend changed</td><td><code>meta.json</code> disagrees with the current code or backend</td><td>Full rebuild</td></tr><tr><td>The index directory points at another library</td><td>A notice says the index belongs to another asset library</td><td>Clear the override directory or let it be taken over by a rebuild</td></tr><tr><td>Ollama does not have that model</td><td><code>ollama list</code> does not show the name</td><td>Pull the model, then rebuild</td></tr><tr><td>The Maya documentation index is missing</td><td>No <code>meta.json</code> under <code>kb/semantic/&lt;official / ollama&gt;</code></td><td>Rebuild the documentation index</td></tr><tr><td>The index lives on a network drive</td><td>Several machines write the same directory on one backend</td><td>Use a local directory per machine (backends are already separated)</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Run <code>asset_semantic_status</code> and record <code>dir</code>, <code>model</code>, <code>count</code>, <code>reason</code> and <code>index_dir</code>.</li>
+<li>When the asset library index is missing, run <code>python tools/asset_index.py --rebuild</code>; use <code>--sync</code> when you only want to catch up with newly added assets.</li>
+<li>When the Maya documentation index is missing, run <code>python tools/build_semantic_index.py --model embeddinggemma-2:740m</code>.</li>
+<li>When the model is not pulled, run <code>ollama pull embeddinggemma-2:740m</code> first, then rebuild.</li>
+<li>If you set an index root directory, confirm it is on a local disk; each library automatically uses its own subdirectory under that root.</li>
+<li>When told the index belongs to another library, either clear the directory override and rebuild, or confirm the original library no longer uses it and let the new one take over.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p><code>asset_semantic_status</code> shows an index count greater than 0, <code>model</code> matches the index record, and search no longer reports a missing index.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Confirm the model name in <code>meta.json</code> exactly matches the pulled model, including the tag.</li>
+<li>Back up the index directory before deleting it; if a rebuild fails, keep <code>meta.json</code> and the error message.</li>
+<li>Verify the documentation index with <code>maya_docs(action=&quot;status&quot;, probe=true)</code> or <code>tools/setup_semantic_env.py --all</code>.</li>
+<li>Follow 4.5.6.5 &quot;Rebuild and model selection&quot; for the correct procedure after switching models.</li>
+</ul>

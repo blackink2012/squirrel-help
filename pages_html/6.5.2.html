@@ -1,0 +1,23 @@
+<p>导入后发现贴图变粉、变黑，或资产里没有 <code>textures/</code>、<code>deps/</code>，先确认导出时文件是否真的被打包。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>导入资产后材质显示粉色/黑色，贴图节点指向空路径。</li>
+<li><code>.zasset</code> 里没有 <code>textures/</code>，或 <code>deps/</code> 下缺少对应缓存、代理、引用文件。</li>
+<li><code>meta.json</code> 的 <code>dependencies_missing</code> 不为空，导出日志出现「依赖缺失」。</li>
+</ul>
+<h2 id="h-2">常见原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>导出时贴图路径已经断开</td><td>Maya 里 <code>file</code> 节点的路径不存在</td><td>先用 File Path Editor 重新定位贴图，再导出</td></tr><tr><td>没有勾「贴图 textures/」</td><td>资产内没有 <code>textures/</code></td><td>重新导出并保留该复选框</td></tr><tr><td>没有勾「收集关联文件」</td><td>缓存/代理/引用没进 <code>deps/</code></td><td>勾选后重新导出</td></tr><tr><td>依赖在收集范围之外</td><td><code>dependencies_out_of_scope</code> 有记录</td><td>把依赖放到本地可访问路径，或随资产手动交付</td></tr><tr><td>路径含无法解析的记号</td><td><code>dependencies_unresolved_tokens</code> 有记录</td><td>把路径展开为实际文件路径后重导</td></tr><tr><td>引用文件未加载</td><td>引用节点状态为未加载</td><td>先在 Maya 中加载引用，再导出或收集</td></tr></tbody></table>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>在 Maya 中检查选中物体的 <code>file</code>、<code>aiImage</code> 等贴图节点，确认路径指向真实文件。</li>
+<li>重新导出时保留 <code>贴图 textures/</code>；有缓存、代理或引用时勾选「收集场景中已挂载的缓存/代理/引用文件」。</li>
+<li>导出后检查 <code>.zasset/textures/</code> 和 <code>.zasset/deps/</code> 是否出现对应文件。</li>
+<li>打开 <code>meta.json</code>，查看 <code>texture_map</code>、<code>dependencies_missing</code>、<code>dependencies_out_of_scope</code>、<code>dependencies_unresolved_tokens</code>。</li>
+<li>导入时使用资产自带的导入入口，程序会按 <code>texture_map</code> 把原路径重映射到包内路径。</li>
+</ol>
+<h2 id="h-4">仍不行怎么办</h2>
+<ul>
+<li>搜索 Script Editor 里的 <code>[StageTextures]</code>、<code>[Export] 依赖</code>、<code>[Export] 依赖警告</code>，确认是收集失败还是路径本身断开。</li>
+<li>换一台机器验证：若对方能看到贴图，说明缺失发生在原机器的路径，而不是资产结构。</li>
+<li><code>.ma</code> 文件里保留的是导出时的原始绝对贴图路径，不能只凭 <code>.ma</code> 文本判断资产是否缺图；以 <code>textures/</code> 和 <code>texture_map</code> 为准。</li>
+</ul>

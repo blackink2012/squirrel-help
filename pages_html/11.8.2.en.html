@@ -1,0 +1,27 @@
+<p>An alias is a keyword in the file name used to decide which PBR channel a texture belongs to.</p>
+<p><img src="media_en/shared/settings-texture-alias.webp" alt="Aliases" loading="lazy" decoding="async"></p>
+<h2 id="h-1">What it does</h2>
+<p><strong>Settings → Texture suffixes</strong> lists the texture types on the left and the alias list for the selected type on the right, one per line. The data comes from <code>texture_type_rules</code> in <code>Assets/preset/pbr_mapping.json</code>; the <code>aliases</code> array of each entry is exactly this list.</p>
+<h2 id="h-2">Values and defaults</h2>
+<ul>
+<li>The types are defined by the JSON. Currently they include <code>baseColor</code>, <code>normal</code>, <code>roughness</code>, <code>metallic</code>, <code>ao</code>, <code>arm</code>, <code>orm</code>, <code>emissive</code>, <code>height</code>, <code>opacity</code>, <code>clearcoat</code>, <code>clearcoatRoughness</code>, <code>specular</code>, <code>subsurface</code>, <code>anisotropy</code>, <code>ior</code>.</li>
+<li>Each type can have several alias lines. An alias is a keyword without the extension. For example <code>normal</code> contains <code>nrm</code>, <code>n</code> and <code>normal</code>, so <code>crate_n.png</code> is recognized as a normal map.</li>
+<li>Type matching priority comes from <code>priority</code> in the JSON; the UI only edits aliases.</li>
+</ul>
+<h2 id="h-3">Scope of effect</h2>
+<ul>
+<li>It affects texture channel detection in PBR-to-asset conversion and in material creation.</li>
+<li>It only matches file name keywords: it does not rewrite files, and it does not change texture paths in assets that already exist.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<p>When your naming convention differs from the default aliases, for example when roughness is written <code>_r</code> and metallic is written <code>_m</code>.</p>
+<h2 id="h-5">Steps</h2>
+<ol>
+<li>Open <strong>Settings → Texture suffixes</strong> and unlock if necessary.</li>
+<li>Select a type on the left, then edit alias lines on the right.</li>
+<li>Click <strong>Apply</strong> or <strong>OK</strong> to write back to <code>pbr_mapping.json</code>.</li>
+</ol>
+<h2 id="h-6">Verify the result</h2>
+<p>Run PBR-to-asset conversion with a texture named after the new alias; the texture should land in the matching channel.</p>
+<h2 id="h-7">Tips</h2>
+<p>The <strong>Restore defaults</strong> button on this page re-reads <code>pbr_mapping.json</code> from disk so you can discard unapplied edits. It does not generate a factory copy.</p>

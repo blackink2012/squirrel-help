@@ -1,0 +1,28 @@
+<blockquote><p>一句话定位：<strong>把一个资产「摊开」给人看的窗口——左边大图、右边全部信息。</strong></p></blockquote>
+<p>窗口标题不是固定叫「资产详情」，而是显示<strong>这个资产的显示名</strong>（没有显示名就用英文名），窗口内左上角才是资产名。</p>
+<h2 id="h-1">怎么打开</h2>
+<table><thead><tr><th>入口</th><th>操作</th><th>结果</th></tr></thead><tbody><tr><td>资产右键菜单</td><td>右键资产卡片 →「资产详情」</td><td>没有版本/变体的资产 → 本窗口；有版本/变体的资产 → 版本浏览器（<a href="#/15.11.2"><code>8.11.2</code></a>）</td></tr><tr><td>双击右侧预览图</td><td>双击右侧「预览」面板里的图片</td><td>同上（同一条链路）</td></tr></tbody></table>
+<blockquote><p>注意：资产如果带版本或变体，这个入口会直接打开<strong>版本浏览器</strong>，而不是本窗口。</p></blockquote>
+<p><img src="media/shared/dialog-asset-details.webp" alt="资产详情窗口" loading="lazy" decoding="async"></p>
+<h2 id="h-2">左栏：图</h2>
+<table><thead><tr><th>区域</th><th>是什么</th><th>怎么用</th></tr></thead><tbody><tr><td>大预览图</td><td>当前缩略图，按比例居中放在固定正方形区域里</td><td>鼠标<strong>滚轮</strong>可切换到上一张/下一张</td></tr><tr><td>缩略图条</td><td>该资产有多张缩略图槽时才出现，一行小图</td><td>点某一张切换大图；多张时图下方有页码/序号</td></tr><tr><td>注释 / 标签</td><td>资产有注释或有标签时显示在左下</td><td>只读文字/胶囊</td></tr></tbody></table>
+<h2 id="h-3">右栏：信息卡</h2>
+<table><thead><tr><th>卡片</th><th>字段</th><th>说明</th></tr></thead><tbody><tr><td>标题卡</td><td>资产名 + 分类面包屑</td><td>面包屑形如「材质 › AAAcustom」，用于确认它到底在哪个分类</td></tr><tr><td>详情卡 · 节点类型</td><td>如 <code>VRayMtl</code>、<code>aiStandardSurface</code></td><td>这个资产里的主节点类型</td></tr><tr><td>详情卡 · 资产类型</td><td>如 <code>materials</code>、<code>models</code></td><td>所属子库</td></tr><tr><td>详情卡 · 大小</td><td>如 <code>140.9 KB</code></td><td>整个 <code>.zasset</code> 目录的总字节</td></tr><tr><td>详情卡 · 分辨率</td><td>如 <code>2048×2048</code></td><td>贴图/图片类资产才有</td></tr><tr><td>详情卡 · 软件 / 渲染器 / 色彩空间</td><td>如 <code>Maya 2025</code> / <code>redshift</code> / <code>ACEScg</code></td><td>导出时记录的环境信息</td></tr><tr><td>详情卡 · 动画格式</td><td>如 <code>abc</code></td><td>只显示本次导出带上的动画格式</td></tr><tr><td>详情卡 · 创建时间</td><td>日期</td><td>导出时间</td></tr><tr><td>包含格式卡</td><td>格式胶囊，如 <code>zmetal</code>、<code>ma</code></td><td>资产包里实际有哪些格式；这是判断「有没有贴图/材质」最快的地方</td></tr><tr><td>标签卡</td><td>标签胶囊</td><td>资产的标签</td></tr><tr><td>注释卡</td><td>文本</td><td>资产注释</td></tr><tr><td>路径卡</td><td>灰色小字</td><td><code>.zasset</code> 的实际磁盘路径，可选中复制</td></tr></tbody></table>
+<h2 id="h-4">一次完整操作（把预览图拖进当前场景）</h2>
+<ol>
+<li>右键资产 →「资产详情」。</li>
+<li>在左栏大图上<strong>按住鼠标左键拖出窗口</strong>，拖到 Maya 视口里松手。</li>
+<li>插件按这个资产的默认导入格式导入（与把资产卡片拖进视口是同一套逻辑）。</li>
+<li>想换一张缩略图看：滚轮，或点下方缩略图条。</li>
+<li>想对这个资产做别的操作：在窗口内<strong>右键</strong>，弹出的是与资产卡片同款的右键菜单。</li>
+</ol>
+<blockquote><p>窗口上会提示「按住图片拖出窗口 → 导入 Maya」，这是拖拽导入的入口。</p></blockquote>
+<h2 id="h-5">常见疑问</h2>
+<table><thead><tr><th>疑问</th><th>说明</th></tr></thead><tbody><tr><td>为什么双击预览图打开的是版本浏览器？</td><td>该资产带版本或变体。要看单资产信息请从版本浏览器里选「主版本」再导入，或删掉版本/变体后再看</td></tr><tr><td>为什么「包含格式」里没有 ma？</td><td>导出时没勾几何体格式，或这是纯材质资产（材质分类锁定几何格式）</td></tr><tr><td>为什么图是灰底占位图？</td><td>那次导出没出真图。右键 →「更新缩略图 → 后台渲染」（见 8.12.6）或「截取」</td></tr><tr><td>大小比预期大很多？</td><td>贴图与关联文件被收进了资产包，见 <a href="#/15.10.5"><code>8.10.5</code></a></td></tr></tbody></table>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>用户指南版详情说明：<a href="#/4.4.5"><code>4.1.4.5</code></a></li>
+<li>版本浏览器（有版本/变体时的同一入口）：<a href="#/15.11.2"><code>8.11.2</code></a></li>
+<li>无头出图（补缩略图）：<a href="#/15.12.6"><code>8.12.6</code></a></li>
+<li>多缩略图槽与删除：<a href="#/4.7.5"><code>4.1.7.5</code></a></li>
+</ul>

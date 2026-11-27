@@ -1,0 +1,24 @@
+<p>The texture import policy decides where textures are read from and whether they are copied into the project when importing materials or textures from the library.</p>
+<p><img src="media_en/shared/settings-texture-policy.webp" alt="Texture import policy" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>It controls where textures under <code>textures/</code> inside a <code>.zasset</code> end up in Maya.</p>
+<h2 id="h-2">Values and defaults</h2>
+<table><thead><tr><th>Option</th><th>Behavior</th></tr></thead><tbody><tr><td>Copy textures into the project</td><td>Extracts textures to <code>{project}/sourceimages/squirrel_asset/{asset name}_{last 4 of ID}/</code> and points the material there</td></tr><tr><td>Current asset directory (default)</td><td>No copying; the material points directly at <code>textures/</code> inside the <code>.zasset</code></td></tr><tr><td>Source file directory</td><td>Prefers the original absolute paths recorded at export, falling back to in-asset paths when they do not exist</td></tr></tbody></table>
+<ul>
+<li>The preset file currently holds <code>asset_directory</code>; when that key is missing the code falls back to <code>copy_to_project</code>.</li>
+</ul>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>Material import, light texture import, texture assignment and reference import — every path that reads textures from an asset.</li>
+<li>It only changes the paths after import and never modifies the asset package.</li>
+<li>It is stored as <code>texture_import_policy</code> in <code>config.json</code>.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<ul>
+<li>The asset must be delivered to another machine, or the project must be self-contained: choose <code>「拷贝贴图到项目」 (Copy textures into the project)</code>.</li>
+<li>Single-machine use where disk space matters and assets should stay together: keep <code>「当前资产目录」 (Current asset directory)</code>.</li>
+<li>Textures still live in the original working folder and should stay editable: choose <code>「源文件目录」 (Source file directory)</code>.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<blockquote><p><strong>Warning</strong>: <code>「源文件目录」 (Source file directory)</code> relies on the absolute paths recorded at export; after moving machines or directories the textures are not found, so switch to one of the first two options.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: copying into the project creates a sub-directory from the asset name and the last four characters of the ID, so different assets never overwrite each other.</p></blockquote>

@@ -1,0 +1,10 @@
+<p>所有命令都按同一套结构调用与返回：调用方给 <code>command_id</code>、<code>params</code> 与 <code>dry_run</code>，底座回 <code>status</code>、<code>result</code>、<code>error</code>。</p>
+<h2 id="h-1">请求参数</h2>
+<table><thead><tr><th>字段</th><th>必填</th><th>说明</th></tr></thead><tbody><tr><td><code>command_id</code></td><td>是</td><td>命令 id，以命令参考和清单里的 <code>params_schema</code> 为准</td></tr><tr><td><code>params</code></td><td>否</td><td>命令参数对象，键名必须来自该命令的 <code>params_schema</code></td></tr><tr><td><code>dry_run</code></td><td>否</td><td>只预演、不改状态；默认 <code>false</code></td></tr><tr><td><code>instance_id</code></td><td>视入口</td><td>目标实例；在 Maya 内打开的对话可省略</td></tr><tr><td><code>session_id</code></td><td>否</td><td>审计归属，写进 <code>audit.jsonl</code></td></tr><tr><td><code>request_id</code></td><td>否</td><td>进度与取消的对号；异步作业由底座预先生成</td></tr><tr><td><code>allow_cross_instance</code></td><td>否</td><td>默认只操作当前绑定的实例</td></tr></tbody></table>
+<p>执行器统一签名是 <code>executor(dry_run=False, **params)</code>。只有声明了 <code>progress_supported</code> / <code>cancel_supported</code> 的命令才会被注入 <code>progress</code> / <code>cancel</code> 两个对象；未声明的命令收到它们会直接 <code>TypeError</code>。</p>
+<h2 id="h-2">命令返回</h2>
+<p>命令内部统一返回字典，<code>status</code> 取 <code>ok</code>、<code>preview</code> 或 <code>error</code>。<code>preview</code> 是 <code>dry_run</code> 的预览，不是失败；其余字段由各命令定义，例如 <code>changes</code>、<code>moved</code>、<code>created_ids</code>、<code>warning</code>、<code>missing</code>。</p>
+<p>外层信封由 <code>/execute</code> 或 <code>squirrel_execute_command</code> 统一包装：</p>
+<pre><code class="language-json">{"status": "ok", "result": {"status": "ok"}, "error": null}</code></pre>
+<p>命令内层的 <code>status=&quot;error&quot;</code> 会被提升为外层错误，因此只有外层 <code>ok</code> 才代表真正成功。单次响应上限为 262144 字节；超限时返回 <code>truncated: true</code>、<code>original_bytes</code> 与 <code>content_prefix</code>，此时应改用更精确的查询（加 <code>limit</code>、指定字段或分批）。</p>
+<blockquote><p><strong>提示</strong>：参数名不要猜。同名字段在不同命令里可能含义不同，以清单中的 <code>params_schema</code> 为唯一依据。</p></blockquote>

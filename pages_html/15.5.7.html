@@ -1,0 +1,28 @@
+<blockquote><p>一句话定位：<strong>在资产网格里右键一张 HDR 资产卡片时，弹出的就是这个菜单。</strong> HDR 是环境光照（IBL）用的贴图，所以菜单里没有「导入几何体」，只有「导入 HDR」「建环境光」「指定给灯」三类。</p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>左侧「分类」页签 → 点「HDR」或它下面的任一分类；</li>
+<li>中间资产网格里<strong>右键任意 HDR 卡片</strong>。</li>
+</ol>
+<p><img src="media/shared/menu-sublib-hdr.webp" alt="HDR 资产右键菜单" loading="lazy" decoding="async"></p>
+<h2 id="h-2">菜单从上到下的顺序</h2>
+<table><thead><tr><th>段</th><th>条目</th></tr></thead><tbody><tr><td>① 子库专属</td><td>导入 hdr（.exr 资产显示「导入 exr」）、创建环境光 ▶、指定贴图、打开图像</td></tr><tr><td>② 收藏与选择</td><td>添加到收藏夹 ▶、全选、复制、打开文件夹</td></tr><tr><td>③ 整理</td><td>移动到 ▶、复制到 ▶</td></tr><tr><td>④ 维护</td><td>编辑、更新缩略图 ▶、更新资产 ▶、删除 ▶</td></tr><tr><td>⑤ 查看与 AI</td><td>AI 分析缩略图</td></tr><tr><td>⑥ 最后一条</td><td>资产详情</td></tr></tbody></table>
+<p>HDR 菜单里<strong>没有</strong>「后台渲染」（更新缩略图只有 6 项）、<strong>没有</strong>「格式转换」、<strong>没有</strong>「预览节点」——HDR 资产里没有几何体也没有节点文件。</p>
+<h2 id="h-3">菜单逐项详解</h2>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>导入 hdr</td><td>把 HDR 贴图导进场景（建 file 节点，不建灯）</td><td>Maya 已连接；资产里有 .hdr / .exr</td><td>场景里多一个 HDR 贴图的 file 节点</td><td>只导贴图，灯要另外建；想要现成的灯用「创建环境光」</td></tr><tr><td>创建环境光 ▶</td><td>建一盏穹顶灯并接上这个 HDR</td><td>本机插件里有穹顶灯预设模板</td><td>子菜单选渲染器模板（见下节），场景里建出对应的穹顶灯，HDR 已接好</td><td>会新建灯；原来场景里的灯不动</td></tr><tr><td>指定贴图</td><td>把 HDR 贴到场景中<strong>已选中的穹顶灯</strong>上</td><td>场景里选中了穹顶灯</td><td>选中灯的贴图属性被指向该 HDR</td><td>不新建灯；没选中穹顶灯就点会提示失败</td></tr><tr><td>打开图像</td><td>用内置图像浏览器看这张 HDR</td><td>资产里有图片文件</td><td>打开图像浏览器窗口</td><td>窗口复用，不会堆出一屏窗口</td></tr><tr><td>添加到收藏夹 ▶</td><td>把资产加入收藏夹</td><td>资产库已加载</td><td>子菜单列「默认收藏夹」+ 你自建的收藏夹；点一下加入、再点一下移出</td><td>多选时对全部选中的资产生效</td></tr><tr><td>全选</td><td>选中网格里当前可见的全部卡片</td><td>有卡片</td><td>全部高亮</td><td>只选当前筛选 / 搜索结果</td></tr><tr><td>复制</td><td>把资产放进剪贴板</td><td>无</td><td>内部剪贴板记录资产，同时把资产文件夹写进系统剪贴板</td><td>真正复制一份要再到目标分类空白处「粘贴」</td></tr><tr><td>打开文件夹</td><td>打开资产在磁盘上的位置</td><td>资产是 .zasset 目录</td><td>文件管理器定位到资产文件夹</td><td>只打开，不改内容</td></tr><tr><td>移动到 ▶</td><td>把资产移到别的分类</td><td>资产库已加载</td><td>级联选目标分类，资产从当前分类消失</td><td>见 <a href="#/15.5.15"><code>8.5.15</code></a></td></tr><tr><td>复制到 ▶</td><td>把资产复制一份到别的分类</td><td>资产库已加载</td><td>目标分类多出同一资产</td><td>占双份磁盘空间</td></tr><tr><td>编辑</td><td>改中文名、分类、标签、注释</td><td>无</td><td>弹「编辑资产」对话框</td><td>见 <a href="#/15.5.16"><code>8.5.16</code></a></td></tr><tr><td>更新缩略图 ▶</td><td>换掉或新增缩略图</td><td>无</td><td>子菜单 6 项：截取 / 导入 / Maya拍屏 / 渲染图 / 添加 / 截取添加</td><td>HDR 没有「后台渲染」</td></tr><tr><td>更新资产 ▶</td><td>把资产内容换成 / 扩成新的</td><td>「替换资产」等需要场景里有选中物体</td><td>替换资产 / 追加格式 / 追加为 LOD / 创建新版本 / 添加新变体… / 批量添加变体… / 变体管理…</td><td>都会写磁盘，先看清目标资产</td></tr><tr><td>删除 ▶</td><td>删掉这个资产</td><td>无</td><td>子菜单：移到回收站 / 彻底删除</td><td>「彻底删除」不可还原</td></tr><tr><td>AI 分析缩略图</td><td>让 AI 读缩略图给建议</td><td>AI 依赖已装好</td><td>打开 AI 分析窗口，确认后写回资产</td><td>见 <a href="#/15.5.17"><code>8.5.17</code></a></td></tr><tr><td>资产详情</td><td>单独看这个资产的详情</td><td>无</td><td>有版本 / 变体打开版本浏览器，否则打开资产观察窗口</td><td>与双击右侧预览图同一条链路</td></tr></tbody></table>
+<h2 id="h-4">子菜单：创建环境光 ▶</h2>
+<p>样本资产上出现 3 种模板，对应三家渲染器的穹顶灯：</p>
+<table><thead><tr><th>子项</th><th>说明</th></tr></thead><tbody><tr><td>VRayLightDome</td><td>V-Ray 的穹顶灯</td></tr><tr><td>aiSkyDomeLight</td><td>Arnold 的天空穹顶灯</td></tr><tr><td>rsDomeLight</td><td>Redshift 的穹顶灯</td></tr></tbody></table>
+<p>这些模板来自插件自带的穹顶灯预设目录；预设目录里有哪些 <code>.ma</code> 模板，子菜单就会出现哪几项。想用哪个渲染器打环境光，就选它对应的那一项。</p>
+<h2 id="h-5">这个子库特有的注意点</h2>
+<ul>
+<li><strong>「创建环境光」和「指定贴图」是一对</strong>：前者「建灯 + 接图」，后者「只把图接到你已经有的灯上」。场景里已经有一盏穹顶灯、只想换环境图，就用「指定贴图」。</li>
+<li><strong>选了哪家渲染器的灯，就要装哪家插件</strong>：模板建不建得出来，取决于对应渲染器插件是否已加载。</li>
+<li><strong>HDR 没有「导入几何体 / 格式转换 / 预览节点」</strong>：这不是漏了，HDR 资产里没有这些内容。</li>
+</ul>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>公共条目详解：<a href="#/15.5.13"><code>8.5.13</code></a>、<a href="#/15.5.14"><code>8.5.14</code></a>、<a href="#/15.5.15"><code>8.5.15</code></a>、<a href="#/15.5.16"><code>8.5.16</code></a>、<a href="#/15.5.17"><code>8.5.17</code></a></li>
+<li>导入 HDR 与穹顶灯：<a href="#/5.3.6"><code>4.2.3.6</code></a>；创建穹顶灯：<a href="#/5.5.8"><code>4.2.5.8</code></a>；HDR 连接：<a href="#/7.4.5"><code>4.4.4.5</code></a></li>
+<li>子库差异总表：<a href="#/15.5.1"><code>8.5.1</code></a></li>
+</ul>

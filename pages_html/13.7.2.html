@@ -1,0 +1,28 @@
+<p>崩溃后按「体检 → 清卡死或点掉模态框 → 拉起并自证」三步走，不要反复重开或直接杀进程。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>Maya 突然消失、白屏或长时间未响应。</li>
+<li>工具报告断连，重开 Maya 后仍然连不上。</li>
+<li>新 Maya 启动后客户端报「端口被占用」或「连接被拒」。</li>
+<li>崩溃前的未保存场景找不到了。</li>
+</ul>
+<h2 id="h-2">可能原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>Maya 进程已经崩溃</td><td>进程消失，<code>%TEMP%</code> 有新的崩溃转储</td><td>按三步恢复</td></tr><tr><td>主线程卡死</td><td>进程在、端口监听但不应答</td><td>确认后清理卡死实例</td></tr><tr><td>模态对话框挡住</td><td>Maya 窗口有恢复/报错/未保存提示</td><td>先点掉对话框</td></tr><tr><td>旧实例占着默认端口</td><td>新实例退到 7110–7129</td><td>扫描备用段并连实际端口</td></tr><tr><td>渲染器或插件带崩 Maya</td><td>事件日志指向渲染器 DLL</td><td>见 6.7.3「渲染器崩溃」</td></tr><tr><td>未保存场景丢失</td><td>自动保存目录为空或未开启</td><td>见 6.7.4「自动保存与恢复」</td></tr></tbody></table>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>体检：运行 <code>python maya_bridge.py --doctor</code>。它只报告谁在线、谁卡死、谁该清。</li>
+<li>先看 Maya 窗口，如果有模态对话框就点掉，再跑一次 <code>--doctor</code>；确认是卡死而不是对话框后，运行 <code>python maya_bridge.py --doctor --kill-hung</code>。</li>
+<li>拉起：运行 <code>python maya_bridge.py --doctor --launch</code>，它会等待 Maya 真正能应答，而不是只看进程是否启动。</li>
+<li>收尾确认：运行 <code>python maya_bridge.py --ping</code> 或 <code>--scan</code>，确认版本、场景与实际端口。</li>
+<li>需要重投任务时，只对幂等或只读任务使用 <code>--retry-if-crashed</code>；任务文件里写了 <code>SQ_DESTRUCTIVE = True</code> 时程序会拒绝自动重投。</li>
+<li>恢复未保存内容时，查看自动保存目录与 <code>%TEMP%\squirrel_pre_render\</code>，先复制出来再打开。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p><code>--doctor</code> 报出可用的 <code>healthy_port</code>，<code>--ping</code> 返回 Maya 版本与当前场景，新任务能正常执行。</p>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>不要连续重开多个 Maya，先确认旧实例是否还占着端口。</li>
+<li>查看 <code>~\.squirrel_asset_manager\bridge_port.log</code> 与 <code>bridge_recover.log</code>，确认端口变化和自愈记录。</li>
+<li>崩溃取证看 Windows 事件日志（模块名 + 偏移）和 <code>%TEMP%\MayaCrashLog*.dmp</code>。</li>
+<li>破坏性任务绝不因为一次断连就重跑；先查迟到结果和作业历史。</li>
+</ul>

@@ -1,0 +1,27 @@
+<blockquote><p>一句话定位：<strong>左侧这一竖栏是「你去哪个库、哪一类、哪个文件夹看资产」的总开关 —— 三个页签对应三套入口，下面是分类树和回收站。</strong></p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<p>它一直在窗口左边，不需要「打开」。如果整栏不见了，先看是不是被<strong>收起成了窄图标条</strong>（工具栏最左边那颗折页按钮，见 <a href="#/15.2.2"><code>8.2.2</code></a>）。</p>
+<p><img src="media/15.3.1-1.webp" alt="左侧导航：标题条「导航」、分类 / 项目 / 收藏三个页签、资产库下拉与分类树；左下角是回收站入口" loading="lazy" decoding="async"></p>
+<h2 id="h-2">这一栏从上到下有什么</h2>
+<table><thead><tr><th>位置</th><th>控件</th><th>作用</th><th>详见</th></tr></thead><tbody><tr><td>标题条</td><td>「导航」+ 折页按钮</td><td>显示这一块的名字；折页按钮把整栏收起 / 展开成窄图标条</td><td><a href="#/15.2.2"><code>8.2.2</code></a></td></tr><tr><td>页签行</td><td>分类 / 项目 / 收藏</td><td>三套入口：主资产库、当前工程的库、收藏夹</td><td>本页</td></tr><tr><td>「分类」页签顶部</td><td>资产库下拉</td><td>在多个主资产库之间切换</td><td><a href="#/15.3.2"><code>8.3.2</code></a></td></tr><tr><td>「分类」页签主体</td><td>分类树</td><td>全部资产 / 各子库 / 分类 / 子分类 / 脚本，决定网格显示哪些资产</td><td><a href="#/15.3.3"><code>8.3.3</code></a></td></tr><tr><td>分类树左下角</td><td>回收站（带数量）</td><td>打开回收站视图，还原或彻底删除已删资产</td><td><a href="#/15.8.3"><code>8.8.3</code></a></td></tr><tr><td>「项目」页签</td><td>创建 / 刷新 + 项目库分类树</td><td>管理跟着当前 Maya 工程走的项目库</td><td><a href="#/15.3.5"><code>8.3.5</code></a></td></tr><tr><td>「收藏」页签</td><td>收藏夹列表 + 「+」</td><td>按收藏夹查看自己标记的资产</td><td><a href="#/15.3.6"><code>8.3.6</code></a></td></tr></tbody></table>
+<h2 id="h-3">三个页签分别是什么</h2>
+<table><thead><tr><th>页签</th><th>库是什么</th><th>切换后中间网格显示</th><th>适合</th></tr></thead><tbody><tr><td>分类</td><td><strong>主资产库</strong>（全局复用的库，可配置多个）</td><td>当前主资产库里选中的分类</td><td>日常找素材、导入导出资产</td></tr><tr><td>项目</td><td><strong>项目库</strong>：当前 Maya 工程目录下的 <code>SquirrelLib</code> 文件夹</td><td>项目库里的分类</td><td>只属于这个工程的资产，随工程走</td></tr><tr><td>收藏</td><td>收藏夹（<strong>按库分别存储</strong>，主库的收藏与项目库的收藏互不相通）</td><td>选中收藏夹内的资产</td><td>把常用资产单独收一撮</td></tr></tbody></table>
+<p>页签行右边是整栏的收起 / 展开入口（在工具栏最左边，见 <a href="#/15.2.2"><code>8.2.2</code></a>）；收起后只剩一列图标（三个页签 + 顶级分类图标），功能都在。</p>
+<h2 id="h-4">单击、右键分别在哪一页讲</h2>
+<ul>
+<li><strong>单击</strong>任何一个页签 / 节点 → 中间网格跟着换内容，行为规则见 <a href="#/15.3.3"><code>8.3.3</code></a>。</li>
+<li><strong>右键</strong>分类树节点 → 不同节点弹出的菜单不一样，见 <a href="#/15.3.4.1"><code>8.3.4.1</code></a> ~ <a href="#/15.3.4.4"><code>8.3.4.4</code></a>。</li>
+<li>右键<strong>收藏夹</strong> → 收藏夹的增删改，见 <a href="#/15.3.6"><code>8.3.6</code></a>。</li>
+</ul>
+<h2 id="h-5">小白易错点</h2>
+<ul>
+<li><strong>左边整栏消失了</strong>：99% 是被收起了。点工具栏最左边的折页按钮；还不行就用「面板与布局 → 重置布局」（<a href="#/15.2.5"><code>8.2.5</code></a>）。</li>
+<li><strong>切了页签，资产好像少了</strong>：不同页签对应不同的库 / 收藏夹，内容本来就不一样，不是资产丢了。</li>
+<li><strong>在「收藏」页签里改了分类，回到「分类」页签发现没变</strong>：两个页签操作的是不同的库，看清当前页签再操作。</li>
+<li><strong>回收站不在树里</strong>：它是分类树左下角的一个独立入口按钮，不是分类节点。</li>
+</ul>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>左侧导航的完整使用教程见 <a href="#/4.2"><code>4.1.2</code></a>。</li>
+<li>分类树各节点的单击行为见 <a href="#/15.3.3"><code>8.3.3</code></a>。</li>
+</ul>

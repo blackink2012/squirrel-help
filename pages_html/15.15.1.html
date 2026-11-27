@@ -1,0 +1,47 @@
+<blockquote><p>一句话定位：<strong>插件自己的离线帮助站 —— 点工具栏最右边的「使用帮助」，浏览器会打开一个本地网页；左边目录、上面搜索、右边本页导航。</strong></p></blockquote>
+<p>它是<strong>本地网页</strong>，不是联网文档：插件在本机起一个小 HTTP 服务（<code>127.0.0.1</code> 的 8790–8799 端口段），再用系统浏览器打开。所以断网也能用，速度也快。搜索除了关键词，还会走本机的语义检索（装了 AI 依赖时）。</p>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>顶部工具栏<strong>最右侧的「使用帮助」按钮</strong>（图标按钮，提示文字是「使用帮助」）；</li>
+<li>浏览器自动打开帮助首页，地址形如 <code>http://127.0.0.1:8793/</code>（端口可能不同）。</li>
+</ol>
+<p>补充说明：</p>
+<ul>
+<li>同一个插件进程里重复点，会<strong>复用</strong>已经起好的服务（不会每次换端口）。</li>
+<li>如果浏览器没弹出来，去看 Maya 脚本编辑器里的 <code>[Help] 已打开帮助中心: &lt;url&gt;</code>，把那个 URL 手动粘到浏览器。</li>
+<li>帮助服务起不来时，会<strong>回退到旧帮助页</strong>（<code>Assets/help/help.html</code>），功能会少一些。</li>
+</ul>
+<h2 id="h-2">界面分区</h2>
+<p><img src="media/shared/help-search.webp" alt="帮助中心与搜索" loading="lazy" decoding="async"></p>
+<table><thead><tr><th>区域</th><th>里面有什么</th><th>怎么用</th></tr></thead><tbody><tr><td>顶部栏</td><td>左侧目录开关（☰）、站名「松鼠资产管家帮助」、<strong>搜索框</strong>（占位「搜索功能、设置、命令…」）、右侧版本号</td><td>搜索框是主要入口</td></tr><tr><td>左侧「目录」</td><td>全书章节树，可逐级展开 / 收起</td><td>展开状态会被记住，下次打开还原</td></tr><tr><td>中间正文</td><td>标题、面包屑、正文；正文底部有「此页是否有帮助？」</td><td>读正文</td></tr><tr><td>右侧「本页内容」</td><td>当前页的 h2 / h3 标题列表</td><td>点标题跳转；滚动时会自动高亮当前所在小节</td></tr><tr><td>正文上方「面包屑」</td><td>帮助主页 / 章 / 节 / 当前页</td><td>点任意一级回到上层</td></tr><tr><td>正文底部「上一篇 / 下一篇」</td><td>按目录顺序翻页</td><td>顺读时用它</td></tr><tr><td>首页卡片</td><td>「新特性 / 5 分钟上手 / 界面概述 / 常用工作流 / 快捷键 / 命令参考 / 常见问题 / 支持与反馈」</td><td>不知道从哪看时点卡片</td></tr><tr><td>首页「最近访问」</td><td>你最近看过的页面（最多 8 条）</td><td>接着上次看</td></tr></tbody></table>
+<h2 id="h-3">搜索怎么用</h2>
+<table><thead><tr><th>操作</th><th>效果</th></tr></thead><tbody><tr><td>在顶部搜索框打字</td><td>每敲一下就会过滤一次（很短的去抖）；先出<strong>本地词法</strong>结果，随后用语义结果替换/合并</td></tr><tr><td>↑ / ↓</td><td>在结果列表里上下选择</td></tr><tr><td>Enter</td><td>打开当前选中的结果</td></tr><tr><td>Esc</td><td>关掉结果下拉、光标离开搜索框</td></tr><tr><td>点结果</td><td>跳到那一页</td></tr></tbody></table>
+<p>结果条目长这样，一眼能判断要不要点：</p>
+<table><thead><tr><th>元素</th><th>含义</th></tr></thead><tbody><tr><td>标题</td><td>命中的页面标题</td></tr><tr><td>类型徽章</td><td>页面 / 概念 / 参考 / 排错 / 命令</td></tr><tr><td>路径行</td><td>它在书里的位置（章 / 节）</td></tr><tr><td>片段</td><td>命中词附近的原文，命中词高亮</td></tr><tr><td>顶部模式说明</td><td>「语义 + 词法」= 两路都用了；「词法检索」= 只有关键词；「词法检索 · 语义暂不可用」= 语义检索没生效</td></tr></tbody></table>
+<h2 id="h-4">深链：直接打开某一页</h2>
+<p>地址栏里 <code>#/</code> 后面就是页面 ID，所以可以：</p>
+<ul>
+<li><code>http://127.0.0.1:8793/#/15.14.9</code> —— 直接打开「材质转换工具」；</li>
+<li><code>http://127.0.0.1:8793/#/15.16.2</code> —— 直接打开菜单项总索引；</li>
+<li><code>http://127.0.0.1:8793/#/12.1.1?cmd=hdr_to_zasset</code> —— 打开命令参考页并<strong>高亮</strong>那条命令（<code>cmd=</code> 后面是命令 id）。</li>
+</ul>
+<p>页面 ID 就是每页 frontmatter 里的 <code>id</code>，本词典里每页标题下都能对上。插件内部也支持 <code>open_help_center(&quot;8.14.9&quot;)</code> 这种带 ID 的调用，效果同深链。</p>
+<h2 id="h-5">搜不到怎么办（关键词技巧）</h2>
+<ol>
+<li><strong>先说人话，再说术语。</strong> 搜索会做同义词扩展，很多口语说法已经被收录（例如「字太小」「界面放大」「模型导入」「材质导入」「贴图丢失」「崩溃」「卡死」「搜不到」「搜不准」「快捷键」「语义搜索」）。先用你平时怎么说就怎么写。</li>
+<li><strong>用界面上的原文。</strong> 帮助里的标题和正文基本照抄界面文字，所以直接搜按钮名 / 菜单名（「快捷工具」「编辑标签」「更新缩略图」「授权管理」）命中率最高。</li>
+<li><strong>缩短关键词。</strong> 长句子会分词后要求同时满足，容易一条都不中。把 &quot;怎么把HDR环境贴图批量转成资产&quot; 缩成 &quot;HDR 转资产&quot; 或 &quot;HDR&quot;。</li>
+<li><strong>换同义词 / 中英互换。</strong> 例如 <code>zmetal</code>、<code>mmap</code>、<code>mcp</code>、<code>dsh</code> 这类专有名词直接搜；反过来搜中文名（「材质转换」「外部 AI 工具」）。</li>
+<li><strong>看模式说明。</strong> 如果一直显示「词法检索 · 语义暂不可用」，说明语义检索没生效（嵌入依赖 / 索引缺失），这时只能靠关键词；修法见 <a href="#/13.5.1"><code>6.5.1</code></a>。</li>
+<li><strong>搜不到就用目录和索引兜底。</strong> 按章翻左侧目录，或直接看 <a href="#/15.16.1"><code>8.16.1</code></a>（按任务找菜单）、<a href="#/15.16.2"><code>8.16.2</code></a>（菜单项总索引）。</li>
+<li><strong>页面加载失败</strong>（提示「页面加载失败」/「请在项目根执行 python tools/build_help.py」）说明帮助数据没生成或过期，需要重新构建帮助（开发向操作，普通用户重装 / 更新插件即可）。</li>
+</ol>
+<h2 id="h-6">常见问题</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>处理</th></tr></thead><tbody><tr><td>点「使用帮助」没反应</td><td>浏览器没被唤起，或服务没起来</td><td>去 Maya 脚本编辑器看 <code>[Help]</code> 那行 URL，手动打开；仍不行说明回退旧帮助页了</td></tr><tr><td>打开是旧版帮助</td><td>新帮助服务起不来，回退了 <code>help.html</code></td><td>重启插件再试；持续这样就把插件日志发给支持</td></tr><tr><td>搜索一直「正在搜索…」</td><td>语义检索在等模型 / 结果迟迟不回</td><td>等几秒；一直这样就看模式说明是否已退化</td></tr><tr><td>结果里没有刚更新的页面</td><td>帮助数据是构建时生成的，插件内的帮助不热更新</td><td>用与插件版本匹配的帮助页</td></tr></tbody></table>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>「使用帮助」按钮在工具栏里的位置：<a href="#/15.2.4"><code>8.2.4</code></a></li>
+<li>这本词典怎么组织、怎么读：<a href="#/15.1.1"><code>8.1.1</code></a></li>
+<li>语义检索不可用怎么修：<a href="#/13.5.1"><code>6.5.1</code></a></li>
+<li>按任务找菜单：<a href="#/15.16.1"><code>8.16.1</code></a></li>
+</ul>

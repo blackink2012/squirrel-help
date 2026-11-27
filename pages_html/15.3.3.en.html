@@ -1,0 +1,30 @@
+<blockquote><p>One-line summary: <strong>the category tree is the asset library&#x27;s &quot;file manager&quot; — nodes come in several types, and clicking one only filters the central assets without changing them.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<p>Left navigation → <strong>Category</strong> tab → the tree in the body. It is always shown and needs no opening; when the library dropdown changes libraries, the tree switches to that library&#x27;s categories.</p>
+<p><img src="media_en/15.3.3-1.webp" alt="Category tree: node types and click behavior" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Node types at a glance</h2>
+<table><thead><tr><th>Node</th><th>Appearance</th><th>What it represents</th><th>What the grid shows after a click</th></tr></thead><tbody><tr><td>All assets</td><td>Top row, with a total count after the name</td><td>Every asset across all sub-libraries (not limited by sub-library categories)</td><td>All assets of the current library</td></tr><tr><td>Sub-library root</td><td>Second level, with a colored icon (materials / models / lights / textures / scenes / HDR / animation / images / audio / animation data / node tree)</td><td>One asset type</td><td>All assets of that sub-library (including every category below it)</td></tr><tr><td>Category</td><td>One level under a sub-library root, folder-like</td><td>A folder you created</td><td>Assets in that category and <strong>all its sub-categories</strong></td></tr><tr><td>Sub-category</td><td>Deeper levels, nestable</td><td>A finer folder</td><td>Same as above, rooted at that node</td></tr><tr><td>Custom category</td><td>Auto-created by the plug-in in some sub-libraries</td><td>Catch-all for assets that belong to no specific category</td><td>Same as a normal category; <strong>cannot be deleted</strong></td></tr><tr><td>Scripts</td><td>Last row of the tree, code icon</td><td><strong>Not a disk category</strong> but the entry to the script browser</td><td>The main area switches to the script browser (not the asset grid)</td></tr><tr><td>Recycle bin</td><td>A separate button at the bottom left of the tree (not inside it)</td><td>Deleted assets / categories</td><td>The main area switches to the recycle bin view</td></tr></tbody></table>
+<p>The <code>(N)</code> after a node name is the number of assets it contains; no number means zero. Icon colors differ per sub-library so materials (pink), models (blue) and the rest are recognizable at a glance.</p>
+<h2 id="h-3">What single-click, double-click and the arrow do</h2>
+<table><thead><tr><th>Action</th><th>Effect</th></tr></thead><tbody><tr><td>Single-click the node name</td><td><strong>Selects and filters</strong>: the grid shows only assets in that node and all its sub-categories</td></tr><tr><td>Single-click the arrow in front of a node</td><td>Only <strong>expands / collapses</strong> that level without changing the current filter</td></tr><tr><td>Double-click the node name (when it has children)</td><td>Expands / collapses that level (the special case is <strong>All assets</strong>: it expands or collapses every sub-library)</td></tr><tr><td>Ctrl + click</td><td>Adds / removes categories; the grid shows the <strong>union of several categories</strong></td></tr><tr><td>Shift + click</td><td>Selects a contiguous range of categories</td></tr><tr><td>Double-click <strong>All assets</strong></td><td>Expands / collapses all sub-libraries together and also switches to the All assets view</td></tr></tbody></table>
+<h2 id="h-4">Rules to keep in mind</h2>
+<ul>
+<li><strong>Clicking a category never changes assets</strong>: a category is only a filter view and an asset&#x27;s home is decided by its folder. To move an asset between categories use <strong>Move to</strong>, see <a href="#/en/15.5.15"><code>8.5.15</code></a>.</li>
+<li><strong>Multi-select shows a union</strong>: with Materials + Models selected the grid shows both; to return to one category, single-click a node normally.</li>
+<li><strong>The Scripts node cannot be multi-selected with asset categories</strong>: it is an entry for a whole different view (it switches the main area away), so Ctrl-clicking it keeps only itself.</li>
+<li><strong>Some sub-libraries are missing</strong>: the top-level category may be hidden in settings, see <a href="#/en/4.2.4"><code>4.1.2.4</code></a>.</li>
+</ul>
+<h2 id="h-5">Where the context menus are documented</h2>
+<p>In the same tree, right-clicking different nodes opens different menus, documented by node type across four pages:</p>
+<table><thead><tr><th>Right-click location</th><th>Page</th></tr></thead><tbody><tr><td>The <strong>All assets</strong> node / blank space in the tree</td><td><a href="#/en/15.3.4.1"><code>8.3.4.1</code></a></td></tr><tr><td>A sub-library root node (materials / models / lights…)</td><td><a href="#/en/15.3.4.2"><code>8.3.4.2</code></a></td></tr><tr><td>A category / sub-category node</td><td><a href="#/en/15.3.4.3"><code>8.3.4.3</code></a></td></tr><tr><td>The Scripts node and the recycle bin entry</td><td><a href="#/en/15.3.4.4"><code>8.3.4.4</code></a></td></tr></tbody></table>
+<h2 id="h-6">Beginner pitfalls</h2>
+<ul>
+<li><strong>The asset count did not change after clicking a category</strong>: that category may have no assets of its own and the count shows those in sub-categories; try another node.</li>
+<li><strong>Double-click did not expand but changed the filter</strong>: the double-click window is fairly wide (about 800 ms), so two slow clicks count as two single clicks; the arrow in front is the safest.</li>
+<li><strong>The tree is blank / only shows &quot;All assets&quot;</strong>: the library is still loading or its path is invalid; check that the dropdown points at a valid library, see <a href="#/en/15.3.2"><code>8.3.2</code></a>.</li>
+</ul>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>The complete tutorial for the category tree: <a href="#/en/4.2.1"><code>4.1.2.1</code></a>.</li>
+<li>Navigation area overview: <a href="#/en/15.3.1"><code>8.3.1</code></a>.</li>
+</ul>

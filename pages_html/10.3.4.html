@@ -1,0 +1,23 @@
+<p>创建穹顶灯会按当前渲染器建出对应的穹顶灯节点，并把 HDR 贴图接到灯上，用作环境照明。</p>
+<p><img src="media/shared/menu-context-dome-light.webp" alt="HDR 资产右键 →「创建环境光」" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>Maya 在线，当前渲染器已确定。</li>
+<li>使用预设时，插件目录 <code>Assets/HDR_ligt</code> 下存在对应的 <code>.ma</code> 预设。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在资产库右键点击 HDR 资产，展开「创建环境光」子菜单。</li>
+<li>子菜单列出 <code>Assets/HDR_ligt</code> 下的预设名；在 Maya 内运行时按该预设导入并替换 HDR 路径，独立运行版则经命令通道用内置模板建灯并连接所选 HDR。</li>
+<li>也可调用 <code>create_dome_light</code>；传 <code>hdr_path</code> 指定贴图，留空时使用内置默认 IBL。</li>
+<li>灯建好后，如需换 HDR 或把另一张 HDR 接到已有穹顶灯，用「指定贴图」的 HDR 分支。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>返回 <code>status=ok</code> 并给出 <code>node</code>；Outliner 中出现对应渲染器的穹顶灯节点（Arnold 为 <code>aiSkyDomeLight</code>，Redshift 为 <code>RedshiftDomeLight</code>，V-Ray 为 <code>VRayLightDomeShape</code>），灯光的贴图路径指向所选 HDR。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>穹顶灯节点类型随渲染器变化，切换渲染器后需要重新确认灯的属性与贴图接线。</li>
+<li>当前渲染器没有可用模板时，命令会返回「创建失败（渲染器不支持或 Maya 未就绪）」。</li>
+<li>灯光属性通常在 shape 上；在 Attribute Editor 里展开 shape 再核对。</li>
+<li>不传 <code>hdr_path</code> 时使用内置默认 IBL；建好后要换贴图，用「指定贴图」的 HDR 分支。</li>
+</ul>

@@ -1,0 +1,26 @@
+<p>When checked, caches, proxies, references and volume files already attached in the scene are copied into the asset&#x27;s <code>deps/</code> directory, so they travel with the package when the asset is delivered.</p>
+<p><img src="media_en/shared/dialog-export-right.webp" alt="Right side of the export dialog: linked file and proxy options" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The selected objects carry file-based nodes, such as Alembic, gpuCache, nCache, various proxies or Maya references.</li>
+<li>Those files really exist on disk; files with broken paths cannot be copied.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>In the right column&#x27;s <code>「收集关联文件」 (Collect linked files)</code> section check <code>收集场景中已挂载的缓存/代理/引用文件</code> (collect caches / proxies / references attached in the scene).</li>
+<li>Keep <code>贴图 textures/ (textures)</code> when material textures are needed. Textures go into <code>textures/</code>, not <code>deps/</code>.</li>
+<li>Check the other formats as needed and click <code>「创建资产」 (Create asset)</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li><code>.zasset/deps/</code> gains sub-directories by type: <code>caches/</code>, <code>proxies/</code>, <code>references/</code>, <code>volumes/</code>, <code>textures/</code>, <code>audio/</code>, <code>movies/</code>, <code>imageplanes/</code>, <code>others/</code>.</li>
+<li>The dependency list is visible in <code>meta.json</code>; when everything was found <code>dependencies_missing</code> is empty.</li>
+<li>The export result or log reports how many were collected, missing and out of scope.</li>
+</ul>
+<h2 id="h-4">Main supported nodes</h2>
+<table><thead><tr><th>Category</th><th>Example nodes</th><th>Common formats</th></tr></thead><tbody><tr><td><code>caches</code></td><td><code>AlembicNode</code>, <code>gpuCache</code>, <code>cacheFile</code>, <code>geometryCache</code>, XGen, Yeti</td><td><code>.abc</code>, <code>.mc</code>, <code>.xml</code>, <code>.bif</code></td></tr><tr><td><code>proxies</code></td><td><code>aiStandIn</code>, <code>VRayProxy</code>, <code>VRayMesh</code>, <code>VRayScene</code>, <code>RedshiftProxyMesh</code>, <code>mayaUsdProxyShape</code></td><td><code>.ass</code>, <code>.vrmesh</code>, <code>.vrscene</code>, <code>.rs</code>, <code>.usd</code></td></tr><tr><td><code>volumes</code></td><td><code>aiVolume</code>, <code>VRayVolumeGrid</code>, <code>RedshiftVolumeShape</code></td><td><code>.vdb</code>, <code>.vol</code></td></tr><tr><td><code>references</code></td><td>Maya reference nodes</td><td><code>.ma</code>, <code>.mb</code></td></tr><tr><td><code>textures</code></td><td><code>file</code>, <code>aiImage</code> and others</td><td><code>.png</code>, <code>.exr</code>, <code>.tx</code> and others</td></tr></tbody></table>
+<h2 id="h-5">Tips and warnings</h2>
+<blockquote><p><strong>Tip</strong>: scanning always runs; even with collection unchecked, missing and out-of-scope dependencies are recorded in <code>meta.json</code> and reported in the log. The checkbox only decides whether they are copied to disk.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: frame sequences containing <code>#</code>, <code>####</code>, <code>&lt;f&gt;</code> or <code>&lt;UDIM&gt;</code> are expanded into actual files; same-named files from different directories get a short hash appended so they do not overwrite each other.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: files already copied into <code>textures/</code> as textures are not stored a second time under <code>deps/</code>.</p></blockquote>
+<blockquote><p><strong>Warning</strong>: out-of-scope dependencies (for example shared libraries on a system or network location) are not copied and are only recorded in <code>dependencies_out_of_scope</code>; confirm before delivery that the recipient&#x27;s environment can reach them.</p></blockquote>

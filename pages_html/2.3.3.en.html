@@ -1,0 +1,33 @@
+<p>When no library is configured, the plug-in creates <code>SquirrelLib</code> automatically; you can also add an existing directory or create a new empty library.</p>
+<p><img src="media_en/shared/settings-sublibraries.webp" alt="Settings → Sub-libraries and categories: check the top-level categories to show in the main UI" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Automatic initialization</h2>
+<p>The first time the main window opens without a configured library, <code>SquirrelLib</code> is created in the user directory. Loading that library completes the directories for all 11 built-in sub-libraries and creates the default sub-categories plus a <code>「自定义」 (Custom)</code> category. <code>library.json</code> and <code>favorites.json</code> are written to the library root.</p>
+<h2 id="h-2">Adding or creating a library</h2>
+<ol>
+<li>Open <code>Settings → General</code>.</li>
+<li>In the <code>「资产库管理」 (Asset library management)</code> group, click <code>「添加资产库」 (Add asset library)</code> and pick an existing directory.</li>
+<li>Or click <code>「创建资产库」 (Create asset library)</code> and choose a new directory.</li>
+<li>With a library selected you can click <code>「设为默认」 (Set as default)</code> so it loads first next time.</li>
+<li>Click <code>「确定」 (OK)</code> to save; the category tree in the main window refreshes.</li>
+</ol>
+<h2 id="h-3">What the directories look like after completion</h2>
+<ul>
+<li><strong>The <code>「创建资产库」 (Create asset library)</code> button creates only 6 base directories</strong>: <code>materials</code>, <code>models</code>, <code>lights</code>, <code>textures</code>, <code>scenes</code>, <code>hdr</code>.</li>
+<li><strong>Loading or switching to that library completes all 11 built-in sub-libraries</strong>: <code>materials</code>, <code>models</code>, <code>lights</code>, <code>textures</code>, <code>scenes</code>, <code>hdr</code>, <code>ani</code>, <code>images</code>, <code>audio</code>, <code>animation</code>, <code>nodetree</code> — in other words, the remaining five (dynamics, images, audio, animation data, node trees) appear the first time the library is loaded.</li>
+<li>On first run (when the library root has no <code>library.json</code>), or when a sub-library has no sub-categories, sub-category folders are created from the default configuration.</li>
+<li>Every sub-library root also gets an <code>AAAcustom</code> (custom) sub-category so assets always have a place to go.</li>
+<li>Top-level categories cannot hold assets directly; assets belong in their sub-categories.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The category tree on the left shows 11 built-in sub-libraries, and expanding them reveals the default categories and <code>「自定义」 (Custom)</code>.</li>
+<li><code>library.json</code>, <code>favorites.json</code> and the sub-library directories appear in the library root.</li>
+<li>The library is listed in <code>library_paths</code> in <code>~/.squirrel_asset_manager/app_settings.json</code>.</li>
+</ul>
+<h2 id="h-5">Common failures</h2>
+<ul>
+<li><strong>Invalid path / no permission</strong>: switch to a local directory you can write to, or ask an administrator to grant write access on the share.</li>
+<li><strong>The library loads empty</strong>: the directory has no <code>.zasset</code> packages, or the category levels differ from what you expect; check the sub-library and category directories.</li>
+<li><strong>The library disappears after the settings file is corrupted</strong>: the settings file is backed up as <code>.bak</code>, and <code>library_paths</code> can be restored from it.</li>
+<li><strong>Several people renaming in a shared library at the same time</strong>: the library has no cross-machine file lock, so avoid moving the same asset concurrently (the exact lock strategy is to be confirmed).</li>
+</ul>

@@ -1,0 +1,34 @@
+<blockquote><p>一句话定位：<strong>这组开关决定&quot;外部进程能不能驱动本软件&quot; —— 每一个都是权限开关，默认全关，按需最小开启。</strong></p></blockquote>
+<h2 id="h-1">为什么单独成组、默认全关</h2>
+<p>它们不是普通偏好，而是<strong>权限</strong>：开了之后，外部 AI / MCP 客户端能读写你的资产库、甚至让 Maya 执行代码。默认关闭，避免装好就留一个无人看管的执行入口。</p>
+<p><img src="media/shared/settings-ai-channels.webp" alt="AI 设置 → AI / MCP 通道（默认关闭）" loading="lazy" decoding="async"></p>
+<h2 id="h-2">五个开关分别放开什么</h2>
+<table><thead><tr><th>开关</th><th>默认</th><th>打开后会怎样</th><th>建议</th></tr></thead><tbody><tr><td>打开资产管理器时自动连接 AI 底座</td><td>关</td><td>打开主窗口时自动起 broker 并把本机注册成实例，Web 端与外部 AI 才能驱动本软件</td><td>需要外部 AI 驱动时才开；平时可留关，用「AI 工具 → AI 助手」手动连</td></tr><tr><td>Maya 启动时就把本机注册到 AI 底座</td><td>关</td><td>不打开资产管理器窗口也会注册，外部 AI 客户端随时可驱动本机</td><td>与上一项独立；更&quot;常驻&quot;，权限也更持久</td></tr><tr><td>本地文档没有时，在线查询 Maya 官方帮助</td><td>关</td><td>本地 Maya 文档知识库没命中时，允许联网检索 Autodesk 官方帮助作为补充</td><td>只在需要查新命令时开；离线 / 内网环境建议保持关闭</td></tr><tr><td>允许 AI 在 Maya 中执行任意 Python / MEL（高危）</td><td>关</td><td><code>maya_run_python</code> / <code>maya_run_mel</code> 可用：<strong>即调用即执行、无审批、不可回滚</strong>，权限等于当前系统用户</td><td>只在受信任的机器、受控任务上临时开；用完关掉</td></tr><tr><td>允许 AI 删除 / 覆盖替换资产（破坏性操作）</td><td>关</td><td>AI 才能经资产接口删除（软删进回收站、可还原）或覆盖导出（旧版进历史）</td><td>不需要 AI 做破坏性操作就别开；界面上的手动操作不受影响</td></tr></tbody></table>
+<blockquote><p>环境变量 <code>SQUIRREL_ENABLE_MAYA_EXEC=1</code> 可强制开启万能通道，风险更高，不建议使用。</p></blockquote>
+<h2 id="h-3">首次开启高危项：风险确认弹窗</h2>
+<p>从关→开时（首次）会弹出「AI 助手授权与风险确认」，逐条列明风险，必须勾选确认才启用：</p>
+<p><img src="media/shared/dialog-exec-consent.webp" alt="AI 助手授权与风险确认：不勾选则保持关闭" loading="lazy" decoding="async"></p>
+<p>弹窗里列的事实包括：</p>
+<ul>
+<li><strong>无审批</strong>：所有命令直接执行，没有确认弹窗；</li>
+<li><strong>可执行任意 Python</strong>：权限等同当前系统用户，可读写、删除本机任意文件；</li>
+<li><strong>可绕过保护</strong>：回收站的软删除与库路径限制对任意代码不构成技术屏障；</li>
+<li><strong>系统 / Maya 权限</strong>：能改节点、材质、动画与工程设置，效果等同你本人在场景里手动操作；</li>
+<li><strong>损坏风险</strong>：误改误删可能无法撤销（软删可从回收站还原、覆盖导出留历史，硬删除不可还原）；</li>
+<li><strong>云端</strong>：启用云端服务时，缩略图与提示词会离开本机，需要另行单独同意（见 <a href="#/11.4.7"><code>4.8.4.7</code></a>）。</li>
+</ul>
+<p>确认记录保存在本机留存备查；不勾选则万能执行通道保持关闭。</p>
+<h2 id="h-4">建议</h2>
+<ul>
+<li>只开<strong>当前任务真需要</strong>的那一两项；</li>
+<li>在受管 / 生产机器上保持全关；</li>
+<li>用完高危项及时关回去（下一轮启动就不再暴露执行入口）。</li>
+</ul>
+<h2 id="h-5">相关</h2>
+<ul>
+<li>AI 依赖检查与安装 → <a href="#/11.4.1"><code>4.8.4.1</code></a></li>
+<li>外部连接（桥接端口） → <a href="#/11.4.4"><code>4.8.4.4</code></a></li>
+<li>云端服务同意 → <a href="#/11.4.7"><code>4.8.4.7</code></a></li>
+<li>「AI 设置」页逐项说明 → <a href="#/15.9.3"><code>8.9.3</code></a></li>
+<li>AI 助手对话面的开关 → <a href="#/8.3.2"><code>4.5.3.2</code></a></li>
+</ul>

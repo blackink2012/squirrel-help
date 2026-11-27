@@ -1,0 +1,22 @@
+<p>The panel shows &quot;skill landing&quot; and &quot;MCP channel&quot; separately: the first teaches the other model how to proceed, the second makes the tools actually callable.</p>
+<p><img src="media_en/shared/dialog-external-agents.webp" alt="External AI tools" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<p>The plug-in main window is open and the target tool is installed. The skill directory of some tools has not been verified on this machine and is marked &quot;to be verified&quot;.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open <code>Settings → AI 设置 (AI settings)</code> and click <code>「外部 AI 工具…」 (External AI tools…)</code> in the <code>「外部 AI 工具」 (External AI tools)</code> group.</li>
+<li>Find the target tool in the list and check the skill root it shows. When auto-detection is wrong click <code>「选择路径…」 (Choose path…)</code> to set it by hand.</li>
+<li>Click <code>「安装技能」 (Install skills)</code>. If that tool already has skills installed, the list of skills to be overwritten is shown first and installation continues only after confirmation.</li>
+<li>After installing read the status line and self-check results: they should show the skills in place with a count, and list any problems item by item.</li>
+<li>When MCP is needed check the matching <code>「MCP 通道」 (MCP channel)</code>. For tools without a writable configuration click <code>「复制配置片段」 (Copy the configuration snippet)</code> or <code>「手工配置说明」 (Manual configuration instructions)</code> and paste it yourself.</li>
+<li>When it is no longer needed click <code>「移除技能」 (Remove skills)</code>; removal only deletes the batch recorded in the ledger.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The status shows <code>「技能已就位（N 个）」 (skills in place, N)</code>, MCP shows as attached with the configuration file path, and after the other tool restarts you can see <code>squirrel-*</code> skills and the matching tools.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>Operations in this panel write to disk directly and are not controlled by the Settings dialog&#x27;s OK / Cancel.</li>
+<li>Another tool&#x27;s configuration is backed up before writing; when it cannot be parsed the panel refuses to write.</li>
+<li>The path of a tool marked &quot;to be verified&quot; may be wrong, so confirm it before installing.</li>
+<li>Some clients only read their configuration at startup, so restart that tool after changing it.</li>
+</ul>

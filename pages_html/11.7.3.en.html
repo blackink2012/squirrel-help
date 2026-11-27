@@ -1,0 +1,22 @@
+<p>A sub-library without its own double-click configuration does not break: it follows the <code>default</code> section of <code>double_click_preset.json</code>.</p>
+<p><img src="media_en/shared/settings-fallback.webp" alt="Fallback" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>Double-click presets are stored per sub-library. Lookup order: the sub-library&#x27;s own section, then <code>default</code>, and when <code>default</code> is missing too it counts as <code>「无操作」 (None)</code>.</p>
+<h2 id="h-2">Values and defaults</h2>
+<ul>
+<li>The factory <code>default</code> section is <code>{&quot;cmd&quot;: &quot;import&quot;, &quot;option&quot;: &quot;&quot;}</code>, that is &quot;import with an automatic format&quot;.</li>
+<li>Unregistered custom sub-libraries, and custom top-level categories without a <code>type</code> field, all use this section.</li>
+<li>Sub-libraries that are explicitly registered (even when the choice is <code>「无操作」 (None)</code>) follow their own configuration and never fall back.</li>
+</ul>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>A custom sub-library imports on double-click by default instead of doing nothing.</li>
+<li>With <code>option</code> empty the import format is the asset&#x27;s first available format; when the asset has no importable format that double-click does nothing.</li>
+<li>When the saved command is not in the sub-library&#x27;s available list (for example leftover configuration after a rename), the interface falls back to <code>「无操作」 (None)</code>.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<p>To give a custom sub-library a specific double-click action, select it in Settings and configure it directly; the result is written into its own section and overrides <code>default</code>.</p>
+<h2 id="h-5">Verify the result</h2>
+<p>Create a new custom sub-library and apply settings; double-clicking an asset inside should run &quot;import&quot;. If nothing happens, first check whether that sub-library was explicitly set to <code>「无操作」 (None)</code>.</p>
+<h2 id="h-6">Tips</h2>
+<p><code>default</code> is a fallback, not a place to configure one specific sub-library; to change specific behavior, select that sub-library on the left and edit it there.</p>

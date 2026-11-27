@@ -1,0 +1,24 @@
+<p>Convert import merges &quot;import the asset&quot; and &quot;convert to the target type&quot; into one step: import first, then convert the newly created materials or lights to the chosen type.</p>
+<p><img src="media_en/shared/menu-context-convert.webp" alt="Material asset context menu → Convert import submenu (listing the reachable target types)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The target is a <code>.zasset</code> with an importable format (<code>zmetal</code> preferred for materials).</li>
+<li>A matching <code>.mmap</code> mapping exists, or a usable intermediate path does.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the material or light asset in the library and point at <code>「转换导入」 (Convert import)</code>.</li>
+<li>Choose the target type in the submenu: for materials the reachable material types, for lights the target light node types.</li>
+<li>The tool imports the asset (<code>zmetal</code> first for materials) and finds the materials or lights created this time.</li>
+<li>Materials are converted through the mapping and replace the source in place; lights are rebuilt as the target light type.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The target type material appears in the Hypershade and the original objects keep their material assignment; a light asset produces a light of the target type in the Outliner and it is selected. The Script Editor reports the number of nodes imported and converted.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Convert import only supports <code>.zasset</code>; import an ordinary <code>.ma</code> into the library first and then convert.</li>
+<li>When the asset has no importable format or no new material is created after import, it reports an error with the reason.</li>
+<li>A light asset without <code>.zlight</code> cannot be rebuilt from generic parameters and takes the ordinary <code>.ma/.mb</code> import path.</li>
+</ul>
+<h2 id="h-5">Warnings</h2>
+<p>When conversion fails, read the Maya Script Editor log; a missing mapping is the most common cause, so verify the mapping file first as described in 7.2.1.</p>

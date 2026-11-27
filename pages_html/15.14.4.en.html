@@ -1,0 +1,55 @@
+<blockquote><p>One-line summary: <strong>convert a batch of images from one format to another (png / jpg / exr / hdr / tga / tif / bmp / webp), optionally changing resolution.</strong></p></blockquote>
+<p>It only handles &quot;format and size&quot; conversion, <strong>does not import into the library and never touches the Maya scene</strong>. It is not the same as <strong>Format conversion</strong> for assets (<a href="#/en/15.12.4"><code>8.12.4</code></a>): that one targets assets in the library, while this one targets directories on disk.</p>
+<h2 id="h-1">Where to open it</h2>
+<table><thead><tr><th>Entry</th><th>How</th></tr></thead><tbody><tr><td>Top toolbar <strong>Quick tools</strong> menu</td><td><strong>Quick tools</strong> → <strong>Image format conversion tool</strong></td></tr><tr><td>Script browser</td><td><strong>Script browser</strong> → add the plug-in&#x27;s <code>quicktools</code> directory → double-click <code>图像格式转换工具.py</code></td></tr></tbody></table>
+<p>The window is titled &quot;Batch image format conversion&quot;. All three quick tool entries open the same window.</p>
+<p><img src="media_en/shared/quicktool-image-format.webp" alt="Image format conversion tool window" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What every control does</h2>
+<h3 id="h-3">Card &quot;Input mode&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Radio <strong>Choose files</strong></td><td>Hand-pick a few images</td><td>For converting just a few</td></tr><tr><td>Radio <strong>Choose folder</strong></td><td>Convert a whole directory</td><td>Use this for batches</td></tr></tbody></table>
+<h3 id="h-4">Card &quot;Input&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Path input (placeholder &quot;choose the image files to convert...&quot; / &quot;choose the folder to convert...&quot;)</td><td>The source files or directory</td><td>—</td></tr><tr><td><strong>Browse...</strong></td><td>Chooses files / a directory</td><td>—</td></tr></tbody></table>
+<h3 id="h-5">Card &quot;Input format filter&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Input (placeholder &quot;e.g. png, jpg, exr&quot;)</td><td>Converts only these extensions; empty = all supported formats</td><td>Fill it in when the directory holds other files</td></tr><tr><td><strong>Supported formats: .bmp, .exr, .hdr, .jpeg, .jpg, .png, .tga, .tif, .tiff, .webp</strong></td><td>The formats that can be read</td><td>Anything outside the list cannot be read</td></tr></tbody></table>
+<h3 id="h-6">Card &quot;Output location&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Path input (placeholder &quot;choose the output folder...&quot;)</td><td>Where converted results go</td><td><strong>Always point it at an empty or dedicated output directory</strong>, see the risks</td></tr><tr><td><strong>Browse...</strong></td><td>Chooses the directory</td><td>—</td></tr></tbody></table>
+<h3 id="h-7">Card &quot;Output format&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td><strong>Target format:</strong> dropdown</td><td>.exr (OpenEXR) / .hdr (Radiance HDR) / .png (PNG) / .jpg (JPEG) / .jpeg (JPEG) / .tif (TIFF) / .tiff (TIFF) / .bmp (BMP) / .webp (WebP) / .tga (TGA)</td><td>Do not choose jpg when you need alpha; choose exr / hdr for HDR data</td></tr></tbody></table>
+<h3 id="h-8">Card &quot;Output resolution (empty keeps the original size)&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td><strong>Width:</strong> input (placeholder &quot;unlimited&quot;)</td><td>Target width in pixels</td><td>Empty = keep the original width</td></tr><tr><td><strong>Height:</strong> input (placeholder &quot;unlimited&quot;)</td><td>Target height in pixels</td><td>Empty = keep the original height</td></tr><tr><td>Checkbox <strong>Keep aspect ratio</strong></td><td>Ticked = no distortion when scaling; unticked = stretch to the given size</td><td>Tick it in normal cases</td></tr></tbody></table>
+<h3 id="h-9">Card &quot;Output structure&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Checkbox <strong>Keep hierarchy</strong></td><td>Ticked = output keeps the source directory levels; unticked = everything flat in the output directory</td><td>Tick it when the source is layered</td></tr></tbody></table>
+<h3 id="h-10">Log area and bottom</h3>
+<table><thead><tr><th>Control</th><th>Effect</th></tr></thead><tbody><tr><td><strong>Conversion log</strong> area</td><td>Prints live: the output directory, how many files to convert, each file&#x27;s processing, &quot;source file renamed&quot;, and each failure reason</td></tr><tr><td>Status text &quot;Ready&quot; / &quot;Processing (i/n): file name&quot;</td><td>Current progress</td></tr><tr><td>&quot;N files selected&quot;</td><td>How many files the current input holds</td></tr><tr><td><strong>Help</strong> icon button</td><td>Opens the detailed help</td></tr><tr><td><strong>Cancel</strong></td><td>Closes the window</td></tr><tr><td><strong>Start conversion</strong></td><td>Starts; while running it becomes <strong>Abort</strong>, which stops before the next file</td></tr></tbody></table>
+<h2 id="h-11">A complete flow</h2>
+<ol>
+<li>Quick tools → <strong>Image format conversion tool</strong>;</li>
+<li>Choose input mode <strong>Choose folder</strong> and browse to the source directory;</li>
+<li>Fill <strong>Input format filter</strong> with the formats to convert (such as <code>exr</code>); leaving it empty converts all supported formats;</li>
+<li>Choose an <strong>empty directory</strong> as the <strong>Output location</strong>;</li>
+<li>Pick the <strong>Target format</strong>;</li>
+<li>Fill width / height when resizing and tick <strong>Keep aspect ratio</strong>; otherwise leave both empty;</li>
+<li>When the source is layered and you want the structure kept, tick <strong>Keep hierarchy</strong>;</li>
+<li>Click <strong>Start conversion</strong> and read the log: confirm the &quot;converting N files -&gt; .xxx&quot; count and the &quot;output to&quot; path;</li>
+<li>When done it reports &quot;Conversion finished! X succeeded, Y failed&quot;, with failure reasons one per line in the log;</li>
+<li>Check the files in the output directory (same-named files sit in their subdirectories).</li>
+</ol>
+<h2 id="h-12">Where the output lands</h2>
+<ul>
+<li>Output files are under the <strong>output location</strong>, named after the source file with the target extension;</li>
+<li>With <strong>Keep hierarchy</strong> ticked the subdirectory structure matches the source;</li>
+<li>Conversion <strong>never opens the folder for you</strong>, so check the output directory yourself; every log line states the path it processed.</li>
+</ul>
+<h2 id="h-13">Risks and how to undo (two traps that really bite)</h2>
+<ul>
+<li><strong>Same-named output is overwritten silently.</strong> When the output directory already holds a same-named file (a previous run, for example), this run overwrites it without a word. To keep the old result, use an empty output directory or rename / move the old files first.</li>
+<li><strong>When a source file name contains characters Windows forbids, the tool renames the source file.</strong> The log shows &quot;source file renamed: old -&gt; new&quot;. That is its <strong>only write to the source directory</strong> and it is irreversible (the old path is gone). To avoid touching the sources, copy the source directory and convert the copy.</li>
+<li>Aborting is safe: <strong>Abort</strong> stops after the current file finishes, keeps converted files and logs &quot;user aborted the conversion&quot;.</li>
+<li>To undo, delete the converted files in the output directory; apart from that rename case, source files are never modified or deleted.</li>
+</ul>
+<h2 id="h-14">Related</h2>
+<ul>
+<li>Its position in the <strong>Quick tools</strong> menu: <a href="#/en/15.2.6"><code>8.2.6</code></a></li>
+<li><strong>Format conversion</strong> for library assets: <a href="#/en/15.12.4"><code>8.12.4</code></a></li>
+<li>HDR to asset (use that one when importing into the library): <a href="#/en/15.14.1"><code>8.14.1</code></a></li>
+</ul>

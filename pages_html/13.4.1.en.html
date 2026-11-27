@@ -1,0 +1,28 @@
+<p>A hollow asset is a <code>.zasset</code> that contains only <code>meta.json</code> and a thumbnail, with <code>formats</code> listing only <code>sicon</code> or <code>aicon</code> and no geometry, material or textures.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The asset can be found in the grid, but importing it adds no objects to the scene.</li>
+<li>Opening the <code>.zasset</code> directory shows only <code>meta.json</code> and <code>thumb.sicon</code>.</li>
+<li><code>formats</code> in <code>meta.json</code> lists only <code>sicon</code>/<code>aicon</code>, where it should include <code>ma</code>, <code>mb</code>, <code>zmetal</code> or <code>textures</code>.</li>
+<li>The asset creation result has <code>status</code> ok, but <code>notes</code> mentions that one format failed to export.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>The scene holds unknown data that blocks saving <code>.ma</code></td><td><code>notes</code> says &quot;this file contains unknown data&quot;</td><td>Tick <code>.mb</code>, or let the tool fall back automatically</td></tr><tr><td>A geometry format is ticked but the selected objects have no shape</td><td>The log says no exportable objects were found</td><td>Select models with meshes, not empty groups</td></tr><tr><td>Only textures, or only materials, are ticked</td><td>All geometry formats are off in the preset</td><td>Tick at least one geometry format, or confirm the asset type</td></tr><tr><td>The export error was swallowed by an older build</td><td>The old build still reports success</td><td>Upgrade to a build with the geometry self-check and <code>.mb</code> fallback</td></tr><tr><td>The target directory is not writable</td><td>The export log shows a permission error</td><td>Restore directory permissions and export again</td></tr><tr><td>The asset was damaged by hand</td><td>Metadata or directory structure is incomplete</td><td>Delete and recreate it; never assemble a <code>.zasset</code> by hand</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open <code>meta.json</code> and confirm whether <code>formats</code> contains the expected formats.</li>
+<li>Back in Maya, confirm the selected objects really have meshes or materials, not just empty transforms.</li>
+<li>When recreating the asset, tick at least one geometry format; for material assets also tick the material preset and textures.</li>
+<li>If <code>notes</code> says <code>.ma</code> failed because of unknown data, tick <code>.mb</code> instead; newer builds fall back automatically when <code>.ma</code> fails.</li>
+<li>After export, check <code>formats</code> again to confirm the geometry files were really written.</li>
+<li>Once you confirm it is hollow, back it up, delete the old asset and recreate it with the fixed workflow.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p><code>formats</code> contains geometry, material or texture formats, and importing into the scene produces the matching objects or materials instead of an empty group.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Retry in a new empty scene containing only the target objects to rule out unknown nodes and third-party plug-ins.</li>
+<li>Use <code>cmds.unknownPlugin(q=True, list=True)</code> to check whether the scene carries unknown plug-in data.</li>
+<li>Export with only <code>.mb</code> ticked first to confirm the geometry itself is writable, then add other formats back one at a time.</li>
+<li>Check with 6.3.3 &quot;Library health anomalies&quot; whether the asset is recorded as a load failure, and report the original <code>notes</code> text.</li>
+</ul>

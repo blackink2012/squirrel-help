@@ -1,0 +1,25 @@
+<blockquote><p>一句话定位：<strong>工具栏右段这四颗：刷新重读资产库、Maya 目标决定插件驱动哪台 Maya、设置打开设置窗口、帮助打开帮助中心。</strong></p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<p>它们都在工具栏右侧，从左到右依次是：<strong>刷新 → AI 工具 → 快捷工具 → 面板与布局 → 维护 → Maya 目标 → 设置 → 帮助</strong>（本页只讲刷新、Maya 目标、设置、帮助这四颗；中间的菜单另见 <a href="#/15.2.5"><code>8.2.5</code></a> ~ <a href="#/15.2.8"><code>8.2.8</code></a>）。</p>
+<p>鼠标停在图标上会显示名称，例如「刷新材质库」「选择要驱动的 Maya（多开时用；菜单里每台一张窗口缩略图）」「设置（AI / 字号 / 语言 / 资产库…）」「使用帮助」。</p>
+<p><img src="media/15.2.4-1.webp" alt="工具栏右侧：刷新、AI 工具、快捷工具、面板与布局、维护、Maya 目标、设置、帮助" loading="lazy" decoding="async"></p>
+<h2 id="h-2">逐项详解</h2>
+<table><thead><tr><th>按钮</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>刷新</td><td>重新读取当前资产库（分类树与资产卡片），并丢掉缩略图像素缓存重新加载</td><td>资产库已加载</td><td>网格与分类树按磁盘上的最新内容重画；状态栏数字更新</td><td>在「收藏」页签里刷新的是<strong>当前收藏夹</strong>，不会把你踢回分类页；它会重新扫到磁盘上的 <code>.zasset</code> 资产包，但<strong>散文件</strong>不会因此变成资产</td></tr><tr><td>Maya 目标 ▾</td><td>选择插件要驱动哪一台 Maya（多开时认人用）</td><td><strong>独立版且没有被 Maya 挂载</strong></td><td>弹出 Maya 清单菜单（见下节）</td><td>Maya 内版 / 被宿主挂载时不显示这颗按钮，属于正常</td></tr><tr><td>设置</td><td>打开设置窗口</td><td>无</td><td>弹出非模态的设置窗口（同一时间只有一个，再点会前置已开的那个）</td><td>改完要按设置窗口自己的「确定 / 应用」才落盘，见 <a href="#/15.9.1"><code>8.9.1</code></a></td></tr><tr><td>使用帮助</td><td>打开帮助中心</td><td>无</td><td>用浏览器打开帮助中心页面</td><td>帮助中心打不开时会自动回退到旧帮助页；两者都失败时只在脚本编辑器打印日志，界面没有弹窗</td></tr></tbody></table>
+<h2 id="h-3">子菜单：Maya 目标 ▾</h2>
+<p><img src="media/shared/menu-maya-target.webp" alt="Maya 目标菜单：自动选择 + 每台 Maya 一行（窗口缩略图、版本、场景名、PID、端口）" loading="lazy" decoding="async"></p>
+<p>这个菜单每次弹出都会重新扫描在线 Maya，所以刚启动的 Maya 会出现、刚关掉的会消失。</p>
+<table><thead><tr><th>菜单项 / 行</th><th>说明</th></tr></thead><tbody><tr><td>自动选择（优先最新版本）</td><td>默认项。不用你指定，插件按桥接端口自动挑一台在线的 Maya；勾会落在被自动选中的那台实例行上（示例里是 Maya 2025）</td></tr><tr><td>一台 Maya 一行</td><td>每行显示「Maya 版本 + 场景名（未保存场景会写「未保存场景」）+ PID + 端口」，行首是这台 Maya 的窗口缩略图；点这一行即切换目标，当前那台行尾有 ✓</td></tr><tr><td>（没发现在线的 Maya —— 先启动 Maya，或确认它的桥接端口开着）</td><td>灰字提示，表示一台都没探测到</td></tr><tr><td>Maya（未开桥接端口）</td><td>探测到了进程、但它的桥接端口没开，插件连不上。点这一行<strong>不会切换目标</strong>，而是把「修复命令」复制到剪贴板并把那台 Maya 提到前台 —— 到它的 Script Editor 粘贴回车即可打开端口</td></tr><tr><td>没抓到画面 / Maya 已最小化</td><td>缩略图位置的提示。最小化的窗口 Windows 不渲染画面，所以抓不到缩略图；点这一行会复原并提到前台</td></tr></tbody></table>
+<h2 id="h-4">小白易错点</h2>
+<ul>
+<li><strong>刷新后改动没出现</strong>：刷新会重新扫描磁盘上的 <code>.zasset</code> 资产包并重建分类，所以手工拷进来的<strong>完整资产包</strong>刷新后是能看到的；但<strong>散文件</strong>（没打包的图片 / 模型 / 贴图）不会因此变成资产，要走导入流程，见 <a href="#/4.3.5"><code>4.1.3.5</code></a>。</li>
+<li><strong>找不到「Maya 目标」</strong>：你用的是 Maya 内版或宿主挂载的独立版，目标已经定死了，不需要也不允许在这里切。</li>
+<li><strong>切了 Maya，资产却导进了另一台</strong>：检查菜单里当前带 ✓ 的那一行；插件只认这一行对应的端口。切完建议先看状态栏 / 导出一个测试资产确认。</li>
+<li><strong>设置窗口点了没反应</strong>：它可能已经在别处打开着（非模态单例），再点一次会把它提到前台，而不是开第二个。</li>
+</ul>
+<h2 id="h-5">相关</h2>
+<ul>
+<li>工具栏整体索引见 <a href="#/15.2.1"><code>8.2.1</code></a>。</li>
+<li>设置窗口各页详解见 <a href="#/15.9.1"><code>8.9.1</code></a> ~ <a href="#/15.9.10"><code>8.9.10</code></a>。</li>
+<li>帮助中心界面与搜索见 <a href="#/15.15.1"><code>8.15.1</code></a>。</li>
+<li>多开 Maya 与端口/库切换的背景见 <a href="#/4.11.1"><code>4.1.11.1</code></a>。</li>
+</ul>

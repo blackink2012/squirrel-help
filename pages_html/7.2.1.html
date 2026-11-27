@@ -1,0 +1,23 @@
+<p><code>.mmap</code> 是「源材质类型 → 目标材质类型」的属性对照表，转换时逐行把源属性写到目标属性。</p>
+<p><img src="media/shared/dialog-mapping-preview.webp" alt="材质节点属性映射工具：上方是预设与源 / 目标材质工具条，中间是映射表（示例未加载材质，表格为空），左栏是 AI 智能映射" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已安装插件，能访问插件目录下的 <code>Assets/material_mapper_presets</code>（灯光为 <code>Assets/light_mapper_presets</code>）；工具底部会直接显示当前使用的「预设路径」，以那行为准。</li>
+<li>知道源、目标材质或灯光的节点类型名（区分大小写）。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>打开映射目录，找到形如 <code>lambert_aiStandardSurface.mmap</code> 的文件；文件名就是 <code>源类型_目标类型</code>。</li>
+<li>打开文件，核对顶层 <code>source_type</code>、<code>target_type</code> 与 <code>mappings</code>；<code>mappings</code> 每行包含 <code>source_attribute</code>、<code>target_attribute</code>、<code>transform</code>、<code>default_value</code>，需要参数时还有 <code>parameters</code>。</li>
+<li>把整个映射文件夹加载到材质转换工具：点「加载预设」（或「打开文件夹」先确认目录），工具会扫描其中所有 <code>.mmap</code>。</li>
+<li>在映射表里核对行数与映射内容（材质属性 / 目标属性 / 转换函数 / 参数 / 默认值）。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>转换工具状态栏显示已加载的映射文件数量；预览表里能看到源属性、目标属性、转换函数与默认值；转换时脚本编辑器不再提示缺少映射。</p>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>查找顺序：根目录 <code>A_B.mmap</code> → <code>B/</code> 子目录 → 任意一级子目录；灯光映射与材质映射物理隔离，不能混放。</li>
+<li><code>source_attribute</code> 留空表示只写 <code>default_value</code>；源属性不存在时也会退回默认值。</li>
+<li><code>transform</code> 填转换函数名（如 <code>transparency_to_transmission</code>），需要时用 <code>parameters</code> 传 JSON 参数。</li>
+<li><code>.mmap</code> 只描述属性规则，不等于「类型映射配置预设」<code>.mlist</code>；后者只记录哪些类型转哪些类型。</li>
+</ul>

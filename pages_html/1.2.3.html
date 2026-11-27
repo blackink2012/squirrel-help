@@ -1,0 +1,9 @@
+<p>插件版功能最完整；独立版 / EXE 胜在不开 Maya 也能浏览，并能在 Maya 运行时远程驱动它。</p>
+<table><thead><tr><th>项目</th><th>Maya 插件版</th><th>独立版 / EXE</th></tr></thead><tbody><tr><td>运行位置</td><td>Maya 进程内</td><td>独立进程，经 commandPort 连接 Maya</td></tr><tr><td>安装位置</td><td>同一个 EXE 安装目录（勾选「Maya 集成」后供 Maya 导入）</td><td><code>%LOCALAPPDATA%\SquirrelAM</code></td></tr><tr><td>Python / Qt</td><td>使用 Maya 自带</td><td>EXE 内置 Python 3.11.9 + PySide6 6.9.2</td></tr><tr><td>浏览、搜索、看缩略图</td><td>支持</td><td>支持</td></tr><tr><td>导入、导出、材质应用</td><td>支持</td><td>Maya 在线时支持；离线不可用</td></tr><tr><td>拖入视口、吸附摆放</td><td>支持</td><td>Maya 在线时支持</td></tr><tr><td>截屏、拍屏、渲染缩略图</td><td>支持</td><td>Maya 在线时支持</td></tr><tr><td>版本 / LOD、批量操作</td><td>支持</td><td>支持</td></tr><tr><td>AI 分析、语义搜索、dsh</td><td>支持（依赖可选组件）</td><td>支持（AI 底座独立于 Maya）</td></tr><tr><td>多版本 Maya</td><td>一份安装，按 ABI 自动匹配</td><td>工具栏可切换目标 Maya</td></tr><tr><td>离线使用</td><td>需要 Maya 本机运行</td><td>可浏览；场景操作仍需 Maya</td></tr><tr><td>卸载影响</td><td>同一个卸载器：移除安装目录与 Maya 启动段</td><td>同左</td></tr></tbody></table>
+<h2 id="h-1">选择建议</h2>
+<ul>
+<li><strong>只在 Maya 里工作</strong>：装 EXE 时勾上「Maya 集成」，少一层进程与端口。</li>
+<li><strong>经常不开 Maya 整理资产</strong>：装 EXE 后直接双击主程序，浏览与搜索随时可用。</li>
+<li><strong>两者都要</strong>：一次安装即可 —— 勾「Maya 集成」后既有 Maya 内入口，也有独立程序；两者共用同一资产库、设置与授权。</li>
+<li><strong>团队共享</strong>：库放在共享盘即可；语义索引建议每人放本地目录，避免多写入方互相覆盖。</li>
+</ul>

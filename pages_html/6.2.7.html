@@ -1,0 +1,26 @@
+<p>「仅导出材质」只打包材质节点和贴图，跳过模型网格、缓存和代理；材质子库新建资产时默认就勾选它。</p>
+<p><img src="media/shared/dialog-export-left.webp" alt="导出对话框左侧：导出模式 / 命名 / 缩略图来源 / 标签" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>在 Maya 中选中材质节点，或选中已经赋了材质的物体。</li>
+<li>需要材质随资产保存时，至少勾选 <code>材质预设 .zmetal</code> 或 <code>材质映射 .mcm</code>。</li>
+<li>需要贴图时保留 <code>贴图 textures/</code>。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在右栏「导出选项」勾选 <code>仅导出材质（跳过几何体/代理）</code>。材质子库默认已勾选。</li>
+<li>在「材质格式」勾选 <code>材质预设 .zmetal</code>；需要按模型匹配赋材质时再勾 <code>.mcm</code>。</li>
+<li>需要贴图时保留 <code>贴图 textures/</code>。</li>
+<li>需要材质节点快照时，可以额外勾 <code>Maya ASCII .ma</code> 或 <code>Maya Binary .mb</code>；这两个格式在该模式下仍会导出，但内容只有材质节点，不含网格。</li>
+<li>选择缩略图来源，点击「创建资产」。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li><code>.zasset</code> 内有 <code>node.zmetal</code>（和/或 <code>node.mcm</code>）、<code>textures/</code>，没有 <code>node.fbx</code>、<code>node.obj</code>、<code>node.usd</code>、<code>.abc</code> 或代理文件。</li>
+<li>将资产导入场景后，材质网络被重建；<code>.mcm</code> 资产可在选中目标模型时按拓扑匹配赋材质。</li>
+<li>如果本次没有解析到任何材质节点，导出结果里不会产生材质文件，资产只剩 <code>meta.json</code> 和缩略图。</li>
+</ul>
+<h2 id="h-4">提示与警告</h2>
+<blockquote><p><strong>提示</strong>：该模式不会自动独显物体，截图覆盖层拍的是你当前摆好的视口；给材质配预览时先用「创建模型」放一个载体。</p></blockquote>
+<blockquote><p><strong>提示</strong>：<code>ma</code>/<code>mb</code> 不属于“被跳过的几何体”：它们在仅材质模式下仍可写文件，只是文件内容是材质节点而不是网格。</p></blockquote>
+<blockquote><p><strong>警告</strong>：从「更新资产」进入且勾了「仅导出材质」时，如果选中内容里解析不到材质节点，程序会在导出前拦下并提示；新建资产没有这道预检，请自行确认选中了材质节点或带材质的物体。</p></blockquote>

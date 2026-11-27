@@ -1,0 +1,26 @@
+<p>右键材质资产选择 <code>.zmetal</code>，插件会在场景中重建完整着色网络，并把贴图按导入策略落盘。</p>
+<p><img src="media/shared/menu-context-material.webp" alt="材质资产右键：导入 ▶（示例资产有多种格式；只有 zmetal 一种时才直接显示「导入 zmetal」）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>Maya 场景已打开。</li>
+<li>材质资产包含 <code>node.zmetal</code>；快捷工具导出的资产不含节点网络数据。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>右键材质资产。</li>
+<li>只有 zmetal 一种格式时点「导入 zmetal」；有多种格式时展开「导入」后选择 <code>zmetal</code>。</li>
+<li>资产含多种精度贴图时，在「选择贴图精度」对话框中选精度；点「取消」则放弃导入。</li>
+<li>等待节点网络创建完成。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>Hypershade 中出现完整材质网络：shader、shadingGroup、file、place2dTexture 等。</li>
+<li>导入后自动选中新建材质；脚本编辑器输出「已创建 N 个节点」与「已选中新建材质」。</li>
+<li>file 节点的 <code>fileTextureName</code> 指向本次精度对应的磁盘路径。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>贴图按「设置 → 常规」的贴图导入策略处理：拷贝到工程、直接读资产目录或保持源路径。</li>
+<li>导入 zmetal 后，若当前渲染器与材质原类型不同，插件会<strong>不弹确认</strong>直接转换为当前渲染器默认材质；要指定目标类型，请用右键「转换导入」。</li>
+<li>日志提示「不含 .zmetal 文件（不含节点网络数据）」时，改用「应用材质到选中」或直接使用资产内的 ma/mb 材质网络。</li>
+</ul>

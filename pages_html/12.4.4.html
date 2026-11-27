@@ -1,0 +1,12 @@
+<p><code>Assets/preset/external_agents.json</code> 是“技能已落位到哪些外部工具”的账本；真正的技能源在 <code>dsh_plugins/skills/</code>，当前共 13 个技能束。</p>
+<h2 id="h-1">落位账本</h2>
+<p>账本结构版本为 <code>1</code>，每个工具占一个键：</p>
+<table><thead><tr><th>字段</th><th>含义</th></tr></thead><tbody><tr><td><code>root</code></td><td>该工具的技能根目录（按本机用户目录展开后的绝对路径）</td></tr><tr><td><code>landed</code></td><td>已经落位的技能名列表</td></tr><tr><td><code>problems</code></td><td>落位时发现的问题（缺 <code>name:</code>、目录名不一致等）</td></tr></tbody></table>
+<p>当前记录的工具有 <code>codex</code>、<code>custom</code>、<code>workbuddy</code>、<code>doubao</code>、<code>qoderworkcn</code>、<code>trae-cn</code>、<code>agents-shared</code>、<code>dsh-desktop</code>、<code>qoderwork</code>、<code>claude-code</code>。路径是本机值，换机后会重新探测，不能直接当通用配置拷来拷去。</p>
+<h2 id="h-2">技能束</h2>
+<p><code>dsh_plugins/skills/</code> 下当前 13 个：</p>
+<table><thead><tr><th>类别</th><th>技能</th></tr></thead><tbody><tr><td>资产与转换</td><td><code>squirrel-assets</code>、<code>squirrel-asset-conversion</code></td></tr><tr><td>Maya 操作</td><td><code>squirrel-maya-help</code>、<code>squirrel-maya-modeling</code>、<code>squirrel-maya-headless</code>、<code>squirrel-maya-plugins</code>、<code>squirrel-bifrost</code></td></tr><tr><td>插件与脚本</td><td><code>squirrel-plugin-internals</code>、<code>squirrel-script-assets</code></td></tr><tr><td>文档与写作</td><td><code>squirrel-docs-site-to-llm-wiki</code>、<code>writing-for-agents</code></td></tr><tr><td>元技能</td><td><code>skill-creator</code>、<code>mcp-builder</code></td></tr></tbody></table>
+<p>技能只提供“说明书”，让外部模型知道有哪些命令与纪律；真正可执行的通道是 MCP 入口（<code>mcp/squirrel_mcp_server.py</code>），两者需要同时具备。</p>
+<h2 id="h-3">安装与更新</h2>
+<p>在「设置 → AI 设置 → 外部 AI 工具」里按工具勾选安装、更新或移除。落位是纯拷贝，并在目标目录写入 <code>SQUIRREL_PROVENANCE.txt</code> 说明来源；账本由插件自动维护。MCP 配置分三种：可直接写入（writer）、需要用户手工粘贴（manual-needed）、该工具没有 MCP（not-supported）。</p>
+<blockquote><p><strong>警告</strong>：不要手工编辑账本，也不要直接修改已落位的技能副本——下次更新会整体覆盖。要改内容请改 <code>dsh_plugins/skills/</code> 下的源，再重新落位。</p></blockquote>

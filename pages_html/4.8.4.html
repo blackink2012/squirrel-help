@@ -1,0 +1,25 @@
+<p>批量操作栏提供标签、名称与分类的批量入口；注释、渲染器、色彩空间等字段目前没有统一的批量表单。</p>
+<p><img src="media/shared/dialog-batch-tag.webp" alt="批量标签" loading="lazy" decoding="async"></p>
+<h2 id="h-1">可批量修改的字段</h2>
+<table><thead><tr><th>字段</th><th>入口</th><th>说明</th></tr></thead><tbody><tr><td>标签</td><td>批量操作栏 → 批量标签</td><td>追加标签或删除标签</td></tr><tr><td>显示名、文件名</td><td>批量操作栏 → 批量重命名</td><td>前缀、后缀或查找替换</td></tr><tr><td>分类</td><td>批量操作栏 → 批量移动</td><td>同一子库内批量换分类</td></tr><tr><td>名称、标签、注释、分类</td><td>AI 批量分析结果应用</td><td>按 AI 建议批量写入，见 AI 工具章节</td></tr></tbody></table>
+<h2 id="h-2">批量追加或删除标签</h2>
+<ol>
+<li>多选资产，点批量操作栏的「批量标签」。</li>
+<li>选择「添加标签」：输入标签（逗号分隔）或点选常用标签，点「应用」。</li>
+<li>选择「删除标签」：点击现有标签使其变红，点「应用」删除。</li>
+<li>执行前查看「操作预览」确认资产数与标签数。</li>
+</ol>
+<h2 id="h-3">批量修改名称与分类</h2>
+<ol>
+<li>改名：用「批量重命名」，选择显示名或文件名，再选前缀、后缀或查找替换。</li>
+<li>换分类：用「批量移动」，从当前子库的分类列表中选择目标分类。</li>
+<li>两项操作完成后都会重新加载网格。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>属性面板显示更新后的标签、名称与分类。</li>
+<li>用新标签或新名称搜索能命中这批资产。</li>
+<li>分类树中目标分类的资产数量增加。</li>
+</ul>
+<div class="admonition note"><div class="admonition-title">注意</div><p>注释、材质类型、软件、渲染器、色彩空间等字段没有批量编辑对话框；可以逐个资产在属性面板修改，或通过命令层 <code>edit</code> 逐条写入。</p></div>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>批量写入会直接覆盖选中资产的对应字段。执行前确认选中范围，并先看操作预览。</p></div>

@@ -1,0 +1,14 @@
+<p>导入时贴图与关联文件落到哪里，由「设置 → 常规」中的两条策略决定：贴图导入策略与依赖文件导入策略。</p>
+<table><thead><tr><th>选项</th><th>贴图落点</th><th>关联文件与引用落点</th></tr></thead><tbody><tr><td>拷贝贴图到项目 / 拷贝到项目</td><td>工程 <code>sourceimages/squirrel_asset/&lt;资产名&gt;_&lt;ID后4位&gt;/</code></td><td>工程 <code>cache/squirrel_asset/&lt;资产名&gt;_&lt;ID后4位&gt;/</code>；引用进 <code>references/squirrel_asset/&lt;资产名&gt;_&lt;ID后4位&gt;/</code></td></tr><tr><td>当前资产目录</td><td>直接读取 <code>.zasset/textures/</code> 内的文件，不复制</td><td>直接读取 <code>.zasset/deps/</code> 内的文件，不复制</td></tr><tr><td>源文件目录</td><td>保持导出时记录的原始绝对路径，不修改</td><td>保持导出时记录的原始绝对路径，不修改</td></tr></tbody></table>
+<h2 id="h-1">适用范围</h2>
+<ul>
+<li>贴图策略作用于 ma/mb 导入、zmetal 材质导入、zlight 灯光导入、贴图导入、HDR 指定贴图与创建环境光。</li>
+<li>依赖策略作用于 ma/mb 导入与「添加引用」，按 <code>meta.dependency_map</code> 的完整源路径优先匹配，未命中再退回文件名匹配。</li>
+<li>两条策略都在 <code>Assets/preset/config.json</code> 中持久化；当前仓库默认值为 <code>asset_directory</code>，以设置界面实际值为准。</li>
+</ul>
+<h2 id="h-2">选择建议</h2>
+<ul>
+<li>资产库与工程在同一台机器、经常整理资产目录：选「当前资产目录」，不产生副本。</li>
+<li>需要把工程整体拷走或交给他人：选「拷贝到项目」，路径最稳。</li>
+<li>源文件位置固定且磁盘空间紧张：选「源文件目录」；一旦源文件被移动，贴图与依赖会断链。</li>
+</ul>

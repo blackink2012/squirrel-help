@@ -1,0 +1,26 @@
+<p>Caches and proxies preset which cache and render-proxy formats are checked by default when exporting each asset type.</p>
+<p><img src="media_en/shared/settings-cache-proxy.webp" alt="Caches and proxies" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>When a new export dialog or asset creation starts, Alembic, Arnold, V-Ray, Redshift and V-Ray proxy formats are pre-checked for the current asset type.</p>
+<h2 id="h-2">Values and defaults</h2>
+<ul>
+<li>Choose the asset type in the list on the left, shown as a sub-library ID.</li>
+<li>The five options and their default asset types:</li>
+</ul>
+<table><thead><tr><th>Option</th><th>Asset types where it is checked by default</th></tr></thead><tbody><tr><td>Alembic (.abc)</td><td><code>ani</code></td></tr><tr><td>Arnold (.ass)</td><td>None</td></tr><tr><td>V-Ray (.vrscene)</td><td>None</td></tr><tr><td>Redshift (.rs)</td><td>None</td></tr><tr><td>V-Ray proxy (.vrmesh)</td><td>None</td></tr></tbody></table>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>It only decides the initial state of checkboxes in the export interface; a single export can still change them.</li>
+<li>Proxy formats only make sense when the matching renderer (Arnold / V-Ray / Redshift) is available.</li>
+<li>It never changes existing assets, the context menu or quick tools.</li>
+<li>It is stored under the matching asset type key in <code>Assets/preset/export_preset.json</code>.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<ul>
+<li>Animation or FX assets need caches: keep <code>.abc</code> for <code>ani</code>.</li>
+<li>Delivery to a render farm needs lightweight proxies: check the proxy formats matching the farm&#x27;s renderer.</li>
+<li>Only local Maya use: keep everything unchecked to shrink assets.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<blockquote><p><strong>Tip</strong>: cache and proxy files are usually large, so confirm free disk space before exporting.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: the list on the left holds asset types, not categories; all categories under one type share the same defaults.</p></blockquote>

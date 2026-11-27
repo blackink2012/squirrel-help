@@ -1,0 +1,31 @@
+<p>When an existing variant needs a new shape or another detail level, do it in <code>「更新变体」 (Update variant)</code> instead of deleting and recreating it; the shared textures and materials never change.</p>
+<p><img src="media/shared/concept-variant-update-flow.webp" alt="Update variant: menu path and file locations" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Entry point</h2>
+<p>Right-click the asset → <code>「更新资产」 (Update asset)</code> → <code>「更新变体 ▶」 (Update variant ▶)</code> → choose a variant. The submenu contains:</p>
+<table><thead><tr><th>Menu item</th><th>Effect</th></tr></thead><tbody><tr><td>Capture / import / Maya playblast / render / add / capture and add</td><td>Redo <strong>that variant&#x27;s</strong> thumbnail only, with the same entries as <code>「更新缩略图」 (Update thumbnail)</code></td></tr><tr><td><code>「覆盖（用当前选中）」 (Overwrite from current selection)</code></td><td>Overwrite the variant with the geometry currently selected in the viewport</td></tr><tr><td><code>「追加 LOD…」 (Append LOD…)</code></td><td>Add a detail level to that variant</td></tr><tr><td><code>「删除变体」 (Delete variant)</code></td><td>Delete the variant (see &quot;Variant management and deletion&quot;)</td></tr></tbody></table>
+<h2 id="h-2">Overwriting a variant</h2>
+<ol>
+<li>Select the new geometry in the viewport (marquee selecting collapses to root objects).</li>
+<li>Right-click the asset → <code>「更新资产」 (Update asset)</code> → <code>「更新变体 ▶」 (Update variant ▶)</code> → target variant → <code>「覆盖（用当前选中）」 (Overwrite from current selection)</code>.</li>
+<li>Confirm the prompt to finish overwriting.</li>
+</ol>
+<ul>
+<li>Only the geometry of <code>variants/&lt;id&gt;.&lt;ext&gt;</code> is replaced; textures and materials are untouched.</li>
+<li>After overwriting, regenerate the image in <code>「更新变体」 (Update variant)</code> so the thumbnail matches the geometry.</li>
+</ul>
+<h2 id="h-3">Appending a LOD</h2>
+<ol>
+<li>Select the low- or high-poly object to use for that level.</li>
+<li><code>「更新变体 ▶」 (Update variant ▶)</code> → target variant → <code>「追加 LOD…」 (Append LOD…)</code> and enter a level number from 1 to 9.</li>
+<li>The file is written as <code>variants/&lt;id&gt;_lodN.&lt;ext&gt;</code> and registered in that variant&#x27;s <code>lods</code> in <code>variants.json</code>.</li>
+</ol>
+<ul>
+<li><code>LOD0</code> is the variant&#x27;s own geometry (<code>variants/&lt;id&gt;.&lt;ext&gt;</code>) and needs no extra append.</li>
+<li>Afterwards <code>「导入变体 / 版本」 (Import variant / version)</code> shows one more level menu for that variant (its own geometry plus <code>LOD1</code>, <code>LOD2</code>…).</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>Overwrite: the Script Editor reports <code>「变体「…」已用当前选中覆盖」 (variant &quot;…&quot; overwritten from the current selection)</code>, and reimporting the variant in the scene gives the new shape.</li>
+<li>Append LOD: it reports <code>「变体「…」已追加 LODn」 (variant &quot;…&quot; got LODn appended)</code> and <code>variants/</code> gains <code>&lt;id&gt;_lodN.&lt;ext&gt;</code>.</li>
+</ul>
+<div class="admonition note"><div class="admonition-title">注意</div><p>Variants do not offer the background (headless) render entry: that path renders a whole asset package, and a variant has no package of its own.</p></div>

@@ -1,0 +1,23 @@
+<p>The chat surface can dock inside Maya or be handed to the system browser; both start the same dsh with the same sessions and tools, and only the window location differs.</p>
+<p><img src="media_en/shared/ui-ai-assistant.webp" alt="AI assistant area: the toggle button at the bottom right (controls both embedded and browser modes)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<p>The AI assistant starts normally and dsh is installed.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open <code>Settings → AI 设置 (AI settings)</code>.</li>
+<li>In the <code>「AI 对话面」 (AI chat surface)</code> group find <code>「在 Maya 内嵌 AI 对话面（取消则用系统浏览器打开）」 (embed the AI chat surface in Maya; uncheck to open it in the system browser)</code>.</li>
+<li>Checked means it docks inside Maya next time; unchecked means the system browser.</li>
+<li>Close Settings and reopen <code>AI 工具 (AI tools) → AI 助手 (AI assistant)</code>. The setting applies on the next click.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>Embedded mode: a docked panel appears on the right of Maya with the scene name in its title.</li>
+<li>Browser mode: the system browser opens the dsh page and Maya shows no docked panel; while the assistant runs, the <code>「AI 工具」 (AI tools)</code> menu gains <code>「召回AI面板」 (Recall the AI panel)</code>.</li>
+</ul>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>When the Maya layout swallows the embedded panel, the plug-in recalls it automatically as long as the service is running; a panel you hid yourself is never forced back.</li>
+<li>In browser mode the tab belongs to the browser and the plug-in cannot see you closing it; clicking the toggle then may stop the service, so use <code>「召回AI面板」 (Recall the AI panel)</code> to recover.</li>
+<li>When the embedded component is unavailable it falls back to the browser even if embedding is still checked.</li>
+<li>The <code>「AI 工具」 (AI tools)</code> menu is <strong>rebuilt per state</strong>: while the assistant is not running it contains only AI thumbnail analysis / AI search preview / AI assistant / stop the AI backend service; <code>「关闭 AI 助手」 (Close the AI assistant)</code> and <code>「召回AI面板」 (Recall the AI panel)</code> appear only <strong>while it runs</strong> (open the assistant once and look at the menu again).</li>
+</ul>

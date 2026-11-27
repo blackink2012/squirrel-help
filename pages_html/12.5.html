@@ -1,0 +1,13 @@
+<p>插件包自包含：把 <code>squirrel_asset_manager/</code> 一个目录放好即可运行；资产库、用户设置、缓存与日志分别落在包外。</p>
+<h2 id="h-1">插件包</h2>
+<table><thead><tr><th>目录</th><th>内容</th></tr></thead><tbody><tr><td><code>core/</code></td><td>数据层：管理器、<code>.zasset</code> 读写、导出编排、材质与分类</td></tr><tr><td><code>ui/</code></td><td>主窗口、缩略图网格、预览、设置与各类对话框</td></tr><tr><td><code>integration/</code></td><td>Maya 导入/导出执行器、格式路由、贴图与依赖处理</td></tr><tr><td><code>utils/</code></td><td>设置、JSON、截图、桥接与异常处理</td></tr><tr><td><code>quicktools/</code></td><td>PBR/模型/HDR 转资产、图像格式转换、批量处理等独立工具</td></tr><tr><td><code>ai/</code></td><td>Maya 侧命令实现（query / generate / convert / organize / scene 等）</td></tr><tr><td><code>ai_base/</code></td><td>宿主无关底座：命令注册表、broker、作业、进度、取消、索引</td></tr><tr><td><code>embedded/</code></td><td>独立版挂载与常驻预热</td></tr><tr><td><code>mcp/</code></td><td>MCP server 入口</td></tr><tr><td><code>dsh_plugins/</code></td><td>技能束 <code>skills/</code> 与 dsh 侧工具 patch</td></tr><tr><td><code>dsh_home/</code></td><td>运行期 dsh 目录：会话、技能、审计与作业记录</td></tr><tr><td><code>knowledge/</code></td><td>Maya 文档知识库与发布件</td></tr><tr><td><code>Assets/</code></td><td><code>preset/</code> 预设、<code>prompt/</code> 提示词、<code>help/v2/</code> 帮助、图标、材质映射、IBL 与示例网格</td></tr><tr><td><code>bin/</code></td><td>随包的 <code>ffmpeg.exe</code> / <code>ffprobe.exe</code>（动图与序列编码）</td></tr><tr><td><code>tools/</code></td><td>索引、帮助构建、许可证与自检脚本</td></tr></tbody></table>
+<p>安装后位于 <code>Documents/maya/squirrel_asset_manager/</code>；README 建议装在版本无关的 <code>maya\</code> 下，一份供所有 Maya 版本使用。</p>
+<h2 id="h-2">资产库</h2>
+<pre><code>资产库根/
+├── materials/  models/  lights/  textures/  scenes/  hdr/  ani/
+├── .squirrel_index_cache.json
+└── .squirrel_ai_index/        # 语义检索索引（按后端分家：official/ ollama/；可改到本地其他根）</code></pre>
+<p>每个 <code>.zasset</code> 是文件夹资产包，常见内容为 <code>meta.json</code>、<code>node.zmetal</code>、<code>thumb.sicon</code>、<code>thumb.aicon</code>、<code>thumb.mp4</code>、<code>node.mcm</code>、几何/代理文件与 <code>textures/</code>。</p>
+<h2 id="h-3">包外位置</h2>
+<table><thead><tr><th>路径</th><th>内容</th></tr></thead><tbody><tr><td><code>~/.squirrel_asset_manager/</code></td><td><code>app_settings.json</code>、桥接端口/自愈日志、broker 开机日志、Maya 帮助缓存</td></tr><tr><td><code>&lt;包&gt;/dsh_home/</code></td><td>dsh 运行期目录；可用 <code>SQUIRREL_DSH_HOME</code> 或 <code>DSH_HOME</code> 改到别处</td></tr><tr><td><code>%TEMP%\squirrel_asset_manager\</code></td><td>AI 依赖检查报告与安装日志</td></tr><tr><td><code>{工程}/cache/alembic/squirrel_asset/</code></td><td>导入 abc 缓存</td></tr><tr><td><code>{工程}/cache/squirrel_asset/</code></td><td>导入代理缓存</td></tr></tbody></table>
+<p>帮助源文件在 <code>Assets/help/v2/pages/</code>，<code>toc.json</code>、<code>pages_html/</code>、<code>search/</code> 与 <code>generated/</code> 是构建产物，不要手改。</p>

@@ -1,0 +1,30 @@
+<blockquote><p>一句话定位：<strong>给每一种资产类型（材质 / 模型 / 灯光…）预先定好：导出时默认勾哪些格式、哪些格式干脆锁掉不让选。</strong></p></blockquote>
+<p><strong>这一页默认是锁住的</strong>，必须先在窗口底部勾「解锁全部配置」并确认警告，才能改（见 <a href="#/15.9.1"><code>8.9.1</code></a>）。</p>
+<p><img src="media/shared/settings-export.webp" alt="设置窗口（导出默认值页）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">怎么打开</h2>
+<p>设置窗口 → 勾「解锁全部配置」→ 页签「导出默认值」。</p>
+<h2 id="h-2">页面结构</h2>
+<p>左边是<strong>资产类型列表</strong>（材质 / 模型 / 灯光 / 贴图 / 场景 / HDR / 动态 / 节点树 / 图片 / 音频 / 动画数据），右边是这一类型的格式与选项。<strong>改哪个类型，先在左边点它</strong>；切换时插件会自动保存上一类型界面上勾好的状态。</p>
+<h2 id="h-3">控件详解</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值（以「材质」为例）</th><th>改了会怎样</th><th>需要先解锁</th></tr></thead><tbody><tr><td>资产类型列表</td><td>左侧列表</td><td>选给哪个资产类型配默认值</td><td>第一项「材质」</td><td>切换类型，右侧显示该类型自己的配置</td><td>是</td></tr><tr><td>材质节点 (.zmetal)</td><td>复选框</td><td>导出材质节点文件</td><td>勾选</td><td>创建资产 / 导出时该格式默认勾上</td><td>是</td></tr><tr><td>合并材质 (.zmetal_merge)</td><td>复选框</td><td>导出合并后的材质</td><td>勾选</td><td>同上</td><td>是</td></tr><tr><td>材质→模型映射 (.mcm)</td><td>复选框</td><td>导出材质到模型的映射文件</td><td>不勾</td><td>同上</td><td>是</td></tr><tr><td>Maya ASCII (.ma)</td><td>复选框</td><td>导出 .ma 几何</td><td>勾选</td><td>同上</td><td>是</td></tr><tr><td>Maya Binary (.mb)</td><td>复选框</td><td>导出 .mb 几何</td><td>不勾</td><td>同上</td><td>是</td></tr><tr><td>FBX (.fbx)</td><td>复选框</td><td>导出 FBX</td><td>不勾（材质类型下锁定）</td><td>同上</td><td>是</td></tr><tr><td>OBJ (.obj)</td><td>复选框</td><td>导出 OBJ</td><td>不勾（材质类型下锁定）</td><td>同上</td><td>是</td></tr><tr><td>USD (.usd)</td><td>复选框</td><td>导出 USD</td><td>不勾（材质类型下锁定）</td><td>同上</td><td>是</td></tr><tr><td>Alembic (.abc)</td><td>复选框</td><td>导出 ABC 缓存</td><td>不勾（材质类型下锁定）</td><td>同上</td><td>是</td></tr><tr><td>Arnold (.ass)</td><td>复选框</td><td>导出 Arnold 代理</td><td>不勾（材质类型下锁定）</td><td>同上</td><td>是</td></tr><tr><td>V-Ray (.vrscene)</td><td>复选框</td><td>导出 V-Ray 场景</td><td>不勾（材质类型下锁定）</td><td>同上</td><td>是</td></tr><tr><td>Redshift (.rs)</td><td>复选框</td><td>导出 Redshift 代理</td><td>不勾（材质类型下锁定）</td><td>同上</td><td>是</td></tr><tr><td>V-Ray 代理 (.vrmesh)</td><td>复选框</td><td>导出 .vrmesh 代理</td><td>不勾（材质类型下锁定）</td><td>同上</td><td>是</td></tr><tr><td>锁定（每个格式右侧各有一个）</td><td>复选框</td><td>锁住这个格式</td><td>材质类型下锁：fbx / obj / usd / abc / ass / vrscene / rs / vrmesh</td><td>锁住后：创建资产对话框里该格式<strong>不可勾选</strong>，也不会被导出（防止误选当前分类不支持的格式）</td><td>是</td></tr><tr><td>收集场景中已挂载的缓存/代理/引用文件</td><td>复选框</td><td>导出时把场景里挂着的缓存、代理、引用文件一起收进资产包</td><td>勾选</td><td>不勾则资产包里缺这些依赖，导入时可能丢引用</td><td>是</td></tr><tr><td>贴图 textures/</td><td>复选框</td><td>收集贴图到资产包的 <code>textures/</code> 目录</td><td>勾选</td><td>不勾则贴图不进包，导入后贴图路径可能断（见 <a href="#/6.5.2"><code>4.3.5.2</code></a>）</td><td>是</td></tr><tr><td>仅导出材质（跳过几何体/代理）</td><td>复选框</td><td>只导材质，不出几何 / 代理</td><td>勾选</td><td>勾上时即使选了几何格式也不会导出几何；适用于纯材质资产</td><td>是</td></tr></tbody></table>
+<h2 id="h-4">各资产类型的出厂默认（节选）</h2>
+<p>下表是从出厂预设文件读出的当前默认，方便对照「为什么我的导出框里是这些」：</p>
+<table><thead><tr><th>资产类型</th><th>默认勾选的项</th><th>默认锁定的格式</th></tr></thead><tbody><tr><td>材质</td><td>zmetal、zmetal_merge、ma、收集关联文件、贴图、仅导出材质</td><td>fbx、obj、usd、abc、ass、vrscene、rs、vrmesh</td></tr><tr><td>模型</td><td>ma、收集关联文件、贴图</td><td>无</td></tr><tr><td>灯光</td><td>zmetal、ma、贴图</td><td>无</td></tr><tr><td>贴图</td><td>贴图</td><td>无</td></tr><tr><td>场景</td><td>ma、收集关联文件、贴图</td><td>无</td></tr><tr><td>HDR</td><td>贴图</td><td>无</td></tr><tr><td>动态</td><td>ma、abc、收集关联文件、贴图</td><td>无</td></tr></tbody></table>
+<p>其它类型（节点树 / 图片 / 音频 / 动画数据）以页面显示为准；每种类型都是独立保存的。</p>
+<h2 id="h-5">这些设置什么时候生效</h2>
+<ul>
+<li>保存后，<strong>下一次</strong>打开「创建资产 / 导出」对话框时，对应类型就按这里的默认值预勾选（见 <a href="#/15.10.1"><code>8.10.1</code></a>）；</li>
+<li>锁定只影响「能不能选」，不会把已经存在的资产里已有的格式删掉；</li>
+<li>已经打开着的导出对话框不会实时变（关掉重开即可）。</li>
+</ul>
+<h2 id="h-6">反悔与风险</h2>
+<table><thead><tr><th>情况</th><th>怎么反悔</th></tr></thead><tbody><tr><td>还没保存</td><td>点「取消」丢弃本次改动</td></tr><tr><td>已经保存</td><td>点「恢复默认设置」→ 会重新从 <code>export_preset.json</code> 读取（注意：读的是文件里的值，不是内置出厂值，见 <a href="#/15.9.1"><code>8.9.1</code></a>）</td></tr><tr><td>想彻底回到出厂</td><td>用一份备份的 <code>export_preset.json</code> 覆盖回去（文件在 <code>&lt;插件目录&gt;\Assets\preset\</code>）</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>把不该有的格式解除锁定，会让用户在创建资产时勾到当前分类不支持的格式，导出出来是空的或直接失败；把该有的格式锁上，则整个类型导不出东西。改锁定前先想清楚这个类型实际支持什么格式。</p></div>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>设置窗口总览与全局锁定 → <a href="#/15.9.1"><code>8.9.1</code></a></li>
+<li>右键菜单页（同属高级页签） → <a href="#/15.9.5"><code>8.9.5</code></a></li>
+<li>按子库保存导出默认值（用户指南） → <a href="#/6.4.1"><code>4.3.4.1</code></a></li>
+<li>创建资产 / 导出对话框 → <a href="#/15.10.1"><code>8.10.1</code></a></li>
+<li>导出预设窗口 → <a href="#/15.12.3"><code>8.12.3</code></a></li>
+</ul>

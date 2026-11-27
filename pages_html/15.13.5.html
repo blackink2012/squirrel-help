@@ -1,0 +1,48 @@
+<blockquote><p>一句话定位：<strong>把&quot;松鼠资产管家&quot;的能力（技能说明 + MCP 工具入口）接到 Claude Code、Codex、Trae 这类外部 AI 工具里，让它们也知道你有资产库和 Maya。</strong></p></blockquote>
+<p>要让外部工具真正能干活，需要<strong>两半</strong>，缺一半就是&quot;模型知道有这回事，但调不动&quot;：</p>
+<ol>
+<li><strong>技能落位</strong>：把我们的技能说明拷进对方的技能目录；</li>
+<li><strong>MCP 通道</strong>：把本插件的 MCP 入口写进对方的配置文件 —— 技能里提到的那些 <code>squirrel_*</code> 工具才会真的存在。</li>
+</ol>
+<p>所以窗口里每一家工具都把这两半的<strong>状态分开显示</strong>。</p>
+<h2 id="h-1">怎么打开</h2>
+<p><strong>设置 → AI 设置 → 「外部 AI 工具…」按钮</strong>。</p>
+<p>注意：这个窗口里的操作<strong>当场就落盘</strong>（拷技能 / 写对方配置），和设置窗口的「确定 / 取消」不是一套语义 —— 点了取消不会回滚已经做过的安装。</p>
+<h2 id="h-2">界面结构</h2>
+<p><img src="media/shared/dialog-external-agents.webp" alt="外部 AI 工具窗口" loading="lazy" decoding="async"></p>
+<h3 id="h-3">顶部</h3>
+<table><thead><tr><th>控件</th><th>作用</th></tr></thead><tbody><tr><td>标题「把松鼠的能力接给外部 AI 工具」</td><td>窗口定位</td></tr><tr><td>两段说明文字</td><td>解释上面说的&quot;两半&quot;</td></tr><tr><td>⚠ / ✓ 开头的一行</td><td>内置对话面（DSH）自己的技能状态；显示&quot;技能未就位&quot;时，启动一次 AI 助手就会自动落位，不用在这里管</td></tr></tbody></table>
+<h3 id="h-4">每家工具一张卡（这是窗口主体）</h3>
+<p>工具列表包括：跨工具共用技能目录、DeepSeek Harness（桌面版）、Claude Code、Codex CLI、Cursor、豆包（Doubao）、Gemini CLI、QoderWork（国际版 / 国内版）、Trae（国际版 / 国内版）、Windsurf、WorkBuddy、自定义 / 其它工具…</p>
+<p>每张卡里的控件都一样：</p>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>工具名</td><td>这一行接的是谁</td><td>—</td></tr><tr><td>状态徽章</td><td>技能状态：技能已就位（N 个）/ 技能部分就位 / 未落位 / 未安装 / 需要先选择目录 / 待实测</td><td>先看徽章，再决定要不要装</td></tr><tr><td>技能目录路径</td><td>技能会装到这个目录</td><td>一般不改；路径不对就点「选择路径…」</td></tr><tr><td>「待实测」标签 + 提示</td><td>这条路径<strong>没有官方文档或本机实测依据</strong>，装上不一定生效</td><td>看到它就自己确认路径后再装</td></tr><tr><td>「选择路径…」</td><td>手工指定该工具的技能目录（会记进设置）</td><td>工具装在非默认位置时用</td></tr><tr><td>「安装技能」</td><td>把技能拷进该目录；目录不存在会自动创建</td><td>会弹确认，列出要写哪些、会不会覆盖</td></tr><tr><td>「移除技能」</td><td>只删<strong>我们落的</strong>那些（带 <code>squirrel-</code> 前缀），同目录别人的技能不动</td><td>不想接了就用它撤</td></tr><tr><td>「MCP 通道」勾选框</td><td>勾 = 把本插件的 MCP 入口写进这个工具的配置；<strong>写入前会自动备份原配置</strong></td><td>想让对方真的能调工具，必须勾</td></tr><tr><td>「复制配置片段」</td><td>复制一段手工配置文本，粘到没收录格式的工具（比如 Trae / 豆包）自己的配置里</td><td>对方不支持自动写、或写不进去时用</td></tr><tr><td>卡底状态行</td><td>技能目录是否存在 / MCP 是否挂上 / 配置文件路径 / 会不会新建</td><td>它告诉你现在真实状态，不用猜</td></tr></tbody></table>
+<h3 id="h-5">底部的三个按钮</h3>
+<table><thead><tr><th>控件</th><th>作用</th></tr></thead><tbody><tr><td>「重新探测」</td><td>重新扫一遍各家工具装没装、技能在不在、MCP 挂没挂</td></tr><tr><td>「手工配置说明」</td><td>复制<strong>完整</strong>的手工说明（解释器 / 入口脚本 / 各家路径 / 片段），适合自己动手改配置的人</td></tr><tr><td>「关闭」</td><td>关窗（已做的安装不会回滚）</td></tr></tbody></table>
+<h2 id="h-6">一次完整的接入流程（以 Claude Code 为例）</h2>
+<ol>
+<li>设置 → AI 设置 → 「外部 AI 工具…」；</li>
+<li>先点底部「重新探测」，确认 Claude Code 那张卡是&quot;未安装 / 未找到&quot;还是已找到；</li>
+<li>看技能目录路径是否正确；不对就点「选择路径…」挑到它的技能目录；</li>
+<li>点「安装技能」→ 确认弹窗里看清&quot;会覆盖哪些、新写哪些&quot;→ 继续；</li>
+<li>勾上「MCP 通道」→ 它会写入对方配置（原配置自动备份，状态行会显示已挂上 + 配置文件路径）；</li>
+<li>点「关闭」；</li>
+<li>去外部工具里新开一个会话，问它&quot;这个项目里能用什么工具&quot;，确认它读到了技能 / 工具。</li>
+</ol>
+<h2 id="h-7">做完能看见什么</h2>
+<ul>
+<li>卡片的徽章从「技能未落位」变成「技能已就位（N 个）」；</li>
+<li>MCP 那一行变成「已挂上（配置文件在下方路径）」；</li>
+<li>对方工具的配置目录里多出我们的技能目录 / 配置项。</li>
+</ul>
+<h2 id="h-8">风险与反悔</h2>
+<ul>
+<li><strong>「安装技能」是覆盖式的</strong>：同名目录会<strong>先删后拷</strong>。如果你在那边手动改过我们的技能内容，那些改动会丢（确认弹窗会明确列出&quot;会覆盖 N 个&quot;）。</li>
+<li><strong>会写对方的配置文件</strong>（勾 MCP 时）。写之前自动备份原配置，状态行会提示备份路径；想撤可以再点「移除技能」+ 在对方配置里删掉对应条目，或用备份还原。</li>
+<li>「移除技能」只删带 <code>squirrel-</code> 前缀的目录，不会动同目录下别人的技能。</li>
+<li>「待实测」的几家（Cursor / Gemini CLI / Windsurf / Trae 国际版等）装上不一定生效，装之前请自己确认那个目录真的是它的技能目录。</li>
+</ul>
+<h2 id="h-9">相关</h2>
+<ul>
+<li>设置里 AI 页的其它项：<a href="#/15.9.3"><code>8.9.3</code></a></li>
+<li>内置对话面（dsh）没装时的安装引导：<a href="#/15.13.6"><code>8.13.6</code></a></li>
+</ul>

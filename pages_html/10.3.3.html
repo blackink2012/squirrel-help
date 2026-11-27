@@ -1,0 +1,23 @@
+<p>应用灯光把灯光资产里的参数应用到场景中已有的灯光 shape，并按当前渲染器做参数映射。</p>
+<p><img src="media/shared/menu-context-light-params.webp" alt="灯光资产右键 →「应用灯光参数」" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>场景中已有灯光，且灯光 shape 可用。</li>
+<li>当前渲染器已确定；跨渲染器应用时参数会按映射转换。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在 Maya 中选中要修改的灯光（选中 transform 或 shape 都可以）。</li>
+<li>在资产库右键点击灯光资产，选择「应用灯光参数到选中灯光」。</li>
+<li>也可调用 <code>apply_light</code>，显式传 <code>targets</code> 指定灯光节点；不传时使用当前选中。</li>
+<li>需要先预览时传 <code>dry_run=true</code>，返回里会列出目标与来源渲染器。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>返回 <code>status=ok</code>，带 <code>applied</code> 数量、<code>source</code> 渲染器与 <code>shapes</code> 列表；在 Attribute Editor 中对照灯光的强度、颜色、衰减等参数。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>灯光属性在 <strong>shape</strong> 上，不在 transform 上；手动核对时先展开 shape。</li>
+<li>未选中任何灯光时命令直接返回错误「未选中任何灯光节点」，不会猜目标。</li>
+<li>源资产与当前渲染器不同时会走转换；个别参数未必一一对应，以返回的 <code>shapes</code> 与界面结果为准。</li>
+<li>资产含 <code>.zlight</code> 时按该数据建临时灯再转换；不含时回退用资产里的 <code>.ma</code> / <code>.mb</code> 灯光网络作参数源。</li>
+</ul>

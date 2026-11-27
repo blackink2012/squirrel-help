@@ -1,0 +1,28 @@
+<p>The plug-in routes files to different importers by extension; when an extension is not in the supported set it is treated as an unknown format and fails immediately.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>Right-click import does nothing, or the log reports an unknown format.</li>
+<li>A file type is missing from the file chooser, or cannot be imported after selection.</li>
+<li>Image format conversion reports an unsupported target format.</li>
+<li>A format checkbox in the export dialog is grayed out, or shows <strong>unavailable</strong> next to it.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>The extension is not in the supported set</td><td><code>explain_format</code> returns <code>importer=unknown</code></td><td>Convert to a supported format, or import as an external file</td></tr><tr><td>Upper case or multiple suffixes</td><td>The file suffix is not a single dotted extension</td><td>Rename to a standard extension and retry</td></tr><tr><td>A Maya-side plug-in is missing</td><td>The import plug-in that format depends on is not loaded</td><td>Load the plug-in in the plug-in manager</td></tr><tr><td>An internal format treated as an external file</td><td><code>.zmetal</code> and <code>.zlight</code> are not ordinary external files</td><td>Import from the asset library, or use the matching conversion tool</td></tr><tr><td>The external-file import set is narrower</td><td>The extension is missing from the <code>importable_external</code> group</td><td>Collect it into the library first, or convert the format</td></tr><tr><td>The export format plug-in is unavailable</td><td>The format checkbox is grayed out</td><td>See 4.3.5.4 &quot;Format unavailable&quot;</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Run <code>list_supported_formats</code> and confirm which group the extension belongs to: geometry, proxy, volume, texture, HDR, zmetal or zlight.</li>
+<li>For a single file, run <code>explain_format</code> with the extension and confirm the returned <code>importer</code> is not <code>unknown</code>.</li>
+<li>Geometry supports <code>ma</code>, <code>mb</code>, <code>fbx</code>, <code>obj</code>, <code>abc</code>, <code>usd</code>, <code>usda</code>, <code>usdc</code>, <code>glb</code>, <code>gltf</code>, <code>dae</code>; proxies support <code>ass</code>, <code>rs</code>, <code>proxy</code>, <code>vrmesh</code>, <code>vrscene</code>; volumes support <code>vdb</code>.</li>
+<li>Textures support <code>png</code>, <code>jpg</code>, <code>jpeg</code>, <code>exr</code>, <code>hdr</code>, <code>tga</code>, <code>tiff</code>, <code>tif</code>, <code>bmp</code>, <code>psd</code>.</li>
+<li>To collect an external file into the library, first confirm the <code>importable_external</code> group of <code>list_supported_formats</code> contains that extension; if not, convert it first.</li>
+<li>For formats that depend on a Maya plug-in, load that plug-in in the plug-in manager and retry the import or export.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p><code>explain_format</code> returns a definite importer type (such as <code>geometry</code>, <code>texture</code>, <code>hdri</code>) and the file imports or converts normally.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Record the file extension, source software and full error to confirm the file itself is not corrupt.</li>
+<li>Save the file as a standard format in the target software first, then import it to verify.</li>
+<li>For export-side problems, check the plug-in and format presets per 4.3.5.4 &quot;Format unavailable&quot;.</li>
+<li>When reporting, include the returns of <code>list_supported_formats</code> and <code>explain_format</code> so it is clear whether the manifest is missing an entry or a plug-in failed to load.</li>
+</ul>

@@ -1,0 +1,10 @@
+<p>This page lists only items explicitly recorded in the documentation that are not finished yet; there are no version numbers or release dates, and scheduling is to be confirmed.</p>
+<table><thead><tr><th>Item</th><th>Current state</th><th>Basis</th></tr></thead><tbody><tr><td>Filling in help center bodies (P4)</td><td>Partly done: 5.2, 5.4, 5.5, 5.7, 5.8 and 7 are written; the remaining chapters continue as planned</td><td><code>docs/2026-10-19-帮助系统重构规划.md</code> §11 P4</td></tr><tr><td>English help</td><td>Not started: this release is Chinese first, English pages are reserved with the same id structure and fall back to Chinese when missing</td><td>Same document, §2.2, §6.5</td></tr><tr><td>Unattended Maya automatic restart</td><td>Not built: it needs a supervisor outside Maya (a boot-started process or a scheduled task), and whether to build it needs user confirmation</td><td><code>docs/2026-10-15-Maya崩溃后恢复连接.md</code></td></tr><tr><td>Autosave reliability review</td><td>Unverified: no autosave files were observed when the program drives Maya without human interaction; verify when used interactively</td><td>Same document</td></tr><tr><td>Help center video course</td><td>Not in this release; only video card slots are reserved on the home page</td><td>Same document, §2.2</td></tr><tr><td>Installer code signing</td><td>Not on the confirmed plan; installer v1 is unsigned and relies on <code>SHA256SUMS</code> and manually allowing it past SmartScreen</td><td><code>AGENTS.md</code></td></tr></tbody></table>
+<h2 id="h-1">Out of scope for this release</h2>
+<ul>
+<li>Online help hosting, an account system and a comment backend.</li>
+<li>Rewriting the embedding model, the vector index or the ranking algorithm.</li>
+<li>Replacing Maya&#x27;s official help; Maya commands still follow the official docs and the <code>maya_docs</code> knowledge base.</li>
+<li>Full English translation and synchronized multilingual releases.</li>
+</ul>
+<blockquote><p><strong>Tip</strong>: A roadmap is not a promise list. Confirm the release plan before communicating specific versions and dates externally.</p></blockquote>

@@ -1,0 +1,43 @@
+<p>Licenses come as trial, perpetual, subscription and floating licenses, plus offline licenses issued by the vendor for a specific machine code. A license is normally bound to this machine&#x27;s code, and activation is either online or offline.</p>
+<p><img src="media_en/shared/settings-license.webp" alt="Settings → License activation" loading="lazy" decoding="async"></p>
+<h2 id="h-1">License and versions</h2>
+<table><thead><tr><th>License</th><th>Validity</th><th>Which versions it covers</th></tr></thead><tbody><tr><td>Trial</td><td>Per the license (the current promotion period is 1 year)</td><td>Latest version</td></tr><tr><td>Subscription (annual)</td><td>365 days, renewable</td><td>Always the latest version while valid</td></tr><tr><td>Perpetual</td><td>No expiry</td><td>The major version current at first activation, plus new versions released in the following 3 years (older major versions also work); for offline-issued licenses the major version <strong>at issue time</strong> applies</td></tr></tbody></table>
+<ul>
+<li>The 3 years of free upgrades for a perpetual license start on the <strong>first activation date</strong> (<strong>for vendor-issued offline perpetual licenses, the issue date</strong>), and the baseline version is the current major version at activation / issue time (independent of which version is installed on this machine). The license window shows <code>「版本范围：1.x · 免费升级至 &lt;date&gt;」 (Version range: 1.x · free upgrades until &lt;date&gt;)</code>.</li>
+<li>After the 3 years, moving to a newer major version needs a new purchase; versions you already own keep working and are never disabled.</li>
+<li>The message <code>「当前版本超出该授权范围」 (this version is outside the license range)</code> means the installed version is beyond your version range: keep using the older version or buy a new license.</li>
+<li><strong>The <code>「购买授权」 (Buy license)</code> button is always visible and enabled only when the product is unlicensed, expired, or within 15 days of expiry</strong>; with plenty of license time left it is greyed out with a hover reason.</li>
+<li><strong>The green Activate button</strong> appears both on <strong>Settings → License activation</strong> and in the <strong>License management</strong> window. With an empty key and no trial started yet, clicking it issues a per-machine trial license from the server (<strong>no sign-in window</strong>); with a key it activates online.</li>
+</ul>
+<h2 id="h-2">License states</h2>
+<table><thead><tr><th>State</th><th>Meaning</th><th>Availability</th></tr></thead><tbody><tr><td>Trial</td><td>Issued by the server; trial days follow the license</td><td>Full features</td></tr><tr><td>Licensed</td><td>A valid perpetual or subscription license</td><td>Per license feature flags</td></tr><tr><td>Grace period</td><td>The 7 days after a subscription expires</td><td>Features keep working</td></tr><tr><td>Expired</td><td>The trial or subscription ended</td><td>Read-only, browsing only</td></tr><tr><td>Not activated</td><td>No usable license</td><td>Read-only, browsing only</td></tr></tbody></table>
+<p>Once the trial or license expires, unlicensed features are limited to read-only mode; the current code checks the license at import, export and conversion entry points.</p>
+<h2 id="h-3">Activation methods</h2>
+<ul>
+<li><strong>Free trial</strong>: while unlicensed and no trial started yet, leave the key empty and click the green <strong>Activate</strong> button; the server issues a per-machine trial license (no sign-in needed) that includes all features.</li>
+<li><strong>Online activation (code)</strong>: enter a <code>SQAM-XXXX-XXXX-XXXX-XXXX</code> key in the field under the machine code on <strong>Settings → License activation</strong>, then click <strong>Activate</strong>. The license window accepts the same key.</li>
+<li><strong>Offline activation</strong>: expand the collapsed <code>「离线许可证激活」 (Offline license activation)</code> section in the license window and click <code>「导入许可证文件…」 (Import license file…)</code> to pick a <code>.lic</code> / <code>.dat</code> / <code>.json</code> file issued by the licensor.</li>
+<li><strong>From the clipboard</strong>: copy the full license text and click <strong>Import from clipboard</strong>; it activates directly and never shows the license content. You can also drag the license file into the license window.</li>
+</ul>
+<ul>
+<li><strong>Online-activated licenses</strong>: deactivation is limited only by the server&#x27;s daily cap (max 3 per 24 hours); there is no machine-switch counter.</li>
+<li><strong>Offline-issued licenses</strong>: issued by the vendor for a machine code and <strong>cannot be unbound for a machine move</strong>. When online they only do read-only registration + heartbeat (no seat, no account binding; the server cannot revoke or delete them). The version range and the 3-year free-upgrade cutoff of a perpetual certificate are fixed <strong>at issue time</strong>; a heartbeat inside the upgrade window raises <code>max_version</code> automatically (the window still shows <code>「版本范围 / 免费升级至」</code>).</li>
+<li>The license is written to <code>%PROGRAMDATA%\SquirrelAssetManager\license.dat</code> first and falls back to <code>%LOCALAPPDATA%\SquirrelAssetManager\license.dat</code> if that fails; the trial record is <code>trial.dat</code>.</li>
+</ul>
+<h2 id="h-4">Machine code</h2>
+<ul>
+<li>The machine code is derived from hardware signals of this machine.</li>
+<li>Licenses not bound to a machine are issued only by special arrangement; regular offline-issued and online-activated licenses are bound to the machine code.</li>
+<li>Where to see it: the read-only <code>「机器码」 (Machine code)</code> field in the <strong>Current license</strong> card of <code>Settings → License activation</code>, with <code>「复制」 (Copy)</code> on the right; it is also shown in the <code>「授权管理」 (License management)</code> window.</li>
+</ul>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>The status badge on <strong>Settings → License activation</strong> shows <strong>Licensed</strong> or <strong>Trial</strong>, and the status line updates.</li>
+<li>The machine code is not <code>-</code>, and copying it yields the complete string.</li>
+<li>Import and export no longer report an insufficient license.</li>
+</ul>
+<h2 id="h-6">Notes</h2>
+<ul>
+<li>A machine code is not a license and cannot replace an activation code or license file.</li>
+<li>Do not publish activation codes or license files; offline licenses are usually bound to this machine&#x27;s code.</li>
+</ul>

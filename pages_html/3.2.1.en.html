@@ -1,0 +1,34 @@
+<p>An area can dock inside the main window or be dragged out into a separate window; drag a floating window back to the edge of the main window to dock it again.</p>
+<p><img src="media_en/shared/area-header.webp" alt="Area header: hold the blank space next to the name to drag the area; the button at the far right opens the area menu" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Docking and moving</h2>
+<ol>
+<li>Hold the blank space in the area header (next to the panel name).</li>
+<li>Drag to another position inside the main window; docking indicators appear while dragging.</li>
+<li>Release and the area docks to the indicated edge or column.</li>
+</ol>
+<p>Dragging the gap between areas changes width and height, and the proportions are saved automatically.</p>
+<h2 id="h-2">Floating and tearing off</h2>
+<p><img src="media_en/shared/area-menu-tearoff.webp" alt="Area menu: Tear off turns the current area into a separate window; Tear off a copy duplicates it first" loading="lazy" decoding="async"></p>
+<p><img src="media_en/shared/area-float-window.webp" alt="After tearing off, the area becomes a floating window above the main interface" loading="lazy" decoding="async"></p>
+<ol>
+<li>Click the function button on the right of the area header to open the area menu.</li>
+<li>Choose <code>「撕下」 (Tear off)</code> to turn the current area into a separate window, or <code>「撕下副本」 (Tear off a copy)</code> to duplicate the same panel type first and float the copy, leaving the original in the layout.</li>
+<li>You can also drag the area header out of the main window and release to create a floating window.</li>
+<li>Floating windows move and resize freely; drag one back to the edge of the main window to dock it again, or choose <code>「停靠回主窗口」 (Dock back into the main window)</code> in the area menu.</li>
+</ol>
+<h2 id="h-3">Closing an area</h2>
+<ul>
+<li>Area menu → <code>「关闭本区域」 (Close this area)</code>.</li>
+<li>At least one area always remains; closing the last one is refused with <code>「至少要保留一个区域」 (at least one area must remain)</code> in the status bar.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>Tearing off creates a separate window and the freed space in the main window goes to neighboring areas.</li>
+<li>Dragging the floating window back to the edge of the main window and releasing docks it again.</li>
+<li>Closing an area reduces the count, and the menu offers creating a new area.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>With the layout locked you cannot drag areas around or pull them out, but <code>「撕下」 (Tear off)</code> in the area menu still works (see 3.2.4).</li>
+<li>Floating state is <strong>not kept for the next start</strong>: while an area floats the layout tree may not be readable, so by design the plug-in saves nothing and returns to a docked layout after restart; the docked layout, proportions and maximized state are saved automatically (see 3.2.5).</li>
+</ul>

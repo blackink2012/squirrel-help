@@ -1,0 +1,32 @@
+<p>场景与动态资产走同一条几何导入管线；含动画的格式会带时间范围或帧序列设置进入场景。</p>
+<p><img src="media/shared/menu-context-scene.webp" alt="场景资产右键：导入场景与动画" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>当前 Maya 场景已保存，避免导入的相机、灯光与原场景混淆。</li>
+<li>场景资产包含 ma、mb、fbx、usd、abc 等格式，或 ass、rs 帧序列。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>右键场景或动态资产，点「导入 ma」（只有一种格式时直接执行；有多种格式时才展开「导入 ▶」）。</li>
+<li>选择要导入的格式。多格式资产会逐项列出格式名。</li>
+<li>等待导入完成。</li>
+<li>播放时间轴，检查动画是否随帧更新。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>Outliner 中出现场景中的模型、相机、灯光等节点。</li>
+<li>动态资产的时间轴范围内，模型随帧变化。</li>
+<li>ass、rs 序列资产的代理节点已开启帧扩展（<code>useFrameExtension</code>）；usd 动画按覆盖时间范围导入。</li>
+<li>脚本编辑器出现导入成功日志。</li>
+</ul>
+<h2 id="h-4">相关：另外四类资产不在这条管线里</h2>
+<p>本页讲的是「场景 / 动态」这类几何资产。图片、音频、动画数据、节点树 是另外四类，入口与结果都不同：</p>
+<table><thead><tr><th>资产</th><th>右键入口</th><th>详见</th></tr></thead><tbody><tr><td>动画数据（ATOM 关键帧）</td><td>「导入动画 ▶」/「导入动画（层级映射）…」/「导入到选择属性 ▶」</td><td><a href="#/15.5.11"><code>8.5.11</code></a></td></tr><tr><td>节点树（节点网络）</td><td>「导入 ma」</td><td><a href="#/15.5.12"><code>8.5.12</code></a></td></tr><tr><td>音频（音乐）</td><td>「导入到时间轴 / 时间编辑器 / Trax 编辑器 / 摄像机序列器」</td><td><a href="#/15.5.10"><code>8.5.10</code></a></td></tr><tr><td>图片</td><td>「导入为 file 节点 / 创建 imagePlane / 指定到选中材质槽 / 打开图像」</td><td><a href="#/15.5.9"><code>8.5.9</code></a></td></tr></tbody></table>
+<p>其中动画数据与节点树<strong>常一起来用</strong>：节点树（或模型）提供场景里的层级，再把动画数据的关键帧贴到这些层级上。</p>
+<h2 id="h-5">提示</h2>
+<ul>
+<li>usd 动画导入使用 <code>importTimeRange=override</code> 与 <code>readAnimData=1</code>，工作范围以资产内记录为准。</li>
+<li>abc、usd 会先复制到工程缓存再导入，避免引用资产包内的临时路径。</li>
+<li>场景资产会合并进当前场景而非新建文件；导入前先保存当前场景。</li>
+<li>ass、rs 帧序列是否启用帧扩展，取决于资产 <code>meta.json</code> 的 <code>ani</code> 记录。</li>
+</ul>

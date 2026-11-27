@@ -1,0 +1,23 @@
+<p>材质资产记录的是具体节点类型，能不能直接重建，取决于当前 Maya 是否加载了对应渲染器插件。</p>
+<p><img src="media/shared/area-icon-view.webp" alt="材质卡片上的球体预览随渲染器不同而不同" loading="lazy" decoding="async"></p>
+<h2 id="h-1">常用对应关系</h2>
+<table><thead><tr><th>渲染器</th><th>常用材质节点</th><th>双击自动创建的默认材质</th><th>所需插件</th></tr></thead><tbody><tr><td>Arnold</td><td><code>aiStandardSurface</code>、<code>aiStandardHair</code>、<code>aiVolume</code></td><td><code>aiStandardSurface</code></td><td><code>mtoa</code></td></tr><tr><td>V-Ray</td><td><code>VRayMtl</code></td><td><code>VRayMtl</code></td><td><code>vrayformaya</code></td></tr><tr><td>Redshift</td><td><code>RedshiftStandardMaterial</code>、<code>RedshiftOpenPBRMaterial</code>、<code>RedshiftMaterial</code></td><td><code>RedshiftStandardMaterial</code></td><td><code>redshift4maya</code></td></tr><tr><td>Maya 原生</td><td><code>standardSurface</code>、<code>openPBRSurface</code>、<code>lambert</code>、<code>phong</code>、<code>blinn</code></td><td>不参与渲染器自动切换</td><td>无</td></tr></tbody></table>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在 Maya 中确认当前渲染器（<code>defaultRenderGlobals.currentRenderer</code>），并确认对应插件已加载。</li>
+<li>在资产库中查看材质资产的 <code>node_type</code> 与 <code>renderer</code>，对照上表判断目标机器能否直接创建。</li>
+<li>双击导入，或右键「转换导入」选择当前渲染器常用的材质类型。</li>
+<li>如果插件未加载或该版本没有此节点类型，删除对应材质节点会失败；先加载插件再重试。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>导入后 Hypershade 中出现对应类型的新材质，属性编辑器标题显示正确的节点类型；双击创建的材质类型与当前渲染器一致。</p>
+<h2 id="h-4">提示</h2>
+<ul>
+<li><strong>导入时是否自动转换，取决于入口</strong>：<ul>
+<li><strong>双击导入 <code>zmetal</code></strong>：直接按当前渲染器转成默认材质，<strong>不弹确认</strong>；</li>
+<li><strong>右键「导入」</strong>：先把资产里的原材质建出来，再弹<strong>一次</strong>整批确认（一个资产里的所有材质只问一次，不会逐材质弹框），确认后才转换；</li>
+<li>其它格式（如 <code>ma</code>）无论双击还是右键都会先问再转。</li>
+</ul></li>
+<li>自动转换只认 Arnold、V-Ray、Redshift 三种渲染器；Maya 原生材质与当前渲染器材质不参与，需要时到材质转换工具手动转换。</li>
+<li>同一资产在不同渲染器机器上导入，得到的节点类型可能不同，这是转换的结果，不是资产损坏。</li>
+</ul>

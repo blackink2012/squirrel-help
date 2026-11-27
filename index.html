@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN" data-style="balenciaga">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>松鼠资产管家帮助</title>
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
+  <link rel="stylesheet" href="assets/help.css">
+  <link rel="stylesheet" href="assets/presets/balenciaga.css">
+  <link rel="stylesheet" href="assets/preset-bridge.css">
+</head>
+<body>
+  <header class="topbar">
+    <button id="menuToggle" class="icon-button" type="button" aria-label="显示或隐藏目录" aria-expanded="false">
+      <span class="menu-lines" aria-hidden="true"></span>
+    </button>
+    <a class="brand" href="#/" id="brandLink">
+      <img class="brand-logo" src="assets/squirrel_icon.webp" alt="" aria-hidden="true">
+      <span class="brand-text" id="brandText">松鼠资产管家帮助</span>
+    </a>
+    <div class="search-wrap">
+      <input id="searchInput" class="search-input" type="search" autocomplete="off"
+             placeholder="搜索功能、设置、命令…（回车搜索）" aria-label="搜索帮助">
+    </div>
+    <div class="top-actions">
+      <div id="langSwitch" class="lang-switch" role="group" aria-label="切换语言">
+        <button type="button" data-lang="zh" class="is-active" aria-pressed="true">中</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+      <span class="version-tag">v1.0</span>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside id="sidebar" class="sidebar" aria-label="帮助目录">
+      <div class="sidebar-head" id="sidebarHead">目录</div>
+      <nav id="tocTree" class="toc-tree"></nav>
+    </aside>
+
+    <main class="main">
+      <section id="homeView" class="home-view" aria-label="帮助主页"></section>
+
+      <section id="searchView" class="search-view" aria-label="搜索结果" hidden></section>
+
+      <section id="docView" class="doc-view" hidden>
+        <nav id="breadcrumb" class="breadcrumb" aria-label="面包屑"></nav>
+        <div class="doc-grid">
+          <article id="article" class="article"></article>
+          <aside class="page-toc" aria-label="本页内容">
+            <div class="page-toc-title" id="pageTocTitle">本页内容</div>
+            <nav id="pageToc"></nav>
+          </aside>
+        </div>
+        <div class="doc-footer">
+          <a id="prevLink" class="page-nav prev" href="#/" hidden></a>
+          <a id="nextLink" class="page-nav next" href="#/" hidden></a>
+        </div>
+        <div class="feedback">
+          <span id="feedbackQuestion">此页是否有帮助？</span>
+          <button type="button" data-feedback="yes" id="feedbackYes">有帮助</button>
+          <button type="button" data-feedback="no" id="feedbackNo">没帮助</button>
+          <span id="feedbackStatus" class="feedback-status"></span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="assets/help.js"></script>
+</body>
+</html>

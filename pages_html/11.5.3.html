@@ -1,0 +1,26 @@
+<p>缓存与代理为每种资产类型预设导出时默认勾选的缓存与渲染代理格式。</p>
+<p><img src="media/shared/settings-cache-proxy.webp" alt="缓存与代理" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>新建导出对话框或创建资产时，按当前资产类型预勾 Alembic、Arnold、V-Ray、Redshift 与 V-Ray 代理格式。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<ul>
+<li>左侧列表选择资产类型，显示为子库 ID。</li>
+<li>五个选项及默认值：</li>
+</ul>
+<table><thead><tr><th>选项</th><th>默认勾选的类型</th></tr></thead><tbody><tr><td>Alembic (.abc)</td><td><code>ani</code></td></tr><tr><td>Arnold (.ass)</td><td>无</td></tr><tr><td>V-Ray (.vrscene)</td><td>无</td></tr><tr><td>Redshift (.rs)</td><td>无</td></tr><tr><td>V-Ray 代理 (.vrmesh)</td><td>无</td></tr></tbody></table>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>只决定导出界面里复选框的初始状态，单次导出仍可修改。</li>
+<li>代理格式只在对应渲染器（Arnold / V-Ray / Redshift）可用时才有意义。</li>
+<li>不改变已有资产，也不改变右键菜单或快捷工具。</li>
+<li>保存到 <code>Assets/preset/export_preset.json</code> 对应资产类型的键。</li>
+</ul>
+<h2 id="h-4">何时修改</h2>
+<ul>
+<li>动画或特效资产需要缓存：为 <code>ani</code> 保留 <code>.abc</code>。</li>
+<li>交付给渲染农场、需要轻量代理：按农场渲染器勾选对应代理格式。</li>
+<li>只在本机 Maya 中使用：保持全不勾，减小资产体积。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<blockquote><p><strong>提示</strong>：缓存与代理文件通常体积较大，导出前确认目标磁盘空间。</p></blockquote>
+<blockquote><p><strong>提示</strong>：左侧是资产类型而不是分类；同一类型下的所有分类共用一套默认值。</p></blockquote>

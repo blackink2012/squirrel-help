@@ -1,0 +1,26 @@
+<p>Give the plug-in a reference image and it first uses image vectors to find visually similar assets; only when image retrieval is unavailable does it fall back to &quot;image to description&quot; or &quot;vision keywords&quot;.</p>
+<p><img src="media_en/shared/dialog-ai-search.webp" alt="AI search" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>Image search from the main interface: an asset library is open.</li>
+<li>Pixel-level retrieval needs the image sidecar and the image index; without them a vision model or tag fallback is still possible.</li>
+<li>A dropped asset must have a usable thumbnail.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>In the search bar click the <strong>upload</strong> button (tooltip <code>「上传文件搜索」 (Upload a file to search)</code>) and pick one of <code>「上传图片搜索」 / </code>「上传视频搜索」 / <code>「上传音频搜索」 (upload image / video / audio search)</code>, or click <strong>screenshot search</strong> and marquee a screen region.</li>
+<li>You can also drag a local image, video or audio file onto the search bar (the placeholder changes accordingly: images, audio and video each have their own hint).</li>
+<li>To find music by &quot;the sound that is playing&quot;, switch to the <strong>music (audio) category</strong> and use <strong>record system audio search</strong>: it records what this computer is <strong>playing</strong>, not the microphone.</li>
+<li>To find assets from an animation picture, click <strong>screen-recording search</strong> and record a marquee region.</li>
+<li>Wait for retrieval. The internal order is: image vectors → turn the query image into one Chinese description and use text vectors → vision-model keywords and lexical search.</li>
+<li>Results appear isolated in the asset grid; click ✕ on the right of the search box to cancel the isolation and restore all assets of the current category.</li>
+<li>In <code>「AI 搜索预览资产」 (AI search preview)</code> you can also add several reference images at once and send them together with text.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The status bar reports the path actually used: image-vector hits show the count and duration, the description route shows the recognized description, and the keyword route shows the keywords. When all three fail it reports no matching assets.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>Building the image index the first time, or a cold start of the sidecar, is noticeably slower; afterwards it is incremental with a resident process.</li>
+<li>The image index syncs incrementally on thumbnail changes; never use a sync command with <code>--limit</code> as sampling, because it trims index entries.</li>
+<li>Chinese text-to-image search is not the image index&#x27;s strength, so prefer a reference image for finding pictures.</li>
+</ul>

@@ -1,0 +1,30 @@
+<p>带变体、版本或 LOD 的资产通过「导入变体 / 版本」子菜单，只导入指定的那一份几何体。</p>
+<p><img src="media/shared/dialog-version-browser-variant.webp" alt="版本浏览器：查看并导入指定版本 / 变体" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>资产包含变体（<code>variants.json</code> 的 <code>variants</code> 段非空），或内嵌版本（如 <code>V1</code>、<code>V2</code>），或主版本自身有多条 LOD。</li>
+<li>已在网格中右键该资产。</li>
+</ul>
+<h2 id="h-2">菜单标题</h2>
+<table><thead><tr><th>资产内容</th><th>菜单标题</th></tr></thead><tbody><tr><td>有变体，且另有版本</td><td>导入变体 / 版本</td></tr><tr><td>只有变体</td><td>导入变体</td></tr><tr><td>只有多版本 / 多 LOD</td><td>导入版本 / LOD</td></tr></tbody></table>
+<p>主版本固定排在最上面，其后是各版本与各变体；条目左侧带小缩略图，鼠标悬停会在菜单旁弹出预览大图。</p>
+<h2 id="h-3">操作步骤</h2>
+<ol>
+<li>右键资产，展开对应的「导入…」子菜单。</li>
+<li>选择目标：主版本、某个内嵌版本，或某个变体条目。</li>
+<li>选 LOD：「本体几何体」是该变体 / 版本的 <code>LOD0</code>，其余档位按 <code>LOD1</code>、<code>LOD2</code>…列出；无 LOD 时直接列出根目录几何文件。</li>
+<li>同一档位有多个格式时，再展开格式子菜单，条目为格式名，或「格式 · 文件名」。</li>
+<li>若该条目还带 <code>.zmetal</code>、<code>.mcm</code>，它们会与几何格式并列显示，点击后走材质导入而不是几何导入。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>场景中只新增所选变体 / 版本 / LOD 的几何体。</li>
+<li>脚本编辑器出现 <code>[VariantImport] 导入变体几何体: &lt;文件&gt; (&lt;格式&gt;)</code> 与导入成功日志。</li>
+<li>导入变体时贴图与材质来自资产根目录，不需要额外指定。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<ul>
+<li>变体几何体平铺在 <code>variants/</code> 下（<code>&lt;id&gt;.&lt;ext&gt;</code>、<code>&lt;id&gt;_lodN.&lt;ext&gt;</code>），旧版子目录 <code>variants/&lt;id&gt;/</code> 仍兼容读取。</li>
+<li>默认 LOD 由 <code>lods.json</code> 的 <code>default_lod</code> 决定；LOD0 固定指向根目录的几何体，不放在 <code>lod0/</code> 子目录。</li>
+<li>需要连同某个版本的独立材质一起用，请另见「版本独立材质」；变体不携带独立材质。</li>
+</ul>

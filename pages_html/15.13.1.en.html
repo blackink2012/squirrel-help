@@ -1,0 +1,54 @@
+<blockquote><p>One-line summary: <strong>describe what you want in one sentence (or just send a reference image) and it finds the closest assets in the current library.</strong></p></blockquote>
+<p>This is not ordinary file-name search. It first turns your sentence into <strong>intent keywords</strong> and then runs a vector search in the library with them; with <strong>use global model</strong> ticked, the understanding step is handed to the large model. That is why it can find words that are not in any name (for example &quot;gray frosted sphere&quot; still hits).</p>
+<h2 id="h-1">How to open it</h2>
+<p>Two routes open the same interface:</p>
+<ol>
+<li><strong>Standalone window</strong>: top toolbar <strong>AI tools</strong> → click <strong>AI search preview assets</strong> in the menu.</li>
+<li><strong>As a panel inside the main interface</strong>: top toolbar <strong>Panels and layout</strong> → <strong>New panel</strong> → <strong>AI search preview assets</strong>; you can also switch an existing area&#x27;s header dropdown to this panel type.</li>
+</ol>
+<p>Also note the <strong>AI search</strong> checkbox to the right of the main window&#x27;s search box is not this window — that one searches the asset grid semantically, see <a href="#/en/15.2.3"><code>8.2.3</code></a>.</p>
+<h2 id="h-2">Three prerequisites</h2>
+<ul>
+<li><strong>Open an asset library first</strong>. With no library nothing typed into this window works; it reports &quot;open an asset library before using AI search&quot;.</li>
+<li><strong>To use the large model for intent analysis</strong>: configure the global model in <strong>Settings → AI settings</strong> first, then tick <strong>use global model</strong> back in this window. Unticked also works, using only local vector retrieval (no model calls, no cost, no network).</li>
+<li><strong>To make search-by-image work</strong>: the local AI dependencies (embedding model) must be installed. On the first search the status bar shows &quot;loading embedding model… (about 10–20 seconds the first time, seconds afterwards)&quot;, which is normal.</li>
+</ul>
+<p><img src="media_en/shared/dialog-ai-search.webp" alt="AI search window" loading="lazy" decoding="async"></p>
+<h2 id="h-3">What every control does</h2>
+<h3 id="h-4">Top row (mode and conversation controls)</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Title &quot;AI search preview assets&quot;</td><td>The window title; it also hints this is preview plus search, not an import button</td><td>—</td></tr><tr><td><strong>Use global model</strong> checkbox</td><td>Ticked = use the global model from <strong>Settings → AI settings</strong> for intent analysis (the same source as AI thumbnail analysis); unticked (default) = local vector retrieval only</td><td>Leave it unticked to save cost or stay offline; tick it when results are off</td></tr><tr><td>Status text &quot;local vector retrieval only&quot; (or a model name)</td><td>Shows the current retrieval mode: &quot;local vector retrieval only&quot; when no model is used, or the model actually in use</td><td>Read-only; confirms whether a model is involved right now</td></tr><tr><td>⚙ button (AI service configuration)</td><td>Opens the model configuration window dedicated to AI search, see <a href="#/en/15.13.2"><code>8.13.2</code></a></td><td>Click it to change provider / enter an API key</td></tr><tr><td><strong>Clear conversation</strong> button</td><td>Clears the conversation area and starts a new round</td><td>Click it when results are noisy and you want to restart</td></tr></tbody></table>
+<h3 id="h-5">Middle: conversation and results</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Scroll area</td><td>Your messages and reference images above, result cards below; each card is a matched asset</td><td>Cards can be <strong>dragged into the Maya viewport</strong> to import</td></tr><tr><td>Input (placeholder &quot;type a natural-language description, or click to send a reference image…&quot;)</td><td>Describe what you are looking for. <strong>Enter</strong> sends</td><td>Describing material / shape / purpose works better than file names</td></tr><tr><td>Image button (add image)</td><td>Adds reference images, several allowed, sent together with text</td><td>With a reference image, sending the image first usually hits better</td></tr><tr><td>Screenshot button</td><td>Drag a rectangle anywhere on screen and use that frame as the reference image</td><td>Saw the look in someone&#x27;s screenshot? Frame it directly</td></tr><tr><td><strong>Send</strong> button</td><td>Sends this round of search</td><td>—</td></tr><tr><td>The <strong>intent keywords</strong> row plus a remove icon per keyword</td><td>Shows keywords the AI extracted from your sentence; <strong>clicking × removes that keyword and automatically searches again with the rest</strong></td><td>Removing an obviously wrong word is faster than rewriting the sentence</td></tr><tr><td><strong>Expand all ↓</strong></td><td>Shows part of the results first; click to show everything</td><td>—</td></tr><tr><td>Result count note (such as &quot;found N matching assets · sorted by relevance&quot;)</td><td>Tells you how many matched and whether the display was truncated</td><td>—</td></tr><tr><td>Footer hint (right-click a card: import / locate / find similar / send to AI analysis…)</td><td>Reminds you how to act on cards</td><td>Remember this: the card context menu is where actions live</td></tr></tbody></table>
+<h3 id="h-6">Result card context menu</h3>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Notes</th></tr></thead><tbody><tr><td>Import into Maya</td><td>Imports that asset into the current scene</td><td>Maya must be connected; this changes the scene (Ctrl+Z undoes it)</td></tr><tr><td>Locate in library</td><td>Closes the window, returns to the asset grid and selects that asset</td><td>Locating changes no data</td></tr><tr><td>Find similar</td><td>Runs another search using this card as the reference image</td><td>—</td></tr><tr><td>Send to AI analysis</td><td>Sends the card&#x27;s thumbnail to AI analysis (see <a href="#/en/15.13.3"><code>8.13.3</code></a>)</td><td>The asset needs a thumbnail, otherwise it reports &quot;no thumbnail, cannot send to AI&quot;</td></tr><tr><td>Add to wishlist</td><td>Adds the asset to the wishlist on the right of the window</td><td>A collection list only; files are not copied</td></tr><tr><td>View details</td><td>Opens the asset details window, see <a href="#/en/15.11.1"><code>8.11.1</code></a></td><td>—</td></tr></tbody></table>
+<h3 id="h-7">Right side: wishlist</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Title <strong>Wishlist</strong> plus a number</td><td>How many entries the wishlist holds</td><td>—</td></tr><tr><td><strong>Clear</strong> link</td><td>Empties the whole wishlist (with confirmation)</td><td>Make sure you have noted the assets before clearing</td></tr><tr><td>Entries (click a row to locate, × at the end removes)</td><td>Click = locate in the asset grid; × = remove from the wishlist</td><td>Collect &quot;things this project needs&quot; here</td></tr><tr><td>Empty-state hint &quot;add matching assets to the wishlist (right-click a result card → add to wishlist)&quot;</td><td>Guidance while the wishlist is empty</td><td>—</td></tr></tbody></table>
+<p>The wishlist is stored locally and survives closing the window and restarting the plug-in (on the same machine).</p>
+<h2 id="h-8">A complete usage flow</h2>
+<ol>
+<li>Confirm an asset library is open on the left (the right one).</li>
+<li>Open the AI search window and type a plain sentence, for example &quot;rusted metal sheet, large and old&quot;.</li>
+<li>If needed, click the image button to send a reference image, or the screenshot button to frame part of the screen.</li>
+<li>Press Enter (or click <strong>Send</strong>).</li>
+<li>Read the results:<ul>
+<li>remove clearly off-target keywords with × and it searches again automatically;</li>
+<li>click <strong>Expand all ↓</strong> when there are many results; loosen the description when there are few.</li>
+</ul></li>
+<li><strong>Right-click</strong> the assets you like: click <strong>Import into Maya</strong> for the ones to use now, and <strong>Add to wishlist</strong> for later.</li>
+<li>Before wrapping up, use the wishlist to gather everything this project needs at once.</li>
+</ol>
+<h2 id="h-9">What you see afterwards</h2>
+<ul>
+<li>Result cards appear in the conversation area sorted by relevance, each a real asset in the library.</li>
+<li>Imported assets appear in the current Maya scene (equivalent to one asset import).</li>
+<li>Wishlist entries survive closing the window.</li>
+</ul>
+<h2 id="h-10">Common messages and what to do</h2>
+<table><thead><tr><th>Message you see</th><th>Meaning</th><th>What to do</th></tr></thead><tbody><tr><td>AI semantic retrieval is not active: …</td><td>The embedding model / index is missing, so only lexical search is available</td><td>Install it in <strong>Settings → AI settings → install AI dependencies</strong>, see <a href="#/en/15.9.3"><code>8.9.3</code></a></td></tr><tr><td>AI service unavailable, falling back to keyword search</td><td>The model cannot be reached, so it degrades to keyword search</td><td>Check provider / API key / address, see <a href="#/en/15.13.2"><code>8.13.2</code></a></td></tr><tr><td>Could not extract search keywords, please rephrase</td><td>The description is too short or too abstract</td><td>Use &quot;material + shape + purpose&quot;</td></tr><tr><td>No matching assets, try removing tags or rephrasing</td><td>The keywords are too narrow</td><td>Remove a few keywords or use more common wording</td></tr><tr><td>The current model does not support image analysis, falling back to tag search for this asset</td><td>The chosen model is text-only</td><td>Choose a vision-capable model, or describe it in words</td></tr></tbody></table>
+<h2 id="h-11">Related</h2>
+<ul>
+<li>Changing provider / key / model: <a href="#/en/15.13.2"><code>8.13.2</code></a></li>
+<li>Opening it from the menu: <a href="#/en/15.2.7"><code>8.2.7</code></a></li>
+<li>Why semantic retrieval is unavailable and how to fix it: <a href="#/en/13.5.1"><code>6.5.1</code></a></li>
+<li>Other entries for importing assets into the scene: <a href="#/en/15.5.13"><code>8.5.13</code></a></li>
+</ul>

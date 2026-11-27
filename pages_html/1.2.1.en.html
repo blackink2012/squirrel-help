@@ -1,0 +1,25 @@
+<p>The Maya plug-in edition installs the whole interface and feature set inside the Maya process and reads and writes the current scene directly. It is the most complete and the smoothest form to work with.</p>
+<h2 id="h-1">How it runs</h2>
+<ul>
+<li>The plug-in code lives in the <code>squirrel_asset_manager</code> folder of the local EXE install directory (default <code>%LOCALAPPDATA%\SquirrelAM</code>, changeable during installation), and <strong>one installation serves every installed Maya version</strong>.</li>
+<li>Core modules ship as several <code>.pyd</code> builds, one per Python ABI; Maya loads the matching build at startup.</li>
+<li>When <code>「Maya 集成」 (Maya integration)</code> is checked in the installer, it writes a marked startup block into the <code>userSetup.py</code> of every Maya version detected locally (or checked in the wizard): import path, MCP startup registration, status-line button and bridge port. The shelf button is created only once, at install time.</li>
+</ul>
+<h2 id="h-2">Where to open it</h2>
+<ul>
+<li>The <code>「松鼠资产管家」 (Squirrel Asset Manager)</code> button in the Custom category of the Maya shelf.</li>
+<li>The squirrel icon on the right side of the Maya status line.</li>
+<li><code>MaterialLibraryWindow.show_window()</code> in the Script Editor (no separate Maya menu item is registered).</li>
+</ul>
+<h2 id="h-3">Advantages</h2>
+<ul>
+<li>Uses the current scene and viewport directly: drag and drop, snapping, thumbnail capture and material assignment all happen in the same process.</li>
+<li>No separate Python or PySide6 install; it uses the Qt bindings that ship with Maya.</li>
+<li>Shares the same commands and data as the AI backend, MCP and headless batch processing.</li>
+</ul>
+<h2 id="h-4">Requirements and limits</h2>
+<ul>
+<li>Requires one of Maya 2022–2027; earlier versions (2021 and before) have no matching <code>.pyd</code> and cannot run it.</li>
+<li>Close all Maya instances before installing or overwriting <code>.pyd</code> files so the files are not locked.</li>
+<li>The plug-in edition cannot run on its own when Maya is not running; use the standalone edition / EXE to browse assets instead.</li>
+</ul>

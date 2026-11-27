@@ -1,0 +1,53 @@
+<blockquote><p>一句话定位：<strong>选一批 .ma / .mb，写一段 MEL 或 Python，让它在每个文件里都跑一遍，可选跑完自动保存。</strong></p></blockquote>
+<p>窗口标题叫「Maya批量脚本执行器」。它适合&quot;同一件事要在几十个场景文件上做一遍&quot;的活：批量改名、批量清空选择、批量补灯光、批量设置渲染参数……</p>
+<h2 id="h-1">从哪打开</h2>
+<table><thead><tr><th>入口</th><th>具体怎么做</th></tr></thead><tbody><tr><td>顶部工具栏「快捷工具」菜单</td><td>「快捷工具」→「批量处理maya文件」</td></tr><tr><td>脚本浏览器</td><td>「脚本浏览器」→ 添加插件目录下的 <code>quicktools</code> 目录 → <code>批量处理maya文件.py</code> 双击运行</td></tr></tbody></table>
+<p>没有对应的命令入口（命令面里没有这个工具）。</p>
+<p><img src="media/shared/quicktool-batch-maya.webp" alt="批量处理 Maya 文件窗口" loading="lazy" decoding="async"></p>
+<h2 id="h-2">界面上每个控件做什么</h2>
+<h3 id="h-3">卡片「文件选择」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「添加文件」</td><td>加 .ma / .mb 到列表</td><td>建议只加<strong>副本</strong>，见&quot;风险&quot;</td></tr><tr><td>「移除选中」</td><td>把列表里选中的条目去掉（不删磁盘文件）</td><td>—</td></tr><tr><td>「清空列表」</td><td>清空整个待处理列表</td><td>不删磁盘文件</td></tr><tr><td>「打开文件夹」</td><td>在资源管理器里打开某个文件所在目录</td><td>确认文件位置时用</td></tr><tr><td>「已选择 N 个文件」</td><td>当前待处理数量</td><td>开跑前再核一遍</td></tr></tbody></table>
+<h3 id="h-4">卡片「脚本输入」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>单选「MEL」/「Python」</td><td>这段脚本按哪种语言执行（默认 MEL）</td><td>只选一个；两个都不选会提示&quot;请至少选择一种脚本类型&quot;</td></tr><tr><td>「MEL示例」/「Python示例」</td><td>往编辑框里填一段示例脚本</td><td>不知道怎么写时从示例改</td></tr><tr><td>「清空脚本」</td><td>清空编辑框</td><td>—</td></tr><tr><td>脚本文本框（占位「在此输入MEL或Python脚本...」）</td><td>要跑的内容，带语法高亮</td><td>先在「测试执行」里跑通它，再批量</td></tr></tbody></table>
+<h3 id="h-5">卡片「执行选项」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>勾选「无头执行（mayapy 独立进程，不占用当前场景）」</td><td>用 mayapy 起独立进程跑批，当前 Maya 与你打开的场景完全不受影响</td><td>默认勾选，建议保持；取消勾选才会在当前 Maya 进程里逐个打开文件</td></tr><tr><td>勾选「执行后保存文件」</td><td>勾 = 每个文件跑完就 <code>save</code>；不勾 = 只跑不存</td><td><strong>先不勾跑一遍看结果</strong>，确认了再勾上重跑</td></tr><tr><td>勾选「显示详细信息」</td><td>日志里逐文件打印&quot;处理文件 i/n&quot;和&quot;已保存&quot;</td><td>文件多时建议勾</td></tr><tr><td>勾选「高级选项」</td><td>展开下面三个勾选项</td><td>—</td></tr><tr><td>勾选「执行前备份文件」</td><td>见&quot;风险&quot;：<strong>当前版本这一项不影响实际行为</strong></td><td>别依赖它，自己手动备份</td></tr><tr><td>勾选「强制保存（忽略警告）」</td><td>同上，当前版本未接入执行流程</td><td>同上</td></tr><tr><td>勾选「忽略错误继续执行」</td><td>同上，当前版本未接入执行流程（实际行为一直是&quot;出错记日志、继续下一个&quot;）</td><td>同上</td></tr></tbody></table>
+<h3 id="h-6">底部按钮</h3>
+<table><thead><tr><th>按钮</th><th>作用</th></tr></thead><tbody><tr><td>「测试执行（当前场景）」</td><td><strong>只在当前打开的场景里</strong>跑一遍这段脚本，不打开文件、不保存。用来验证脚本对不对</td></tr><tr><td>「批量执行」</td><td>对列表里每个文件：打开 → 跑脚本 →（勾了才保存）→ 下一个</td></tr><tr><td>「关闭」</td><td>关窗口（跑批期间请别关）</td></tr></tbody></table>
+<h3 id="h-7">卡片「执行日志」</h3>
+<table><thead><tr><th>控件</th><th>作用</th></tr></thead><tbody><tr><td>日志文本区</td><td>逐文件结果、失败原因、最后汇总「成功: X 个文件 / 失败: Y 个文件」</td></tr><tr><td>「清空日志」</td><td>清屏（不影响已跑的批）</td></tr><tr><td>「保存日志」</td><td>把日志存成文件，出问题拿它去排查</td></tr><tr><td>「复制日志」</td><td>复制到剪贴板</td></tr><tr><td>「就绪」状态行</td><td>当前状态</td></tr></tbody></table>
+<h2 id="h-8">一次完整的操作流程</h2>
+<ol>
+<li><strong>先把要处理的文件复制一份</strong>（重要，见&quot;风险&quot;），只对副本操作；</li>
+<li>快捷工具 →「批量处理maya文件」；</li>
+<li>「添加文件」把这批副本加进来；</li>
+<li>选 MEL 或 Python，写脚本；不会写就点「MEL示例」/「Python示例」在示例上改；</li>
+<li>先点「测试执行（当前场景）」：它会<strong>在你当前正在看的场景里</strong>跑这段脚本 —— 所以先拿一个空场景或临时场景测；</li>
+<li>测通了，取消勾选「执行后保存文件」，先点「批量执行」空跑一遍，看日志里有没有大面积失败；</li>
+<li>确认没问题，勾上「执行后保存文件」，再点「批量执行」；</li>
+<li>跑完看日志末尾的「成功 / 失败」统计；有失败就按文件名和错误原因逐个处理；</li>
+<li>需要留档就点「保存日志」。</li>
+</ol>
+<h2 id="h-9">输出结果在哪</h2>
+<ul>
+<li>脚本的效果直接落在<strong>每个 Maya 文件里</strong>（勾了「执行后保存文件」才会写回文件）；</li>
+<li>窗口里只产生<strong>日志</strong>：每条处理结果、失败原因、最终统计；</li>
+<li>批量跑完会自动<strong>尝试把原场景打开回来</strong>（它开始前记住了当前场景路径）；如果打开失败，日志里不会强调，但你的场景会停在这批的最后一个文件上 —— 这时不要随手保存。</li>
+</ul>
+<h2 id="h-10">风险与反悔（这一页最重要的一段）</h2>
+<ul>
+<li><strong>「批量执行」默认走「无头执行」</strong>（mayapy 独立进程），不占用当前 Maya；只有你取消勾选「无头执行」时，才会在当前 Maya 进程里逐个打开文件跑，那种情况下要注意：<ul>
+<li>跑批期间当前场景会被顶掉（结束后会尝试打开回原场景）；</li>
+<li><strong>当前场景如果有未保存改动，跑批前请先自己保存</strong>，否则可能丢；</li>
+<li>跑批期间不要动这个 Maya，等它跑完。</li>
+</ul></li>
+<li><strong>「执行后保存文件」会直接覆盖磁盘上的源文件</strong>，没有版本、没有回收站。<strong>这就是必须先复制副本的原因</strong>：把要处理的文件复制到另一个目录，只对副本跑批，原文件永远不动。<strong>这一条是反悔的唯一可靠退路</strong>。</li>
+<li>三个高级勾选项（执行前备份 / 强制保存 / 忽略错误继续执行）在当前版本里没有接到执行流程上，<strong>别把安全交给它们</strong>。实际行为固定是：单个文件出错 → 记日志 → 继续下一个。</li>
+<li>脚本本身的风险仍然存在：脚本写错会在批里连续错几十次。所以第 5 步「测试执行」一定要做。</li>
+<li>反悔：原文件没动 → 直接重来；副本被改坏了 → 从备份再拷一份。</li>
+</ul>
+<h2 id="h-11">相关</h2>
+<ul>
+<li>它在「快捷工具」菜单里的位置：<a href="#/15.2.6"><code>8.2.6</code></a></li>
+<li>批量镜像复制（只是复制文件，不改内容）：<a href="#/15.14.6"><code>8.14.6</code></a></li>
+<li>无头（不开 Maya 界面）跑批的正规做法：<a href="#/10.6.1"><code>4.7.6.1</code></a></li>
+</ul>

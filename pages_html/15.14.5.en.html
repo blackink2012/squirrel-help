@@ -1,0 +1,53 @@
+<blockquote><p>One-line summary: <strong>pick a batch of .ma / .mb files, write a piece of MEL or Python, and run it in every file, optionally saving after each one.</strong></p></blockquote>
+<p>The window is titled &quot;Maya batch script runner&quot;. It suits work where &quot;the same thing must be done to dozens of scene files&quot;: batch rename, clear selections, add lights, set render options…</p>
+<h2 id="h-1">Where to open it</h2>
+<table><thead><tr><th>Entry</th><th>How</th></tr></thead><tbody><tr><td>Top toolbar <strong>Quick tools</strong> menu</td><td><strong>Quick tools</strong> → <strong>Batch process Maya files</strong></td></tr><tr><td>Script browser</td><td><strong>Script browser</strong> → add the plug-in&#x27;s <code>quicktools</code> directory → double-click <code>批量处理maya文件.py</code></td></tr></tbody></table>
+<p>There is no matching command entry (the command surface does not expose this tool).</p>
+<p><img src="media_en/shared/quicktool-batch-maya.webp" alt="Batch process Maya files window" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What every control does</h2>
+<h3 id="h-3">Card &quot;File selection&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td><strong>Add files</strong></td><td>Adds .ma / .mb to the list</td><td>Add <strong>copies only</strong>, see the risks</td></tr><tr><td><strong>Remove selected</strong></td><td>Removes the selected rows from the list (never deletes files)</td><td>—</td></tr><tr><td><strong>Clear list</strong></td><td>Empties the whole pending list</td><td>Never deletes files</td></tr><tr><td><strong>Open folder</strong></td><td>Opens the directory of a file in Explorer</td><td>For verifying file locations</td></tr><tr><td>&quot;N files selected&quot;</td><td>How many are pending</td><td>Check it again before running</td></tr></tbody></table>
+<h3 id="h-4">Card &quot;Script input&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Radio <strong>MEL</strong> / <strong>Python</strong></td><td>Which language the script is in (MEL by default)</td><td>Pick exactly one; picking neither reports &quot;choose at least one script type&quot;</td></tr><tr><td><strong>MEL example</strong> / <strong>Python example</strong></td><td>Fills the editor with a sample script</td><td>Start from a sample when unsure</td></tr><tr><td><strong>Clear script</strong></td><td>Empties the editor</td><td>—</td></tr><tr><td>Script text box (placeholder &quot;type MEL or Python here...&quot;)</td><td>The content to run, with syntax highlighting</td><td>Get it working with <strong>Test run</strong> before batching</td></tr></tbody></table>
+<h3 id="h-5">Card &quot;Execution options&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Checkbox <strong>Headless execution (separate mayapy process, does not occupy the current scene)</strong></td><td>Runs the batch in a separate mayapy process so the current Maya and your open scene are untouched</td><td>Ticked by default, so keep it; unticking it makes Maya open the files one by one in the current process</td></tr><tr><td>Checkbox <strong>Save files after execution</strong></td><td>Ticked = <code>save</code> after each file; unticked = run without saving</td><td><strong>Run once unticked to inspect results</strong>, then tick and run again</td></tr><tr><td>Checkbox <strong>Show detailed information</strong></td><td>Logs &quot;processing file i/n&quot; and &quot;saved&quot; per file</td><td>Tick it for large batches</td></tr><tr><td>Checkbox <strong>Advanced options</strong></td><td>Expands the three checkboxes below</td><td>—</td></tr><tr><td>Checkbox <strong>Back up files before execution</strong></td><td>See the risks: <strong>in the current version this does not affect behavior</strong></td><td>Do not rely on it; back up manually</td></tr><tr><td>Checkbox <strong>Force save (ignore warnings)</strong></td><td>As above: not wired into the execution flow in the current version</td><td>As above</td></tr><tr><td>Checkbox <strong>Ignore errors and continue</strong></td><td>As above: not wired in (actual behavior is always &quot;log the error and continue with the next&quot;)</td><td>As above</td></tr></tbody></table>
+<h3 id="h-6">Bottom buttons</h3>
+<table><thead><tr><th>Button</th><th>Effect</th></tr></thead><tbody><tr><td><strong>Test run (current scene)</strong></td><td>Runs the script <strong>only in the currently open scene</strong>, opening and saving nothing. Use it to validate the script</td></tr><tr><td><strong>Run batch</strong></td><td>For each file in the list: open → run the script → (save only if ticked) → next</td></tr><tr><td><strong>Close</strong></td><td>Closes the window (do not close it while a batch is running)</td></tr></tbody></table>
+<h3 id="h-7">Card &quot;Execution log&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th></tr></thead><tbody><tr><td>Log area</td><td>Per-file results, failure reasons, and a final &quot;succeeded: X files / failed: Y files&quot;</td></tr><tr><td><strong>Clear log</strong></td><td>Clears the view (does not affect a finished batch)</td></tr><tr><td><strong>Save log</strong></td><td>Saves the log to a file for troubleshooting</td></tr><tr><td><strong>Copy log</strong></td><td>Copies it to the clipboard</td></tr><tr><td>&quot;Ready&quot; status line</td><td>Current state</td></tr></tbody></table>
+<h2 id="h-8">A complete flow</h2>
+<ol>
+<li><strong>Copy the files to process first</strong> (important, see the risks) and operate only on the copies;</li>
+<li>Quick tools → <strong>Batch process Maya files</strong>;</li>
+<li><strong>Add files</strong> and include those copies;</li>
+<li>Choose MEL or Python and write the script; use <strong>MEL example</strong> / <strong>Python example</strong> as a starting point;</li>
+<li>Click <strong>Test run (current scene)</strong> first: it runs the script <strong>in the scene you are currently looking at</strong>, so test in an empty or temporary scene;</li>
+<li>Once it works, untick <strong>Save files after execution</strong> and click <strong>Run batch</strong> for a dry run, watching the log for mass failures;</li>
+<li>When that looks right, tick <strong>Save files after execution</strong> and click <strong>Run batch</strong> again;</li>
+<li>Read the success / failure statistics at the end of the log and handle failures by file name and reason;</li>
+<li>Click <strong>Save log</strong> if you need a record.</li>
+</ol>
+<h2 id="h-9">Where the output lands</h2>
+<ul>
+<li>The script&#x27;s effect lands <strong>inside each Maya file</strong> (written back only when <strong>Save files after execution</strong> is ticked);</li>
+<li>The window only produces <strong>logs</strong>: each result, failure reason and the final statistics;</li>
+<li>After a batch it <strong>tries to reopen your original scene</strong> (the path was remembered beforehand); if reopening fails the log does not emphasize it and your scene stays on the last file of the batch — do not save casually then.</li>
+</ul>
+<h2 id="h-10">Risks and how to undo (the most important part of this page)</h2>
+<ul>
+<li><strong>Run batch defaults to headless execution</strong> (a separate mayapy process) and does not occupy the current Maya; only when you untick <strong>Headless execution</strong> does it open files one by one in the current Maya process, and then:<ul>
+<li>the current scene is replaced during the run (it tries to reopen the original afterwards);</li>
+<li><strong>save any unsaved changes in the current scene before running</strong>, or they may be lost;</li>
+<li>do not use this Maya while the batch runs.</li>
+</ul></li>
+<li><strong>Save files after execution overwrites the source files on disk</strong>, with no versions and no recycle bin. <strong>That is exactly why you must copy first</strong>: copy the files into another directory, batch only the copies, and the originals never change. <strong>This is the only reliable fallback.</strong></li>
+<li>The three advanced checkboxes (back up before execution / force save / ignore errors) are not wired into the execution flow in the current version, <strong>so do not entrust safety to them</strong>. The actual behavior is fixed: a file fails → log it → continue with the next.</li>
+<li>Script risks remain: a broken script fails dozens of times in a row, which is why step 5 (<strong>Test run</strong>) is mandatory.</li>
+<li>To undo: if the originals were untouched, just start over; if a copy is damaged, copy it back from the backup.</li>
+</ul>
+<h2 id="h-11">Related</h2>
+<ul>
+<li>Its position in the <strong>Quick tools</strong> menu: <a href="#/en/15.2.6"><code>8.2.6</code></a></li>
+<li>Batch mirror copy (copies files without changing content): <a href="#/en/15.14.6"><code>8.14.6</code></a></li>
+<li>The proper way to run batches headlessly (without the Maya UI): <a href="#/en/10.6.1"><code>4.7.6.1</code></a></li>
+</ul>

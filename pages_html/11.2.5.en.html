@@ -1,0 +1,23 @@
+<p>The interface language switches the plug-in&#x27;s own Chinese / English display and never affects asset names, tags or the Maya interface.</p>
+<p><img src="media_en/shared/settings-language.webp" alt="Interface language" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>It chooses the language of plug-in windows, menus and messages.</p>
+<h2 id="h-2">Values and default</h2>
+<ul>
+<li>Follow system (default), Chinese, English. The field is labelled <code>Language / 语言</code>.</li>
+</ul>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>After <code>「应用」 (Apply)</code> the i18n switches immediately and the category tree rebuilds the display names of built-in categories in the new language.</li>
+<li>The window shows <code>「设置已保存。请重启插件以完全生效。」 (settings saved; restart the plug-in for full effect.)</code> Most main-window text unifies after a plug-in restart.</li>
+<li>It never translates user data such as asset names, Chinese names or tags, and never changes Maya&#x27;s native interface.</li>
+<li>The setting is stored under the <code>language</code> key in <code>app_settings.json</code>.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<ul>
+<li>When a team uses the English interface, or to compare against English documentation.</li>
+<li>If some windows still show the old language, restart the plug-in and check again.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<blockquote><p><strong>Tip</strong>: language and appearance theme are independent settings; switching language never changes colors.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: the category tree updates immediately, but open dialogs usually need to be reopened to change language.</p></blockquote>

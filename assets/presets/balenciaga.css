@@ -1,0 +1,58 @@
+/* balenciaga — Balenciaga（2017 后）
+   适用：时尚/反文化/香水品牌、“酷到不屑于设计”的定位
+   不用：需要说服陌生访客的转化页面；企业软件
+   由 references/presets.md 索引；改这里只改变量，不改 base.css。 */
+
+[data-style="balenciaga"] {
+    --paper: #ffffff;
+    --surface: #f5f4f0;
+    --surface-2: #efeeea;
+    --ink: #000000;
+    --ink-2: #000000;
+    --muted: #555555;
+    --rule: #000000;
+    --rule-strong: #000000;
+    --accent: #000000;
+    --accent-ink: #ffffff;
+    --accent-soft: rgba(0, 0, 0, 0.08);
+    --ok: #1f7a3f;
+    --warn: #b4461f;
+    --code-bg: #000000;
+    --code-fg: #ffffff;
+    /* 图表令牌：多系列用明度阶梯，accent 只给一个主角系列 */
+    --chart-1: #000000;
+    --chart-2: #313131;
+    --chart-3: #626262;
+    --chart-4: #939393;
+    --chart-hero: #000000;
+    --chart-grid: #000000;
+    --chart-axis: #555555;
+    --radius: 0;
+    --radius-sm: 0;
+    --border-w: 1px;
+    --shadow: none;
+    --rail-w: 220px;
+    --measure: 780px;
+    --pad-x: 48px;
+    --pad-y: 40px;
+    --font-display: 'Helvetica Neue', Helvetica, Arial, 'Microsoft YaHei', sans-serif;
+    --font-body: 'Helvetica Neue', Helvetica, Arial, 'Microsoft YaHei', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+    --display-weight: 700;
+    --display-tracking: -0.02em;
+    --h2-transform: uppercase;
+    --label-transform: uppercase;
+    --label-tracking: 0;
+    --fs-brand: 24px;
+    --fs-h2: 44px;
+    --fs-h3: 20px;
+    --fs-h4: 13px;
+    --fs-body: 12px;
+    --fs-small: 13px;
+    --lh: 1.5;
+    --dur: 0.2s;
+}
+
+/* 签名元素（本套独有，别套到别的预设上） */
+[data-style="balenciaga"] .doc h2 { font-weight: 700; }
+[data-style="balenciaga"] .btn { background: transparent; color: var(--ink); border: 0; padding: 0; text-decoration: underline; }

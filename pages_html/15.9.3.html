@@ -1,0 +1,42 @@
+<blockquote><p>一句话定位：<strong>跟 AI 有关的开关都在这页：装依赖、更新 / 重建索引、配大模型、逐家同意云端服务、决定对话面开在哪（含 dsh 版本轨）、以及允不允许外部工具连本机 Maya。</strong></p></blockquote>
+<p>这一页<strong>不受全局锁定影响</strong>，打开就能改。</p>
+<p><img src="media/shared/settings-ai.webp" alt="设置窗口（AI 设置页）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">怎么打开</h2>
+<p>设置窗口 → 点左侧导航的「AI 设置」（见 <a href="#/15.9.1"><code>8.9.1</code></a>）。</p>
+<h2 id="h-2">1. AI 功能与依赖</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值</th><th>改了会怎样</th><th>需要先解锁</th></tr></thead><tbody><tr><td>AI 依赖检查</td><td>按钮</td><td>体检 AI 各项依赖，生成一份报告并用记事本打开</td><td>—（动作按钮）</td><td>只读检查、不改任何东西；状态行会写报告路径与缺几项</td><td>否</td></tr><tr><td>一键安装 AI 功能与依赖</td><td>按钮</td><td>逐步安装缺失的依赖（Ollama / 嵌入模型 / 索引 / 轻量图像 sidecar）</td><td>—（动作按钮）</td><td>先弹确认框列出步骤与体积；安装有进度、可取消；失败后再点一次只补没装的（勾「强制重装」则覆盖已装部分）</td><td>否</td></tr><tr><td>移除 AI 依赖</td><td>按钮</td><td>卸载官方管线 / 图像 sidecar / 向量索引 / Ollama 模型</td><td>—（动作按钮）</td><td>弹勾选框 + 二次确认；已装的项会被删掉，AI 搜索 / 分析随之不可用</td><td>否</td></tr><tr><td>上次检查状态</td><td>只读文字</td><td>显示上一次检查 / 安装的结果</td><td>「上次检查：未检查（点「AI 依赖检查」生成报告）」</td><td>—</td><td>否</td></tr></tbody></table>
+<h2 id="h-3">2. 向量索引维护</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值</th><th>改了会怎样</th><th>需要先解锁</th></tr></thead><tbody><tr><td>更新向量</td><td>按钮</td><td><strong>增量</strong>同步当前资产库的向量索引：只重新嵌入新增 / 变更的资产，图像 / 媒体索引只刷新已存在的</td><td>—（动作按钮）</td><td>不删任何文件、<strong>不需要二次确认</strong>；与后台自动更新走同一条命令。打开进度框可看实时日志，可取消（已嵌好的行保留，下次继续）；完成后状态行显示结果</td><td>否</td></tr><tr><td>重建全部向量索引</td><td>按钮</td><td>把当前后端的帮助、文档、当前资产库（文本 / 图像 / 音频 / 视频）向量索引<strong>全部删掉重新嵌入</strong></td><td>—（动作按钮）</td><td>先二次确认；这是全量重建，不是增量同步，耗时随库大小增长；重建期间 AI 检索会暂时退回词法（关键词）检索</td><td>否</td></tr><tr><td>索引状态</td><td>只读文字</td><td>显示「正在更新… / 正在重建…」与最后的结果（成功，或失败项数）</td><td>空</td><td>更新与重建共用这一行状态</td><td>否</td></tr></tbody></table>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>日常入库后想让新资产马上能搜到，点「更新向量」即可；只有换嵌入模型 / 换后端、或怀疑索引损坏时才需要「重建全部向量索引」。</p></div>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>重建索引期间 AI 语义搜索会暂时失效（退回关键词），资产多时可能要等较久。不要边重建边做大批量入库，否则刚建的索引又落后了。</p></div>
+<h2 id="h-4">3. 全局大模型（默认）</h2>
+<p>这里的配置是<strong>全局默认</strong>：AI 缩略图分析等需要大模型的功能默认用它；AI 搜索里勾「使用全局大模型」时也用它。</p>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值</th><th>改了会怎样</th><th>需要先解锁</th></tr></thead><tbody><tr><td>AI 服务商</td><td>下拉</td><td>选模型服务商</td><td>Ollama（本地）</td><td>切换服务商会联动 API Key、API 地址与模型列表；<strong>Key 按服务商分别保存，不会串用</strong></td><td>否</td></tr><tr><td>API Key</td><td>密码输入框</td><td>云端服务商的密钥</td><td>空（本地服务无需填写，框会置灰）</td><td>只有云端服务商需要；各服务商的 Key 分开存</td><td>否</td></tr><tr><td>API 地址</td><td>输入框</td><td>接口地址，可填自建 / 中转代理</td><td><code>http://localhost:11434/v1</code>（Ollama 默认；留空时用服务商默认地址）</td><td>换成自定义地址后，模型列表会按新地址重新拉取</td><td>否</td></tr><tr><td>AI 模型</td><td>可输入的下拉框</td><td>选模型，或直接打字输入模型名</td><td>已保存的模型名；没有时显示「正在获取模型列表…」</td><td>打开时会后台实时拉取该服务商的模型列表；拉不到可以手动输入；名字不属于当前服务商时下方会给提示</td><td>否</td></tr><tr><td>开启思考模式</td><td>复选框</td><td>控制模型是否先输出推理过程再回答</td><td>不勾选（关闭）</td><td>开启后复杂推理更准，但打标签 / 分类 / 一句话描述会更慢，<code>max_tokens</code> 不够时正文还会为空；部分服务商无法真正关闭（见 <a href="#/11.4.2"><code>4.8.4.2</code></a>）</td><td>否</td></tr></tbody></table>
+<h2 id="h-5">4. 云端服务同意（单独同意 · 可撤回）</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值</th><th>改了会怎样</th><th>需要先解锁</th></tr></thead><tbody><tr><td>服务商行（DeepSeek / 通义千问 / 智谱 / Kimi / OpenAI / Anthropic Claude / 自定义）</td><td>只读状态文字</td><td>每个云端服务商占一行，显示「未同意（不会发送数据）」，同意后变为已同意</td><td>全部未同意</td><td>—</td><td>否</td></tr><tr><td>查看并同意</td><td>按钮</td><td>逐项单独同意某一家云端服务商</td><td>—</td><td>弹窗列明接收方、数据类别、传输目的、保存期限与出境风险；同意记录存本机，可随时撤回，撤回后立刻停止向该服务商发送数据</td><td>否</td></tr></tbody></table>
+<p>本地服务（Ollama / LM Studio）不出本机，<strong>不需要同意</strong>。完整说明见 <a href="#/11.4.7"><code>4.8.4.7</code></a>。</p>
+<p><img src="media/shared/settings-ai-cloud-consent.webp" alt="云端服务同意：未同意时不会发送数据" loading="lazy" decoding="async"></p>
+<h2 id="h-6">5. AI 对话面</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值</th><th>改了会怎样</th><th>需要先解锁</th></tr></thead><tbody><tr><td>在 Maya 内嵌 AI 对话面（取消则用系统浏览器打开）</td><td>复选框</td><td>决定点「AI 助手」时对话面开在哪</td><td>勾选（内嵌停靠在 Maya 里）</td><td>取消勾选 → 改用系统浏览器；两种方式起的是同一个 dsh，会话与工具一致。<strong>下一次</strong>点「AI 助手」生效，不用重启</td><td>否</td></tr><tr><td>版本轨</td><td>下拉：稳定轨（验证过的版本）/ 尝鲜轨（npm 最新版）</td><td>决定<strong>下一次「一键安装」</strong>装哪一版 dsh</td><td>稳定轨</td><td>尝鲜轨在安装时查询 npm 上的最新版、装下来并钉住（未经验证）；切轨<strong>不会</strong>自动升级已装的运行时，要重装才生效</td><td>否</td></tr><tr><td>版本</td><td>下拉：验证过的几个版本（默认项带「（推荐）」后缀）</td><td>稳定轨下具体装哪一版</td><td>当前推荐版（如 <code>0.2.2-rc.3</code>）</td><td>只在稳定轨可选；切到尝鲜轨这一项会自动置灰。同样只影响下一次一键安装</td><td>否</td></tr></tbody></table>
+<p>对话面的开关与召回见 <a href="#/15.8.2"><code>8.8.2</code></a>；版本轨与版本切换的完整说明见 <a href="#/11.4.3"><code>4.8.4.3</code></a>。</p>
+<h2 id="h-7">6. 外部连接</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值</th><th>改了会怎样</th><th>需要先解锁</th></tr></thead><tbody><tr><td>允许外部工具连接 Maya（独立版 / 命令行）</td><td>复选框</td><td>Maya 启动时监听本机回环端口，供独立版 / 命令行获取场景信息、导入导出资产</td><td>不勾选（默认关闭）</td><td>端口按版本分配（2026→7001、2025→7002…），同版本多开时后启动的自动退到备用段 7110~7129。保存后立即尝试生效，失败会提示「设置已保存，下次启动 Maya 时会按配置重试」</td><td>否</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>这个端口只监听本机回环地址，但<strong>等价于任意代码执行入口</strong>（能连上就能让 Maya 执行代码）。不需要外部工具驱动时，取消勾选更稳妥。</p></div>
+<h2 id="h-8">7. AI / MCP 通道（默认关闭）</h2>
+<p>这一组是<strong>权限开关</strong>：决定外部进程能不能驱动本软件，默认全关。逐项说明见 <a href="#/11.4.6"><code>4.8.4.6</code></a>。</p>
+<p><img src="media/shared/settings-ai-channels.webp" alt="AI / MCP 通道：自动连接底座、Maya 启动注册、在线查官方帮助、万能执行、AI 破坏性操作" loading="lazy" decoding="async"></p>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值</th><th>需要先解锁</th></tr></thead><tbody><tr><td>打开资产管理器时自动连接 AI 底座</td><td>复选框</td><td>开窗时自动起 broker 并注册本机，外部 AI 才能驱动</td><td>不勾选</td><td>否</td></tr><tr><td>Maya 启动时就把本机注册到 AI 底座</td><td>复选框</td><td>不开窗口也注册，外部 AI 随时可驱动</td><td>不勾选</td><td>否</td></tr><tr><td>本地文档没有时，在线查询 Maya 官方帮助</td><td>复选框</td><td>允许 AI 在本地知识库没命中时联网查 Autodesk 官方帮助</td><td>不勾选</td><td>否</td></tr><tr><td>允许 AI 在 Maya 中执行任意 Python / MEL（高危）</td><td>复选框</td><td><code>maya_run_python</code> / <code>maya_run_mel</code> 可用：即调用即执行、无审批</td><td>不勾选</td><td>否；<strong>首次开启</strong>要过风险确认弹窗</td></tr><tr><td>允许 AI 删除 / 覆盖替换资产（破坏性操作）</td><td>复选框</td><td>AI 才能经资产接口删除（软删进回收站）或覆盖导出（旧版进历史）</td><td>不勾选</td><td>否</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>万能执行通道的权限等于当前系统用户，且可绕过软删与库路径约束。只在受信任环境临时开启，用完关回去。</p></div>
+<h2 id="h-9">8. 外部 AI 工具</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值</th><th>改了会怎样</th><th>需要先解锁</th></tr></thead><tbody><tr><td>外部 AI 工具…</td><td>按钮</td><td>打开面板，把本插件的技能与 MCP 通道接给 Claude Code / Codex / Gemini CLI 等</td><td>—（动作按钮）</td><td>面板里的操作<strong>直接写入对方目录 / 配置</strong>，与本次设置的「确定 / 取消」无关（点取消不会回滚）；详见 <a href="#/15.13.5"><code>8.13.5</code></a></td><td>否</td></tr><tr><td>状态行</td><td>只读文字</td><td>显示已选定几个自定义技能目录、挂了几家 MCP 通道</td><td>「选择目录后点「安装技能」落位；「MCP 通道」勾选即写入对方配置。」</td><td>—</td><td>否</td></tr></tbody></table>
+<h2 id="h-10">常见疑问</h2>
+<table><thead><tr><th>现象</th><th>怎么办</th></tr></thead><tbody><tr><td>AI 搜索没反应 / 提示语义未生效</td><td>先点「AI 依赖检查」看缺什么，再点「一键安装 AI 功能与依赖」（见 <a href="#/11.4.1"><code>4.8.4.1</code></a>）</td></tr><tr><td>换了服务商后模型列表为空</td><td>检查 API Key 与地址；有些服务商需要填 Key 才能列模型；也可以直接在「AI 模型」里手输模型名</td></tr><tr><td>装完 AI 依赖仍搜不准</td><td>需要重建向量索引；索引不会自动追平大批量入库</td></tr><tr><td>刚入库的资产搜不到 / 索引落后</td><td>点「更新向量」做增量同步（见 <a href="#/8.6.4"><code>4.5.6.4</code></a>）；只有换嵌入模型 / 换后端或索引损坏才需要重建</td></tr><tr><td>切了版本轨 / 版本，AI 助手没变</td><td>正常：这两项只影响<strong>下一次</strong>「一键安装」，不会自动升级已装运行时；真要换版本，改完再点一次「一键安装 AI 功能与依赖」（见 <a href="#/11.4.3"><code>4.8.4.3</code></a>）</td></tr><tr><td>独立版连不上 Maya</td><td>检查「允许外部工具连接 Maya」是否勾选，端口是否被占用（见 <a href="#/11.4.4"><code>4.8.4.4</code></a>）</td></tr></tbody></table>
+<h2 id="h-11">相关</h2>
+<ul>
+<li>设置窗口总览与全局锁定 → <a href="#/15.9.1"><code>8.9.1</code></a></li>
+<li>AI 依赖检查与安装的完整流程 → <a href="#/11.4.1"><code>4.8.4.1</code></a></li>
+<li>全局大模型 → <a href="#/11.4.2"><code>4.8.4.2</code></a></li>
+<li>AI 对话面（内嵌 / 浏览器） → <a href="#/11.4.3"><code>4.8.4.3</code></a>、<a href="#/15.8.2"><code>8.8.2</code></a></li>
+<li>外部连接（桥接端口） → <a href="#/11.4.4"><code>4.8.4.4</code></a></li>
+<li>外部 AI 工具面板 → <a href="#/15.13.5"><code>8.13.5</code></a></li>
+</ul>

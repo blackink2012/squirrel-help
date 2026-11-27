@@ -1,0 +1,88 @@
+<p>For startup errors, read the full traceback in the Maya Script Editor first; it usually points directly at a missing module, a stale copy, permissions or licensing.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>Clicking the plug-in entry opens no window, or the window flashes and closes.</li>
+<li>The Script Editor shows a red traceback containing <code>ImportError</code>, <code>AttributeError</code>, <code>PermissionError</code> and so on.</li>
+<li>The window opens, but the status line, category tree or AI panel fails to initialize.</li>
+<li>Startup reports <code>sq_license 不可用，进入只读模式</code> (license unavailable, entering read-only mode); features are limited but the program does not crash.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>Package or submodule not found</td><td>The top of the traceback is <code>No module named ...</code></td><td>Follow 6.1.1 &quot;Plug-in not loaded&quot; to check the install path and <code>userSetup.py</code></td></tr><tr><td>A stale copy or half-finished directory is loaded</td><td><code>sq.__file__</code> is not in the install directory, or the directory only has <code>Assets\</code></td><td>Delete the stale copy and reinstall</td></tr><tr><td>Core module ABI mismatch</td><td>Extension module load failure is reported</td><td>Follow 6.1.2 &quot;Version and ABI mismatch&quot;</td></tr><tr><td>Licensing module missing</td><td>The log shows <code>sq_license 不可用</code></td><td>The program enters read-only; confirm the package is complete, or activate on the license page</td></tr><tr><td>Install directory is not writable</td><td>The traceback points at creating directories or writing configuration or logs</td><td>Restore directory permissions, or move to a user-writable location</td></tr><tr><td>Old configuration or cache conflicts with the new version</td><td>Errors cluster around settings, index or category loading</td><td>Back up the configuration, reset the matching cache, then restart Maya</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open the Maya Script Editor, clear the output and click the plug-in entry again to reproduce once.</li>
+<li>Copy the first error line and the last few stack frames of the traceback; do not just capture the words &quot;error&quot;.</li>
+<li>Run <code>import squirrel_asset_manager as sq; print(sq.__file__)</code> to confirm which copy is actually loaded.</li>
+<li>For a missing module or stale copy, reinstall as described in 6.1.1 &quot;Plug-in not loaded&quot;; for an ABI error, switch packages per 6.1.2 &quot;Version and ABI mismatch&quot;.</li>
+<li>If errors appear only when AI, bridging or the status line initializes, check <code>~\.squirrel_asset_manager\broker_boot.log</code> and <code>bridge_port.log</code>.</li>
+<li>After the fix, fully restart Maya and verify once more.</li>
+</ol>
+<h2 id="h-4">Manual launch (when the startup script does not take effect)</h2>
+<p>If neither the shelf nor the status line works but the install directory is complete, you can run the startup code manually in the Maya Script Editor (Python).</p>
+<p><strong>First confirm your install directory</strong> (it is the level that contains the <code>squirrel_asset_manager</code> folder):</p>
+<table><thead><tr><th>Install method</th><th>Default location</th></tr></thead><tbody><tr><td>EXE install (with Maya integration)</td><td>The directory chosen in the wizard, default <code>%LOCALAPPDATA%\SquirrelAM</code>; both <code>SquirrelAssetManager.exe</code> and <code>squirrel_asset_manager\</code> are at this level</td></tr></tbody></table>
+<p>How to tell: the directory contains a <code>squirrel_asset_manager</code> folder with <code>__init__.py</code> and <code>ui\main_window.py</code>. If the plug-in started before, you can also run <code>import squirrel_asset_manager as sq; print(sq.__file__)</code> and strip the trailing <code>\squirrel_asset_manager\__init__.py</code>; what remains is the install root.</p>
+<p>Put that path into <code>INSTALL_DIR</code> below (keep the <code>r&quot;...&quot;</code> raw string form; backslashes need no escaping). <strong>Leave it empty to auto-detect the default locations from the table above</strong>:</p>
+<pre><code class="language-python">import os
+import sys
+import maya.cmds as cmds
+
+# 1) Custom install directory: change only this line. Give the directory that CONTAINS
+#    the squirrel_asset_manager folder, e.g. r"D:\Tools\SquirrelAM"; empty = auto-detect defaults.
+INSTALL_DIR = r""
+
+# 2) Build the candidate list: use the given path if set, otherwise auto-detect
+app_dir = os.path.normpath(cmds.internalVar(userAppDir=True))
+local_appdata = os.environ.get("LOCALAPPDATA") or ""
+if INSTALL_DIR.strip():
+    candidates = [os.path.normpath(INSTALL_DIR.strip())]
+else:
+    candidates = [
+        app_dir,                                      # legacy script install: %MAYA_APP_DIR%
+        os.path.join(app_dir, "scripts"),             # even older script install
+    ]
+    if local_appdata:
+        candidates += [
+            os.path.join(local_appdata, "SquirrelAM"),            # standalone default
+            os.path.join(local_appdata, "SquirrelAssetManager"),  # previous standalone default
+        ]
+# Also accept a path pointing straight at ...\squirrel_asset_manager
+candidates += [os.path.dirname(p) for p in list(candidates)]
+
+install_root = next(
+    (p for p in candidates
+     if os.path.isfile(os.path.join(p, "squirrel_asset_manager", "ui", "main_window.py"))),
+    "")
+if not install_root:
+    raise RuntimeError("squirrel_asset_manager not found; put the directory containing it into INSTALL_DIR")
+if install_root not in sys.path:
+    sys.path.insert(0, install_root)
+
+# 3) Drop an empty namespace package cached earlier
+pkg = sys.modules.get("squirrel_asset_manager")
+if pkg is not None and not getattr(pkg, "__file__", None):
+    for name in [n for n in list(sys.modules)
+                 if n == "squirrel_asset_manager"
+                 or n.startswith("squirrel_asset_manager.")]:
+        del sys.modules[name]
+
+# 4) Open the main window (running again only recalls the existing window)
+from squirrel_asset_manager.ui.main_window import MaterialLibraryWindow
+MaterialLibraryWindow.show_window()
+print("Launched from %s" % install_root)</code></pre>
+<p>How to read the result:</p>
+<ul>
+<li><strong>The window opens normally</strong>: the plug-in itself is fine, only the <code>userSetup.py</code> startup block did not take effect. Append the code above to the end of <code>Documents\maya\&lt;version&gt;[\&lt;language&gt;]\scripts\userSetup.py</code> for the current version, or rerun the installer to write the startup block (see 6.1.1 &quot;Plug-in not loaded&quot;).</li>
+<li><strong>Still <code>No module named &#x27;squirrel_asset_manager&#x27;</code></strong>: <code>INSTALL_DIR</code> is empty or points at the wrong level; check it against the rule above and confirm the directory holds a complete package (not just <code>Assets\</code>).</li>
+<li><strong>Extension module or DLL error</strong>: ABI mismatch; switch packages per 6.1.2 &quot;Version and ABI mismatch&quot;.</li>
+</ul>
+<p>A manual run only affects the current Maya session. To be ready at every startup you still need the startup block in <code>userSetup.py</code>. When writing it there, keep <code>INSTALL_DIR</code> filled in — auto-detection only covers the default locations, so a custom directory will not be found without it.</p>
+<h2 id="h-5">Verify the result</h2>
+<p>The plug-in window appears, the Script Editor no longer shows the same traceback, and the category tree and status bar finish initializing.</p>
+<h2 id="h-6">If it still fails</h2>
+<ul>
+<li>Start with an empty scene to rule out interference from the scene itself or third-party plug-ins.</li>
+<li>Temporarily disable other startup scripts to confirm several tools are not rewriting <code>userSetup.py</code> at once.</li>
+<li>Collect information per 6.8.2 &quot;Diagnostic workflow&quot;; when reporting, include the full traceback, Maya version and install directory tree.</li>
+<li>Never submit full license files or keys for licensing errors; provide only the status and error code.</li>
+</ul>

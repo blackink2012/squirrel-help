@@ -1,0 +1,30 @@
+<p>An asset can have several thumbnails: the first is the main image and the rest are extra slots; the preview panel switches between them and deletes extra images.</p>
+<p><img src="media_en/shared/menu-thumbnail.webp" alt="Thumbnail operation menu" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Slot rules</h2>
+<ul>
+<li>The main image is the first one, named <code>thumb.sicon</code>, <code>thumb.aicon</code>, <code>thumb.png</code> or <code>thumb.mp4</code>.</li>
+<li>Extra images start from the second, named <code>thumb_2.sicon</code>, <code>thumb_3.sicon</code> and so on.</li>
+<li>Folder assets that are not <code>.zasset</code> use <code>&lt;asset name&gt;.sicon</code>, <code>&lt;asset name&gt;_2.sicon</code> and so on.</li>
+<li>The main image cannot be deleted; it can only be replaced by capture or import.</li>
+</ul>
+<h2 id="h-2">Switching</h2>
+<ol>
+<li>Select an asset with several thumbnails; the preview panel shows the counter <code>n/n</code> at the bottom.</li>
+<li>Click the arrows on either side of the preview, or scroll the wheel while hovering it.</li>
+<li>With several images the preview cycles automatically about every 2 seconds; hovering the preview or a playing animation pauses it.</li>
+<li>Double-clicking the preview opens the asset inspector window for a larger view.</li>
+</ol>
+<h2 id="h-3">Deleting an extra image</h2>
+<ol>
+<li>Switch to the extra image to delete and confirm the counter is not <code>1/n</code>.</li>
+<li>Click <code>「删除」 (Delete)</code> at the bottom of the preview panel.</li>
+<li>The image file is deleted from the asset directory immediately and the preview returns to the remaining images.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>After deleting, the counter drops by one and the remaining images can still be switched.</li>
+<li>With only one image left the counter and delete button hide and the arrows disappear.</li>
+<li>The main image always exists, so the card cover is unaffected.</li>
+</ul>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Deleting an extra thumbnail has no second confirmation and does not go to the recycle bin; confirm that the current counter is not the main image before deleting.</p></div>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>To use another image as the cover, use <code>「导入」 (Import)</code> on the target image to overwrite the main image instead of deleting the main image.</p></div>

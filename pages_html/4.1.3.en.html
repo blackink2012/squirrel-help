@@ -1,0 +1,15 @@
+<p>The main asset library accumulates assets over time, while the project library belongs to the current Maya project; the two are isolated, and favorites are stored separately as well.</p>
+<h2 id="h-1">Main asset library</h2>
+<ul>
+<li>The library dropdown above the <code>「分类」 (Categories)</code> tab switches the current asset library; it opens the default library set in settings.</li>
+<li>The main library holds assets reused across projects (materials, models, textures, lights, scenes, HDR, dynamics, images, audio, animation data, node trees); its path is chosen when the library is added and it is kept long term.</li>
+<li>Several libraries can be added and switched at any time; see &quot;Library list and switching&quot;.</li>
+</ul>
+<h2 id="h-2">Project library</h2>
+<ul>
+<li>The project library always lives in <code>SquirrelLib</code> under the root of the current Maya project, travels with the project and never pollutes the main library.</li>
+<li>The <code>「项目」 (Projects)</code> tab in the left column offers <code>「创建」 (Create)</code> and <code>「刷新」 (Refresh)</code>: when the project has no <code>SquirrelLib</code> yet the status area says <code>「项目库未创建」 (project library not created)</code>, and clicking Create generates the sub-library directories; after switching projects click Refresh to load it again.</li>
+<li>The project tree works like the main library category tree, but it is not affected by the &quot;show in the main UI&quot; hiding setting.</li>
+</ul>
+<h2 id="h-3">Between the two</h2>
+<p>Assets are not synchronized automatically. To reuse one, select it in the main library, right-click <code>「复制」 (Copy)</code>, switch to the <code>「项目」 (Projects)</code> tab and <code>「粘贴」 (Paste)</code>; the same works in reverse. Favorites are stored per library, so after switching you see that library&#x27;s own favorites.</p>

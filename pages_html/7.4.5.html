@@ -1,0 +1,28 @@
+<p>HDR 连接由创建环境光自动完成，不同渲染器接到穹顶灯的方式不同，但都使用 <code>Raw</code> 色彩空间。</p>
+<p><img src="media/shared/menu-context-assign-texture.webp" alt="把 HDR 指定给已存在的穹顶灯：右键 HDR →「指定贴图」" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已有一盏穹顶灯，或准备用 HDR 资产创建穹顶灯。</li>
+<li>HDR 文件存在且路径可访问。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在资产库中右键 HDR 资产，选择「创建环境光」；或在「创建资产」里用「创建灯光」选一张 IBL。</li>
+<li>工具按当前渲染器建立连接：<ul>
+<li>Arnold：<code>file</code> 节点，<code>outColor</code> → 穹顶灯 <code>color</code>。</li>
+<li>V-Ray：<code>file</code> + <code>VRayPlaceEnvTex</code>，<code>useDomeTex=1</code>，<code>file</code> 输出 → 穹顶灯 <code>domeTex</code>。</li>
+<li>Redshift：直接把 HDR 路径写进穹顶灯 <code>tex0</code> 字符串属性。</li>
+</ul></li>
+<li>需要确认时打开属性编辑器，查看穹顶灯的贴图属性或连接。</li>
+<li>旋转环境时用穹顶灯或其环境工具的旋转参数，不要改 HDR 文件名。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>穹顶灯的贴图属性有连接或路径；渲染时背景和反射出现 HDR 内容；Arnold/V-Ray 的 <code>file</code> 节点 <code>colorSpace</code> 为 <code>Raw</code>。</p>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>HDR 是线性数据，必须用 <code>Raw</code>；设成 <code>sRGB</code> 会让环境变暗、颜色失真。</li>
+<li>Redshift 的 <code>tex0</code> 只存路径，不会生成 <code>file</code> 节点，这是正常现象。</li>
+<li>重新导入 <code>.zlight</code> 时，贴图路径会按资产内 <code>textures/</code> 重新解析。</li>
+</ul>
+<h2 id="h-5">警告</h2>
+<p>HDR 文件不存在时工具只打印日志，灯仍会创建但没有环境贴图；移动或删除了 HDR 文件后需要重新连接。</p>

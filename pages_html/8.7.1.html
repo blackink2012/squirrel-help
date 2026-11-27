@@ -1,0 +1,20 @@
+<p>Maya 文档知识库没有独立窗口，入口在 AI 助手的 <code>maya_docs</code> 工具或命令面的 <code>maya_doc_search</code>：先用一句话找到名字，再按名字看详情。</p>
+<p><img src="media/shared/menu-ai-tools.webp" alt="「AI 工具」菜单：文档知识库没有独立窗口，从这里的「AI 助手」进入后用 maya_docs 提问" loading="lazy" decoding="async"></p>
+<blockquote><p>图只用来指路：文档知识库没有独立窗口，菜单里也没有「文档」入口 —— 先点「AI 助手」，再在对话里让它查命令 / 节点 / API。检索结果是在对话里返回的，不在这个菜单里。</p></blockquote>
+<h2 id="h-1">前置条件</h2>
+<p>本机有自建知识库，或在线兜底可用；语义检索还需要 Ollama 与文档索引，但词法检索不需要。</p>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在 AI 助手里直接问，例如「polyReduce 怎么用」「怎么让物体沿曲线排列」。</li>
+<li>助手会调用 <code>maya_docs(action=&quot;search&quot;, query=&quot;...&quot;, mode=&quot;auto&quot;)</code>。可限定 <code>type</code> 为 <code>command</code>、<code>node</code>、<code>api</code>、<code>devguide</code> 或 <code>doc</code>，<code>limit</code> 最多 20。</li>
+<li>看结果里的名称、类型、插件、说明与 <code>match</code> 字段，挑出精确名字。</li>
+<li>拿名字再查详情：命令看 <code>maya_docs(action=&quot;help&quot;)</code> 取本机实时参数，节点与 API 看 <code>maya_docs(action=&quot;show&quot;)</code>。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>返回 <code>status=ok</code> 且有 <code>count</code> 与结果列表；<code>match</code> 标明来自词法、语义还是两者。若结果 <code>source</code> 以 <code>online:</code> 开头，说明走的是在线兜底。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>命令参数以本机实时帮助为准，知识库只是快照。</li>
+<li><code>mode=&quot;keyword&quot;</code> 最快且完全离线；口语化问题用默认 <code>auto</code>。</li>
+<li>已装插件的命令基本不在离线库里，先查插件清单再用实时帮助。</li>
+</ul>

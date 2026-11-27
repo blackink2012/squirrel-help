@@ -1,0 +1,23 @@
+<p>The default library decides which library loads first the next time the asset library window opens; it is not the same as the &quot;current library&quot;.</p>
+<p><img src="media_en/shared/settings-general.webp" alt="Settings → General → Asset library management: select a library and click Set as default" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Steps</h2>
+<ol>
+<li>Open the Settings window and go to the <code>「资产库管理」 (Asset library management)</code> group on the <code>「常规」 (General)</code> tab.</li>
+<li>Select the target library in the list.</li>
+<li>Click <code>「设为默认」 (Set as default)</code>.</li>
+<li>A <code>[默认] ([default])</code> marker appears after the list item.</li>
+<li>Click <code>「确定」 (OK)</code> to save.</li>
+</ol>
+<h2 id="h-2">Verify the result</h2>
+<ul>
+<li>Reopening the Settings window the library still carries the <code>[默认] ([default])</code> marker.</li>
+<li>When the asset library window reopens, the default library ranks high among load candidates (after an explicit path, before the last used library).</li>
+<li>The <code>default</code> field returned by <code>library_manage op=list</code> is that library&#x27;s path.</li>
+</ul>
+<h2 id="h-3">Tips</h2>
+<ul>
+<li>Setting the default does not switch the current library immediately; use the library dropdown at the top of the <code>「分类」 (Categories)</code> page to switch.</li>
+<li>With no default set, the Settings window shows the first list item as the default, while startup actually prefers the last used library.</li>
+<li>On the command side <code>library_manage op=set_default</code> requires the library to be registered in <code>library_paths</code> already.</li>
+<li>The default library setting is stored in user settings and not written into the library directory.</li>
+</ul>

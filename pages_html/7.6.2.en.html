@@ -1,0 +1,28 @@
+<p>When a material becomes a flat color or black after import, usually the asset has no textures, the paths still point at the original machine, or <code>fileTextureName</code> was not rewritten successfully.</p>
+<p><img src="media_en/shared/dialog-mapping-preview.webp" alt="Missing textures: check in the mapping preview whether the texture channels have correspondences" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Symptoms</h2>
+<p><code>file</code> node paths in the Hypershade show yellow / red or point at directories that do not exist; viewport materials have no pattern; a light asset&#x27;s HDR / IES is not connected either.</p>
+<h2 id="h-2">Common causes</h2>
+<ol>
+<li>Textures were not checked at export, so the <code>.zasset</code> has no <code>textures/</code> at all.</li>
+<li>The import policy is <code>「源文件目录」 (source file directory)</code>, so paths are still the absolute paths of the export machine.</li>
+<li>The asset was moved or renamed and the original paths in <code>meta.texture_map</code> no longer work.</li>
+<li>Light textures / HDR / IES were not collected, or those files were deleted outside the asset.</li>
+<li>For multi-resolution textures only the currently selected resolution was imported and the others are missing.</li>
+</ol>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open the <code>.zasset</code> and confirm the matching files really exist under <code>textures/</code>.</li>
+<li>Change the texture import policy in settings to copy into the project or the asset directory, then import again.</li>
+<li>Go back to the source scene, export again with textures checked, and avoid exporting material nodes alone.</li>
+<li>Read the Script Editor for logs such as <code>「贴图路径已解析」 (texture path resolved)</code> or <code>「复制依赖失败」 (dependency copy failed)</code> to locate the file.</li>
+<li>When only a few are missing, point <code>file.fileTextureName</code> back at the correct file in the attribute editor.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>The <code>file</code> node paths point at existing files; the viewport shows the textures; the dome light&#x27;s environment texture and an IES light&#x27;s photometric profile work again.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Check whether <code>meta.texture_map</code> records &quot;original path → <code>textures/...</code>&quot;; without it the import side cannot match precisely.</li>
+<li>Do not rename files inside <code>textures/</code> by hand, or the relative paths inside <code>.zmetal</code> / <code>.zlight</code> no longer match.</li>
+<li>When the asset&#x27;s source files are gone, the only option is exporting again from the original project.</li>
+</ul>

@@ -1,0 +1,24 @@
+<p>A frame sequence captures a set of viewport images frame by frame (playblast per frame) for watching motion and change; use &quot;viewport screenshot&quot; for a single detailed frame.</p>
+<p><img src="media_en/shared/menu-thumbnail.webp" alt="The timeline mode of playblast / render outputs a sequence and compiles an MP4" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>Maya is in a GUI session with a usable <code>modelPanel</code>.</li>
+<li>The frame range and output location are decided.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Call <code>capture_sequence</code>; <code>frames</code> accepts <code>&quot;1-10&quot;</code>, <code>&quot;1,3,5&quot;</code>, <code>&quot;1-10:2&quot;</code> or a plain array.</li>
+<li>Set the output: <code>image_path</code> may be a placeholder template (such as <code>.../shot_{frame:04d}.png</code>), a prefix or a directory; without it the system temp directory is used.</li>
+<li>Set size, camera and display mode: <code>width</code> / <code>height</code>, <code>camera</code>, <code>mode</code>, <code>wireframe</code>, <code>panel</code>.</li>
+<li>Set the frame-number <code>padding</code> (4 by default) and the per-call <code>max_frames</code> limit (200 by default).</li>
+<li>To also encode a video, pass <code>video</code> and <code>fps</code> and encoding follows immediately.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>It returns the list of produced frames and their file paths; the count should match the requested range, and a few frames should look right. Every frame gets a blank check and anomalies are listed in <code>blank_frames</code>.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>At most 200 frames per call, a hard gate that keeps the Maya main thread from being monopolized.</li>
+<li>There is a cancel checkpoint per frame; cancelling stops immediately and keeps captured frames with <code>status=cancelled</code> and <code>stopped_early=true</code>.</li>
+<li>Capturing temporarily changes the current frame and restores it afterwards; a large sequence can leave the scene marked as modified, so use <code>cmds.file(modified=False)</code> when that matters.</li>
+<li>A placeholder such as <code>{frame:04d}</code> is expanded from the format string; a prefix or directory uses <code>padding</code> for zero filling, ready for the encoding command.</li>
+</ul>

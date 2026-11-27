@@ -1,0 +1,25 @@
+<p>In the <strong>standalone edition</strong> the Maya target button in the toolbar specifies which Maya to drive when several are open, preventing automatic selection from importing assets into the wrong scene. In the current implementation the button is <strong>created only in the standalone edition while it is not attached by Maya</strong>:</p>
+<table><thead><tr><th>Form</th><th>Has the Maya target button</th><th>Why</th></tr></thead><tbody><tr><td><strong>Standalone edition / EXE</strong> (started on its own, not attached)</td><td>Yes</td><td>You need to choose which online Maya to drive</td></tr><tr><td><strong>In-Maya version</strong> (the plug-in runs inside Maya)</td><td>No</td><td>It is already inside Maya, so the target is itself</td></tr><tr><td><strong>Standalone attached by Maya</strong> (opened embedded from a Maya menu)</td><td>No</td><td>The target is locked to the host; offering a switch would mislead and could import into another scene</td></tr></tbody></table>
+<p><img src="media_en/shared/menu-maya-target.webp" alt="Choose the target instance here when several Maya sessions are open; switching changes the connected session" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>You are using the <strong>standalone edition</strong> (not inside Maya) and it is <strong>not attached by Maya</strong>; the in-Maya and attached forms do not have this button.</li>
+<li>The target Maya is running; if its bridge port is closed it is still listed but cannot be connected directly.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Click the Maya target button in the <strong>standalone</strong> top toolbar; the tooltip reads &quot;choose the Maya to drive (for several sessions; each has a window thumbnail in the menu)&quot;. (The in-Maya version has no such button.)</li>
+<li>The first menu item is <code>「自动选择（优先最新版本）」 (Automatic, preferring the newest version)</code>, which returns to picking a Maya by port.</li>
+<li>Every other row is one Maya: the title shows the version, the subtitle the scene name, PID and port, and a window thumbnail sits on the left.</li>
+<li>Clicking a row applies immediately, restores that Maya and brings it to the front; the choice is also written into settings (<code>maya_target</code>) and restored the next time the standalone edition starts.</li>
+<li>When a row reads <code>「Maya（未开桥接端口）」 (Maya, bridge port closed)</code>, clicking it copies the repair command to the clipboard and brings that Maya forward; paste it into its Script Editor and press Enter to open the port.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The currently selected instance row carries a check mark, the button tooltip appends the chosen target&#x27;s version, scene, PID and port, and a read-only operation (such as the scene overview) returns the expected scene.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>Automatic selection picks in port order, and with several sessions of the same version the first one holds the default port, so specify manually when working with several.</li>
+<li>If the button is missing from the toolbar, first check which form you are in: the in-Maya version and the attached standalone edition <strong>never show it</strong> (see the table above); this is not a missing feature.</li>
+<li>A minimized Maya yields no window thumbnail and the menu says why; Windows does not render minimized windows.</li>
+<li>Restoring the last choice at startup does not bring Maya to the front; when that instance is offline it falls back to automatic selection and logs an explanation.</li>
+</ul>

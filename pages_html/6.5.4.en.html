@@ -1,0 +1,29 @@
+<p>An unavailable format is usually not an asset problem: the Maya plug-in that format needs is not loaded or not installed.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The geometry or proxy format checkbox is greyed out and the right side says <code>未加载 (not loaded)</code> or <code>不可用 (unavailable)</code>.</li>
+<li>The export succeeds but the <code>.zasset</code> has no file for the checked format.</li>
+<li>Only a geometry format was checked yet it reports that no geometry was produced.</li>
+</ul>
+<h2 id="h-2">Common causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Fix</th></tr></thead><tbody><tr><td>Plug-in registered but not loaded</td><td>The status says <code>未加载 (not loaded)</code></td><td>Load it in Maya&#x27;s plug-in manager and reopen the dialog</td></tr><tr><td>Plug-in not installed</td><td>The status says <code>不可用 (unavailable)</code> and is greyed out</td><td>Install the renderer or format plug-in, or use another format</td></tr><tr><td>&quot;Export materials only&quot; is checked</td><td>In that mode <code>fbx</code> / <code>obj</code> / <code>usd</code> / <code>abc</code> and proxies are skipped</td><td>Uncheck it and export again</td></tr><tr><td>Proxy does not match the renderer</td><td>For example Arnold <code>.ass</code> checked without <code>mtoa</code></td><td>Load the matching plug-in or check a proxy the current renderer supports</td></tr><tr><td><code>.ma</code> failed on unknown data</td><td>The log reports a format conversion failure</td><td>Use <code>.mb</code>; the program falls back to <code>.mb</code> once when it is unchecked</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Read the status text next to the format checkbox to see whether it is &quot;not loaded&quot; or &quot;unavailable&quot;.</li>
+<li>Open Maya&#x27;s plug-in manager and load the plug-in for that format:<ul>
+<li>Arnold <code>.ass</code>: <code>mtoa</code></li>
+<li>V-Ray <code>.vrscene</code> / <code>.vrmesh</code>: <code>vrayformaya</code></li>
+<li>Redshift <code>.rs</code>: <code>redshift4maya</code></li>
+<li>FBX <code>.fbx</code>: the FBX plug-in</li>
+</ul></li>
+<li>Close and reopen the export dialog so the status is detected again.</li>
+<li>Uncheck <code>「仅导出材质」 (Export materials only)</code> when geometry is needed; use <code>.zmetal</code> when only materials are needed.</li>
+<li>Export again and confirm inside the <code>.zasset</code> that the target format&#x27;s file now exists.</li>
+</ol>
+<h2 id="h-4">If it still fails</h2>
+<ul>
+<li><code>.ma</code> / <code>.mb</code> are built into Maya and need no third-party plug-in; check only <code>.mb</code> first to verify the geometry is writable.</li>
+<li>Open the Script Editor and search for <code>[Export]</code> to see whether the format was skipped, failed, or never reached the export flow.</li>
+<li>Whether the format keys for <code>abc</code>, <code>obj</code> and similar match Maya&#x27;s actual plug-in names is still to be confirmed; when the status looks wrong, check the real plug-in name in the plug-in manager first.</li>
+<li>After a renderer upgrade or a fresh install, restart Maya before retrying so the plug-in registration is refreshed.</li>
+</ul>

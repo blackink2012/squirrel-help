@@ -1,0 +1,33 @@
+<p>插件版从 Maya 工具架「自定义」分类或状态行图标打开；独立版从开始菜单、桌面快捷方式或主程序打开。</p>
+<p><img src="media/2.3.1-1.webp" alt="Maya 工具架：切到「自定义」分类，点被框出的松鼠按钮启动插件" loading="lazy" decoding="async"></p>
+<p><img src="media/2.3.1-2.webp" alt="Maya 状态行右侧的松鼠图标：另一条启动入口" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Maya 插件版</h2>
+<ol>
+<li>打开 Maya，等待启动完成。</li>
+<li>在工具架顶部切到「自定义（Custom）」分类，点击「松鼠资产管家」按钮。</li>
+<li>或点击 Maya 状态行右侧的松鼠图标。</li>
+<li>也可以在脚本编辑器执行：</li>
+</ol>
+<pre><code class="language-python">from squirrel_asset_manager.ui.main_window import MaterialLibraryWindow
+MaterialLibraryWindow.show_window()</code></pre>
+<p>插件没有单独注册 Maya 菜单项；工具架、状态行和脚本就是全部入口。同一个 Maya 里重复调用只会召回已有窗口，不会开第二个。</p>
+<h2 id="h-2">独立版 / EXE</h2>
+<ul>
+<li>开始菜单：<code>Squirrel Asset Manager</code>。</li>
+<li>桌面快捷方式：<code>Squirrel Asset Manager</code>。</li>
+<li>直接运行安装目录下的 <code>SquirrelAssetManager.exe</code>。</li>
+<li>源码运行：双击 <code>启动独立预览.bat</code>，或执行 <code>python squirrel_asset_manager\standalone_preview.py</code>。</li>
+</ul>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>主窗口出现，标题包含当前版本号。</li>
+<li>左侧分类树与资产网格可见。</li>
+<li>独立版工具栏能看到 Maya 选择下拉与连接状态。</li>
+</ul>
+<h2 id="h-4">常见失败</h2>
+<ul>
+<li><strong>工具架没有按钮</strong>：按钮只在安装时创建一次，手动删除后不会在启动时自动补建；重新运行安装器即可再创建。安装时 Maya 正在运行但工具架尚未就绪也可能没建上，同样重装一次即可。</li>
+<li><strong>状态行图标缺失</strong>：<code>PySide</code> / <code>shiboken</code> 导入失败；查看 Maya 脚本编辑器的输出。</li>
+<li><strong>脚本执行报找不到模块</strong>：安装目录未加入 <code>sys.path</code>；重新运行安装器并勾选对应 Maya 版本以修复集成。</li>
+<li><strong>独立版双击没反应</strong>：检查是否被杀毒软件拦截，或 <code>runtime\python\python.exe</code> 是否完整。</li>
+</ul>

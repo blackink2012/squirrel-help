@@ -1,0 +1,26 @@
+<p>版本独立材质让某个版本拥有自己的 <code>.zmetal</code> 与贴图，导入该版本时可以只还原这一版的外观。</p>
+<h2 id="h-1">是什么</h2>
+<p>资产根目录可以有一份公共材质 <code>node.zmetal</code>；某个版本目录下也可以放一份 <code>variants/&lt;版本&gt;/node.zmetal</code>，并带自己的贴图目录。后者就是该版本的独立材质。</p>
+<h2 id="h-2">导入时如何选</h2>
+<ul>
+<li>导入版本材质时，插件优先读取 <code>variants/&lt;版本&gt;/node.zmetal</code>。</li>
+<li>该版本没有独立材质时，回退到根目录 <code>node.zmetal</code>。</li>
+<li>独立材质的贴图按版本目录解析，并遵循贴图导入策略落盘。</li>
+</ul>
+<h2 id="h-3">操作入口</h2>
+<ol>
+<li>版本根目录里的 <code>.zmetal</code> 会出现在「导入版本 / LOD」子菜单，点击即可导入。</li>
+<li><code>variants/&lt;版本&gt;/node.zmetal</code> 由 <code>import_variant_material</code> 解析导入；对应的界面菜单入口是否已接线待确认，当前可通过该导入函数或 AI 命令使用。</li>
+<li>该导入返回失败时，提示「无法导入版本 … 的材质，请确认该版本包含独立的材质文件」。</li>
+</ol>
+<h2 id="h-4">什么时候需要</h2>
+<ul>
+<li>同一模型的不同版本使用不同配色或不同贴图。</li>
+<li>需要在不改动公共材质的前提下，为某一版保留专属外观。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<ul>
+<li>独立材质在导出新版本时写入，取决于该次导出是否勾选导出 zmetal。</li>
+<li>「导入版本 / LOD」子菜单里的 <code>.zmetal</code> 条目直接走材质导入；版本材质菜单则明确按版本解析。</li>
+<li>版本材质与公共材质同名时，场景中由 Maya 自动改名，不会覆盖已有材质。</li>
+</ul>

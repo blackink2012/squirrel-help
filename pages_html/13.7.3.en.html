@@ -1,0 +1,28 @@
+<p>A crash inside renderer modules such as <code>redshift-core-*.dll</code> or <code>vray_*.dll</code> means the renderer itself crashed and took Maya with it; switch to out-of-process rendering and confirm the fix is actually in effect.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>Maya disappears as soon as you render or use <strong>Update thumbnail → Render image</strong>.</li>
+<li>The second render in the same process always crashes while the first one works.</li>
+<li>The Windows event log shows the same DLL at the same fault offset.</li>
+<li>A new <code>MayaCrashLog*.dmp</code> appears in <code>%TEMP%</code>, and after the crash the port may still be held by the crash reporter.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>Redshift&#x27;s second in-process render</td><td>The first works, the second always crashes</td><td>Upgrade to a build with the blocking-render fix and restart Maya</td></tr><tr><td>The deployed copy was not updated</td><td>Source changed but Maya still runs old code</td><td>Redeploy and fully restart Maya</td></tr><tr><td>Redshift version or license problem</td><td>The log shows a license error</td><td>Check the license; roll back or reinstall the renderer if needed</td></tr><tr><td>Another renderer&#x27;s own DLL crashes</td><td>The event log points at <code>vray_*.dll</code> and similar</td><td>Switch to out-of-process <code>Render.exe</code></td></tr><tr><td>The crash reporter holds the port</td><td>The port still listens but commands do not answer</td><td>Handle it per 6.7.1 &quot;Port listens but does not answer&quot;</td></tr><tr><td>Retrying in-process over and over</td><td>Every retry produces a new crash</td><td>Stop retrying and use the out-of-process channel</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Confirm the plug-in is upgraded to a build containing the Redshift blocking-render fix, then fully quit and restart Maya; a hot reload does not count.</li>
+<li>Do 2 to 4 thumbnail renders in a row and confirm it no longer crashes on the second.</li>
+<li>If it still crashes, set the environment variable <code>SQUIRREL_MAYA_RENDER_VIA_EXE=1</code> to use out-of-process <code>Render.exe</code>. It is slower, but a renderer crash no longer takes Maya down.</li>
+<li>Check the Redshift version and license status; if the log shows a license error, fix the license first.</li>
+<li>Record the crash module name and offset with Event Viewer and keep the matching crash dump.</li>
+<li>Do not retry the same render path repeatedly inside one Maya process, which only produces more crash dumps.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>Four thumbnail renders in a row all produce images, Maya stays open, and <code>%TEMP%</code> gains no new crash dump with the same signature.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Reproduce in a clean Maya instance or a minimal scene to see whether scene content is involved.</li>
+<li>Collect the event log, crash dump, Redshift version and license status before reporting.</li>
+<li>Temporarily switch to playblast or imported images for thumbnails so asset organization is not blocked.</li>
+<li>Whether the AI per-frame render command also uses the blocking path is still unconfirmed; validate with a small batch before rendering at scale.</li>
+</ul>

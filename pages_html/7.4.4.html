@@ -1,0 +1,25 @@
+<p>创建穹顶灯会按当前渲染器选模板，建一盏 dome 灯并把选中的 HDR 接到它上面。</p>
+<p><img src="media/shared/menu-context-dome-light.webp" alt="HDR 资产右键 →「创建环境光」即建穹顶灯" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>当前渲染器为 Arnold、V-Ray 或 Redshift。</li>
+<li>有可用的 HDR 贴图：资产库中的 HDR 资产，或插件自带 <code>Assets/IBL</code> 目录。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>打开「创建资产」对话框，在缩略图来源区点「创建灯光」。</li>
+<li>菜单列出 <code>Assets/IBL</code> 下的 <code>.hdr</code>、<code>.exr</code> 等环境图；悬停条目可看同名 PNG 预览。</li>
+<li>选择一张 HDR，工具按当前渲染器挑模板：Arnold 用 <code>aiSkyDomeLight.ma</code>，V-Ray 用 <code>VRayLightDome.ma</code>，Redshift 用 <code>rsDomeLight.ma</code>。</li>
+<li>也可以直接在资产库双击 HDR 资产，或把它拖进视口；走同一套模板选择逻辑。</li>
+<li>创建后按需在属性编辑器调整旋转、强度与曝光。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>Outliner 中出现穹顶灯并被选中；属性编辑器里能看到 HDR 连接（Arnold 的 <code>file</code>、V-Ray 的 <code>VRayPlaceEnvTex</code>，或 Redshift 的 <code>tex0</code> 路径）；渲染背景有环境光照。</p>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>模板目录是 <code>Assets/HDR_ligt</code>（内含 <code>aiSkyDomeLight.ma</code>、<code>VRayLightDome.ma</code>、<code>rsDomeLight.ma</code>）；默认模板可在「设置 → 右键菜单」页<strong>右栏下半部分的「双击命令」区</strong>按子库修改，拖动 HDR 时也会跟着变。</li>
+<li>创建出的灯会锁定 <code>visibility</code>，避免误隐藏；需要临时关灯时改强度或曝光，不要解锁可见性。</li>
+<li>Arnold 设 <code>camera=0</code>、Redshift 设 <code>cameraRayContributionScale=0</code>、V-Ray 设 <code>domeSpherical=0</code>，目的是让渲染背景保留 alpha，照明与反射仍正常。</li>
+</ul>
+<h2 id="h-5">警告</h2>
+<p>当前只有 Arnold、V-Ray、Redshift 支持自动创建穹顶灯；Maya 原生渲染器不会创建。</p>

@@ -1,0 +1,11 @@
+<p>执行方式是命令的声明：<code>execution=&quot;async&quot;</code> 的 9 条命令应走作业入口，同步硬等会撞上 30 秒上限。</p>
+<h2 id="h-1">异步作业</h2>
+<table><thead><tr><th>命令</th><th>默认超时</th></tr></thead><tbody><tr><td><code>ai_deps_install</code></td><td>10800 秒</td></tr><tr><td><code>render_frames</code>、<code>index_sync</code></td><td>1800 秒</td></tr><tr><td><code>capture_sequence</code></td><td>900 秒</td></tr><tr><td><code>encode_sequence</code>、<code>maya_run_python</code>、<code>maya_run_mel</code></td><td>600 秒</td></tr><tr><td><code>capture_viewport</code></td><td>300 秒</td></tr><tr><td><code>ai_analysis</code></td><td>180 秒</td></tr></tbody></table>
+<p>提交后立刻返回 <code>job_id</code>，用 <code>GET /jobs/&lt;job_id&gt;</code> 查询。状态机为 <code>queued → running → done / error / timeout / cancelled / interrupted</code>。默认 4 个执行线程、排队上限 32、单条默认超时 60 秒；终态作业保留 1 小时、最多 200 条。排队满时返回 <code>QUEUE_FULL</code>，应先查 <code>/jobs</code> 再提交。</p>
+<h2 id="h-2">进度</h2>
+<p>支持进度的命令会收到可调用的 <code>progress(percent, message, **extra)</code>。<code>percent</code> 夹到 0–100，<code>message</code> 截到 200 字符，<code>extra</code> 只保留最多 8 个标量字段。进度帧最快 0.4 秒一帧，但完成时的最后一帧一定送达；<code>progress_age_secs</code> 表示这份进度有多旧。</p>
+<h2 id="h-3">取消</h2>
+<p>当前 7 条命令声明 <code>cancel_supported=true</code>。取消是协作式的：</p>
+<table><thead><tr><th>阶段</th><th>效果</th></tr></thead><tbody><tr><td><code>queued</code></td><td>真取消，命令从未派发给宿主</td></tr><tr><td><code>running</code> 且命令查了检查点</td><td>在下一个检查点停下，作业记 <code>cancelled</code> 并带回部分结果</td></tr><tr><td><code>running</code> 但没查检查点</td><td>停不下来，照常跑完并标 <code>cancel_ignored</code></td></tr></tbody></table>
+<p>自己写的长循环应调用 <code>cancelled()</code> 或 <code>cancel.raise_if_cancelled()</code>。</p>
+<blockquote><p><strong>警告</strong>：同步超时不等于失败。命令可能仍在 Maya 主线程执行，结果会进入迟到结果邮箱（<code>GET /late_results</code>）；先查邮箱，再决定是否重跑。作业历史保存在 <code>&lt;dsh_home&gt;/ai_jobs.jsonl</code>，底座重启后遗留作业标为 <code>interrupted</code>，不会自动重放。</p></blockquote>

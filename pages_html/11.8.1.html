@@ -1,0 +1,28 @@
+<p>「支持格式」定义资产库把哪些扩展名当作可导入的资产文件，每行一个、必须带点号。</p>
+<p><img src="media/shared/settings-formats.webp" alt="设置 → 支持格式" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>列表内容写入 <code>Assets/preset/config.json</code> 的 <code>asset_file_extensions</code>。资产库读取该字段后，用它做两件事：</p>
+<ol>
+<li>「从文件导入」对话框的文件过滤器，只列出这些扩展名。</li>
+<li>把整个文件夹收进资产库时，判断根级文件是否算资产文件并参与分组。</li>
+</ol>
+<h2 id="h-2">可选值与默认值</h2>
+<p>每行一个扩展名，例如 <code>.ma</code>、<code>.png</code>。出厂包含：</p>
+<p><code>.zasset</code>、<code>_zasset</code>、<code>.ma</code>、<code>.mb</code>、<code>.fbx</code>、<code>.obj</code>、<code>.abc</code>、<code>.usd</code>、<code>.usda</code>、<code>.usdc</code>、<code>.glb</code>、<code>.gltf</code>、<code>.dae</code>、<code>.ass</code>、<code>.rs</code>、<code>.proxy</code>、<code>.vrmesh</code>、<code>.vdb</code>、<code>.png</code>、<code>.jpg</code>、<code>.jpeg</code>、<code>.exr</code>、<code>.hdr</code>、<code>.tga</code>、<code>.tiff</code>、<code>.tif</code>、<code>.bmp</code>、<code>.psd</code>、<code>.sicon</code>、<code>.aicon</code>、<code>.mcm</code>、<code>.wav</code>、<code>.mp3</code>、<code>.aiff</code>、<code>.aif</code>、<code>.flac</code>、<code>.ogg</code>、<code>.m4a</code>、<code>.aac</code>、<code>.atom</code>（共 40 项）。</p>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>影响「从文件导入」能看到的文件类型，以及文件夹入库时的根级文件识别。</li>
+<li>不影响「其它配置」里的几何体扩展名与图像扩展名；那两项只在整文件夹入库时给文件分类。</li>
+<li>单文件收进资产库时，子库类型仍按内置扩展名表推断，改这里不影响推断结果。</li>
+</ul>
+<h2 id="h-4">操作步骤</h2>
+<ol>
+<li>打开「设置 → 支持格式」。</li>
+<li>勾选「解锁全部配置」。</li>
+<li>按行增删扩展名，每行一个，不要漏掉点号。</li>
+<li>点「应用」或「确定」。</li>
+</ol>
+<h2 id="h-5">结果验证</h2>
+<p>重新打开「从文件导入」，文件过滤器应包含新增扩展名；已有资产不受影响。</p>
+<h2 id="h-6">提示</h2>
+<p>错误配置会导致资产导入功能异常。不确定时先备份 <code>config.json</code>。</p>

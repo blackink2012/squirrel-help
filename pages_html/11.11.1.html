@@ -1,0 +1,21 @@
+<p>插件的配置分散在包内预设和用户目录两处，备份就是把这几份 JSON 复制走，迁移就是放回对应位置。</p>
+<h2 id="h-1">前置条件</h2>
+<p>先关闭 Maya，或至少关闭设置窗口，避免复制到写了一半的文件。</p>
+<h2 id="h-2">配置文件清单</h2>
+<table><thead><tr><th>文件</th><th>位置</th><th>内容</th></tr></thead><tbody><tr><td><code>config.json</code></td><td><code>&lt;插件包&gt;/Assets/preset/</code></td><td>子库、默认分类、支持格式、扩展名、材质节点类型、导入策略等</td></tr><tr><td><code>context_menu_preset.json</code></td><td>同上</td><td>右键菜单按子库的勾选状态</td></tr><tr><td><code>double_click_preset.json</code></td><td>同上</td><td>双击命令与子选项</td></tr><tr><td><code>export_preset.json</code></td><td>同上</td><td>导出默认格式</td></tr><tr><td><code>pbr_mapping.json</code></td><td>同上</td><td>贴图类型别名与 PBR 映射</td></tr><tr><td><code>app_settings.json</code></td><td><code>~/.squirrel_asset_manager/</code></td><td>字号、主题、语言、库列表、隐藏分类、AI 配置与密钥等个人设置</td></tr></tbody></table>
+<h2 id="h-3">操作步骤</h2>
+<ol>
+<li>关闭 Maya。</li>
+<li>复制上表六个文件到备份目录。</li>
+<li>在新机器上按相同相对位置放回：预设文件放入插件包的 <code>Assets/preset/</code>，<code>app_settings.json</code> 放入当前用户的 <code>~/.squirrel_asset_manager/</code>。</li>
+<li>启动 Maya 与插件，打开设置逐页核对。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p>设置各页显示的值与备份前一致；资产库列表能正常打开。</p>
+<h2 id="h-5">提示</h2>
+<ul>
+<li>预设文件位于 EXE 安装目录内；<strong>覆盖安装会用新包里的同名预设覆盖它们</strong>（你在 <code>Assets/preset/</code> 里改过的配置会丢），升级前先备份。<code>~/.squirrel_asset_manager/app_settings.json</code> 在安装目录外，覆盖安装不受影响。</li>
+<li><code>app_settings.json</code> 里的库路径是绝对路径，换机后可能需要在设置里重新指定。</li>
+<li>文件包含 AI API Key 等敏感信息，备份与传输时注意保密。</li>
+<li>资产库本体不在这些文件里，备份方法见「备份与恢复」。</li>
+</ul>

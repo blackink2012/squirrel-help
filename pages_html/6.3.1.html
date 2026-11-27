@@ -1,0 +1,44 @@
+<p>「追加为 LOD」把 Maya 当前选中的模型写成已有资产的一个精度档位（LOD0–LOD4），不改动其它档位与材质。</p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>目标 <code>.zasset</code> 已经存在，并在网格中能看到它的卡片。</li>
+<li>资产本身已有可沿用的几何体格式（<code>ma</code>/<code>mb</code>/<code>fbx</code>/<code>obj</code>/<code>usd</code>/<code>abc</code> 之一）；追加 LOD <strong>沿用资产现有格式</strong>，不需要再选格式。</li>
+<li>Maya 里能选中要作为该档 LOD 的模型。<strong>不要求打开窗口前先全选好</strong>——档位窗是非模态的，可以边选边绑。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在 Maya 视口中选中要作为某个 LOD 档位的模型。</li>
+<li>右键资产卡片 →「更新资产 ▶」→「追加为 LOD」。</li>
+<li>弹出「追加 LOD」档位窗，顶部副标题写着目标资产/版本名，下面一行实时显示「当前选择：&lt;模型名&gt;」。</li>
+<li>点对应档位卡（<strong>LOD0</strong>–<strong>LOD4</strong>）完成绑定：卡片变 ☑ 并显示「→ 模型名」。</li>
+<li>回 Maya 换选另一个模型 → 再点另一张档位卡，可一次绑多档；点已绑定的档位卡可取消绑定，「清空绑定」可全部重来。</li>
+<li>看窗口下方警告行，确认要点：<ul>
+<li>「「LODn」已存在：将覆盖它的几何体，其它 LOD 不受影响。」</li>
+<li>「LOD0 是版本默认几何体，覆盖后双击卡片导入的就是新模型。」</li>
+<li>「将一次写入 N 条 LOD。」</li>
+</ul></li>
+<li>点「导出并追加（N 档）」，逐档导出并写入。完成后提示「已追加 N 档 LOD。」；失败档位会在提示后括注。</li>
+</ol>
+<blockquote><p>当前版本<strong>不再弹「创建资产」导出配置窗</strong>：追加 LOD 直接沿用目标资产已有格式，在库外临时目录导出 → 验证 → 写入 LOD（<code>lods.json</code> 或旧版 <code>variants.json</code>）；资产没有可沿用的几何格式时会提示「该资产没有可沿用的几何体格式（ma/mb/fbx/obj/usd/abc），无法追加 LOD。」</p></blockquote>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>弹出提示「已追加 N 档 LOD。」。</li>
+<li>右键资产 →「资产详情」（有版本/变体时为版本浏览器）→ 左栏能选到新的 LOD 行，右栏「LOD 管理」卡能看到该档。</li>
+<li><code>.zasset</code> 内新增 <code>lod{n}/node.&lt;ext&gt;</code>；<code>lods.json</code> 的 <code>lods</code> 列表出现对应条目（<code>lod0</code> 始终是根目录几何体）。</li>
+</ul>
+<h2 id="h-4">提示与警告</h2>
+<blockquote><p><strong>提示</strong>：LOD 档位由你在档位卡上<strong>自己指定</strong>（LOD0–LOD4），不是程序按现有最大级别 +1 自动算；一次可以写多档。</p></blockquote>
+<blockquote><p><strong>提示</strong>：追加 LOD 只写几何体，不替换材质、贴图；需要新材质请用「创建新版本」。</p></blockquote>
+<blockquote><p><strong>提示</strong>：档位窗打开期间可以切回 Maya 改选择，窗口会跟着显示「当前选择」；多选时绑定的是<strong>最后一个</strong>（活动对象）。</p></blockquote>
+<blockquote><p><strong>警告</strong>：往已有档位写入会<strong>覆盖该档原几何</strong>（其它 LOD 与版本不受影响）；覆盖 LOD0 等于改掉「双击卡片默认导入的那个模型」。</p></blockquote>
+<blockquote><p><strong>当前版本</strong>：追加 LOD 直接作用于你右键的主资产；不再弹出「选择目标版本」，子版本是独立的 <code>V{n}</code> 资产。为<strong>变体</strong>追加 LOD 走另一个小输入框（「为变体「X」追加 LOD 级别（1-9）」），不是这个档位窗。</p></blockquote>
+<h2 id="h-5">相关界面（历史截图）</h2>
+<p><img src="media/shared/dialog-export-right.webp" alt="导出对话框右侧：版本与 LOD 的追加选项" loading="lazy" decoding="async"></p>
+<blockquote><p>上图是导出相关界面的历史截图；追加 LOD 现在在独立的「追加 LOD」档位窗里完成，截图待统一重截。</p></blockquote>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>创建新版本：<a href="#/6.3.2"><code>4.3.3.2</code></a></li>
+<li>删除版本与 LOD：<a href="#/6.3.4"><code>4.3.3.4</code></a></li>
+<li>导出产物里的 <code>lods.json</code> 与 <code>variants.json</code>：<a href="#/6.1.3"><code>4.3.1.3</code></a></li>
+<li>「追加 LOD」档位窗逐项说明：<a href="#/15.11.4"><code>8.11.4</code></a></li>
+</ul>

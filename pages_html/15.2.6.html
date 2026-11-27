@@ -1,0 +1,34 @@
+<blockquote><p>一句话定位：<strong>工具栏那颗「工具」图标下拉出来的 10 个批量工具 —— 转换入库、批量处理、材质映射、脚本浏览都从这里进。</strong></p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>在顶部工具栏找到那颗<strong>工具图标</strong>（提示「快捷工具：运行 quicktools 目录里的脚本」）；</li>
+<li>单击弹出菜单；</li>
+<li>点其中一项即执行对应工具。</li>
+</ol>
+<p><img src="media/shared/menu-quicktools.webp" alt="「快捷工具」菜单：10 个工具" loading="lazy" decoding="async"></p>
+<h2 id="h-2">菜单逐项详解</h2>
+<p>菜单共 <strong>10 项</strong>，与 <code>quicktools</code> 目录里的脚本文件一一对应（文件名里的下划线会显示成空格）。</p>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>hdr to zasset</td><td>把 HDR 环境图转换成 HDR 资产并入库</td><td>选中 / 指定 HDR 文件与目标分类</td><td>打开「HDR 转资产」窗口，走预览与写入流程</td><td>纯文件工具，没有 Maya 也能跑；详见 <a href="#/15.14.1"><code>8.14.1</code></a></td></tr><tr><td>model to zasset</td><td>把模型文件（.ma/.mb/.fbx 等）转换成模型资产</td><td>选好模型文件与目标分类</td><td>打开「模型转资产」窗口</td><td>详见 <a href="#/15.14.2"><code>8.14.2</code></a></td></tr><tr><td>pbr to zasset</td><td>把一套 PBR 贴图（basecolor / roughness / normal…）打包成材质资产</td><td>贴图命名的后缀要能被识别（可在设置里改后缀）</td><td>打开「PBR 贴图转资产」窗口</td><td>详见 <a href="#/15.14.3"><code>8.14.3</code></a></td></tr><tr><td>图像格式转换工具</td><td>批量把图片转成别的格式 / 色彩空间</td><td>选好源文件夹与输出设置</td><td>打开「图像格式转换」窗口</td><td>纯文件工具，不依赖 Maya；详见 <a href="#/15.14.4"><code>8.14.4</code></a></td></tr><tr><td>批量处理maya文件</td><td>批量处理 .ma/.mb 文件（打开、清理、另存等）</td><td>选好待处理文件列表</td><td>打开「批量处理 Maya 文件」窗口</td><td>详见 <a href="#/15.14.5"><code>8.14.5</code></a></td></tr><tr><td>批量镜像复制</td><td>批量镜像复制模型 / 物体</td><td>选好对象与镜像轴</td><td>打开「批量镜像复制」窗口</td><td>纯文件 / 场景工具，见 <a href="#/15.14.6"><code>8.14.6</code></a></td></tr><tr><td>材质导入导出工具(材质管理)</td><td>材质在库里与场景之间导入导出、批量管理</td><td>选中材质或资产</td><td>打开「材质导入导出工具」窗口</td><td>详见 <a href="#/15.14.7"><code>8.14.7</code></a></td></tr><tr><td>材质节点属性映射工具</td><td>把一种材质节点的属性映射到另一种（跨渲染器）</td><td>指定源 / 目标材质类型</td><td>打开「材质节点属性映射」窗口</td><td>详见 <a href="#/15.14.8"><code>8.14.8</code></a></td></tr><tr><td>材质转换工具</td><td>跨渲染器转换材质（Arnold / Redshift / V-Ray…）</td><td>场景里已选中或指定材质</td><td>打开「材质转换工具」窗口</td><td>详见 <a href="#/15.14.9"><code>8.14.9</code></a></td></tr><tr><td>脚本浏览器</td><td>浏览 / 搜索 / 运行脚本资产</td><td>无</td><td>打开脚本浏览器面板或窗口</td><td>与「新建面板 → 脚本浏览器」同一功能；见 <a href="#/15.14.10"><code>8.14.10</code></a></td></tr></tbody></table>
+<h2 id="h-3">子菜单</h2>
+<p>本菜单<strong>没有二级子菜单</strong>（10 项都是直接执行或直接打开对应工具窗口，没有 ▶）。</p>
+<h2 id="h-4">这个菜单是怎么来的</h2>
+<ul>
+<li>菜单内容<strong>不是写死的</strong>：每次弹出时扫描 <code>quicktools</code> 目录下的 <code>.py</code> 文件重建，按文件名排序。</li>
+<li>所以往该目录里加一个脚本，重新点开这个按钮就能看到它；目录为空时会显示一条灰字「暂无快捷工具」。</li>
+<li>菜单顶部有虚线，可以<strong>撕下来变成浮窗</strong>，方便反复点同一批工具。</li>
+</ul>
+<h2 id="h-5">在 Plugin 版与独立版里的差别</h2>
+<table><thead><tr><th>形态</th><th>工具在哪跑</th></tr></thead><tbody><tr><td>Maya 内版</td><td>就地在本机 Maya 的 Python 里运行</td></tr><tr><td>独立版</td><td>需要 Maya 的工具会<strong>投送</strong>给「Maya 目标」里选中的那台 Maya 运行；纯文件类工具（如「图像格式转换工具」「批量镜像复制」和三个 to zasset 工具）就地在本机跑</td></tr></tbody></table>
+<h2 id="h-6">小白易错点</h2>
+<ul>
+<li><strong>点了没反应 / 只闪一下</strong>：这些工具多数会先弹自己的窗口再执行；如果窗口没出现，看 Maya 脚本编辑器里的日志（独立版还会打印「未发现在线的 Maya」之类的提示）。</li>
+<li><strong>独立版点了报「未发现在线的 Maya」</strong>：先确认有一台开着桥接端口的 Maya，并在「Maya 目标」里选中它，见 <a href="#/15.2.4"><code>8.2.4</code></a>。</li>
+<li><strong>连着点两次</strong>：会开两个工具窗口 / 跑两遍任务，注意别重复执行写库操作。</li>
+<li><strong>以为菜单里是全部工具</strong>：这里只列 <code>quicktools</code> 目录里的脚本；资产右键菜单里的「格式转换」等是另一套入口。</li>
+</ul>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>快捷工具窗口逐页详解见 <a href="#/15.14.1"><code>8.14.1</code></a> ~ <a href="#/15.14.10"><code>8.14.10</code></a>。</li>
+<li>入门版总览见 <a href="#/9.1"><code>4.6.1</code></a>。</li>
+<li>工具栏整体索引见 <a href="#/15.2.1"><code>8.2.1</code></a>。</li>
+</ul>

@@ -1,0 +1,27 @@
+<p>别名是文件名中的关键词，用来判断一张贴图属于哪种 PBR 通道。</p>
+<p><img src="media/shared/settings-texture-alias.webp" alt="别名" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>「设置 → 贴图后缀」左侧列出贴图类型，右侧是该类型的别名列表，每行一个。数据来自 <code>Assets/preset/pbr_mapping.json</code> 的 <code>texture_type_rules</code>，每一项的 <code>aliases</code> 就是这里的列表。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<ul>
+<li>类型由 JSON 决定，当前包括 <code>baseColor</code>、<code>normal</code>、<code>roughness</code>、<code>metallic</code>、<code>ao</code>、<code>arm</code>、<code>orm</code>、<code>emissive</code>、<code>height</code>、<code>opacity</code>、<code>clearcoat</code>、<code>clearcoatRoughness</code>、<code>specular</code>、<code>subsurface</code>、<code>anisotropy</code>、<code>ior</code>。</li>
+<li>每个类型可有多行别名，别名是不含扩展名的关键词。例如 <code>normal</code> 含 <code>nrm</code>、<code>n</code>、<code>normal</code>，文件 <code>crate_n.png</code> 会被识别为法线贴图。</li>
+<li>类型的匹配优先级由 JSON 中的 <code>priority</code> 决定，界面只编辑别名。</li>
+</ul>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>影响 PBR 贴图转资产、创建材质时的贴图通道识别。</li>
+<li>只匹配文件名关键词，不改写文件本身，也不影响已生成资产的贴图路径。</li>
+</ul>
+<h2 id="h-4">何时修改</h2>
+<p>素材命名规范与默认别名不一致，例如把粗糙度写成 <code>_r</code>、把金属度写成 <code>_m</code> 时。</p>
+<h2 id="h-5">操作步骤</h2>
+<ol>
+<li>打开「设置 → 贴图后缀」，必要时先解锁。</li>
+<li>左侧选类型，右侧逐行编辑别名。</li>
+<li>点「应用」或「确定」写回 <code>pbr_mapping.json</code>。</li>
+</ol>
+<h2 id="h-6">结果验证</h2>
+<p>用一张按新别名命名的贴图执行 PBR 转资产，贴图应被分到对应通道。</p>
+<h2 id="h-7">提示</h2>
+<p>页内「恢复默认设置」按钮会重新从磁盘读取 <code>pbr_mapping.json</code>，用于放弃尚未应用的编辑；它不会生成出厂副本。</p>

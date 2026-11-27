@@ -1,0 +1,21 @@
+<p>拿到精确名字后，用 <code>maya_docs(action=&quot;show&quot;)</code> 取结构化详情；命令参数则优先用本机实时帮助，因为它反映当前 Maya 版本与已装插件。</p>
+<p><img src="media/shared/menu-ai-tools.webp" alt="「AI 工具」菜单：详情查询在「AI 助手」对话框里完成，菜单本身没有文档入口" loading="lazy" decoding="async"></p>
+<blockquote><p>图只用来指路：命令详情、节点属性都通过「AI 助手」里的 <code>maya_docs</code> 工具取，不在这个菜单里点。</p></blockquote>
+<h2 id="h-1">前置条件</h2>
+<p>已经从搜索里拿到精确名字，注意 Maya 命令区分大小写。</p>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在 AI 助手里说「看一下 polyReduce 的详情」，或直接调用 <code>maya_docs(action=&quot;show&quot;, name=&quot;polyReduce&quot;)</code>。</li>
+<li>默认返回紧凑摘要：synopsis、flags 的长短名与类型、相关说明。长列表超出上限时会点名剩余项。</li>
+<li>只关心某个参数时加 <code>flag=&quot;percentage&quot;</code>，返回该 flag 的完整说明。</li>
+<li>需要完整正文时加 <code>full=true</code>；指南正文可能几万字，慎用。</li>
+<li>命令的实时参数用 <code>maya_docs(action=&quot;help&quot;, name=&quot;polyReduce&quot;)</code>，它走 Maya 的 <code>cmds.help</code>。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>返回 <code>status=ok</code>，包含名称、类型与详情字段；flag 查询只回目标参数的完整说明。名字不存在时返回候选近邻，按候选重试。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>节点类型不能用 <code>cmds.help</code> 查，要用 <code>show</code>；<code>help</code> 只认识命令。</li>
+<li>在线兜底只有页面正文，没有 flag 表；需要参数时必须在本机有 Maya 或本地知识库。</li>
+<li>已装插件的命令以实时帮助为准，离线库可能没有收录。</li>
+</ul>

@@ -1,0 +1,33 @@
+<p>Batch converts HDR, EXR, PNG, JPEG, TIFF, BMP, WebP and TGA images with OpenCV, supporting resizing and preserving the directory structure.</p>
+<p><img src="media_en/shared/quicktool-image-format.webp" alt="Image format conversion tool" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Purpose</h2>
+<p>Turn high dynamic range textures into previews, or unify image formats between projects without opening an image editor for every file.</p>
+<h2 id="h-2">Input and output</h2>
+<ul>
+<li>Input: <code>「选择文件」 (Choose files)</code> accepts several files; <code>「选择文件夹」 (Choose folder)</code> scans the images inside recursively.</li>
+<li>Output: images in the target format keeping the source base name; an empty <code>「输出位置」 (Output location)</code> means the input file&#x27;s directory (or the input folder in folder mode).</li>
+<li>Output structure: <code>「保持层级结构」 (Keep hierarchy)</code> is on by default and rebuilds the source relative paths under the output directory; when off everything is flattened into the output directory.</li>
+</ul>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open <code>快捷工具 (Quick tools) → 图像格式转换工具 (Image format conversion tool)</code>.</li>
+<li>Choose the input mode and click <code>「浏览...」 (Browse...)</code> to pick files or a folder.</li>
+<li>To limit the input types fill <code>「输入格式过滤」 (Input format filter)</code> such as <code>exr</code> or <code>png, jpg</code> (empty converts every supported format).</li>
+<li>Set <code>「输出位置」 (Output location)</code> and <code>「输出格式」 (Output format)</code>.</li>
+<li>Fill the output width / height as needed and adjust aspect ratio and format options.</li>
+<li>Click <code>「开始转换」 (Start conversion)</code>.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The <code>「转换日志」 (Conversion log)</code> on the left lists each processed path and any renames.</li>
+<li>The progress bar completes and a summary appears (successes / failures).</li>
+<li>The output directory contains files in the target format with the source structure preserved (when keeping hierarchy).</li>
+</ul>
+<h2 id="h-5">Options and notes</h2>
+<table><thead><tr><th>Option</th><th>Default</th><th>Notes</th></tr></thead><tbody><tr><td>Target format</td><td><code>.exr</code></td><td>The dropdown switches to <code>.hdr</code>, <code>.png</code>, <code>.jpg</code>, <code>.tif</code>, <code>.bmp</code>, <code>.webp</code>, <code>.tga</code> and more</td></tr><tr><td>JPEG quality</td><td>95%</td><td>Range 10%–100%</td></tr><tr><td>PNG compression</td><td>5</td><td>Range 0–9</td></tr><tr><td>TIFF compression</td><td>LZW</td><td>NONE and DEFLATE are also available</td></tr><tr><td>Output width / height</td><td>Empty</td><td>Empty keeps the original size; filling one side computes the other proportionally</td></tr><tr><td>Keep aspect ratio</td><td>On</td><td>When off the image is stretched to the given size</td></tr><tr><td>Keep hierarchy</td><td>On</td><td>When off all files go into one directory</td></tr></tbody></table>
+<ul>
+<li>Converting HDR/EXR to an 8-bit format applies Reinhard tone mapping and Gamma 2.2 correction, so colors differ from the original float image; it suits previews and thumbnails.</li>
+<li>File names are cleaned to letters, digits, underscores and dots only, starting with a letter; when a name does not comply the tool <strong>renames the source file</strong> and logs <code>源文件已重命名 (source file renamed)</code>.</li>
+<li>EXR reading prefers OpenCV and falls back to <code>imageio</code>; missing dependencies produce an install hint.</li>
+<li>The output directory is created when it does not exist.</li>
+</ul>

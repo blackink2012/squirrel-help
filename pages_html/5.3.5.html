@@ -1,0 +1,28 @@
+<p>右键灯光资产选择 <code>zlight</code>，插件按当前渲染器创建灯光节点，并复制 HDR、IES、贴图等依赖。</p>
+<p><img src="media/shared/menu-context-light-import.webp" alt="灯光资产右键：导入灯光" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>Maya 场景已打开，当前渲染器已确定。</li>
+<li>灯光资产包含 <code>node.zlight</code>。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>右键灯光资产。</li>
+<li>只有 zlight 一种格式时点「导入 zlight」；有多个格式时展开「导入」后选择 <code>zlight</code>。</li>
+<li>资产里的灯光属于其他渲染器时，按提示确认是否转换；整批只询问一次。</li>
+<li>等待灯光创建与依赖复制完成。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>Outliner 中出现新的灯光 transform 与 shape，导入后自动选中新建灯光。</li>
+<li>灯光类型与当前渲染器匹配；属性面板中的颜色、强度、曝光、色温等已写入。</li>
+<li>脚本编辑器输出「已创建 N 个灯光」，依赖文件按导入策略落盘。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>跨渲染器转换只支持 Arnold、V-Ray、Redshift；Maya 原生灯光不参与转换。</li>
+<li>zlight 默认直接按当前渲染器转换成对应灯光；独立运行版会先按源渲染器建出，再询问是否转换。</li>
+<li>导入 ma/mb 等格式且其中带其他渲染器灯光时，整批只询问一次是否转换。</li>
+<li>没有映射路径的灯光保持原样，只输出「无 … 映射路径，保留原灯光」日志。</li>
+<li>只想把参数套到场景已有灯光时，请用「应用灯光参数到选中灯光」。</li>
+</ul>

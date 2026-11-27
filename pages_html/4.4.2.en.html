@@ -1,0 +1,25 @@
+<p>Two buttons at the top of the asset area: <code>「图标」 (Icons)</code> on the left (click to choose icons / list) and <code>「名称」 (Name)</code> on the right (the label is the current sort key; click to choose the sort type and direction). Both affect display only, never the assets themselves.</p>
+<p><img src="media_en/shared/menu-sort.webp" alt="Sort menu" loading="lazy" decoding="async"></p>
+<p><img src="media_en/shared/menu-view.webp" alt="View menu" loading="lazy" decoding="async"></p>
+<h2 id="h-1">View modes</h2>
+<ol>
+<li>Click the <code>「图标」 (Icons)</code> button at the top of the asset area (its label follows the current view; in list view it reads <code>「列表」 (List)</code>).</li>
+<li>Choose <code>「图标」 (Icons)</code> for a grid of thumbnail cards, or <code>「列表」 (List)</code> for a table with the columns star, name, asset type, category and tags.</li>
+<li>Both views share the current filter and selection; the button label and icon change together when switching.</li>
+</ol>
+<h2 id="h-2">Thumbnail size</h2>
+<ul>
+<li>The <code>「缩略图:」 (Thumbnail:)</code> slider at the top of the asset area: small cards with many columns on the left, large cards with few columns on the right, roughly 2–16 columns.</li>
+<li>In icon view, holding <code>Ctrl</code> and scrolling the wheel also zooms: up enlarges, down shrinks.</li>
+<li>Widening the window adds columns first instead of stretching the cards.</li>
+</ul>
+<h2 id="h-3">Sorting</h2>
+<p>Clicking the <code>「名称」 (Name)</code> button opens the sort menu in two parts:</p>
+<table><thead><tr><th>Part</th><th>Items</th><th>Notes</th></tr></thead><tbody><tr><td>Sort type</td><td>Name / Type / Category / Time</td><td>Single choice; items are not check-marked, compare the toolbar button label instead</td></tr><tr><td>Separator</td><td>—</td><td>—</td></tr><tr><td>Sort direction</td><td>Ascending / Descending</td><td>The current direction has a blue arrow; picking once applies it</td></tr></tbody></table>
+<ul>
+<li><strong>Ascending / descending apply to all four sort keys</strong>: descending simply reverses the current order (including the name order inside each group);</li>
+<li>Names sort by Chinese display name and time sorts by file modification time;</li>
+<li>List view can also sort by clicking the <code>「名称 / 资产类型 / 分类」 (Name / Asset type / Category)</code> headers, and clicking the same column toggles the direction; the star and tag columns do not participate.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<p>After switching, the cards / table reorder immediately without losing the filter. The view mode and sorting are written into the interface state and restored after a restart.</p>

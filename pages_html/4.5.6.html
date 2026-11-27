@@ -1,0 +1,25 @@
+<p>语义搜索和以图搜图依赖按资产库维护的本地索引；先确认 AI 依赖与索引可用，再排查搜索结果。</p>
+<p><img src="media/shared/dialog-ai-search-config.webp" alt="AI 搜索设置" loading="lazy" decoding="async"></p>
+<h2 id="h-1">搜索相关设置</h2>
+<table><thead><tr><th>设置项</th><th>位置</th><th>默认值</th><th>作用</th></tr></thead><tbody><tr><td>AI 搜索</td><td>搜索框右侧勾选框</td><td>开启</td><td>关闭后输入即普通关键词过滤，图片搜索按钮隐藏；选择会被记住</td></tr><tr><td><code>ai_search_use_global</code></td><td>AI 搜索对话框的模型配置</td><td>关闭</td><td>开启后允许 AI 搜索使用「设置 → AI」里的全局大模型做意图分析</td></tr><tr><td><code>ai_asset_semantic</code></td><td>配置项</td><td>开启</td><td>资产库语义检索总开关，关闭等同没有语义能力</td></tr><tr><td><code>ai_asset_semantic_sync</code></td><td>配置项</td><td>开启</td><td>搜索时自动增量同步索引</td></tr><tr><td><code>ai_asset_index_dir</code></td><td>配置项</td><td>空</td><td>空表示索引放在库内 <code>.squirrel_ai_index</code>；填一个本地目录可让每个库在根下各用子目录</td></tr></tbody></table>
+<div class="admonition note"><div class="admonition-title">注意</div><p>三个 <code>ai_asset_*</code> 键目前不在设置窗口的可见控件中，属于配置文件项；对应的依赖安装与检查请使用下面的「AI 功能与依赖」。</p></div>
+<h2 id="h-2">查看与修复索引</h2>
+<ol>
+<li>打开「设置 → AI → AI 功能与依赖」。</li>
+<li>点「AI 依赖检查」生成报告，报告包含资产库索引与图像索引的检查结果，并用记事本打开。</li>
+<li>缺依赖时点「一键安装 AI 功能与依赖」，按步骤补齐 Ollama、嵌入模型、索引与可选 sidecar。</li>
+<li>也可用命令 <code>asset_semantic_status</code> 查看索引条数、维度、模型、索引目录、上次同步与不可用原因。</li>
+<li>索引落后或缺失时，用 <code>index_sync</code> 同步：<code>kind=materials</code> 为文本索引增量同步，<code>kind=images</code> 为图像索引（可全量重建），<code>both</code> 为两套都做。</li>
+</ol>
+<h2 id="h-3">运行机制</h2>
+<ul>
+<li>索引按库分开，切换资产库时后台预热当前库的索引；预热期间搜索先用词法结果，准备好后自动走语义。</li>
+<li>搜索时会做懒同步，同一库短时间内不重复扫描；索引不存在时也能降级为词法搜索。</li>
+</ul>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li><code>asset_semantic_status</code> 显示索引可用、条数与模型正确。</li>
+<li>语义搜索时状态栏出现「本地嵌入」和毫秒数，说明走的是本地索引。</li>
+<li>图像索引可用时，以图搜图状态栏显示「图像向量检索命中」。</li>
+</ul>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>索引是派生数据，可以安全重建；多人共用资产库时，建议把索引根设为各自机器的本地目录，避免索引互相覆盖。索引目录改动后重开插件窗口生效。</p></div>

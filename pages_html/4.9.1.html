@@ -1,0 +1,27 @@
+<p>收藏就是把常用资产放进收藏夹；卡片上的星标表示资产是否属于「当前激活收藏夹」，数据按库保存在 <code>favorites.json</code>。</p>
+<p><img src="media/shared/nav-favorites.webp" alt="「收藏」页签：默认收藏夹与各收藏集的资产计数" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>资产库已加载，左侧「收藏」页签可用。</li>
+<li>目标收藏集已存在。收藏集不存在时不会自动新建，写入会被忽略。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>打开左侧「收藏」页签，在收藏夹列表中选中一个收藏集（默认是「默认收藏夹」）。</li>
+<li>在资产网格或列表视图中，点击卡片上的星标图标；悬停提示为「点击添加/取消收藏」。</li>
+<li>再点一次同一星标即可取消收藏。</li>
+<li>也可以右键资产，选择「添加到收藏夹」，在子菜单里点选收藏集：实心金星表示已在该夹，描边灰星表示未收藏。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>星标在实心与描边之间切换，收藏夹条目后的数量同步变化。</li>
+<li>在「收藏」页签选中该收藏集时，网格只列出其中的资产。</li>
+<li>库根目录 <code>favorites.json</code> 中，对应收藏集的 <code>materials</code> 出现该资产 id。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<div class="admonition note"><div class="admonition-title">注意</div><p>星标写入的是「当前激活收藏夹」。先选收藏集再点星，避免收进错误的夹。</p></div>
+<ul>
+<li>收藏夹按库存储：主资产库与项目库各有一份，面板顶部显示「当前库：主资产库 / 项目库」。</li>
+<li>普通拖放会把资产「移入」目标收藏集（从其它收藏集移除）；按住 Ctrl 拖放是「加入」，保留原归属。</li>
+<li>默认收藏夹不可删除；命令侧可用 <code>favorite</code>（<code>op=list/add/remove/toggle</code>），收藏集不存在时返回 <code>COLLECTION_NOT_FOUND</code>。</li>
+</ul>

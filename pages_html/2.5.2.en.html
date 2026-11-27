@@ -1,0 +1,44 @@
+<p>Activation happens on <strong>Settings → License activation</strong>; renew with a new license by activating again, and release the license on the old machine before moving to a new one. <strong>Online deactivation is limited only by the server&#x27;s daily cap (max 3 per 24 hours); offline-issued licenses cannot be unbound for a machine move.</strong></p>
+<p><img src="media_en/shared/settings-license.webp" alt="Settings → License activation: status, machine code, activation key and License management" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Activation steps</h2>
+<ol>
+<li>Open <strong>Settings → License activation</strong>; if the product is not activated at first launch, the license window opens directly.</li>
+<li>Online activation: enter the key in <code>「激活码」 (Activation key)</code> under the machine code and click <code>「激活」 (Activate)</code>.</li>
+<li>To try first: <strong>leave the key empty and click the green Activate button</strong>; the server issues a per-machine trial license (no sign-in window) that includes all features.</li>
+<li>Offline activation: expand the collapsed <code>「离线许可证激活」 (Offline license activation)</code> section, then click <code>「导入许可证文件…」 (Import license file…)</code> and pick a <code>.lic</code> / <code>.dat</code> / <code>.json</code> file, or copy the full license text and click <strong>Import from clipboard</strong>. <strong>Offline import only accepts offline license files issued manually by support; files issued by online activation cannot be used for offline activation.</strong></li>
+<li>You can also drag the license file directly into the license window (no need to expand the section first).</li>
+<li>On success the state becomes <code>「已授权」 (Licensed)</code> or <code>「试用中（剩余 N 天）」 (Trial, N days left)</code>, and both the window and the settings page refresh.</li>
+</ol>
+<h2 id="h-2">Renewal</h2>
+<ul>
+<li>A subscription license has a 7-day grace period after expiry during which features keep working; after the grace period it becomes read-only.</li>
+<li>To renew, run activation again with the newly issued or renewed license; no uninstall is needed.</li>
+</ul>
+<h2 id="h-3">Moving to a new machine</h2>
+<ol>
+<li>On the old machine click <code>「解除本机授权」 (Release this machine)</code> in the license window; the confirmation shows that this consumes 1 switch and how many remain.</li>
+<li>Once the server confirms, the seat is released and <strong>the remaining switch count drops by 1 immediately</strong> (not only when the new machine activates).</li>
+<li>Install on the new machine, open the license window, and either activate online with the same activation code or import an offline license matching the new machine code.</li>
+<li>When the switch count is used up (5 for perpetual / 3 for subscription), the unbind button is unavailable and you must contact the licensor to extend it or arrange the move.</li>
+<li><strong>Offline-issued licenses cannot be unbound</strong>: the button is disabled; contact the licensor to reissue for the new machine code.</li>
+<li>If the old machine can no longer be used, contact the licensor with the old and new machine codes to request a seat release or transfer.</li>
+<li>After unbinding, the previously exported copy of the same license file no longer works on this machine and cannot be re-imported; do not keep using that license on the unbound device.</li>
+</ol>
+<p>In trial or unlicensed states the <code>「解除本机授权」 (Release this machine)</code> button is unavailable, as it is for offline-issued licenses.</p>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The state shows <code>「已授权：&lt;customer name&gt;」 (Licensed: &lt;customer name&gt;)</code> or <code>「已授权」 (Licensed)</code>.</li>
+<li>Import, export and conversion entry points are available.</li>
+<li>On the new machine the machine code matches the license and <code>E_LIC_MACHINE</code> no longer appears.</li>
+</ul>
+<h2 id="h-5">Common failures</h2>
+<ul>
+<li><strong><code>E_ACT_NET</code></strong>: cannot reach the activation server; use an offline license instead.</li>
+<li><strong><code>E_ACT_KEY</code></strong>: the activation code is wrong or no longer valid; check it and retry.</li>
+<li><strong><code>E_ACT_SEATS</code></strong>: no seats left; release an old device first or contact the licensor.</li>
+<li><strong><code>E_ACT_SWITCH_LIMIT</code></strong>: the machine-switch count is used up (5 for perpetual / 3 for subscription); contact the licensor to arrange the move.</li>
+<li><strong><code>E_ACT_OFFLINE_LICENSE</code></strong>: offline-issued licenses cannot be unbound for a machine move; contact the licensor to reissue.</li>
+<li><strong><code>E_LIC_REVOKED_FILE</code></strong>: this license file was already unbound and voided on this machine; activate again with the activation code.</li>
+<li><strong><code>E_LIC_MACHINE</code></strong>: the license is bound to another computer; request a machine move or use a license that matches this machine.</li>
+<li><strong><code>E_LIC_INTEGRITY</code></strong>: program files were modified; reinstall and then activate.</li>
+</ul>

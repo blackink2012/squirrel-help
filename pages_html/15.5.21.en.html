@@ -1,0 +1,33 @@
+<blockquote><p>One-line summary: <strong>selecting two or more assets makes a batch bar &quot;grow&quot; at the right of the top toolbar</strong>, turning the most common batch actions into a row of buttons so you no longer right-click one by one.</p></blockquote>
+<h2 id="h-1">When it appears</h2>
+<table><thead><tr><th>Situation</th><th>Bar</th></tr></thead><tbody><tr><td>Two or more assets selected (rubber band / Ctrl+click / Shift+click, or right-click <strong>Select all</strong>)</td><td><strong>Appears</strong></td></tr><tr><td>Only one asset selected, or nothing selected</td><td>Hidden</td></tr><tr><td>After clicking <strong>Clear selection</strong></td><td>Collapses automatically</td></tr></tbody></table>
+<p>It appears <strong>inside the top toolbar, to the right of the search box</strong>, scales in height with the font size in settings, and never squeezes out other toolbar buttons.</p>
+<p><img src="media_en/15.5.21-1.webp" alt="The batch bar that appears after multi-selecting" loading="lazy" decoding="async"></p>
+<h2 id="h-2">The bar holds six controls</h2>
+<table><thead><tr><th>Control</th><th>Effect</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>N assets selected</td><td>A count hint only (not a button)</td><td>—</td><td>This is where you verify &quot;how many did I really select&quot;</td></tr><tr><td>Batch rename</td><td>Renames assets in bulk</td><td>Opens the batch rename window (<a href="#/en/15.12.1"><code>8.12.1</code></a>), renames one by one on confirm and reports &quot;N succeeded&quot;</td><td>The naming rule is set in the window; check the preview before confirming</td></tr><tr><td>Batch tags</td><td>Adds / removes / overwrites tags in bulk</td><td>Opens the batch tag window (<a href="#/en/15.12.2"><code>8.12.2</code></a>) with <strong>Add / Remove / Overwrite</strong>; writes back on confirm</td><td>Overwrite clears existing tags, so choose carefully</td></tr><tr><td>Batch move</td><td>Moves this batch into another category</td><td>Opens a &quot;Choose target category&quot; list (<strong>only categories of the current sub-library</strong>), then moves one by one and refreshes</td><td>For cross-sub-library moves use right-click <strong>Move to ▶</strong></td></tr><tr><td>Batch copy</td><td>Copies this batch into another category</td><td>Same as above; copies one by one after choosing the target</td><td>Doubles disk usage</td></tr><tr><td>Batch delete</td><td>Deletes this batch</td><td>Opens a confirmation (listing the first 20 names and the total); moves to the recycle bin on confirm</td><td><strong>Restorable</strong>: recover it in the recycle bin, see <a href="#/en/15.8.3"><code>8.8.3</code></a></td></tr><tr><td>Clear selection</td><td>Empties the current selection</td><td>All cards unhighlight and the bar collapses</td><td>Does not affect asset content</td></tr></tbody></table>
+<p>Layout: a blue count label on the left, a row of buttons in the middle (delete uses the red danger style), and the low-key <strong>Clear selection</strong> at the far right.</p>
+<h2 id="h-3">How it differs from right-clicking a multi-selection (important)</h2>
+<table><thead><tr><th>Action</th><th>Batch bar</th><th>Context menu (after multi-select)</th></tr></thead><tbody><tr><td>Rename / change tags</td><td>✓ has dedicated windows</td><td>✗ use <strong>Edit</strong> one by one, or just use the bar</td></tr><tr><td>Target range for move / copy</td><td><strong>Only the current sub-library&#x27;s categories</strong></td><td><strong>Full cascade of all 11 sub-libraries, cross-sub-library allowed</strong></td></tr><tr><td>Delete</td><td>✓ one batch delete (to the recycle bin)</td><td>✓ Delete ▶ offers move to recycle bin or delete permanently</td></tr><tr><td>Delete permanently</td><td>✗ no such entry</td><td>✓ right-click Delete ▶ delete permanently</td></tr></tbody></table>
+<p>Conclusion: <strong>to shuffle things inside one sub-library the bar is handier; to move across sub-libraries or delete permanently use the context menu.</strong></p>
+<h2 id="h-4">A typical usage</h2>
+<ol>
+<li>Rubber-band select a dozen materials in the Materials category;</li>
+<li>The bar at the top right reads &quot;12 assets selected&quot;;</li>
+<li>Click <strong>Batch tags</strong> and add an <code>old-library migration</code> tag;</li>
+<li>Click <strong>Batch move</strong>, choose the target category in the list and confirm;</li>
+<li>The bar collapses as the selection empties, the tree refreshes, and the assets are in the new category.</li>
+</ol>
+<h2 id="h-5">Notes and risks</h2>
+<ul>
+<li><strong>Check the count first</strong>: before batch deleting or moving, look at the bar&#x27;s &quot;N assets selected&quot; and the status bar to confirm nothing extra is selected.</li>
+<li><strong>Batch delete is not &quot;delete permanently&quot;</strong>: it goes through the recycle bin and can be restored; to erase them for good use right-click <strong>Delete ▶ Delete permanently</strong>, which is irreversible.</li>
+<li><strong>Batch rename / tags write back to asset metadata</strong>: to undo, change the names / tags back (the dialogs have no bulk revert).</li>
+<li><strong>With a selection spanning categories, batch move uses the first asset&#x27;s sub-library</strong>: when the selection mixes sub-libraries, the target list follows the first asset&#x27;s sub-library, so use the context menu for cross-sub-library moves.</li>
+</ul>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>Multi-select and rubber band: <a href="#/en/4.4.1"><code>4.1.4.1</code></a>; batch move and copy: <a href="#/en/4.8.1"><code>4.1.8.1</code></a>; batch delete: <a href="#/en/4.8.2"><code>4.1.8.2</code></a></li>
+<li>Batch rename window: <a href="#/en/15.12.1"><code>8.12.1</code></a>; batch tag window: <a href="#/en/15.12.2"><code>8.12.2</code></a></li>
+<li>Favorite / select all / duplicate on cards: <a href="#/en/15.5.14"><code>8.5.14</code></a>; move to / copy to: <a href="#/en/15.5.15"><code>8.5.15</code></a></li>
+<li>Sub-library comparison table: <a href="#/en/15.5.1"><code>8.5.1</code></a></li>
+</ul>

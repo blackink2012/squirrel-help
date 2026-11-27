@@ -1,0 +1,21 @@
+<p>Hiding a top-level category only affects the left column; it never deletes folders or assets on disk.</p>
+<p><img src="media_en/shared/settings-sublibraries.webp" alt="Settings → Sub-libraries and categories: unchecking Show in the main UI hides that top-level category" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<p>An asset library is loaded.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open <code>「设置」 (Settings)</code>.</li>
+<li>Choose <code>「子库与分类」 (Sub-libraries and categories)</code> on the left.</li>
+<li>Select the sub-library or top-level category to change in the list on the left.</li>
+<li>Check or uncheck <code>「显示在主 UI」 (Show in the main UI)</code> at the top right. Unchecked means hidden.</li>
+<li>Click <code>「应用」 (Apply)</code> or <code>「确定」 (OK)</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The category tree and the collapsed icon strip rebuild immediately: the hidden top-level category no longer appears, while <code>「全部资产」 (All assets)</code> is always kept. If the hidden category was selected, the selection falls back to <code>「全部资产」 (All assets)</code>.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>The setting only affects the main asset library&#x27;s category tree; the project library tree on the <code>「项目」 (Projects)</code> tab always shows every top-level category.</li>
+<li>Assets inside hidden items remain in the library and can be reached through <code>「全部资产」 (All assets)</code> or search.</li>
+<li>The setting is stored as <code>hidden_top_categories</code> (blacklist semantics); when it cannot be read, everything is shown.</li>
+<li>A sub-library is also a top-level node, so uncheck <code>「显示在主 UI」 (Show in the main UI)</code> for it as well to hide it; re-check it and click <code>「应用」 (Apply)</code> to restore.</li>
+</ul>

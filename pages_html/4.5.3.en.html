@@ -1,0 +1,32 @@
+<p>With <code>「AI 搜索」 (AI search)</code> checked, describe the asset you want in one sentence and press Enter; the plug-in searches by meaning instead of literal matches.</p>
+<p><img src="media_en/shared/dialog-ai-search.webp" alt="AI search" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>An asset library is open; otherwise the status bar says <code>「请先打开一个资产库再使用 AI 搜索」 (open an asset library before using AI search)</code>.</li>
+<li><code>「AI 搜索」 (AI search)</code> is checked on the right of the search box. The switch is on by default and remembers your last choice.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Check <code>「AI 搜索」 (AI search)</code> on the right of the search box; the placeholder becomes &quot;describe the asset you are looking for in one sentence, press Enter for AI search&quot;.</li>
+<li>Type a natural-language description, for example &quot;old metal with some grime&quot; or &quot;coarse cloth that would work as a carpet&quot;.</li>
+<li>Press Enter. A spinner appears in the middle of the grid and the status bar shows <code>「AI 正在分析意图…」 (AI is analyzing the intent…)</code>.</li>
+<li>Wait for the results to replace the grid. To cancel, clear the search box or click the built-in ✕.</li>
+</ol>
+<h2 id="h-3">How it works</h2>
+<ol>
+<li>Local semantic retrieval comes first: local embedding vectors and lexical results are ranked together, and no large model is called at query time.</li>
+<li>When local semantics are unavailable or return nothing, a large model extracts keywords and those are searched against names, tags and notes.</li>
+<li>If the keywords still return nothing, the original text is tokenized and searched once more, so &quot;using AI&quot; never makes results worse.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>With local semantic hits the status bar reads <code>「语义检索 N 条 · 本地嵌入 模型名 · 毫秒数」 (semantic: N results · local embedding &lt;model&gt; · &lt;ms&gt;)</code>.</li>
+<li>When a large model extracted keywords it reads <code>「AI 搜索「关键词」：找到 N 个资产」 (AI search &quot;&lt;keywords&gt;&quot;: N assets found)</code>.</li>
+<li>The grid keeps only the results, and the properties panel on the right clears because the selection was cleared.</li>
+</ul>
+<h2 id="h-5">Scope</h2>
+<ul>
+<li>The search scope matches the selected sub-library or category; with a specific category selected it searches only that category and its sub-categories.</li>
+<li>Typing does not filter live — you must press Enter; clearing the input restores the current category list immediately.</li>
+</ul>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>Index status, switches and model configuration are described in &quot;Index status and search settings&quot;. When the index is unavailable, search degrades automatically and keeps working.</p></div>

@@ -1,0 +1,41 @@
+<blockquote><p>一句话定位：<strong>鼠标指着一张资产卡片按一下空格，会围绕鼠标弹出十字标记菜单——上和下、左和右各是一类「导入」命令，朝方向拖一下就执行。</strong> 它和右键菜单用的是同一套命令，只是把最常用的那段单独抽出来做成快速环。</p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>鼠标移到资产区里<strong>某一张卡片上</strong>（不必先选中它）；</li>
+<li>按一下<strong>空格</strong>（不要按 Ctrl / Shift）。</li>
+</ol>
+<p>细节：</p>
+<ul>
+<li>如果那张卡当时没被选中，插件会先把它选中——与右键同一规矩（菜单作用的资产必须先在选中里）。</li>
+<li>只在<strong>图标视图</strong>里有效；列表视图里没有这个环。</li>
+<li>资产里一条导入类命令都没有时，什么都不会弹。</li>
+</ul>
+<p><img src="media/shared/menu-space-marker.webp" alt="空格标记菜单（下图是「上=导入」方向展开时；带 zmetal / ma 两个子项）" loading="lazy" decoding="async"></p>
+<blockquote><p><strong>看这张图要注意</strong>：标记菜单是<strong>悬停才展开</strong>的——静态截图只能展开一个方向。图里展开的是「上 = 导入」， 另外三个方向（左 引用 / 右 应用 / 下 转换）在鼠标移过去时才展开，所以图上只看到端点标记。 材质资产实际四个方向都有内容：上=导入、左=添加引用、右=为当前选择指定材质 + 应用材质参数、下=转换导入。</p></blockquote>
+<h2 id="h-2">四个方向是什么</h2>
+<table><thead><tr><th>方向</th><th>归类</th><th>典型内容</th></tr></thead><tbody><tr><td>上</td><td>导入</td><td>导入 / 导入 ▶ / 导入贴图 ▶ / 导入到时间轴 等</td></tr><tr><td>左</td><td>引用</td><td>添加引用 / 添加引用 ▶</td></tr><tr><td>右</td><td>应用</td><td>为当前选择指定材质 / 应用材质参数 / 创建材质 / 指定贴图 / 应用灯光参数</td></tr><tr><td>下</td><td>转换</td><td>转换导入 ▶（材质、灯光）</td></tr></tbody></table>
+<p><strong>没有对应命令的方向就空着</strong>（一颗药丸都不画），这是照 Maya 标记菜单的语义来的。</p>
+<h2 id="h-3">药丸怎么读</h2>
+<table><thead><tr><th>长相</th><th>含义</th></tr></thead><tbody><tr><td>一颗药丸（一行字）</td><td>一条<strong>具体命令</strong>，拖上去松手就执行</td></tr><tr><td>同一方向上下堆叠的多颗</td><td>该方向有多条命令（例如贴图的右边有三颗）</td></tr><tr><td>药丸后面带 ▸</td><td>它<strong>有子项</strong>：悬停 / 拖到它上面，一级会消失、只留这一颗 + 子项列表</td></tr><tr><td>子菜单只有一条子项</td><td>直接降级成药丸本身，少一层点击</td></tr><tr><td>子项很多</td><td>子菜单单列显示，超过可视行数用<strong>滚轮</strong>翻页</td></tr></tbody></table>
+<p>子项列表里每一行都是一条可执行命令（例如「转换导入 ▶」下的 18 种材质类型）。</p>
+<h2 id="h-4">怎么用</h2>
+<table><thead><tr><th>操作</th><th>结果</th></tr></thead><tbody><tr><td>按住空格弹出 → 朝方向拖 → 松开空格</td><td>执行高亮的那一条（最顺手的用法）</td></tr><tr><td>弹出后用鼠标点药丸 / 点子项</td><td>同样执行</td></tr><tr><td>方向键选方向，Enter 进子项 / 执行</td><td>全键盘操作</td></tr><tr><td>二级里 ↑↓（或 Tab）走动、← 退回一级、Enter 执行</td><td>子菜单内的键盘操作</td></tr><tr><td>Esc</td><td>取消</td></tr><tr><td>高亮在中心 / 没拖到任何药丸就松手</td><td>取消，什么都不执行</td></tr></tbody></table>
+<p>底部提示行会写「松开空格 / Enter 执行 · Esc 取消」，记不住时看它。</p>
+<h2 id="h-5">各子库的四个方向（典型形态）</h2>
+<table><thead><tr><th>子库</th><th>上（导入）</th><th>左（引用）</th><th>右（应用）</th><th>下（转换）</th></tr></thead><tbody><tr><td>材质</td><td>导入 ▶（zmetal / ma）</td><td>添加引用</td><td>为当前选择指定材质、应用材质参数</td><td>转换导入 ▶（18 种）</td></tr><tr><td>模型</td><td>导入 ma</td><td>添加引用</td><td>—</td><td>—</td></tr><tr><td>灯光</td><td>导入 ▶（zlight / ma）</td><td>添加引用</td><td>应用灯光参数到选中灯光</td><td>转换导入 ▶（4 种）</td></tr><tr><td>贴图</td><td>导入贴图 ▶（每张 + 导入全部）</td><td>—</td><td>为当前选择指定材质、创建材质 ▶、指定贴图到材质</td><td>—</td></tr><tr><td>场景 / 节点树</td><td>导入 ma</td><td>添加引用</td><td>—</td><td>—</td></tr><tr><td>HDR</td><td>导入 hdr</td><td>—</td><td>创建环境光 ▶、指定贴图</td><td>—</td></tr><tr><td>动态</td><td>导入 ▶（ma / abc）</td><td>添加引用 ▶（ma / abc）</td><td>—</td><td>—</td></tr><tr><td>图片</td><td>导入为 file 节点、创建 imagePlane</td><td>—</td><td>指定到选中材质槽</td><td>—</td></tr><tr><td>音频</td><td>导入到时间轴、导入到时间编辑器、导入到 Trax 编辑器、导入摄像机序列器</td><td>—</td><td>—</td><td>—</td></tr><tr><td>动画数据</td><td>导入动画 ▶、导入动画（层级映射）…、导入到选择属性 ▶</td><td>—</td><td>—</td><td>—</td></tr></tbody></table>
+<p>这张表是<strong>典型形态</strong>：实际药丸的数量与名称取决于资产里到底有几种格式（例如建模资产只有 ma 时，「导入」就是一颗而不是带子项的那颗）。</p>
+<h2 id="h-6">它和右键菜单的关系</h2>
+<table><thead><tr><th>项</th><th>右键菜单</th><th>空格标记菜单</th></tr></thead><tbody><tr><td>命令来源</td><td>同一套构建代码</td><td>同一套构建代码（只取「导入段」）</td></tr><tr><td>包含范围</td><td>全部条目（含收藏、编辑、删除、详情）</td><td><strong>只有导入 / 引用 / 应用 / 转换</strong></td></tr><tr><td>多选语义</td><td>对全部选中资产生效</td><td>一致（同一批命令，语义不变）</td></tr><tr><td>适合场景</td><td>一次性的管理操作</td><td>一边摆资产一边快速导入，手不离鼠标</td></tr></tbody></table>
+<h2 id="h-7">注意点</h2>
+<ul>
+<li><strong>Ctrl+Space 是另一件事</strong>：它是「切换当前焦点那张卡片的选中」，不会弹标记菜单。</li>
+<li><strong>Shift+Space 不响应</strong>：只有不带修饰键的空格才会弹环。</li>
+<li><strong>标记菜单不提供「删除 / 编辑」</strong>：那些操作请走右键菜单。</li>
+<li><strong>子项要看清楚再松手</strong>：拖到带 ▸ 的药丸上会立刻展开子项，松手执行的是<strong>子项里当前高亮的那一行</strong>。</li>
+</ul>
+<h2 id="h-8">相关</h2>
+<ul>
+<li>右键菜单总览：<a href="#/15.5.1"><code>8.5.1</code></a>；导入与引用：<a href="#/15.5.13"><code>8.5.13</code></a></li>
+<li>空白处与列表视图右键：<a href="#/15.5.19"><code>8.5.19</code></a></li>
+<li>单击 / 双击 / 右键的通用约定：<a href="#/3.3.1"><code>3.3.1</code></a>；快捷键摘要：<a href="#/3.3.6"><code>3.3.6</code></a>；快捷键总表：<a href="#/12.6"><code>5.6</code></a></li>
+</ul>

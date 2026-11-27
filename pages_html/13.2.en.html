@@ -1,0 +1,28 @@
+<p>For licensing problems, first check the status and machine code on <strong>Settings → License activation</strong>, then handle it as not activated, expired, or integrity check failure.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The plug-in opens and browses, but import, export, conversion and similar operations are refused.</li>
+<li>The status shows <strong>Not activated (read-only)</strong>, <strong>Trial ended</strong> or <strong>Subscription expired</strong>.</li>
+<li>Online activation keeps failing, or the old license stops working after switching machines.</li>
+<li>The log contains <code>E_LIC_INTEGRITY</code>, <code>E_LIC_MISSING</code> or <code>sq_license 不可用，进入只读模式</code> (license unavailable, entering read-only mode).</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>Not activated yet</td><td><strong>License activation</strong> shows <strong>Not activated</strong></td><td>Enter a key under the machine code, or open the license manager and import a license</td></tr><tr><td>Trial expired</td><td>Status shows the trial has ended with 0 days left</td><td>Purchase or import a full license</td></tr><tr><td>Subscription expired</td><td>Status shows grace period or expired</td><td>Renew, then activate again</td></tr><tr><td>Machine change or hardware change</td><td>The machine code and the license binding disagree</td><td>First run <strong>Deactivate this machine</strong> on the old machine (limited by the server&#x27;s daily cap, max 3 per 24 hours), then activate on the new machine; offline-issued licenses cannot be unbound yourself, contact the licensor to reissue</td></tr><tr><td>Online activation cannot reach the network</td><td>The dialog reports server unreachable, timeout or DNS failure</td><td>Check network, proxy and firewall, or use an offline license</td></tr><tr><td>Installation package was modified</td><td>Integrity check failure is reported</td><td>Reinstall the complete package; never delete or edit <code>integrity.json</code> or the <code>_vendor</code> directory</td></tr><tr><td>Licensing module missing</td><td>The log says <code>sq_license</code> is unavailable</td><td>Confirm the package is complete; without it the program can only run read-only</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open <strong>Settings → License activation</strong> and note the current status and machine code.</li>
+<li>If not activated or the trial expired, enter the key under the machine code and click <strong>Activate</strong>; alternatively open <strong>License management</strong> to activate online.</li>
+<li>If online activation is unavailable, use <strong>Import license file…</strong>, or copy the full license text and click <strong>Import from clipboard</strong>.</li>
+<li>When switching machines, copy the machine code on the new machine and activate; if the old machine still holds the license, deactivate it first as the vendor requires.</li>
+<li>On an integrity check failure, reinstall the complete package to restore deleted or modified files.</li>
+<li>After a successful activation, restart the plug-in window so the feature gates re-read the status.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>The status badge on <strong>License activation</strong> shows <strong>Licensed</strong> or <strong>Trial</strong>, and the previously refused import, export or conversion operations now run.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Record the status text, error code and machine code and pass them to the plug-in distributor.</li>
+<li>When online activation fails, try an offline license first to rule out network and proxy factors.</li>
+<li>If the log shows <code>E_LIC_MISSING</code>, the licensing module did not load; treat it as an installation problem.</li>
+<li>Never publish full license files, private keys or credentials containing personal information.</li>
+</ul>

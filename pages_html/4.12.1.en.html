@@ -1,0 +1,28 @@
+<p>A health check reports the library root, asset and category counts, duplicate UUIDs and the load-failure list in one pass; it is the first step when an asset is on disk but missing from the list.</p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The asset library is loaded (a live library manager exists).</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open the plug-in window and confirm the target library is loaded.</li>
+<li>Call the <code>library_health</code> command with the default <code>op=status</code>.</li>
+<li>Use the table below to classify the problem.</li>
+<li>With duplicate UUIDs, run <code>op=fix_uuids</code>, which rewrites the duplicated IDs and rescans automatically.</li>
+<li>With load failures, read each <code>reason</code>, fix the asset&#x27;s <code>meta.json</code> or run <code>op=reload</code> to rescan the disk.</li>
+<li>If the sub-library / category configuration looks wrong, run <code>op=reload_config</code> to reread <code>config.json</code>.</li>
+</ol>
+<h2 id="h-3">Status fields</h2>
+<table><thead><tr><th>Field</th><th>Meaning</th></tr></thead><tbody><tr><td><code>library_root</code></td><td>Current library root</td></tr><tr><td><code>is_loaded</code></td><td>Whether the library is loaded</td></tr><tr><td><code>asset_count</code></td><td>Number of indexed assets</td></tr><tr><td><code>category_count</code></td><td>Number of categories</td></tr><tr><td><code>has_duplicate_uuids</code></td><td>Whether duplicate UUIDs exist</td></tr><tr><td><code>load_failure_count</code> / <code>load_failures</code></td><td>Assets present on disk but not indexed, with reasons (at most 20 entries)</td></tr></tbody></table>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>Running <code>op=status</code> again shows <code>has_duplicate_uuids</code> as false and <code>load_failure_count</code> at 0 or clearly reduced.</li>
+<li>Assets that were missing reappear in the grid and in search results.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>A failing individual check is returned in its own <code>*_error</code> field and does not fail the whole health check.</li>
+<li>On load failures the Script Editor also prints <code>「⚠ 加载失败 N 个资产」 (failed to load N assets)</code>, which can be compared with the health result.</li>
+<li>The toolbar refresh button is equivalent to rescanning the disk (<code>op=reload</code>) and also checks for leftover temporary directories.</li>
+<li><code>fix_uuids</code> rewrites asset IDs, so places that reference the old IDs such as favorites may need a manual review.</li>
+</ul>

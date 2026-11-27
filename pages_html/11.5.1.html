@@ -1,0 +1,25 @@
+<p>材质格式为每种资产类型预设导出时默认勾选的材质类选项。</p>
+<p><img src="media/shared/settings-material-formats.webp" alt="材质格式" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>新建导出对话框或创建资产时，按当前资产类型预勾材质格式，减少重复设置。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<ul>
+<li>左侧列表选择资产类型，显示为子库 ID，共 11 个内置条目：<code>materials</code>、<code>models</code>、<code>lights</code>、<code>textures</code>、<code>scenes</code>、<code>hdr</code>、<code>ani</code>、<code>images</code>、<code>audio</code>、<code>animation</code>、<code>nodetree</code>（若建了自定义子库，也会出现在列表里）。</li>
+<li>三个选项及默认值：</li>
+</ul>
+<table><thead><tr><th>选项</th><th>默认勾选的类型</th></tr></thead><tbody><tr><td>材质节点 (.zmetal)</td><td><code>materials</code>、<code>lights</code></td></tr><tr><td>合并材质 (.zmetal_merge)</td><td><code>materials</code></td></tr><tr><td>材质→模型映射 (.mcm)</td><td>无</td></tr></tbody></table>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>只决定导出界面里复选框的初始状态，单次导出仍可修改。</li>
+<li>不改变已有资产，也不改变右键菜单或快捷工具。</li>
+<li>保存到 <code>Assets/preset/export_preset.json</code> 对应资产类型的键。</li>
+</ul>
+<h2 id="h-4">何时修改</h2>
+<ul>
+<li>材质库固定交付 <code>.zmetal</code>：保持默认。</li>
+<li>需要每个材质节点单独成文件、不要合并：取消「合并材质」。</li>
+<li>需要材质与模型的映射文件：勾选 <code>.mcm</code>。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<blockquote><p><strong>提示</strong>：左侧是资产类型而不是分类；同一类型下的所有分类共用一套默认值。</p></blockquote>
+<blockquote><p><strong>提示</strong>：改完点「应用」才写入预设文件，下一次打开导出对话框生效。</p></blockquote>

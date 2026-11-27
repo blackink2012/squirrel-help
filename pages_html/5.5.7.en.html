@@ -1,0 +1,28 @@
+<p><code>「应用灯光参数到选中灯光」 (Apply light parameters to the selected light)</code> writes a light asset&#x27;s parameters into the light already selected in the scene; it never creates a light.</p>
+<p><img src="media/shared/menu-context-light-params.webp" alt="Light asset context menu: apply light parameters to the selected light" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>One or more light nodes (transform or shape) are selected in Maya.</li>
+<li>The light asset contains <code>.zlight</code>; otherwise it falls back to the light network in <code>.ma/.mb</code>.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select the target light in the viewport or the Outliner.</li>
+<li>Right-click the light asset and choose <code>「应用灯光参数到选中灯光」 (Apply light parameters to the selected light)</code>.</li>
+<li>The plug-in builds a temporary light from the <code>.zlight</code> under the source renderer to serve as the parameter source.</li>
+<li>Parameters are written item by item: same type writes directly, cross type maps through the <code>.mmap</code> files in <code>Assets/light_mapper_presets/</code>.</li>
+<li>Afterwards the temporary source light is deleted and the modified light is selected.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>Color, intensity, exposure, color temperature and texture attributes of the selected light match the asset.</li>
+<li>The Script Editor reports <code>「已应用 N 处灯光参数」 (applied N light parameter groups)</code>.</li>
+<li>No temporary light is left in the scene.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>With no light selected it reports <code>「未选中任何灯光节点」 (no light node selected)</code>.</li>
+<li>With nothing applicable it reports <code>「没有可应用的灯光参数」 (no light parameters to apply)</code>.</li>
+<li>When <code>.zlight</code> is missing and the <code>.ma/.mb</code> fallback also fails it reports <code>「.zasset 不含 .zlight 文件，且 .ma/.mb 回退失败」 (the .zasset contains no .zlight file and the .ma/.mb fallback failed)</code>.</li>
+<li>This only changes parameters and never changes the light&#x27;s type in the scene.</li>
+</ul>

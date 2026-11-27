@@ -1,0 +1,29 @@
+<p>插件没有统一的日志中心，大部分诊断输出在 Maya 脚本编辑器；按问题类型再去对应目录找文件。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>想反馈问题，但不知道应该附哪个文件。</li>
+<li>脚本编辑器里只有一部分输出，重启后记录消失。</li>
+<li>崩溃、桥接、AI 安装各有一堆日志，不知道哪个相关。</li>
+</ul>
+<h2 id="h-2">可能原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>只看界面提示</td><td>界面只显示一句话，完整错误在脚本编辑器</td><td>打开脚本编辑器复现一次</td></tr><tr><td>日志按功能分散</td><td>桥接、AI 安装、无头作业各有自己的文件</td><td>按下表找对应文件</td></tr><tr><td>日志已被轮换或清理</td><td>目录里只有最近几次记录</td><td>复现后立即复制留存</td></tr><tr><td>崩溃时来不及写日志</td><td>进程直接退出</td><td>看崩溃转储与 Windows 事件日志</td></tr></tbody></table>
+<h2 id="h-3">常见日志位置</h2>
+<table><thead><tr><th>位置</th><th>内容</th></tr></thead><tbody><tr><td>Maya 脚本编辑器</td><td>插件运行、导入导出、渲染、材质转换的主要输出与 traceback</td></tr><tr><td><code>~\.squirrel_asset_manager\bridge_port.log</code></td><td>commandPort 端口分配、被占用与备用端口记录</td></tr><tr><td><code>~\.squirrel_asset_manager\bridge_recover.log</code></td><td>断连自愈、清理、拉起与重投记录</td></tr><tr><td><code>~\.squirrel_asset_manager\broker_boot.log</code></td><td>Maya 启动时注册 AI 底座失败的原因</td></tr><tr><td><code>&lt;包&gt;\dsh_home\dsh_install.log</code></td><td>dsh 安装过程</td></tr><tr><td><code>&lt;包&gt;\dsh_home\broker_daemon.log</code></td><td>AI 底座进程输出</td></tr><tr><td><code>&lt;包&gt;\dsh_home\squirrel_web_&lt;实例&gt;.log</code></td><td>dsh 前端启动输出</td></tr><tr><td><code>%TEMP%\squirrel_asset_manager\ai_install.log</code></td><td>AI 依赖安装日志</td></tr><tr><td><code>%TEMP%\squirrel_standalone_host.log</code></td><td>独立版宿主启动日志</td></tr><tr><td>无头作业工作目录下的 <code>worker.log</code></td><td>无头生成缩略图、格式转换等作业日志</td></tr><tr><td><code>%TEMP%\MayaCrashLog&lt;日期&gt;.&lt;时间&gt;.dmp</code></td><td>Maya 崩溃转储</td></tr><tr><td>Windows 事件查看器 → 应用程序</td><td>崩溃模块名、错误偏移与异常代码</td></tr><tr><td><code>%TEMP%\squirrel_pre_render\</code></td><td>渲染前备份的场景，不是日志</td></tr></tbody></table>
+<p><code>dsh_home</code> 默认在插件包内的 <code>dsh_home</code> 目录；设置过 <code>SQUIRREL_DSH_HOME</code> 或 <code>DSH_HOME</code> 时，以环境变量为准。</p>
+<h2 id="h-4">解决步骤</h2>
+<ol>
+<li>先打开 Maya 脚本编辑器，清空后复现问题，复制完整 traceback。</li>
+<li>按问题类型定位日志：桥接看 <code>bridge_*</code>，AI 看 <code>dsh_home</code>，安装看 <code>ai_install.log</code>。</li>
+<li>崩溃问题同时记录事件日志中的模块名与偏移，并保留对应 dump。</li>
+<li>把关键片段复制到反馈内容里，不要只给「报错了」。</li>
+<li>日志较长时保留首尾与时间点附近内容，并说明复现时间。</li>
+</ol>
+<h2 id="h-5">结果验证</h2>
+<p>能明确指出失败发生在哪一层，并找到对应时间点的日志或转储。</p>
+<h2 id="h-6">仍不行怎么办</h2>
+<ul>
+<li>复现后立即复制日志，避免被下一次启动覆盖。</li>
+<li>如果目录不存在，说明该功能没有运行到写日志那一步，回到对应功能的排错页。</li>
+<li>不确定该看哪份时，按 6.8.2「诊断流程」逐层排查。</li>
+<li>提交反馈时使用 6.8.3「反馈模板」，附上日志路径与关键片段。</li>
+</ul>

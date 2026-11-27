@@ -1,0 +1,30 @@
+<p>一个资产可以有多张缩略图：第 1 张是主图，后面是附加槽；预览面板可以切换查看并删除附加图。</p>
+<p><img src="media/shared/menu-thumbnail.webp" alt="缩略图操作菜单" loading="lazy" decoding="async"></p>
+<h2 id="h-1">槽位规则</h2>
+<ul>
+<li>主图是第 1 张，文件名为 <code>thumb.sicon</code>、<code>thumb.aicon</code>、<code>thumb.png</code> 或 <code>thumb.mp4</code>。</li>
+<li>附加图从第 2 张开始，文件名为 <code>thumb_2.sicon</code>、<code>thumb_3.sicon</code> 等。</li>
+<li>非 <code>.zasset</code> 的文件夹资产使用 <code>资产名.sicon</code>、<code>资产名_2.sicon</code> 的命名。</li>
+<li>主图不能被删除，只能被截取或导入替换。</li>
+</ul>
+<h2 id="h-2">切换查看</h2>
+<ol>
+<li>选中有多张缩略图的资产，预览面板底部显示计数 <code>n/n</code>。</li>
+<li>点预览图两侧的左右箭头切换；鼠标停在预览图上滚动滚轮也可以切换。</li>
+<li>多图时预览会自动轮播，每隔约 2 秒切到下一张；鼠标停在预览图上或正在播放动图时暂停。</li>
+<li>双击预览图打开资产观察窗口，可看更大的图。</li>
+</ol>
+<h2 id="h-3">删除附加图</h2>
+<ol>
+<li>切换到要删除的附加图，确认计数不是 <code>1/n</code>。</li>
+<li>点预览面板底部的「删除」。</li>
+<li>该图片文件会立即从资产目录删除，预览回到剩余图片。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>删除后计数减一，剩余图片仍可切换。</li>
+<li>只剩一张时，计数与删除按钮隐藏，左右箭头消失。</li>
+<li>主图始终存在，卡片封面不受影响。</li>
+</ul>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>删除附加缩略图没有二次确认，也不会进入回收站；操作前先确认当前计数不是主图。</p></div>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>要用另一张图当封面，请对目标图使用「导入」覆盖主图，而不是删除主图。</p></div>

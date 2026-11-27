@@ -1,0 +1,20 @@
+<p>色彩空间决定贴图数值是否被转成线性：颜色类贴图用 <code>sRGB</code>，法线、粗糙度、金属度等数据贴图用 <code>Raw</code>。</p>
+<p><img src="media/shared/dialog-format-convert.webp" alt="图像格式转换" loading="lazy" decoding="async"></p>
+<h2 id="h-1">贴图类型与色彩空间</h2>
+<table><thead><tr><th>贴图类型</th><th>色彩空间</th></tr></thead><tbody><tr><td>baseColor / albedo / diffuse / color</td><td><code>sRGB</code></td></tr><tr><td>emissive / subsurface 颜色</td><td><code>sRGB</code></td></tr><tr><td>normal</td><td><code>Raw</code></td></tr><tr><td>roughness / metallic / ao / arm / orm</td><td><code>Raw</code></td></tr><tr><td>height / opacity / clearcoat / specular / anisotropy / ior</td><td><code>Raw</code></td></tr></tbody></table>
+<p>插件在按 PBR 贴图创建材质时，会从 <code>Assets/preset/pbr_mapping.json</code> 读取这些规则并自动设置 <code>file</code> 节点的 <code>colorSpace</code>。</p>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>用贴图资产或 PBR 贴图流程创建材质，工具按规则为每个 <code>file</code> 节点设置色彩空间。</li>
+<li>在属性编辑器中选中 <code>file</code> 节点，核对 <code>colorSpace</code> 是否与上表一致。</li>
+<li>连接 HDR 到穹顶灯时不要手动改成 <code>sRGB</code>；插件连接时会按 <code>Raw</code> 处理，导入连接时还会开启 <code>ignoreColorSpaceFileRules</code>。</li>
+<li>导入资产后若发现贴图偏色，先检查 <code>file.colorSpace</code>，再检查是否被 Maya 的文件规则重新推导。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>颜色贴图显示为 <code>sRGB</code>，法线与数据贴图为 <code>Raw</code>；法线贴图不再发灰或偏色，粗糙度数值与源文件一致，HDR 环境亮度正常。</p>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>导入 <code>.zmetal</code> / <code>.ma</code> 时，插件会在改贴图路径前后保护原有 <code>colorSpace</code>，避免被 png/jpg 的默认规则覆盖。</li>
+<li>图像格式转换工具只转换像素与位深，不写入色彩空间元数据；HDR/EXR 转 8 位还会做色调映射。</li>
+<li>颜色贴图设成 <code>Raw</code> 会偏暗、过饱和；数据贴图设成 <code>sRGB</code> 会让法线和粗糙度失真。</li>
+</ul>

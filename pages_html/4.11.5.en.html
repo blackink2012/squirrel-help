@@ -1,0 +1,23 @@
+<p>Removing a library only unregisters the entry from the library list; no library directory or asset on disk is deleted.</p>
+<p><img src="media_en/shared/settings-general.webp" alt="Settings → General → Asset library management: select a library and click Delete selected" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Steps</h2>
+<ol>
+<li>Open the Settings window and go to the <code>「资产库管理」 (Asset library management)</code> group on the <code>「常规」 (General)</code> tab.</li>
+<li>Select the library to remove in the list.</li>
+<li>Click <code>「删除选中」 (Delete selected)</code>.</li>
+<li>Click <code>「确定」 (OK)</code> to save the settings.</li>
+<li>If the current library was removed, go back to the <code>「分类」 (Categories)</code> page and switch to another library in the dropdown.</li>
+</ol>
+<h2 id="h-2">Verify the result</h2>
+<ul>
+<li>The settings list loses an item and the main window&#x27;s library dropdown no longer lists that library.</li>
+<li>The library directory, its assets and <code>favorites.json</code> on disk stay untouched.</li>
+<li><code>「添加资产库」 (Add asset library)</code> can register it again later.</li>
+</ul>
+<h2 id="h-3">Tips</h2>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>At least one asset library must remain; clicking delete when only one is left reports <code>「至少保留一个资产库」 (keep at least one asset library)</code>.</p></div>
+<ul>
+<li>Removing the default library does not rewrite <code>default_library</code>; set another library as default before removing it.</li>
+<li>After removing the current library you must switch manually; <code>library_manage op=remove</code> returns <code>was_current</code> / <code>was_default</code> so you can confirm.</li>
+<li>To really delete library files, remove the directory outside the plug-in; the plug-in offers no disk-delete operation.</li>
+</ul>

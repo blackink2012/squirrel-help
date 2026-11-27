@@ -1,0 +1,16 @@
+<p>Install failures are usually network, permission or Node version problems; read the report and logs first, then fix only the step that failed instead of reinstalling everything.</p>
+<h2 id="h-1">Symptoms and fixes</h2>
+<p><strong>Ollama did not install</strong>: confirm the <code>ollama</code> command exists, or install it manually from ollama.com and rerun the one-click install. Automatic install on Windows relies on winget and fails when a policy blocks it.</p>
+<p><strong>The service did not start</strong>: confirm port 11434 is free, run <code>ollama serve</code> manually and then open <code>http://127.0.0.1:11434/api/tags</code>. If the system or environment sets a proxy (<code>HTTP_PROXY</code> / <code>HTTPS_PROXY</code>) without putting <code>127.0.0.1</code> in <code>NO_PROXY</code>, even loopback requests are intercepted.</p>
+<p><strong>Model pull interrupted</strong>: rerun the one-click install, which skips finished steps. On a slow network switch mirrors or try later.</p>
+<p><strong>Image sidecar half installed</strong>: a venv without numpy / Pillow counts as incomplete. Rerun the install, or run <code>python tools\asset_vision_env.py --install --self-check</code>.</p>
+<p><strong>Index build failed</strong>: mostly Ollama is not running or a model is missing. Run the dependency check first and confirm the library path exists; on the command line <code>python tools\asset_index.py --status</code> and <code>--doctor</code> show the reason.</p>
+<p><strong>dsh install failed</strong>: close any open AI panel and retry so files are not locked; Node must be <code>^22.19 || &gt;=24</code>.</p>
+<h2 id="h-2">Reading the logs</h2>
+<ul>
+<li>AI dependency install: <code>%TEMP%\squirrel_asset_manager\ai_install.log</code></li>
+<li>dsh install: <code>&lt;plug-in directory&gt;\dsh_home\dsh_install.log</code></li>
+<li>dsh startup: <code>&lt;plug-in directory&gt;\dsh_home\squirrel_web_&lt;instance&gt;.log</code></li>
+</ul>
+<h2 id="h-3">If it still fails</h2>
+<p>Report the report, the last 40 log lines and the OS version together; do not delete a half-built venv or index directory by hand — rerunning the install overwrites and repairs them.</p>

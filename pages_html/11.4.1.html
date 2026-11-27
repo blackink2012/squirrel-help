@@ -1,0 +1,27 @@
+<p>先跑依赖检查看缺什么，再用一键安装补齐，是让 AI 搜索与分析可用的最短路径。</p>
+<p><img src="media/shared/settings-ai.webp" alt="设置 → AI" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>插件主窗口可用；安装过程需要联网。</li>
+<li>本机允许安装 Ollama；一键安装会调用系统的包管理器。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>打开「设置 → AI 设置」，找到最上方的「AI 功能与依赖」。</li>
+<li>点「AI 依赖检查」。约数秒后生成文本报告并用记事本打开，状态行会显示缺项数量。</li>
+<li>点「一键安装 AI 功能与依赖」。确认框会列出步骤和预计下载量；需要图像检索时保留「同时安装图像检索」，可填写视觉对话模型名。</li>
+<li>需要覆盖已装部分时勾「强制重装（覆盖已装部分）」；否则已具备的步骤会自动跳过。</li>
+<li>在进度窗口查看实时日志；关闭窗口等于取消，已装好的部分保留。失败后再点一次只补失败或未装的步骤。</li>
+<li>安装结束后再点一次「AI 依赖检查」复核。</li>
+</ol>
+<h2 id="h-3">安装内容</h2>
+<table><thead><tr><th>步骤</th><th>说明</th></tr></thead><tbody><tr><td>安装 Ollama</td><td>本地 AI 服务，约 1 GB</td></tr><tr><td>启动 Ollama 服务</td><td>供嵌入与模型调用</td></tr><tr><td>拉嵌入模型</td><td><code>embeddinggemma-2:740m</code>，约 1.3 GB</td></tr><tr><td>文档向量索引</td><td>约 23 MB，换模型才重建</td></tr><tr><td>资产库语义索引</td><td>当前库，可选</td></tr><tr><td>图像检索 sidecar</td><td>勾选图像检索时安装，numpy + Pillow，约 30 MB</td></tr><tr><td>视觉对话模型</td><td>勾选图像检索时按填写的模型名拉取，约 5.6 GB</td></tr></tbody></table>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>再次检查时缺项减少或全部就绪，状态行不再提示缺少依赖。</li>
+<li>自然语言搜索、以图搜图和 AI 分析可以正常调用。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<blockquote><p><strong>提示</strong>：报告位于 <code>%TEMP%\squirrel_asset_manager\AI依赖检查报告.txt</code>；安装日志为同目录的 <code>ai_install.log</code>。</p></blockquote>
+<blockquote><p><strong>提示</strong>：安装或使用时 Ollama 服务必须保持运行；关闭服务后 AI 功能会不可用。</p></blockquote>
+<blockquote><p><strong>提示</strong>：安装中断不会破坏已完成的部分，重新点「一键安装」即可继续补齐。</p></blockquote>

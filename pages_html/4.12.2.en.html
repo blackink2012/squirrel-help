@@ -1,0 +1,28 @@
+<p>An asset library has two rebuildable indexes: the directory index cache used at startup and the vector index used for semantic search; the first invalidates itself, the second must be rebuilt manually.</p>
+<p><img src="media_en/shared/settings-ai.webp" alt="Settings → AI" loading="lazy" decoding="async"></p>
+<h2 id="h-1">The two indexes</h2>
+<table><thead><tr><th>Index</th><th>Default location</th><th>Purpose</th><th>How to rebuild</th></tr></thead><tbody><tr><td>Directory index cache</td><td><code>&lt;library root&gt;/.squirrel_index_cache.json</code></td><td>Speeds up opening the library</td><td><code>library_health op=clear_cache</code> then <code>op=reload</code>, or delete the file and refresh</td></tr><tr><td>Semantic index</td><td><code>&lt;library root&gt;/.squirrel_ai_index/&lt;official or ollama&gt;/</code></td><td>AI semantic search and search by image</td><td><code>python tools/asset_index.py --rebuild --library &quot;&lt;library root&gt;&quot;</code></td></tr></tbody></table>
+<h2 id="h-2">Steps: directory index</h2>
+<ol>
+<li>Run <code>library_health op=clear_cache</code> to delete the cache file.</li>
+<li>Run <code>library_health op=reload</code>, or click the toolbar refresh button, and wait for the scan to finish.</li>
+</ol>
+<h2 id="h-3">Steps: semantic index</h2>
+<ol>
+<li>Confirm Ollama and the embedding model are available.</li>
+<li>In the plug-in package root run <code>python tools/asset_index.py --rebuild --library &quot;&lt;library root&gt;&quot;</code>.</li>
+<li>Use <code>--status</code> to see the entry count and model, and <code>--verify</code> for a consistency self-check.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>After rebuilding the directory index the asset count matches the number of <code>.zasset</code> folders on disk.</li>
+<li>After rebuilding the semantic index <code>--status</code> shows entries and AI semantic search returns results again.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>The directory cache invalidates itself by <code>.zasset</code> modification time and falls back to a full scan when incompatible.</li>
+<li>The semantic index is derived data and by default follows the library directory; use the <code>ai_asset_index_dir</code> setting or the <code>SQUIRREL_ASSET_INDEX_DIR</code> environment variable to move it locally, which takes effect after reopening the window.</li>
+<li>The index is split by backend (<code>official</code> and <code>ollama</code> each get one): vectors from the two backends are not interchangeable, and sharing a directory makes users of different backends mark each other stale and rebuild repeatedly.</li>
+<li>When several people share one library, do not put the semantic index on a shared drive, or concurrent writes from the same backend will wait on each other.</li>
+<li>Use <code>--sync</code> for incremental syncing; after changing the model or the text template you must use <code>--rebuild</code>.</li>
+</ul>

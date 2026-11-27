@@ -1,0 +1,25 @@
+<p><strong>独立运行版</strong>工具栏的 Maya 目标按钮用于在多开时指定要驱动哪一台，避免自动选择把资产导进另一台 Maya 的场景。按当前实现，这个按钮<strong>只在独立版、且没有被 Maya 挂载时</strong>才建出来：</p>
+<table><thead><tr><th>形态</th><th>有没有「Maya 目标」按钮</th><th>为什么</th></tr></thead><tbody><tr><td><strong>独立版 / EXE</strong>（自己单独启动、未挂载）</td><td>有</td><td>需要你指定驱动哪台在线 Maya</td></tr><tr><td><strong>Maya 内版</strong>（插件在 Maya 里运行）</td><td>没有</td><td>本来就在 Maya 里，目标就是自己</td></tr><tr><td><strong>被 Maya 挂载的独立版</strong>（从 Maya 菜单嵌入打开）</td><td>没有</td><td>目标已锁定为宿主，给切换只会误导，还可能把资产导进别的场景</td></tr></tbody></table>
+<p><img src="media/shared/menu-maya-target.webp" alt="多开 Maya 时在这里选目标实例，换实例会换连的会话" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>使用的是<strong>独立运行版</strong>（不在 Maya 内部），且<strong>没有被 Maya 挂载</strong>；Maya 内版 / 挂载形态没有这个按钮。</li>
+<li>目标 Maya 已启动；若它未开桥接端口，菜单里仍会列出，但不能直接连接。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>点击<strong>独立版</strong>顶部工具栏上的 Maya 目标按钮，悬停提示为「选择要驱动的 Maya（多开时用；菜单里每台一张窗口缩略图）」。（Maya 内版没有这个按钮。）</li>
+<li>菜单第一项是「自动选择（优先最新版本）」，选择它即回到按端口自动挑一台的逻辑。</li>
+<li>其余每行是一台 Maya：标题显示版本，副标题显示场景名、PID 与端口，左侧是窗口缩略图。</li>
+<li>点击目标行后立即生效，该台 Maya 会被复原并提到前台；选择同时写入设置（<code>maya_target</code>），下次启动独立版会尝试恢复。</li>
+<li>若某行显示「Maya（未开桥接端口）」，点击它会复制修复命令到剪贴板并把该 Maya 提到前台，到它的 Script Editor 粘贴回车即可开端口。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>菜单中当前选中的实例行带勾选标记，按钮悬停提示会附上所选目标的版本、场景、PID 与端口；随后执行一次只读操作（如场景概览）确认返回的是预期场景。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>自动选择按端口顺序挑，同版本多开时先启动的那台占默认端口，因此多开场景建议手动指定。</li>
+<li>工具栏上找不到这个按钮时，先确认当前是哪种形态：Maya 内版 / 被挂载的独立版<strong>本来就不显示</strong>它（见上面的对照表），这不是功能缺失。</li>
+<li>最小化的 Maya 抓不到窗口缩略图，菜单会写明原因；这是 Windows 不为最小化窗口渲染画面导致的。</li>
+<li>开机恢复上次选择时不会把 Maya 抢到前台；若上次那台已离线，会退回自动选择并打印说明。</li>
+</ul>

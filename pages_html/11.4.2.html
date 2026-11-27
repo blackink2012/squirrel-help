@@ -1,0 +1,46 @@
+<p>全局大模型是插件里所有需要大模型的功能默认使用的服务商与模型配置。</p>
+<p><img src="media/shared/settings-global-llm.webp" alt="全局大模型" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>在一个地方配置服务商、API Key、API 地址与模型名，供 AI 缩略图分析等功能复用。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<ul>
+<li>服务商：Ollama（本地，默认）、LM Studio（本地）、DeepSeek、通义千问（阿里云 DashScope）、智谱（BigModel）、Kimi（月之暗面）、OpenAI、Anthropic Claude、自定义（OpenAI 兼容）。</li>
+<li>API Key：云端服务商必填；Ollama 等本地服务无需填写，输入框会置灰。</li>
+<li>API 地址：留空时使用该服务商默认地址；自定义服务商需填写兼容端点。</li>
+<li>模型：下拉框实时拉取该服务商的模型列表，也可直接输入模型名；默认留空。</li>
+<li>思考模式：默认<strong>关闭</strong>。开启后模型先输出推理过程再回答，只建议复杂推理任务开启。</li>
+<li>各服务商的 Key 分别保存，切换服务商不会串用。</li>
+</ul>
+<h2 id="h-3">用其它厂商 / 自建接口</h2>
+<p>插件只对接 <strong>OpenAI 兼容协议</strong>（<code>POST {地址}/chat/completions</code>，模型列表走 <code>GET {地址}/models</code>）。不在下拉列表里的服务商，只要它提供 OpenAI 兼容端点，就选 <strong>自定义（OpenAI 兼容）</strong>，把地址、Key、模型名填进去即可：</p>
+<table><thead><tr><th>服务</th><th>API 地址填什么</th></tr></thead><tbody><tr><td>Google Gemini</td><td><code>https://generativelanguage.googleapis.com/v1beta/openai/</code></td></tr><tr><td>Anthropic Claude</td><td>可直接选下拉里的 <strong>Anthropic Claude</strong>（地址 <code>https://api.anthropic.com/v1/</code>，官方 OpenAI SDK 兼容层）</td></tr><tr><td>OpenRouter</td><td><code>https://openrouter.ai/api/v1</code></td></tr><tr><td>硅基流动 / 火山方舟 / 月之暗面 / 百川等</td><td>各自控制台里的「OpenAI 兼容」地址</td></tr><tr><td>聚合网关（OneAPI / NewAPI）</td><td><code>http://&lt;你的网关&gt;/v1</code></td></tr><tr><td>本地 LM Studio / vLLM / Xinference</td><td>LM Studio 可直接选下拉里的 <strong>LM Studio（本地）</strong>（默认 <code>http://127.0.0.1:1234/v1</code>）；其它本地服务填 <code>http://127.0.0.1:&lt;端口&gt;/v1</code></td></tr></tbody></table>
+<p>注意：</p>
+<ul>
+<li>地址末尾<strong>不要</strong>重复写 <code>/chat/completions</code>，只填到 <code>/v1</code> 这一层；</li>
+<li>模型名拿不到列表时可以<strong>直接手输</strong>；</li>
+<li>本地服务若不要 Key，随便填一个占位值即可（自定义服务商的 Key 输入框是启用的）；</li>
+<li><strong>Azure OpenAI</strong>（<code>api-key</code> 认证头 + <code>deployments/&lt;部署名&gt;</code> 路径 + <code>api-version</code> 参数）与 <strong>Anthropic / Gemini 原生协议</strong>（<code>/v1/messages</code>、<code>generateContent</code>）不走 OpenAI 兼容格式，当前版本不直接支持 —— 优先选厂商提供的兼容端点，或经 OneAPI 之类的网关转成 OpenAI 兼容。</li>
+</ul>
+<h2 id="h-4">思考模式</h2>
+<p><img src="media/shared/settings-ai-thinking.webp" alt="全局大模型里的「开启思考模式（默认关闭）」" loading="lazy" decoding="async"></p>
+<p>默认<strong>关闭</strong>。思考（推理过程）与正文共用输出 token，打标签 / 分类 / 一句话描述这类任务开了只会更慢，预算不够时正文还会为空 —— 所以能关的一律默认关。</p>
+<p>只有需要多步推理的场景（复杂描述、疑难判定）才建议勾选「开启思考模式」。</p>
+<p>各服务商的实际效果：</p>
+<table><thead><tr><th>服务商</th><th>关闭时的做法</th></tr></thead><tbody><tr><td>Ollama</td><td>OpenAI 兼容端传 <code>reasoning_effort: none</code>（实测有效）；原生接口传 <code>think: false</code></td></tr><tr><td>DeepSeek / 智谱（一般模型）</td><td>传 <code>thinking: disabled</code></td></tr><tr><td>智谱 glm-5.2 / glm-5.3</td><td>始终思考、无法关闭 → 关思考时降到最低档</td></tr><tr><td>OpenAI o 系列 / GPT-5</td><td>无法真正关闭 → 关思考时用 <code>reasoning_effort: low</code></td></tr><tr><td>Kimi / Claude 兼容层 / 自定义 / LM Studio</td><td>无通用开关，保持服务端默认</td></tr></tbody></table>
+<blockquote><p><strong>提示</strong>：开启思考后如果回答为空，通常是 <code>max_tokens</code> 被推理过程用完，与思考开关本身无关。</p></blockquote>
+<h2 id="h-5">影响范围</h2>
+<ul>
+<li>AI 缩略图分析等需要大模型的功能默认读取这组配置。</li>
+<li>AI 搜索只有在搜索配置里勾选「使用全局大模型」时才调用它；否则只做本地向量检索。</li>
+<li>语义搜索与以图搜图使用本地 Ollama 嵌入模型，不受这里的对话模型影响。</li>
+<li>配置保存在 <code>app_settings.json</code> 的 <code>ai_provider</code>、<code>ai_api_keys</code>、<code>ai_base_url</code>、<code>ai_model</code>。</li>
+</ul>
+<h2 id="h-6">何时修改</h2>
+<ul>
+<li>已购买云端模型服务，想获得比本地更快的分析效果。</li>
+<li>使用中转或自建 OpenAI 兼容接口，选「自定义（OpenAI 兼容）」并填地址与模型。</li>
+<li>只想本地运行：保持 Ollama，先完成「AI 依赖检查与安装」。</li>
+</ul>
+<h2 id="h-7">提示</h2>
+<blockquote><p><strong>提示</strong>：云端服务商需要联网，分析用的缩略图与提示词会发送到该服务商；本地 Ollama 不出本机。</p></blockquote>
+<blockquote><p><strong>提示</strong>：API Key 以明文保存在 <code>app_settings.json</code>，注意不要外发该文件。</p></blockquote>

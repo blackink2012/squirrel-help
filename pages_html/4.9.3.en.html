@@ -1,0 +1,26 @@
+<p>The wishlist is a cross-session &quot;to look at&quot; queue on the right of the AI search dialog; it is a single linear list and a separate organization tool from favorites.</p>
+<p><img src="media_en/shared/dialog-ai-search.webp" alt="The Wishlist panel on the right of the AI search window: right-click a result card to add it" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The AI search dialog is open and an asset library is loaded (adding an item resolves the asset ID into an entry).</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click a card in the AI search results and choose <code>「加入心愿单」 (Add to wishlist)</code>.</li>
+<li>You can also drag the result card straight into the <code>「心愿单」 (Wishlist)</code> panel on the right.</li>
+<li>Clicking an entry locates the matching asset in the main window.</li>
+<li>Click the close icon at the top right of an entry (tooltip <code>「从心愿单移除」 (Remove from wishlist)</code>) to remove it.</li>
+<li>Click <code>「清空」 (Clear)</code> at the top of the panel and confirm in <code>「确定清空全部心愿单吗？」 (Clear the whole wishlist?)</code> to empty the queue.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The count next to the <code>「心愿单」 (Wishlist)</code> title increases or decreases accordingly.</li>
+<li>Closing and reopening the dialog, or even restarting the plug-in, keeps the entries (stored under the user setting key <code>ai_search_wishlist</code>).</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Adding the same asset twice reports <code>「已在心愿单中：资产名」 (already in the wishlist: &lt;asset name&gt;)</code>.</li>
+<li>The wishlist stores only display fields such as ID, name, path, sub-library, category and tags; it does not store a preview image.</li>
+<li>It is completely independent of favorites: starring an asset does not change the wishlist, and the wishlist is not grouped by collection.</li>
+<li>On the command side use <code>wishlist</code>: <code>op=list/add/remove/clear</code>, with <code>dry_run</code>; <code>add</code> reports existing and missing IDs honestly.</li>
+</ul>

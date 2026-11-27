@@ -1,0 +1,30 @@
+<p>右键材质或贴图资产选择「为当前选择指定材质」，插件会创建材质网络并赋给当前选中的物体。</p>
+<p><img src="media/shared/menu-context-apply-material.webp" alt="材质资产右键：为当前选择指定材质" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已在 Maya 中选中一个或多个物体。</li>
+<li>材质资产含 <code>.zmetal</code>，或含带材质网络的 <code>.ma/.mb</code>；贴图资产需带 <code>properties</code> 记录。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在场景中选中目标物体。</li>
+<li>右键材质或贴图资产，选择「为当前选择指定材质」。</li>
+<li>插件按资产内容选择路径：<ul>
+<li>有 <code>.zmetal</code>：重建节点网络，取根材质赋给选中物体。</li>
+<li>无 <code>.zmetal</code> 但有 <code>.ma/.mb</code>：导入材质网络后赋给选中物体。</li>
+<li>只有贴图：创建 <code>openPBRSurface</code> 并连接贴图后赋值。</li>
+</ul></li>
+<li>等待赋值完成。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>选中物体的 shadingGroup 指向新材质。</li>
+<li>Hypershade 中出现对应材质节点。</li>
+<li>脚本编辑器输出「赋予材质 … → N 个物体」。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>没有选中物体时只创建材质、不赋值，日志为「材质已创建（无选中物体，未赋予）」。</li>
+<li>同一资产含多个根材质时只取第一个可用根材质赋给整批选中物体；需要面级分配请用 MCM。</li>
+<li>贴图资产缺少 <code>properties</code> 时无法判断通道对应关系，赋值会终止。</li>
+</ul>

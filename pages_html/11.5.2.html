@@ -1,0 +1,25 @@
+<p>几何体格式为每种资产类型预设导出时默认勾选的几何文件格式。</p>
+<p><img src="media/shared/settings-geo-formats.webp" alt="几何体格式" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>新建导出对话框或创建资产时，按当前资产类型预勾 Maya、FBX、OBJ、USD 等几何格式。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<ul>
+<li>左侧列表选择资产类型，显示为子库 ID。</li>
+<li>五个选项及默认值：</li>
+</ul>
+<table><thead><tr><th>选项</th><th>默认勾选的类型</th></tr></thead><tbody><tr><td>Maya ASCII (.ma)</td><td><code>materials</code>、<code>models</code>、<code>lights</code>、<code>scenes</code>、<code>ani</code></td></tr><tr><td>Maya Binary (.mb)</td><td>无</td></tr><tr><td>FBX (.fbx)</td><td>无</td></tr><tr><td>OBJ (.obj)</td><td>无</td></tr><tr><td>USD (.usd)</td><td>无</td></tr></tbody></table>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>只决定导出界面里复选框的初始状态，单次导出仍可修改。</li>
+<li>不改变已有资产，也不改变右键菜单或快捷工具。</li>
+<li>保存到 <code>Assets/preset/export_preset.json</code> 对应资产类型的键。</li>
+</ul>
+<h2 id="h-4">何时修改</h2>
+<ul>
+<li>模型要交付给引擎或 DCC：为 <code>models</code> 勾选 <code>.fbx</code> 或 <code>.usd</code>。</li>
+<li>只需要 Maya 内部使用：保留 <code>.ma</code>，或改勾 <code>.mb</code> 减小体积。</li>
+<li>不希望材质或灯光资产默认带几何体：取消对应类型的 <code>.ma</code>。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<blockquote><p><strong>提示</strong>：<code>.ma</code> 排除默认初始 <code>SE</code> 节点，避免把默认着色器带进资产。</p></blockquote>
+<blockquote><p><strong>提示</strong>：左侧是资产类型而不是分类；同一类型下的所有分类共用一套默认值。</p></blockquote>

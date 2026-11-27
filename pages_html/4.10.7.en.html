@@ -1,0 +1,29 @@
+<p>The version browser uses three columns to review the versions, variants, thumbnails and properties of one asset family, and to import or delete versions and variants.</p>
+<p><img src="media_en/shared/dialog-version-browser.webp" alt="Version browser" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The asset has versions (the card shows a multi-version badge or <code>has_versions</code> is true), or it has variants (the <code>variants</code> section of <code>variants.json</code> is not empty).</li>
+</ul>
+<h2 id="h-2">How to open it</h2>
+<p>Double-click the asset preview on the right. With versions or variants the version browser opens; with neither, the asset inspector still opens.</p>
+<h2 id="h-3">Interface</h2>
+<table><thead><tr><th>Area</th><th>Contents</th></tr></thead><tbody><tr><td>Left column, versions / variants</td><td>The main version, the <code>V1</code>, <code>V2</code>… entries and the variant entries (shown as &quot;variant · name&quot;), all with thumbnails</td></tr><tr><td>Middle, preview</td><td>The thumbnail of the current entry; for a variant it shows <strong>that variant&#x27;s thumbnail</strong>; with several thumbnails use the wheel or the thumbnail strip at the bottom</td></tr><tr><td>Right column, information</td><td>Category breadcrumb, version and tag badges, details (size, resolution, renderer…), formats, tags, notes and path</td></tr><tr><td>Bottom buttons</td><td>For versions: <code>「导入此版本」 (Import this version)</code> and <code>「删除此版本」 (Delete this version)</code>; for variants: <code>「导入此变体」 (Import this variant)</code> and <code>「删除此变体」 (Delete this variant)</code></td></tr></tbody></table>
+<h2 id="h-4">Steps</h2>
+<ol>
+<li>Click a version or variant in the left column; the preview in the middle and the information on the right follow.</li>
+<li>To import, click <code>「导入此版本」 (Import this version)</code> or <code>「导入此变体」 (Import this variant)</code>, which imports using the first available format of that entry.</li>
+<li>To delete a non-main version, click <code>「删除此版本」 (Delete this version)</code> or <code>「删除此变体」 (Delete this variant)</code> and confirm.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>The window title shows the main asset name.</li>
+<li>The main version entry carries a <code>「主版本」 (main version)</code> marker and its delete button is disabled.</li>
+<li>After deleting a version or variant the list refreshes, and the library in the main window refreshes too.</li>
+</ul>
+<h2 id="h-6">Tips</h2>
+<ul>
+<li>Neither versions nor variants take a grid entry of their own; they are only viewed here or in the context menu.</li>
+<li>A variant stores geometry only, so deleting a variant (or its thumbnail) never affects the textures and materials shared by the asset.</li>
+<li>Entries with several thumbnails can be stepped through with the wheel, and the strip highlights the current image.</li>
+<li>The window can be resized and maximized, and the layout scales with the interface font size.</li>
+</ul>

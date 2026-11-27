@@ -1,0 +1,33 @@
+<p>Deleting a version happens in the asset versions window; the entry for deleting a single LOD cannot be found in the current interface, and the context-menu delete described in older help no longer exists.</p>
+<p><img src="media_en/shared/dialog-version-browser.webp" alt="Delete version / LOD entries in the version browser" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Deleting a version</h2>
+<h3 id="h-2">Prerequisites</h3>
+<ul>
+<li>The main asset has sub-versions (<code>V1/</code>, <code>V2/</code>…).</li>
+<li>Confirm the version is no longer needed; deletion cannot be undone.</li>
+</ul>
+<h3 id="h-3">Steps</h3>
+<ol>
+<li>Select the main asset in the grid and double-click the preview on the right to open the asset versions window.</li>
+<li>Select the sub-version to delete (such as <code>V1</code>) in the <code>「版本」 (Versions)</code> list on the left, not <code>「主版本」 (main version)</code>.</li>
+<li>Click <code>「删除此版本」 (Delete this version)</code>.</li>
+<li>Click <code>「是」 (Yes)</code> in the confirmation dialog.</li>
+</ol>
+<h3 id="h-4">Verify the result</h3>
+<ul>
+<li>The version disappears from the list and its <code>V{n}/</code> directory is removed entirely.</li>
+<li>The main asset&#x27;s <code>meta.json</code> drops the matching <code>version_assets</code> entry; with no versions left, <code>has_versions</code> and <code>version_assets</code> are cleared together.</li>
+<li>The main version cannot be deleted: with <code>「主版本」 (main version)</code> selected the delete button is greyed out.</li>
+</ul>
+<blockquote><p><strong>Warning</strong>: the confirmation states explicitly that all content of that version (geometry, materials, textures, thumbnail) is deleted and cannot be undone. Back up the <code>.zasset</code> first.</p></blockquote>
+<h2 id="h-5">Deleting a LOD</h2>
+<p>A single LOD can be deleted in the asset versions window: select the LOD entry → <code>「删除此 LOD」 (Delete this LOD)</code>; the button is greyed out when only one LOD is left (at least one must remain) and the main version cannot be deleted. The asset context-menu delete described in older help no longer applies.</p>
+<p>Only when the interface cannot delete it (for example the file is locked by another program) is manual handling needed:</p>
+<ol>
+<li>Back up the whole <code>.zasset</code> first.</li>
+<li>Delete the matching <code>lodN/</code> directory (<code>N</code> ≥ 1).</li>
+<li>Remove the entry with <code>id</code> <code>lodN</code> from the <code>lods</code> list in <code>lods.json</code>.</li>
+</ol>
+<blockquote><p><strong>Warning</strong>: never delete the root <code>node.*</code> geometry — it is <code>lod0</code>; the default detail level breaks without it.</p></blockquote>
+<h2 id="h-6">Tips</h2>
+<blockquote><p><strong>Tip</strong>: the append LOD window lets you pick a level that is already taken; confirming warns that its geometry will be overwritten, which replaces that same LOD level. To add a level, pick an empty one.</p></blockquote>

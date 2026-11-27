@@ -1,0 +1,26 @@
+<p><code>「资产详情」 (Asset details)</code> opens a separate <code>「资产观察」 (Asset inspector)</code> window that gathers the large image, several thumbnails and the complete metadata.</p>
+<p><img src="media_en/shared/dialog-asset-details.webp" alt="Asset details preview" loading="lazy" decoding="async"></p>
+<h2 id="h-1">How to open it</h2>
+<ul>
+<li>Right-click an asset card and choose <code>「资产详情」 (Asset details)</code> at the very bottom of the menu.</li>
+<li>Double-click the preview image in the preview panel.</li>
+<li>For assets with several versions the <code>「版本浏览器」 (Version browser)</code> opens instead.</li>
+</ul>
+<h2 id="h-2">Window contents</h2>
+<p>Two columns with a draggable divider in between:</p>
+<p><strong>Left column (preview)</strong></p>
+<ul>
+<li>A square preview area on top: the current thumbnail at full size, the wheel switches when there are several, and GIF / MP4 animate.</li>
+<li>A thumbnail strip below, <strong>shown only when there are several thumbnails</strong>; clicking switches the main image and the current one is highlighted.</li>
+<li>The preview can be <strong>dragged straight into the Maya viewport</strong> to import, using the same path as dragging an asset card.</li>
+</ul>
+<p><strong>Right column (scrollable information cards)</strong></p>
+<table><thead><tr><th>Card</th><th>Contents</th></tr></thead><tbody><tr><td>Title card</td><td>Asset name (large heading) plus the category breadcrumb</td></tr><tr><td>Details card</td><td>Two columns of label / value: node type, asset type, size, resolution, software, renderer, color space, animation format, creation time (whichever exist)</td></tr><tr><td>Formats card</td><td>Format chips of the importable files inside the asset (such as zmetal, ma)</td></tr><tr><td>Tags card</td><td>All tags of the asset as chips; the whole card hides when there are none</td></tr><tr><td>Notes card</td><td>The note text, selectable and copyable; the whole card hides when empty</td></tr><tr><td>Path card</td><td>Full path of the asset on disk, selectable and copyable; the whole card hides when unavailable</td></tr></tbody></table>
+<p>Right-clicking the preview inside this window opens <strong>exactly the same asset context menu as the grid</strong>, except that <code>「资产详情」 (Asset details)</code> is no longer there, to avoid opening an identical window again.</p>
+<h2 id="h-3">Verify the result</h2>
+<p>The window title shows the asset name and the divider can be dragged to resize the columns. Switching thumbnails only changes the preview on the left; the information on the right still describes the current asset.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>The default window size is computed from the screen and the interface scale; dragging the divider adjusts the column ratio, with the left column absorbing width changes while the right column keeps a fixed width.</li>
+<li>Asset details are read-only; change the name, tags and notes back in the properties panel.</li>
+</ul>

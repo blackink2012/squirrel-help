@@ -1,0 +1,44 @@
+<blockquote><p>One-line summary: <strong>the Preview area on the right shows the selected asset&#x27;s thumbnail (possibly several), and double-clicking opens a larger viewer.</strong></p></blockquote>
+<p>It shows a <strong>thumbnail</strong>, not a live Maya viewport render. To change the image use the context menu (<a href="#/en/15.7.2"><code>8.7.2</code></a>) or the four buttons below (<a href="#/en/15.7.3"><code>8.7.3</code></a>).</p>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Pick any category in the left navigation to enter the asset grid;</li>
+<li>Single-click any asset card and the <strong>Preview</strong> area on the right shows the image immediately;</li>
+<li>With no asset selected the preview is a blank canvas with a faint placeholder icon.</li>
+</ol>
+<p>If the panel was closed, reopen the <strong>Preview</strong> area from the <strong>Panels</strong> menu at the top (see <a href="#/en/15.2.5"><code>8.2.5</code></a>); it can also be dragged, split and torn off (see <a href="#/en/3.2.1"><code>3.2.1</code></a>).</p>
+<p><img src="media_en/shared/preview-panel.webp" alt="Preview panel and bottom buttons (only one thumbnail exists in this screenshot, so no slot switcher or delete button is visible)" loading="lazy" decoding="async"></p>
+<h2 id="h-2">The preview area itself</h2>
+<table><thead><tr><th>Feature</th><th>Description</th></tr></thead><tbody><tr><td>Size</td><td>Always a 1:1 square whose side follows the column width; on a narrow column it shrinks to the available height and never draws outside the area</td></tr><tr><td>Empty state</td><td>A dark canvas with a translucent placeholder icon in the center</td></tr><tr><td>Right-click</td><td>Right-clicking the preview image opens the <strong>Update thumbnail</strong> menu (<a href="#/en/15.7.2"><code>8.7.2</code></a>)</td></tr><tr><td>Double-click</td><td>Opens a larger viewer: an ordinary asset opens the asset details / inspection window (<a href="#/en/15.11.1"><code>8.11.1</code></a>); <strong>an asset with versions or variants</strong> opens the version browser (<a href="#/en/15.11.2"><code>8.11.2</code></a>)</td></tr><tr><td>Animated images</td><td>When the asset carries a GIF / MP4 it plays right in the preview</td></tr><tr><td>Video preview</td><td>Playblast videos of animation data assets (mp4 in <code>.cache</code>) play in the preview</td></tr><tr><td>Recycle bin</td><td>Read-only display; every thumbnail control and context menu is disabled</td></tr></tbody></table>
+<h2 id="h-3">Thumbnail slots: one asset can hold several images</h2>
+<table><thead><tr><th>Slot</th><th>Naming in a <code>.zasset</code> asset</th><th>Naming in a plain folder asset</th></tr></thead><tbody><tr><td>First image (main)</td><td><code>thumb.sicon</code> / <code>thumb.aicon</code> / <code>thumb.png</code> / <code>thumb.mp4</code></td><td><code>&lt;asset name&gt;.sicon</code></td></tr><tr><td>Second onward (extra slots)</td><td><code>thumb_2.sicon</code>, <code>thumb_3.sicon</code>…</td><td><code>&lt;asset name&gt;_2.sicon</code>, <code>&lt;asset name&gt;_3.sicon</code>…</td></tr></tbody></table>
+<ul>
+<li>The <strong>main image</strong> is the card cover and <strong>cannot be deleted</strong>; it can only be overwritten by capture or import;</li>
+<li><strong>Extra images</strong> start from the second and can be deleted;</li>
+<li>Extra image numbering continues after the highest existing number and never collides.</li>
+</ul>
+<h2 id="h-4">Switching between several thumbnails</h2>
+<p>When a selected asset has several images, a counter appears below the preview (such as <code>2/3</code>) and you can switch three ways:</p>
+<table><thead><tr><th>Method</th><th>Operation</th><th>Description</th></tr></thead><tbody><tr><td>Hover arrows</td><td>Move the cursor into the preview and ◀ ▶ appear on both sides</td><td>◀ is gray on the first image and ▶ is gray on the last</td></tr><tr><td>Wheel</td><td>Scroll the wheel while hovering the preview</td><td>Up = previous, down = next</td></tr><tr><td>Automatic slideshow</td><td>No action needed; it advances every 2 seconds by default and loops</td><td>Hovering pauses it; it does not run while an animation / video plays or when there is only one image</td></tr></tbody></table>
+<h2 id="h-5">Deleting an extra thumbnail</h2>
+<ol>
+<li>Switch to the image to delete (the counter must not read <code>1/n</code>);</li>
+<li>Click <strong>Delete</strong> below the preview;</li>
+<li>That image file is removed from the asset directory immediately and the preview falls back to the remaining images.</li>
+</ol>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Deleting an extra thumbnail has <strong>no confirmation</strong> and does not use the recycle bin; it deletes the image file on disk. Check the counter while switching, and never click delete on the main image (the delete button is gray there).</p></div>
+<h2 id="h-6">Previewing audio assets</h2>
+<p>Music / audio assets gain two things:</p>
+<ul>
+<li>A large translucent button in the middle of the preview: play / pause (the icon follows the state);</li>
+<li>A timeline below showing <code>current time / total duration</code> that you can drag to seek.</li>
+</ul>
+<h2 id="h-7">Common questions</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th></tr></thead><tbody><tr><td>The preview stays a blank canvas</td><td>No asset selected, or the selection is a virtual entry / recycle bin entry</td></tr><tr><td>The preview image is small / shrank</td><td>The column width or area height is insufficient and the square side was reduced; widen the right column</td></tr><tr><td>It does not show the newest capture</td><td>The preview reads the thumbnail file and never refreshes live; capture or generate it again</td></tr><tr><td>Double-click did not open a viewer</td><td>It may be a read-only entry, or the asset has versions / variants and double-click opens the version browser</td></tr></tbody></table>
+<h2 id="h-8">Related</h2>
+<ul>
+<li>The <strong>Update thumbnail</strong> menu on preview right-click → <a href="#/en/15.7.2"><code>8.7.2</code></a></li>
+<li>The four buttons below the preview → <a href="#/en/15.7.3"><code>8.7.3</code></a></li>
+<li>General rules for multiple thumbnail slots → <a href="#/en/4.7.5"><code>4.1.7.5</code></a></li>
+<li>Asset details / inspection window → <a href="#/en/15.11.1"><code>8.11.1</code></a></li>
+</ul>

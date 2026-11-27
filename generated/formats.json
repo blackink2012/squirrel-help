@@ -1,0 +1,324 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "title": "几何与交换",
+      "extensions": [
+        "abc",
+        "dae",
+        "fbx",
+        "glb",
+        "gltf",
+        "ma",
+        "mb",
+        "obj",
+        "usd",
+        "usda",
+        "usdc"
+      ],
+      "note": "Maya file -import"
+    },
+    {
+      "title": "渲染代理",
+      "extensions": [
+        "ass",
+        "proxy",
+        "rs",
+        "vrmesh",
+        "vrscene"
+      ],
+      "note": "代理 / 渲染代理"
+    },
+    {
+      "title": "体积",
+      "extensions": [
+        "vdb"
+      ],
+      "note": "VDB 体积"
+    },
+    {
+      "title": "贴图",
+      "extensions": [
+        "bmp",
+        "exr",
+        "hdr",
+        "jpeg",
+        "jpg",
+        "png",
+        "psd",
+        "tga",
+        "tif",
+        "tiff"
+      ],
+      "note": "创建 file 节点"
+    },
+    {
+      "title": "HDR",
+      "extensions": [
+        "exr",
+        "hdr"
+      ],
+      "note": "创建穹顶灯"
+    },
+    {
+      "title": "材质",
+      "extensions": [
+        "zmetal"
+      ],
+      "note": "zmetal 材质网络"
+    },
+    {
+      "title": "灯光",
+      "extensions": [
+        "zlight"
+      ],
+      "note": "zlight 灯光资产"
+    }
+  ],
+  "asset_extras": [
+    ".zasset",
+    ".sicon",
+    ".aicon",
+    ".mcm"
+  ],
+  "texture_rules": [
+    {
+      "type": "baseColor",
+      "aliases": [
+        "basecolor",
+        "base_color",
+        "albedo",
+        "diffuse",
+        "col",
+        "color",
+        "base",
+        "diff"
+      ],
+      "color_space": "sRGB",
+      "priority": 1
+    },
+    {
+      "type": "normal",
+      "aliases": [
+        "nrm",
+        "n",
+        "normalmap",
+        "norm",
+        "nor",
+        "nor_dx",
+        "nor_gl",
+        "normal"
+      ],
+      "color_space": "Raw",
+      "priority": 2
+    },
+    {
+      "type": "roughness",
+      "aliases": [
+        "rough",
+        "rgh",
+        "roughnessmap",
+        "rough_map",
+        "roughness"
+      ],
+      "color_space": "Raw",
+      "priority": 3
+    },
+    {
+      "type": "metallic",
+      "aliases": [
+        "metal",
+        "mtl",
+        "metalness",
+        "metal_map",
+        "metallic_map"
+      ],
+      "color_space": "Raw",
+      "priority": 4
+    },
+    {
+      "type": "ao",
+      "aliases": [
+        "ambient",
+        "occlusion",
+        "ambient_occlusion",
+        "ao_map",
+        "ao",
+        "occ"
+      ],
+      "color_space": "Raw",
+      "priority": 5
+    },
+    {
+      "type": "arm",
+      "aliases": [
+        "arm"
+      ],
+      "color_space": "Raw",
+      "priority": 5
+    },
+    {
+      "type": "orm",
+      "aliases": [
+        "orm"
+      ],
+      "color_space": "Raw",
+      "priority": 5
+    },
+    {
+      "type": "emissive",
+      "aliases": [
+        "emit",
+        "emission",
+        "illumination",
+        "emissive_map",
+        "glow"
+      ],
+      "color_space": "sRGB",
+      "priority": 6
+    },
+    {
+      "type": "height",
+      "aliases": [
+        "bump",
+        "disp",
+        "displacement",
+        "heightmap",
+        "height_map",
+        "disp_map",
+        "height",
+        "bump_map"
+      ],
+      "color_space": "Raw",
+      "priority": 7
+    },
+    {
+      "type": "opacity",
+      "aliases": [
+        "alpha",
+        "transparency",
+        "mask",
+        "opacity_map",
+        "alpha_map",
+        "mask_map"
+      ],
+      "color_space": "Raw",
+      "priority": 8
+    },
+    {
+      "type": "clearcoat",
+      "aliases": [
+        "coat",
+        "coating",
+        "clearcoat_map"
+      ],
+      "color_space": "Raw",
+      "priority": 9
+    },
+    {
+      "type": "clearcoatRoughness",
+      "aliases": [
+        "coatRough",
+        "ccRough",
+        "clearcoat_rough",
+        "clearcoat_roughness"
+      ],
+      "color_space": "Raw",
+      "priority": 10
+    },
+    {
+      "type": "specular",
+      "aliases": [
+        "spec",
+        "refl",
+        "reflection",
+        "specular_map",
+        "reflectivity"
+      ],
+      "color_space": "Raw",
+      "priority": 11
+    },
+    {
+      "type": "subsurface",
+      "aliases": [
+        "sss",
+        "subsurface_color",
+        "translucency",
+        "sss_map",
+        "translucent"
+      ],
+      "color_space": "sRGB",
+      "priority": 12
+    },
+    {
+      "type": "anisotropy",
+      "aliases": [
+        "aniso",
+        "anisotropy_map",
+        "direction"
+      ],
+      "color_space": "Raw",
+      "priority": 13
+    },
+    {
+      "type": "ior",
+      "aliases": [
+        "index_of_refraction",
+        "refractive_index"
+      ],
+      "color_space": "Raw",
+      "priority": 14
+    }
+  ],
+  "texture_suffixes": [
+    "_diffuse",
+    "_diff",
+    "_albedo",
+    "_basecolor",
+    "_base_color",
+    "_col",
+    "_normal",
+    "_nrm",
+    "_n",
+    "_bump",
+    "_height",
+    "_disp",
+    "_displacement",
+    "_specular",
+    "_spec",
+    "_refl",
+    "_reflection",
+    "_gloss",
+    "_glossiness",
+    "_roughness",
+    "_rough",
+    "_rgh",
+    "_smoothness",
+    "_metalness",
+    "_metallic",
+    "_metal",
+    "_mtl",
+    "_ao",
+    "_ambient",
+    "_occlusion",
+    "_opacity",
+    "_alpha",
+    "_transparency",
+    "_mask",
+    "_emissive",
+    "_emit",
+    "_emission",
+    "_illumination",
+    "_subsurface",
+    "_sss",
+    "_translucency",
+    "_coat",
+    "_clearcoat",
+    "_coating",
+    "_sheen",
+    "_aniso",
+    "_anisotropy",
+    "_thickness",
+    "_ior"
+  ]
+}

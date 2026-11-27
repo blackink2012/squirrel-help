@@ -1,0 +1,26 @@
+<p>Per-version materials give one version its own <code>.zmetal</code> and textures, so importing that version can restore just that look.</p>
+<h2 id="h-1">What it is</h2>
+<p>The asset root can hold a shared material <code>node.zmetal</code>; a version directory can also hold <code>variants/&lt;version&gt;/node.zmetal</code> with its own texture directory. The latter is that version&#x27;s own material.</p>
+<h2 id="h-2">How it is chosen at import</h2>
+<ul>
+<li>When importing a version&#x27;s material the plug-in reads <code>variants/&lt;version&gt;/node.zmetal</code> first.</li>
+<li>When that version has no material of its own it falls back to <code>node.zmetal</code> in the root.</li>
+<li>The textures of a per-version material are resolved within the version directory and written per the texture import policy.</li>
+</ul>
+<h2 id="h-3">Entry points</h2>
+<ol>
+<li>A version root&#x27;s <code>.zmetal</code> appears in the <code>「导入版本 / LOD」 (Import version / LOD)</code> submenu and can be imported by clicking it.</li>
+<li><code>variants/&lt;version&gt;/node.zmetal</code> is resolved and imported by <code>import_variant_material</code>; whether the matching interface menu entry is wired up is to be confirmed, so today it is used through that import function or an AI command.</li>
+<li>When that import fails it reports <code>「无法导入版本 … 的材质，请确认该版本包含独立的材质文件」 (cannot import the material of version …; confirm that version contains its own material file)</code>.</li>
+</ol>
+<h2 id="h-4">When it is needed</h2>
+<ul>
+<li>Different versions of the same model use different colors or textures.</li>
+<li>A version must keep its own look without changing the shared material.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>Per-version materials are written when a new version is exported, depending on whether zmetal export was checked for that export.</li>
+<li>The <code>.zmetal</code> entries in the <code>「导入版本 / LOD」 (Import version / LOD)</code> submenu go straight to a material import, while the version material menu resolves explicitly per version.</li>
+<li>When a version material has the same name as the shared one, Maya renames it automatically in the scene and never overwrites the existing material.</li>
+</ul>

@@ -1,0 +1,32 @@
+<p>The variant management window lists every variant of the asset in one table with thumbnails, face counts and formats, and lets you import, add from files or delete them.</p>
+<p><img src="media_en/shared/dialog-variant-manager.webp" alt="Variant management window: thumbnail + face count + format" loading="lazy" decoding="async"></p>
+<h2 id="h-1">How to open it</h2>
+<p>Right-click the asset → <code>「更新资产」 (Update asset)</code> → <code>「变体管理…」 (Variant management…)</code>.</p>
+<h2 id="h-2">Interface</h2>
+<table><thead><tr><th>Area</th><th>Contents</th></tr></thead><tbody><tr><td>List</td><td>Each variant shows its thumbnail, <code>variant name (id)</code>, face count, formats and <code>LOD ×N</code>; <code>Ctrl</code> / <code>Shift</code> multi-selection is supported</td></tr><tr><td><code>「导入选中变体」 (Import selected variants)</code></td><td>Imports the selected variants into the current scene one by one (double-clicking a row imports only that one)</td></tr><tr><td><code>「从文件添加…」 (Add from files…)</code></td><td>Pick model files from disk, <strong>one file = one variant</strong></td></tr><tr><td><code>「删除选中变体」 (Delete selected variants)</code></td><td>Deletes the selected variants (with confirmation; the dialog shows the count for a multi-selection)</td></tr><tr><td>Footer note</td><td>All variants share the textures and materials in the asset root; the variant directory stores geometry only</td></tr></tbody></table>
+<h2 id="h-3">Multi-selection</h2>
+<ul>
+<li>With the first row selected, hold <strong>Ctrl</strong> and click other rows to add or remove single rows; hold <strong>Shift</strong> and click to take a range.</li>
+<li><code>「导入选中变体」 (Import selected variants)</code> and <code>「删除选中变体」 (Delete selected variants)</code> act on the current selection; both buttons are disabled when nothing is selected.</li>
+<li>Double-clicking one row imports only that row, regardless of other selections.</li>
+</ul>
+<h2 id="h-4">Adding variants from files</h2>
+<ol>
+<li>Click <code>「从文件添加…」 (Add from files…)</code> and select one or more model files: <code>*.ma</code>, <code>*.mb</code>, <code>*.fbx</code>, <code>*.obj</code>, <code>*.usd</code>, <code>*.usda</code>, <code>*.usdc</code>, <code>*.glb</code>, <code>*.gltf</code>.</li>
+<li>Each file becomes one variant named after the file (without extension); duplicates get <code>_2</code>, <code>_3</code> appended.</li>
+<li>The progress dialog can be cancelled; afterwards it reports successes / failures and the list refreshes.</li>
+</ol>
+<ul>
+<li>This path only copies geometry and does not generate thumbnails; add images through the thumbnail entries in <code>「更新变体」 (Update variant)</code>.</li>
+</ul>
+<h2 id="h-5">Deleting variants</h2>
+<ol>
+<li>Select one or more variants (<code>Ctrl</code> / <code>Shift</code>), then click <code>「删除选中变体」 (Delete selected variants)</code>.</li>
+<li>The confirmation says <code>「只删除这些变体的几何体与缩略图，资产共享的贴图 / 材质不受影响」 (only the geometry and thumbnails of these variants are deleted; the asset&#x27;s shared textures / materials are unaffected)</code>; a multi-selection shows the count, and the actual number deleted is reported afterwards.</li>
+</ol>
+<h2 id="h-6">Verify the result</h2>
+<ul>
+<li>The list refreshes immediately after adding or deleting, and the library in the main window refreshes too.</li>
+<li>The matching <code>&lt;id&gt;.&lt;ext&gt;</code>, <code>&lt;id&gt;_lodN.&lt;ext&gt;</code> and <code>&lt;id&gt;.sicon</code> files under <code>variants/</code> are removed while the asset root&#x27;s textures and materials stay.</li>
+<li>The version browser (double-click the preview on the right) also lists variant entries and offers <code>「导入此变体」 (Import this variant)</code> and <code>「删除此变体」 (Delete this variant)</code>.</li>
+</ul>

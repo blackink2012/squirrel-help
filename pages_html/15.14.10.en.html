@@ -1,0 +1,50 @@
+<blockquote><p>One-line summary: <strong>the &quot;app store&quot; for every reusable script in the plug-in — search it, read the description and double-click to run; favorite the good ones and turn them into shelf buttons.</strong></p></blockquote>
+<p>It does not write scripts; it is a &quot;browser and launcher for the script library&quot;. It holds scripts shipped with the plug-in and lets you add scripts from directories of your own.</p>
+<h2 id="h-1">Where to open it</h2>
+<table><thead><tr><th>Entry</th><th>How</th></tr></thead><tbody><tr><td>Top toolbar <strong>Quick tools</strong> menu</td><td><strong>Quick tools</strong> → <strong>Script browser</strong></td></tr><tr><td>As a main-window panel</td><td><strong>Panels and layout</strong> → <strong>New panel</strong> → <strong>Script browser</strong></td></tr></tbody></table>
+<p>Both open the same interface over the same data.</p>
+<p><img src="media_en/shared/quicktool-script-browser.webp" alt="Script browser window" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What every control does</h2>
+<h3 id="h-3">Top row</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Search box (placeholder &quot;search: name / purpose / tags (space-separated, supports tag: / risk: / cat: / unverified)&quot;)</td><td>Filters the list on the right as you type. <strong>Space-separated words must all match</strong>; prefixes such as <code>tag:xxx</code>, <code>risk:high</code>, <code>cat:qa</code> and <code>unverified</code> are supported</td><td>Search <code>risk:high</code> to find high-risk scripts</td></tr><tr><td><strong>▶ Run</strong> button</td><td>Runs the currently selected script</td><td>Double-clicking a list entry is equivalent</td></tr><tr><td><strong>Add directory</strong> button</td><td>Registers one of your own script directories as a &quot;script root&quot; (files stay put; this only registers them)</td><td>Do it once if you keep your own script repository</td></tr><tr><td><strong>Refresh</strong> button</td><td>Rescans all script roots (shortcut F5)</td><td>Click it after dropping scripts into a directory</td></tr></tbody></table>
+<h3 id="h-4">Left tree (categories and sources)</h3>
+<table><thead><tr><th>Node</th><th>What it is</th><th>How to use it</th></tr></thead><tbody><tr><td>&quot;🕘 Recent (N)&quot;</td><td>Scripts you ran recently</td><td>The fastest path for scripts you use repeatedly</td></tr><tr><td>&quot;★ Favorites&quot;</td><td>Scripts you favorited</td><td>Keep frequently used ones here</td></tr><tr><td>&quot;SquirrelScripts (N)&quot;</td><td>The user script root, grouped by category below (empty categories are still shown)</td><td>The main entry</td></tr><tr><td>Category nodes</td><td>Scripts in that category</td><td>For example split by &quot;modeling / cleanup / export&quot;</td></tr><tr><td>&quot;Unregistered (N)&quot;</td><td>Scripts exist on disk but the registry holds no description / risk / verification record</td><td>They still run; right-click to let AI register them</td></tr><tr><td>Extra script roots</td><td>Directories added with <strong>Add directory</strong></td><td>Categorized the same way</td></tr></tbody></table>
+<h3 id="h-5">The list on the right</h3>
+<table><thead><tr><th>Action</th><th>Effect</th></tr></thead><tbody><tr><td>Single-click</td><td>Selects the script (the bottom status line updates)</td></tr><tr><td><strong>Double-click</strong> / click <strong>▶ Run</strong></td><td>Runs the script</td></tr><tr><td>Hover</td><td>Shows a tooltip: description, <code>risk xxx · verified xxx</code> and other metadata</td></tr><tr><td>Drag an entry onto a category on the left</td><td>Changes its category</td></tr></tbody></table>
+<h3 id="h-6">Context menu (in the list)</h3>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Notes</th></tr></thead><tbody><tr><td>Run</td><td>Runs the script</td><td>Same as double-click</td></tr><tr><td>Run with parameters…</td><td>Fills parameters, then runs</td><td>Only useful when the script declares parameters</td></tr><tr><td>Import (load as module)</td><td>Loads the script as a module without executing it</td><td>For calling its functions from the Script Editor</td></tr><tr><td>Load into Script Editor</td><td>Pastes the source into Maya&#x27;s Script Editor</td><td>For editing and running it</td></tr><tr><td>Generate run command (for shelf)…</td><td>Generates a command you can put on the shelf</td><td>Turn frequently used scripts into buttons</td></tr><tr><td>View description (docstring)</td><td>Shows the script&#x27;s own usage notes</td><td>Read it before running</td></tr><tr><td>Copy path / copy code</td><td>Copies the path or the source</td><td>—</td></tr><tr><td>Open containing folder (with selection) / open with txt</td><td>Locates the file / edits externally</td><td>—</td></tr><tr><td>Re-analyze with AI and register…</td><td>Lets AI re-read the script and fill in its registration</td><td>Also works for unregistered scripts</td></tr><tr><td>Move to _internal (AI only)</td><td>Moves the script into the internal directory so it no longer appears as a tool in the UI</td><td>For scripts meant only for AI</td></tr><tr><td>Delete script…</td><td>Deletes the script file from disk</td><td><strong>Irreversible</strong>, confirm first</td></tr><tr><td>★ Favorite / unfavorite</td><td>Toggles the favorite state</td><td>—</td></tr></tbody></table>
+<h3 id="h-7">Context menu (in the left tree)</h3>
+<table><thead><tr><th>Menu item</th><th>Effect</th></tr></thead><tbody><tr><td>New category… / new script…</td><td>Creates a category / a script directly in the library</td></tr><tr><td>Analyze and register all with AI…</td><td>Batch-fills descriptions and risk information for &quot;unregistered&quot; scripts</td></tr><tr><td>What is &quot;unregistered&quot;?</td><td>Explains the concept</td></tr><tr><td>Rename category… / delete category (with contents)… / open this category&#x27;s folder</td><td>Category maintenance (deleting a category also deletes its contents — dangerous)</td></tr><tr><td>Add script directory… / remove this script root (files stay)</td><td>Manages extra script roots; removing only unregisters and never deletes files</td></tr><tr><td>Expand all / collapse all / refresh (F5)</td><td>View operations</td></tr></tbody></table>
+<h3 id="h-8">Bottom status line</h3>
+<p>It reads &quot;N scripts total · N shown · N extra script roots · double-click / ▶ to run, right-click for more&quot;, useful to confirm the filtered count.</p>
+<h2 id="h-9">A complete usage flow</h2>
+<ol>
+<li>Quick tools → <strong>Script browser</strong>;</li>
+<li>Type a keyword in the search box (such as &quot;thumbnail&quot;), or click a category in the left tree;</li>
+<li>Hover a script to read its description and risk marker;</li>
+<li>Double-click to run it (or select it and click <strong>▶ Run</strong>);</li>
+<li>The result appears in Maya&#x27;s <strong>Script Editor</strong>, and any scene effect happens immediately in the current scene;</li>
+<li>Right-click a useful script → <strong>★ Favorite</strong>; for repeated use choose <strong>Generate run command (for shelf)…</strong> to make a shelf button.</li>
+</ol>
+<h2 id="h-10">Where the output lands</h2>
+<ul>
+<li>Script output goes to the <strong>Maya Script Editor</strong> (History / Output);</li>
+<li>Scene changes land directly in the current scene (whether they can be undone depends on the script, see the risk marker);</li>
+<li>Favorites, recent runs and extra script roots are stored locally and survive restarting;</li>
+<li><strong>Generate run command</strong> produces a command string to paste onto the shelf.</li>
+</ul>
+<h2 id="h-11">Risks and how to undo</h2>
+<ul>
+<li><strong>Read the risk marker first</strong>: list entries show <code>[readonly]</code> / <code>[low]</code> / <code>[high]</code> and similar levels, and the tooltip explains how to undo.</li>
+<li><strong>Scripts with <code>risk=high</code> ask for a second confirmation</strong> before running, with a &quot;do not remind me this time&quot; checkbox — better to leave it unticked and keep the reminder.</li>
+<li><strong>Running a script may change the scene</strong>: save the scene first (Ctrl+S). Read-only scripts change nothing.</li>
+<li><strong>Deleting a script / deleting a category (with contents) really deletes files from disk and cannot be undone.</strong> Confirm it is not your only copy.</li>
+<li><strong>Move to _internal</strong> only relocates the file (it no longer appears as a tool); the file remains.</li>
+<li>To undo: a deleted script can only come back from a backup or version control; a wrong scene change is undone with Maya&#x27;s undo or by not saving and reopening.</li>
+</ul>
+<h2 id="h-12">Related</h2>
+<ul>
+<li>Its position in the <strong>Quick tools</strong> menu: <a href="#/en/15.2.6"><code>8.2.6</code></a></li>
+<li>Browsing, searching and running the script library (user manual version): <a href="#/en/9.6.1"><code>4.6.6.1</code></a></li>
+<li>Running one script across many Maya files is a different tool: <a href="#/en/15.14.5"><code>8.14.5</code></a></li>
+</ul>

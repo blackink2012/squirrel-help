@@ -1,0 +1,49 @@
+<blockquote><p>One-line summary: <strong>after analyzing many assets at once, this window lines the results up so you can review and tick them one by one, then write them into the library in one go.</strong></p></blockquote>
+<p>It uses the same fields as the single-asset results window (<a href="#/en/15.13.3"><code>8.13.3</code></a>) with two differences: <strong>several cards on one screen</strong>, and <strong>an extra &quot;apply selected assets (N)&quot; button</strong> at the bottom (N shows how many are ticked).</p>
+<h2 id="h-1">How to make it appear</h2>
+<ol>
+<li><strong>Select several assets</strong> in the grid (Ctrl / Shift multi-select, or select all in the batch bar, see <a href="#/en/15.5.21"><code>8.5.21</code></a>);</li>
+<li>Top toolbar <strong>AI tools</strong> → &quot;AI thumbnail analysis (N selected assets)&quot;;</li>
+<li>In the <strong>AI analysis configuration</strong> window <strong>keep &quot;show a window for review and editing when done&quot; ticked</strong> and click <strong>Start analysis</strong>;</li>
+<li>When the progress bar finishes this window opens automatically.</li>
+</ol>
+<p>Without that review option there is no window — results are written straight into the library. On the first batch use, always keep the review option.</p>
+<h2 id="h-2">What each part does</h2>
+<p><img src="media_en/shared/dialog-ai-batch-results.webp" alt="AI batch analysis results window" loading="lazy" decoding="async"></p>
+<h3 id="h-3">Top row</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Title &quot;N assets analyzed, edit then tick to apply:&quot;</td><td>Says how many are in this batch and that confirmation is manual</td><td>—</td></tr><tr><td><strong>Select all</strong></td><td>Ticks <strong>every field</strong> of every asset (equal to &quot;accept all AI suggestions&quot;)</td><td>Only when you deeply trust this batch</td></tr><tr><td><strong>Clear all</strong></td><td>Clears every field&#x27;s checkbox so you can pick per item</td><td>The recommended starting point</td></tr></tbody></table>
+<h3 id="h-4">One card per asset</h3>
+<p>Each card corresponds to one asset and holds checkbox-plus-input fields (with <strong>Category</strong> and <strong>Tags</strong> <strong>on the same row</strong>, tags to the right); a preview panel on the right shows the current card&#x27;s image, name and category:</p>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Card title row (original name + sub-library)</td><td>Which asset this is and which sub-library it belongs to</td><td>First check that the name matches</td></tr><tr><td><strong>Name</strong> checkbox plus input</td><td>The AI-suggested new name</td><td>Edit it in the box before ticking</td></tr><tr><td><strong>Category</strong> checkbox plus input</td><td>The AI-suggested sub-category</td><td>If unsure, leave the category unticked and use the other fields</td></tr><tr><td><strong>Tags</strong> checkbox plus input (placeholder &quot;tags&quot;, same row as category, on the right)</td><td>The AI-suggested tags, comma separated</td><td>Applying tags first is the lowest-risk approach</td></tr><tr><td><strong>Notes</strong> checkbox plus input</td><td>A description</td><td>Useful for search</td></tr><tr><td>Right preview panel (image + name + category)</td><td>Confirms at a glance what the asset was judged as</td><td>Scan it to spot obviously wrong ones</td></tr></tbody></table>
+<h3 id="h-5">Bottom</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Notes</th></tr></thead><tbody><tr><td>Checkbox &quot;move into the analyzed category&quot;</td><td>Ticked = <strong>moves the asset files into each analyzed category directory</strong> when applying</td><td>Batch moving is the riskiest item, see the risks below</td></tr><tr><td><strong>Cancel</strong> button</td><td>Writes none of the batch and closes</td><td>Results are discarded but the library is untouched</td></tr><tr><td><strong>Apply selected assets (N)</strong> button</td><td>Writes the assets with <strong>at least one field ticked</strong> into the library; N is the number of ticked assets</td><td>Scan the ticks once more before clicking</td></tr></tbody></table>
+<h2 id="h-6">A complete flow</h2>
+<ol>
+<li>Multi-select assets → AI tools menu → analyze → this window appears;</li>
+<li>Click <strong>Clear all</strong> first (unless you fully trust this batch);</li>
+<li>Go through the cards top to bottom: name, category, tags, notes;</li>
+<li>Tick the fields you accept; edit anything you want changed inside the input before ticking;</li>
+<li>Use each card&#x27;s summary to see &quot;what the AI understood&quot;; skip the whole card when it is clearly off;</li>
+<li>If the files should <strong>not</strong> move around, leave &quot;move into the analyzed category&quot; unticked at the bottom;</li>
+<li>Click <strong>Apply selected assets (N)</strong>;</li>
+<li>Refresh the grid and verify the names / tags / notes changed as expected.</li>
+</ol>
+<h2 id="h-7">What you see afterwards</h2>
+<ul>
+<li>The ticked fields are written into the matching assets&#x27; metadata; assets with no ticked field are completely untouched.</li>
+<li>If &quot;move into the analyzed category&quot; was ticked, those assets move from their original category into the new one (visible after the tree refreshes).</li>
+<li>A large batch is processed asset by asset, and the main interface returns when it finishes.</li>
+</ul>
+<h2 id="h-8">Risks and how to undo (the most important part of this page)</h2>
+<ul>
+<li><strong>Changing many assets at once has no one-click undo.</strong> Split it into two rounds: apply <strong>tags</strong> only first, and handle names and notes once that looks right.</li>
+<li><strong>Ticking &quot;move into the analyzed category&quot; moves files on disk.</strong> AI category judgments can be wrong, and after a bad batch move you must move them back one by one (right-click → <strong>Move to</strong>, see <a href="#/en/15.5.15"><code>8.5.15</code></a>). Leave it unticked on the first batch run.</li>
+<li>Only ticked fields are overwritten: once an original name is replaced you can only change it back by hand, and the plug-in keeps no &quot;previous field&quot; copy.</li>
+<li>To be safer, try 3–5 assets first, confirm the AI judges this kind of asset the way you want, then scale up.</li>
+</ul>
+<h2 id="h-9">Related</h2>
+<ul>
+<li>The single-asset results and configuration windows: <a href="#/en/15.13.3"><code>8.13.3</code></a></li>
+<li>The batch entry in the <strong>AI tools</strong> menu: <a href="#/en/15.2.7"><code>8.2.7</code></a></li>
+<li>Multi-select and the batch bar: <a href="#/en/15.5.21"><code>8.5.21</code></a></li>
+</ul>

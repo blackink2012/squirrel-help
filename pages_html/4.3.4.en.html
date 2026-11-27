@@ -1,0 +1,20 @@
+<p>Deleting a category moves it, its sub-categories and all its assets into the <strong>recycle bin</strong>, with two confirmations; a mistake can be undone by restoring the whole branch from <code>「回收站」 (Recycle bin)</code> on the left.</p>
+<p><img src="media_en/shared/menu-category-delete.webp" alt="Category context menu: delete category" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<p>Know which category you are deleting (the whole subtree goes) and make sure the recycle bin has room (100 GB limit).</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the category and choose <code>「删除分类」 (Delete category)</code>. Core sub-libraries and the automatically created <code>「自定义」 (Custom)</code> sub-category do not offer this item.</li>
+<li>First confirmation: the dialog states how many sub-categories and assets will be deleted; click <code>「是」 (Yes)</code>.</li>
+<li>Second, <code>「最终确认删除」 (Final delete confirmation)</code>: a strong warning says the category and its contents go to the recycle bin (with counts when assets exist), the focus defaults to <code>「否」 (No)</code>, so click <code>「是」 (Yes)</code> to confirm.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The category disappears from the tree and the whole folder moves into the recycle bin; the parent category is selected automatically and the grid no longer shows those assets. The count on the <code>「回收站」 (Recycle bin)</code> entry on the left increases.</p>
+<h2 id="h-4">Warnings</h2>
+<ul>
+<li>Deletion <strong>goes to the recycle bin and can be restored</strong>, but what comes back is the whole category branch, not individual assets; sub-categories and assets return together.</li>
+<li>The recycle bin is limited to 100 GB and never cleans itself; once you are sure, go in and <code>「彻底删除」 (Delete permanently)</code> item by item — that step cannot be undone.</li>
+<li>Deleting a category while keeping its assets is not supported today: move the assets to another category first, or export a backup.</li>
+<li>Do not delete category folders in Explorer; index and favorite records may be left behind. Delete inside the plug-in.</li>
+<li>To be safe, export the whole library or the target assets first as described in &quot;Backup and restore&quot;.</li>
+</ul>

@@ -1,0 +1,25 @@
+<p>When on, dragging a model, dynamics, scene or light into the Maya viewport snaps the asset to the model surface under the cursor and aligns it to the normal.</p>
+<p><img src="media_en/shared/settings-drag.webp" alt="Drag and drop" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>It makes a dropped asset land on a visible surface in the viewport instead of returning to its original coordinates.</p>
+<h2 id="h-2">Values and default</h2>
+<ul>
+<li>The checkbox <code>「拖入资产（模型 / 动态 / 场景 / 灯光）时吸附到场景表面」 (snap assets dragged into the scene onto the surface)</code> is on by default.</li>
+</ul>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>For models, dynamics and scenes: the asset&#x27;s up axis (+Y) aligns with the surface normal and its bottom edge touches the drop point.</li>
+<li>For lights: the light direction (−Z) aligns with the surface normal, shining outward from the surface with its back against it.</li>
+<li>With several assets dropped together they line up along the surface; when the rules differ they import at their original positions.</li>
+<li>It only applies to the models, dynamics, scenes and lights sub-libraries; material, texture and HDR drop semantics are unaffected.</li>
+<li>When off, assets import at their original position, restoring the previous behavior.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<ul>
+<li>Keep it on to place assets quickly onto an existing model surface.</li>
+<li>Turn it off for assets with complex transforms that must return to their original coordinates, or when no surface is available.</li>
+<li>The setting is read at the next drag, so applying is enough and no restart is needed.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<blockquote><p><strong>Tip</strong>: snapping needs an actual model face under the cursor; dropping over empty space falls back to the original position.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: for more detail on drop points and rotation rules see &quot;Snap to the surface&quot;.</p></blockquote>

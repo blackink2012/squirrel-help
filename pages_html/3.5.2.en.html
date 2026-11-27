@@ -1,0 +1,27 @@
+<p>The search box at the top of the Help Center supports both keyword and semantic retrieval and can find pages, commands and sections.</p>
+<p><img src="media/shared/help-search.webp" alt="Help search: results for &quot;material conversion&quot; grouped with facets (content type / section on the left) and hit snippets" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Steps</h2>
+<ol>
+<li>Type a keyword in the search box at the top of the help page, for example &quot;import model&quot;, &quot;font size&quot; or &quot;crash&quot;.</li>
+<li>Results first show local lexical matches, then are replaced by fused &quot;semantic + lexical&quot; results when the service is available.</li>
+<li>Each result shows the title, a type badge (page / concept / reference / command / section), its path and a hit snippet.</li>
+<li>Use ↑ / ↓ to move, <code>Enter</code> to open and <code>Esc</code> to close the results.</li>
+<li>Command results jump to the command reference and highlight the matching row; section results open the section overview.</li>
+</ol>
+<h2 id="h-2">Result states</h2>
+<ul>
+<li>A label at the top states the current mode: <code>「语义 + 词法」 (semantic + lexical)</code>, <code>「词法检索」 (lexical)</code> or <code>「词法检索 · 语义暂不可用」 (lexical · semantic unavailable)</code>.</li>
+<li>With no hits it says <code>「没有找到匹配的帮助页，试试更短的关键词」 (no matching help page; try a shorter keyword)</code>.</li>
+<li>If the search index has not been generated it asks you to run the build command in the project root (release builds normally ship the index).</li>
+</ul>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>Typing &quot;import model&quot; returns pages such as importing geometry and importing from files.</li>
+<li>Typing &quot;text too small&quot; finds the pages about font size.</li>
+<li>Pressing <code>Esc</code> closes the results without navigating away.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Semantic retrieval depends on the local embedding model; when unavailable it falls back to lexical retrieval and search still works.</li>
+<li>The shorter the keyword and the closer it is to UI wording, the more reliable the hit.</li>
+</ul>

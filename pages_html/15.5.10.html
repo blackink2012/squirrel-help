@@ -1,0 +1,27 @@
+<blockquote><p>一句话定位：<strong>在资产网格里右键一张音频资产卡片时，弹出的就是这个菜单。</strong> 音乐有四个「放的地方」，菜单最上面四行就是这四个目标；第五行是提前把音频转成 WAV。</p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>左侧「分类」页签 → 点「音频」或它下面的任一分类；</li>
+<li>中间资产网格里<strong>右键任意音频卡片</strong>。</li>
+</ol>
+<p><img src="media/shared/menu-sublib-audio.webp" alt="音频资产右键菜单" loading="lazy" decoding="async"></p>
+<h2 id="h-2">菜单从上到下的顺序</h2>
+<table><thead><tr><th>段</th><th>条目</th></tr></thead><tbody><tr><td>① 子库专属</td><td>导入到时间轴、导入到时间编辑器、导入到 Trax 编辑器、导入摄像机序列器</td></tr><tr><td>② 收藏与选择</td><td>添加到收藏夹 ▶、全选、复制、打开文件夹</td></tr><tr><td>③ 整理</td><td>移动到 ▶、复制到 ▶</td></tr><tr><td>④ 维护</td><td>编辑、删除 ▶、转换为 WAV</td></tr><tr><td>⑤ 查看与 AI</td><td>AI 分析缩略图</td></tr><tr><td>⑥ 最后一条</td><td>资产详情</td></tr></tbody></table>
+<p>音频菜单<strong>没有</strong>导入 / 添加引用 / 更新缩略图 / 更新资产 / 格式转换 / 预览节点——音频进 Maya 只有上面四条路，没有「几何体导入」这一说。</p>
+<h2 id="h-3">菜单逐项详解</h2>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>导入到时间轴</td><td>把音乐挂到 Maya 时间轴的 sound 节点上</td><td>Maya 已连接</td><td>时间轴上出现声音波形；<strong>当前帧 = 音频首帧</strong></td><td>想从头对齐就把时间轴先拨到起始帧</td></tr><tr><td>导入到时间编辑器</td><td>把音乐作为音频片段放进时间编辑器（Time Editor）</td><td>时间编辑器可用</td><td>时间编辑器里多一个 audio clip，首帧 = 当前帧</td><td>与「导入到时间轴」二选一，看你用哪个面板做动画</td></tr><tr><td>导入到 Trax 编辑器</td><td>建声音轨 / Soundtrack 片段并打开 Trax 面板</td><td>有动画层可放</td><td>Trax 面板打开，里面多一个声音片段</td><td>适合按片段组织声音</td></tr><tr><td>导入摄像机序列器</td><td>把音乐挂到摄像机编辑器（Camera Sequencer）的 shot 上</td><td>已经用序列器排了 shot</td><td>序列器的 shot 上挂上声音，首帧 = 当前帧</td><td>没排 shot 时用不上</td></tr><tr><td>添加到收藏夹 ▶</td><td>把资产加入收藏夹</td><td>资产库已加载</td><td>子菜单列「默认收藏夹」+ 你自建的收藏夹；点一下加入、再点一下移出</td><td>多选时对全部选中的资产生效</td></tr><tr><td>全选</td><td>选中网格里当前可见的全部卡片</td><td>有卡片</td><td>全部高亮</td><td>只选当前筛选 / 搜索结果</td></tr><tr><td>复制</td><td>把资产放进剪贴板</td><td>无</td><td>内部剪贴板记录资产，同时把音频文件写进系统剪贴板</td><td>可直接在资源管理器里粘贴出来</td></tr><tr><td>打开文件夹</td><td>打开资产在磁盘上的位置</td><td>资产已入库</td><td>文件管理器定位到该音频所在文件夹</td><td>只打开，不改内容</td></tr><tr><td>移动到 ▶</td><td>把资产移到别的分类</td><td>资产库已加载</td><td>级联选目标分类，资产从当前分类消失</td><td>见 <a href="#/15.5.15"><code>8.5.15</code></a></td></tr><tr><td>复制到 ▶</td><td>把资产复制一份到别的分类</td><td>资产库已加载</td><td>目标分类多出同一资产</td><td>占双份磁盘空间</td></tr><tr><td>编辑</td><td>改中文名、分类、标签、注释</td><td>无</td><td>弹「编辑资产」对话框</td><td>见 <a href="#/15.5.16"><code>8.5.16</code></a></td></tr><tr><td>删除 ▶</td><td>删掉这个资产</td><td>无</td><td>子菜单：移到回收站 / 彻底删除</td><td>「彻底删除」不可还原</td></tr><tr><td>转换为 WAV</td><td>为音乐生成 WAV 副本（存分类缓存，不新增卡片）</td><td>该音乐还没有 WAV 副本</td><td>生成一份 WAV 缓存，之后导入直接用这份</td><td><strong>已存在 WAV 副本时这一项是灰的</strong>，这是「已经好了，不用再转」</td></tr><tr><td>AI 分析缩略图</td><td>让 AI 读缩略图给建议</td><td>AI 依赖已装好</td><td>打开 AI 分析窗口，确认后写回资产</td><td>见 <a href="#/15.5.17"><code>8.5.17</code></a></td></tr><tr><td>资产详情</td><td>单独看这个资产的详情</td><td>无</td><td>打开资产观察窗口</td><td>与双击右侧预览图同一条链路</td></tr></tbody></table>
+<h2 id="h-4">四个导入目标放哪儿</h2>
+<table><thead><tr><th>子项</th><th>音乐最终挂在哪</th><th>典型用途</th></tr></thead><tbody><tr><td>导入到时间轴</td><td>时间轴的 sound 节点</td><td>一边听音乐一边 K 动画（最常用）</td></tr><tr><td>导入到时间编辑器</td><td>Time Editor 里的 audio clip</td><td>用时间编辑器做非线性动画剪辑</td></tr><tr><td>导入到 Trax 编辑器</td><td>Trax 里的声音轨片段</td><td>按片段组织、和动画层叠着看</td></tr><tr><td>导入摄像机序列器</td><td>Camera Sequencer 的 shot</td><td>多机位剪辑时给每段配声音</td></tr></tbody></table>
+<h2 id="h-5">这个子库特有的注意点</h2>
+<ul>
+<li><strong>Maya 只认 wav / aiff</strong>：mp3、flac、m4a 这类点任何一个导入项都会先在本机转出一份 WAV 副本，再导进 Maya——所以「转换为 WAV」不是必须点的，它只是把那一步提前做好（之后导入更快）。</li>
+<li><strong>「转换为 WAV」不会多出卡片</strong>：WAV 副本存在分类缓存里，网格里还是一张卡。所以别指望在库里找到它。</li>
+<li><strong>首帧对齐靠当前帧</strong>：导入到时间轴 / 时间编辑器 / 序列器都是「当前帧 = 音频首帧」，点之前先把时间轴拨到你要的起点。</li>
+<li><strong>没有「更新缩略图 / 更新资产」</strong>：音频就一个文件，换音乐等于重新入库。</li>
+</ul>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>公共条目详解：<a href="#/15.5.14"><code>8.5.14</code></a>、<a href="#/15.5.15"><code>8.5.15</code></a>、<a href="#/15.5.16"><code>8.5.16</code></a></li>
+<li>动画与时间相关：<a href="#/5.3.7"><code>4.2.3.7</code></a></li>
+<li>子库差异总表：<a href="#/15.5.1"><code>8.5.1</code></a></li>
+</ul>

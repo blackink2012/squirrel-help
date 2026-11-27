@@ -1,0 +1,30 @@
+<p>The category decides where an asset sits in the left category tree; the sub-library (asset type) decides whether it belongs to materials, models, textures or another container.</p>
+<p><img src="media_en/shared/property-panel.webp" alt="The Category field in the properties panel: changing the category writes it back into the asset metadata" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Changing the category</h2>
+<ol>
+<li>Select the asset in the grid and choose <code>「编辑」 (Edit)</code> from the context menu.</li>
+<li>Choose the target category in the <code>「分类」 (Category)</code> dropdown of the edit dialog. The dropdown covers the whole category tree, so pick a category in the same sub-library; moving across sub-libraries is described below.</li>
+<li>Click <code>「保存」 (Save)</code>. The plug-in moves the asset&#x27;s <code>.zasset</code> directory and writes the metadata back.</li>
+<li>The category tree and grid refresh and the asset appears in its new category.</li>
+</ol>
+<h2 id="h-2">Batch changing the category</h2>
+<ol>
+<li>Multi-select assets within the same sub-library.</li>
+<li>Click <code>「批量移动」 (Batch move)</code> in the batch operation bar.</li>
+<li>Choose the target category in the list and confirm.</li>
+<li>When it finishes the grid reloads and the counts of the old and new categories change together.</li>
+</ol>
+<h2 id="h-3">About sub-libraries</h2>
+<ul>
+<li><code>「资产类型」 (Asset type)</code> in the properties panel is a read-only display showing which sub-library the asset belongs to.</li>
+<li>The current interface offers no direct way to switch sub-libraries; moving across sub-libraries can be done with the <code>sub_library</code> parameter of the <code>edit</code> command (that entry is not exposed in the UI; whether it will be added is to be confirmed).</li>
+<li>A cross-sub-library move really moves the <code>.zasset</code> files and can be combined with a target category.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The target category&#x27;s asset count grows and the original one shrinks.</li>
+<li>The asset no longer appears in the original category.</li>
+<li>The <code>「分类」 (Category)</code> field shows the new display name; after a cross-sub-library move <code>「资产类型」 (Asset type)</code> shows the new sub-library.</li>
+</ul>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Do not move, copy or rename <code>.zasset</code> folders in Explorer, or the plug-in index will lose track of the assets.</p></div>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>To view assets differently for a moment you do not need to move categories; use search or tag filtering instead.</p></div>

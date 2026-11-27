@@ -1,0 +1,26 @@
+<p>Headless jobs report state through a progress file in the working directory; cancelling also ends the child process tree so no render leftovers survive.</p>
+<p><img src="media_en/shared/dialog-headless-watch.webp" alt="Headless job progress" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Progress of a headless job</h2>
+<p>The parent process polls <code>progress.json</code>, whose fields include:</p>
+<ul>
+<li><code>running</code>, <code>index</code> / <code>total</code>, <code>label</code>: whether it runs, which item is current and the current asset name.</li>
+<li><code>phase</code>: the current stage, showing &quot;cancelling&quot; while cancelling.</li>
+<li><code>ok</code> / <code>failed</code> / <code>error</code>: finished and failed counts plus the error.</li>
+<li><code>seconds</code>: elapsed time.</li>
+</ul>
+<p>Polling is non-blocking and the interface refreshes on a timer, so the window never freezes.</p>
+<h2 id="h-2">Cancelling</h2>
+<ol>
+<li>Click cancel in the progress window.</li>
+<li>The parent process sets <code>_cancelled</code> and runs <code>taskkill /F /T</code> on the child, ending the whole process tree.</li>
+<li>When results are collected, <code>cancelled=true</code> and the log states the reason.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The job process should exit after cancelling; use <code>python maya_bridge.py --doctor</code> to check for leftover <code>mayabatch</code> / <code>Render</code> / <code>kick</code> / <code>oiiotool</code> processes.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>Arnold&#x27;s <code>kick</code> does not exit by itself after rendering, so cancelling must kill the whole tree; killing only the parent leaves hundreds of MB of zombie processes.</li>
+<li>Long loops run through <code>maya_run_python</code> must call <code>progress(...)</code> themselves and check <code>if cancelled(): break</code>; code without checkpoints cannot be stopped.</li>
+<li>On a job timeout or disconnect check late results first, and never rerun a destructive task just because of one timeout.</li>
+<li>If the worker exits abnormally without a <code>result.json</code>, the result says &quot;the worker produced no result file&quot;; read the end of the log to locate the cause.</li>
+</ul>

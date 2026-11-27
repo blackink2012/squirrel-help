@@ -1,0 +1,25 @@
+<p>Creating a dome light picks a template for the current renderer, builds a dome light and connects the selected HDR to it.</p>
+<p><img src="media_en/shared/menu-context-dome-light.webp" alt="HDR asset context menu → create environment light builds a dome light" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The current renderer is Arnold, V-Ray or Redshift.</li>
+<li>A usable HDR is available: an HDR asset in the library, or one in the plug-in&#x27;s <code>Assets/IBL</code> directory.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open the <code>「创建资产」 (Create asset)</code> dialog and click <code>「创建灯光」 (Create light)</code> in the thumbnail source area.</li>
+<li>The menu lists the environment images (<code>.hdr</code>, <code>.exr</code> and so on) under <code>Assets/IBL</code>; hovering an entry shows a same-named PNG preview.</li>
+<li>Pick an HDR and the tool chooses a template for the current renderer: <code>aiSkyDomeLight.ma</code> for Arnold, <code>VRayLightDome.ma</code> for V-Ray and <code>rsDomeLight.ma</code> for Redshift.</li>
+<li>You can also double-click an HDR asset in the library or drag it into the viewport; the same template logic applies.</li>
+<li>After creation adjust rotation, intensity and exposure in the attribute editor as needed.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>A dome light appears in the Outliner and is selected; the attribute editor shows the HDR connection (Arnold&#x27;s <code>file</code>, V-Ray&#x27;s <code>VRayPlaceEnvTex</code> or Redshift&#x27;s <code>tex0</code> path); the render background shows environment lighting.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>The template directory is <code>Assets/HDR_ligt</code> (containing <code>aiSkyDomeLight.ma</code>, <code>VRayLightDome.ma</code> and <code>rsDomeLight.ma</code>); the default template can be changed per sub-library in <code>Settings → 右键菜单 (Context menu)</code>, in the <strong>double-click command area in the lower half of the right column</strong>, and dragging an HDR follows it.</li>
+<li>The created light locks <code>visibility</code> to prevent accidental hiding; to switch it off temporarily change intensity or exposure rather than unlocking visibility.</li>
+<li>Arnold sets <code>camera=0</code>, Redshift sets <code>cameraRayContributionScale=0</code> and V-Ray sets <code>domeSpherical=0</code>, so the render background keeps its alpha while lighting and reflections still work.</li>
+</ul>
+<h2 id="h-5">Warnings</h2>
+<p>Only Arnold, V-Ray and Redshift can create a dome light automatically today; the native Maya renderer does not.</p>

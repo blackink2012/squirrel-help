@@ -1,0 +1,34 @@
+<blockquote><p>一句话定位：<strong>右栏最下面三块分区：带不带动画、存不存点缓存、存不存渲染代理。</strong></p></blockquote>
+<h2 id="h-1">分区一：动画导出</h2>
+<p>三个单选，只对 <strong>abc / usd / ass / rs / vrmesh</strong> 这些带时间轴的格式生效（分区右侧的灰字 <code>(abc/usd/ass/rs/vrmesh)</code> 就是在提醒这一点）；对 .ma/.mb/.fbx 不改变导出内容。</p>
+<table><thead><tr><th>控件</th><th>类型</th><th>实际取的范围</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>当前帧</td><td>单选（出厂默认）</td><td>只导 Maya <strong>当前时间</strong>那一帧</td><td>静态资产、只要摆好姿势的模型</td><td>动态资产导出后不会动</td></tr><tr><td>时间轴</td><td>单选</td><td>时间轴/播放范围（<code>playbackOptions</code> 的起止帧）</td><td>要完整动作、且范围就在时间轴上设好了</td><td>时间轴范围设成 1–100 但动画在 200 帧，会只导前面一段</td></tr><tr><td>关键帧</td><td>单选</td><td>选中物体<strong>关键帧的起止范围</strong>（没有关键帧就退回当前帧）</td><td>动作集中在某一段、不想导出空帧时</td><td>多个物体关键帧范围不一致时，以整体取到的起止为准</td></tr></tbody></table>
+<blockquote><p>动态（ani）子库的导出预设默认就是「时间轴」；其它分类默认「当前帧」。预设来自 <code>Assets/preset/export_preset.json</code>，见 <a href="#/6.4.1"><code>4.3.4.1</code></a>。</p></blockquote>
+<p><img src="media/shared/dialog-export-right.webp" alt="右栏的动画 / 缓存 / 代理格式" loading="lazy" decoding="async"></p>
+<h2 id="h-2">分区二：缓存格式</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>Alembic .abc</td><td>复选框</td><td>把选中几何烘焙成点缓存，跨软件、跨渲染器通用</td><td>做特效/解算结果交付时勾</td><td>文件体积大（逐帧存点），帧范围选长了会很大；材质类分类这个复选框是锁定的</td></tr></tbody></table>
+<p>.abc 走的取帧方式与上面「动画导出」一致：时间轴=播放范围，关键帧=关键帧范围，当前帧=单帧。</p>
+<h2 id="h-3">分区三：代理格式</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>Arnold .ass</td><td>复选框</td><td>存成 Arnold 代理（渲染时以代理加载，减轻场景负担）</td><td>用 Arnold 渲染的大场景</td><td>没装/没加载 mtoa 时状态显示「未加载 / 不可用」</td></tr><tr><td>Redshift .rs</td><td>复选框</td><td>存成 Redshift 代理</td><td>用 Redshift 渲染的大场景</td><td>同上，需要 Redshift 插件</td></tr><tr><td>V-Ray .vrscene</td><td>复选框</td><td>存成 V-Ray 场景代理</td><td>用 V-Ray 渲染时</td><td>同上，需要 V-Ray 插件</td></tr><tr><td>V-Ray .vrmesh</td><td>复选框</td><td>存成 V-Ray 网格代理</td><td>只要几何代理、不要整场景时</td><td>同上</td></tr></tbody></table>
+<p>代理格式后面的状态小字同样是插件状态：<strong>已就绪 / 未加载 / 不可用</strong>。状态为「不可用」时复选框会被禁用，勾不进导出配置。</p>
+<blockquote><p>材质、灯光分类默认锁定全部代理格式（它们没有几何可代理）。模型/场景分类可用。要改锁定：设置 →「导出默认值」。</p></blockquote>
+<h2 id="h-4">代价对照</h2>
+<table><thead><tr><th>勾选内容</th><th>导出耗时</th><th>包体积</th><th>适用</th></tr></thead><tbody><tr><td>只 .ma（当前帧）</td><td>秒级</td><td>小</td><td>静态模型</td></tr><tr><td>.ma + 动画（时间轴）</td><td>取决于帧数</td><td>中~大</td><td>带动作的模型</td></tr><tr><td>+ .abc</td><td>明显变慢（逐帧烘焙）</td><td>大</td><td>需要缓存交付</td></tr><tr><td>+ 代理（.ass/.rs/.vrmesh）</td><td>很慢（要过渲染器）</td><td>大</td><td>大场景、需要渲染提速</td></tr></tbody></table>
+<h2 id="h-5">一次完整操作（带动作的模型入库）</h2>
+<ol>
+<li>在 Maya 里选中要导出的模型（含动画曲线）。</li>
+<li>打开导出对话框，右栏勾「Maya ASCII .ma」。</li>
+<li>「动画导出」按需要点「时间轴」或「关键帧」——先用时间轴范围确认动画确实在那一段。</li>
+<li>需要缓存交付就勾「Alembic .abc」。</li>
+<li>需要给渲染同事减轻场景负担，再按所用渲染器勾一个代理格式（先看状态是不是「已就绪」）。</li>
+<li>点「创建资产」，等导出完成。包体积会比纯模型大很多，属正常。</li>
+<li>验证：资产详情里「包含格式」应列出 ma + abc/ass 等；「动画格式」一行会显示本次带上的动画格式。</li>
+</ol>
+<h2 id="h-6">出问题怎么办</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>处理</th></tr></thead><tbody><tr><td>导出的资产不会动</td><td>动画导出停在「当前帧」</td><td>重新导出，改「时间轴」或「关键帧」</td></tr><tr><td>.abc 巨大</td><td>帧范围选长了，或逐帧烘焙本身开销</td><td>用「关键帧」缩小范围；确实要全段就接受体积</td></tr><tr><td>代理格式勾不上</td><td>分类锁定，或插件未安装</td><td>换模型/场景分类；确认对应渲染器插件已加载</td></tr><tr><td>代理导出报错</td><td>渲染器版本/授权问题</td><td>看脚本编辑器；可先只导 .ma 保证资产可用</td></tr></tbody></table>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>材质节点与几何格式：<a href="#/15.10.6"><code>8.10.6</code></a></li>
+<li>用户指南版动画/缓存/代理说明：<a href="#/6.2.6"><code>4.3.2.6</code></a></li>
+<li>渲染器（Arnold / Redshift / V-Ray）本身的用法查各自官方帮助；本帮助只讲插件侧的导出与代理入口</li>
+<li>导出产物结构（哪些文件落在包里）：<a href="#/6.1.3"><code>4.3.1.3</code></a></li>
+</ul>

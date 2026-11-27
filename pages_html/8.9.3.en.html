@@ -1,0 +1,20 @@
+<p>First decide whether &quot;nothing was found&quot; or &quot;the ranking is wrong&quot;: the former is usually an index or metadata problem, the latter usually a description that is too broad or a wrong scope.</p>
+<h2 id="h-1">Symptoms and causes</h2>
+<ul>
+<li><strong>A freshly added asset is not found</strong>: the index lags. The next search syncs incrementally, or run <code>python tools\asset_index.py --sync</code>.</li>
+<li><strong>Similar assets do not rank first</strong>: the name, tags and notes are too sparse, or there is no appearance description. The index text comes mainly from those fields.</li>
+<li><strong>Several concepts blur together</strong>: one sentence mixes material, purpose and color and the semantics average out. Split it into two or three sentences, or use keyword mode.</li>
+<li><strong>Wrong scope</strong>: a category is selected although you think you are searching the whole library; clear the category selection and retry.</li>
+<li><strong>Everything is scrambled after changing models</strong>: the index and the current model differ, so it was judged unavailable and fell back to lexical.</li>
+<li><strong>HDR assets are hard to tell apart</strong>: their thumbnails are all light-probe previews, which any retrieval struggles with; add scene or light-source tags manually.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Check <code>asset_semantic_status</code> and confirm it is available with <code>index_lag.stale</code> false.</li>
+<li>Add names, tags and notes to key assets; for assets with sparse metadata, generate an appearance description with a description tool first.</li>
+<li>Shorten the query and keep only the most important material or appearance words.</li>
+<li>Search within the right category, or switch to &quot;search by image&quot;.</li>
+<li>When it is still inaccurate use <code>mode=&quot;keyword&quot;</code> to verify whether the semantic path introduced the bias.</li>
+</ol>
+<h2 id="h-3">If it still fails</h2>
+<p>Record the original query, the expected asset name and the actual top results; that is the key evidence for telling index quality from metadata quality.</p>

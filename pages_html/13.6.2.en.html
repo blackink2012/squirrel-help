@@ -1,0 +1,28 @@
+<p>When Maya shows &quot;not responding&quot; with CPU near 0%, it is usually waiting for a main-thread task to return rather than lacking compute; first decide whether it is frozen or waiting.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The UI shows &quot;not responding&quot; while Maya&#x27;s CPU usage in Task Manager is near 0%.</li>
+<li>Opening the AI panel or switching libraries takes tens of seconds.</li>
+<li>Consecutive thumbnail renders get slower and slower, eventually crashing.</li>
+<li>Memory keeps climbing and does not drop noticeably after closing the plug-in window.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>A long task runs synchronously on the main thread</td><td>CPU low, UI frozen, recovers when the task finishes</td><td>Wait for it, or switch to an async/batch interface</td></tr><tr><td>A nested event loop on the main thread</td><td>The UI never returns while CPU stays near 0%</td><td>Stop such scripts and restart Maya</td></tr><tr><td>Consecutive renders in the same process</td><td>The second render starts hanging or crashes</td><td>See 6.7.3 &quot;Renderer crash&quot;</td></tr><tr><td>Many thumbnails decoded at once</td><td>Stuttering while scrolling, disk and memory rising</td><td>Wait for async loading and reduce the first-screen count</td></tr><tr><td>The semantic embedding model stays resident</td><td>Ollama uses hundreds of MB in Task Manager (about 639 MB measured for the 0.6B tier; varies by model)</td><td>Stop Ollama when semantic search is not needed</td></tr><tr><td>Index/cache files are large</td><td>Cache files in the library directory reach several MB</td><td>Split the library, or rebuild the index</td></tr><tr><td>Several Maya instances at once</td><td>Multiple processes load libraries and thumbnails simultaneously</td><td>Reduce parallel instances</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Check Task Manager first: CPU near 0% and frozen for a long time means the main thread is waiting; do not keep clicking.</li>
+<li>Confirm whether a render, batch import/export or AI panel is in progress; do not trigger it again before it finishes.</li>
+<li>Use async interfaces for batch tasks, provide progress and cancellation checkpoints in long loops, and never spin on the main thread.</li>
+<li>Scripts and tools must not poll with <code>sleep</code> on the Maya main thread, nor nest <code>processEvents()</code> loops.</li>
+<li>Load thumbnails and previews in batches; close preview panels you do not need and extra split-instance panels first.</li>
+<li>If it hangs or crashes after consecutive renders, fully restart Maya instead of hot-reloading the plug-in.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>The UI responds again, tasks complete normally, memory drops after a task ends, and the permanent &quot;not responding&quot; state is gone.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Record what was running before the hang, how long it lasted, and the CPU/memory usage at the time.</li>
+<li>Repeat the same operation in an empty scene to rule out scene size or third-party plug-ins.</li>
+<li>If the bridge or AI panel hangs, use 6.7.1 &quot;Port listens but does not answer&quot; to check whether Maya is really alive.</li>
+<li>For recovery after a crash, follow 6.7.2 &quot;Three steps to recover after a crash&quot; and keep the crash dump.</li>
+</ul>

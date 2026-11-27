@@ -1,0 +1,31 @@
+<blockquote><p>One-line summary: <strong>this page is one large text box with one file extension per line — they are the whitelist the library treats as &quot;asset files&quot;.</strong></p></blockquote>
+<p><strong>This page is locked by default</strong>: tick <strong>Unlock all settings</strong> and accept the warning first (see <a href="#/en/15.9.1"><code>8.9.1</code></a>).</p>
+<p><img src="media_en/shared/settings-formats.webp" alt="Settings window (Supported formats page)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">How to open it</h2>
+<p>Settings window → tick <strong>Unlock all settings</strong> → the <strong>Supported formats</strong> tab.</p>
+<h2 id="h-2">Controls and defaults</h2>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Default</th><th>What changing it does</th><th>Needs unlock</th></tr></thead><tbody><tr><td>Extension list</td><td>Multi-line monospaced text box (one extension per line)</td><td>The whitelist of extensions the library treats as asset files</td><td>See the factory list below (40 entries including <code>.zasset</code>, <code>.ma</code>, <code>.png</code>, <code>.wav</code> and so on)</td><td>Remove one → those files are ignored when collecting a whole folder and rejected on drop; add an unrelated one → unrelated files get collected as asset files</td><td>Yes</td></tr><tr><td>Hint line</td><td>Read-only text</td><td>&quot;One file extension per line; click Apply after editing&quot;</td><td>—</td><td>—</td><td>No</td></tr></tbody></table>
+<h2 id="h-3">Factory list</h2>
+<table><thead><tr><th>Category</th><th>Extensions</th></tr></thead><tbody><tr><td>Asset package / project / geometry</td><td><code>.zasset</code> <code>_zasset</code> <code>.ma</code> <code>.mb</code> <code>.fbx</code> <code>.obj</code> <code>.abc</code> <code>.usd</code> <code>.usda</code> <code>.usdc</code> <code>.glb</code> <code>.gltf</code> <code>.dae</code></td></tr><tr><td>Cache / proxy / mapping</td><td><code>.ass</code> <code>.rs</code> <code>.proxy</code> <code>.vrmesh</code> <code>.vdb</code> <code>.mcm</code></td></tr><tr><td>Image / texture / thumbnail</td><td><code>.png</code> <code>.jpg</code> <code>.jpeg</code> <code>.exr</code> <code>.hdr</code> <code>.tga</code> <code>.tiff</code> <code>.tif</code> <code>.bmp</code> <code>.psd</code> <code>.sicon</code> <code>.aicon</code></td></tr><tr><td>Audio / animation data</td><td><code>.wav</code> <code>.mp3</code> <code>.aiff</code> <code>.aif</code> <code>.flac</code> <code>.ogg</code> <code>.m4a</code> <code>.aac</code> <code>.atom</code></td></tr></tbody></table>
+<h2 id="h-4">What this list actually governs</h2>
+<table><thead><tr><th>Scenario</th><th>Description</th></tr></thead><tbody><tr><td>Collecting a whole folder into the library</td><td>Uses this whitelist to decide which root-level files count as asset files (geometry / textures / audio…); unknown ones are skipped</td></tr><tr><td>The <strong>Import from outside</strong> file chooser</td><td>The file filter is built from this list (see <a href="#/en/15.4.2"><code>8.4.2</code></a>)</td></tr><tr><td>Drop acceptance</td><td>When dropping files into the asset area, this list plus the current category&#x27;s supported import modes decide whether they are accepted</td></tr></tbody></table>
+<p>Note that it does <strong>not</strong> decide whether Maya can import a format (that is Maya&#x27;s / the renderer&#x27;s business), and it does <strong>not</strong> replace the geometry / image extensions on the <strong>Other configuration</strong> page (those only sort files when collecting a whole folder, see <a href="#/en/15.9.9"><code>8.9.9</code></a>).</p>
+<h2 id="h-5">Things to watch when editing</h2>
+<ul>
+<li>One per line, <strong>with the dot</strong> (<code>.fbx</code>, not <code>fbx</code>); empty lines are ignored;</li>
+<li>You must click <strong>Apply</strong> or <strong>OK</strong> to write the configuration; <strong>Cancel</strong> saves nothing;</li>
+<li>Removing a common suffix shows up as &quot;the files are there but never collected / drops are refused&quot;, the most common trap;</li>
+<li>Adding unrelated suffixes (such as <code>.txt</code>) makes readme files get collected as assets.</li>
+</ul>
+<h2 id="h-6">Undo</h2>
+<table><thead><tr><th>Situation</th><th>How to undo</th></tr></thead><tbody><tr><td>Not saved yet</td><td>Click <strong>Cancel</strong></td></tr><tr><td>Saved and you want the factory list</td><td><strong>Restore defaults</strong> does <strong>not</strong> reset this page (see <a href="#/en/15.9.1"><code>8.9.1</code></a>); paste the factory list above back by hand, or overwrite with a backed-up <code>config.json</code> (<code>&lt;plugin dir&gt;\Assets\preset\</code>)</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>This is the library&#x27;s recognition whitelist, and a mistake directly affects folder collection and drop import. Copy <code>config.json</code> somewhere safe before editing.</p></div>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>Settings window overview and the global lock → <a href="#/en/15.9.1"><code>8.9.1</code></a></li>
+<li>The <strong>Other configuration</strong> page (geometry / image extensions) → <a href="#/en/15.9.9"><code>8.9.9</code></a></li>
+<li>Supported formats and import routing (user guide) → <a href="#/en/5.1.1"><code>4.2.1.1</code></a></li>
+<li>Supported formats master table → <a href="#/en/12.3"><code>5.3</code></a></li>
+<li>The structure of config.json → <a href="#/en/12.4.1"><code>5.4.1</code></a></li>
+<li>The <strong>Import from outside</strong> menu → <a href="#/en/15.4.2"><code>8.4.2</code></a></li>
+</ul>

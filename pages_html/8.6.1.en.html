@@ -1,0 +1,15 @@
+<p>The asset index encodes asset metadata and thumbnails into vectors ahead of time, so a search only encodes the query once and compares similarity instead of calling a large model every time.</p>
+<h2 id="h-1">Three kinds of index</h2>
+<table><thead><tr><th>Index</th><th>Contents</th><th>Default location</th><th>Purpose</th></tr></thead><tbody><tr><td>Text semantic index</td><td>Name, display name, tags, category, notes, description and so on</td><td><code>&lt;asset library&gt;\.squirrel_ai_index\&lt;official / ollama&gt;\</code></td><td>Searching assets with colloquial Chinese</td></tr><tr><td>Image vector index</td><td>Image vectors of thumbnails (encoded by the sidecar)</td><td><code>img\</code> in the same directory</td><td>Search by image</td></tr><tr><td>Media vector index</td><td>Audio / video vectors</td><td><code>media\</code> in the same directory</td><td>Text-to-music, recorded-audio-to-music, video-to-video</td></tr></tbody></table>
+<p><strong>The index is split by backend</strong>: official-pipeline and Ollama vectors are not in the same space, so each backend uses its own sub-directory (<code>official\</code> / <code>ollama\</code>). Switching backends reads the matching copy, so they never mark each other stale or overwrite each other&#x27;s rebuilds.</p>
+<p>With <code>ai_asset_index_dir</code> set, indexes move under that root in sub-directories split by &quot;library + backend&quot;: text <code>&lt;root&gt;\&lt;library id&gt;-&lt;official|ollama&gt;</code>, images <code>&lt;root&gt;\&lt;library id&gt;-&lt;official|ollama&gt;\img</code>.</p>
+<h2 id="h-2">Key design points</h2>
+<ul>
+<li><strong>The primary key is the library-relative path</strong>, not the asset UUID. UUIDs change between caches, live libraries and indexes, and using them silently mismatches.</li>
+<li>Every record carries a signature and a text digest, so only changed rows are re-embedded; additions, edits and deletions never require a full rebuild.</li>
+<li>The index records its library and model; a mismatch marks it unavailable with a rebuild command instead of returning wrong results.</li>
+</ul>
+<h2 id="h-3">What it is not</h2>
+<p>The index is derived data and contains no asset files; deleting it never damages assets and only makes the next search encode again. The index travels with the library, but when several people share a library put the index on each machine&#x27;s local disk so concurrent writes from the same backend do not wait on each other.</p>
+<h2 id="h-4">Automatic maintenance</h2>
+<p>Opening or switching a library warms up its index in the background, and searches sync incrementally first. Building the index the first time is slower; afterwards usually only changed rows are processed.</p>

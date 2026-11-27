@@ -1,0 +1,23 @@
+<p>A <code>.mmap</code> is the attribute correspondence table for &quot;source material type → target material type&quot;; conversion writes each source attribute onto its target attribute row by row.</p>
+<p><img src="media_en/shared/dialog-mapping-preview.webp" alt="Material node attribute mapping tool: presets and source / target material toolbars on top, the mapping table in the middle (the sample has no material loaded, so the table is empty), AI mapping on the left" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The plug-in is installed and <code>Assets/material_mapper_presets</code> is reachable in the plug-in directory (<code>Assets/light_mapper_presets</code> for lights); the tool shows the <code>「预设路径」 (preset path)</code> in use at the bottom, which is authoritative.</li>
+<li>The node type names of the source and target materials or lights are known (case-sensitive).</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open the mapping directory and find a file shaped like <code>lambert_aiStandardSurface.mmap</code>; the file name is <code>source type_target type</code>.</li>
+<li>Open the file and check the top-level <code>source_type</code>, <code>target_type</code> and <code>mappings</code>; every row in <code>mappings</code> has <code>source_attribute</code>, <code>target_attribute</code>, <code>transform</code> and <code>default_value</code>, plus <code>parameters</code> when arguments are needed.</li>
+<li>Load the whole mapping folder into the material conversion tool: click <code>「加载预设」 (Load presets)</code> (or <code>「打开文件夹」 (Open folder)</code> first to confirm the directory) and the tool scans every <code>.mmap</code> inside.</li>
+<li>Check the row count and mapping contents in the table (material attribute / target attribute / transform function / parameters / default value).</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The conversion tool&#x27;s status bar shows how many mapping files were loaded; the preview table lists source attributes, target attributes, transform functions and defaults; during conversion the Script Editor no longer reports missing mappings.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Lookup order: <code>A_B.mmap</code> in the root → the <code>B/</code> sub-directory → any first-level sub-directory; light mappings and material mappings are physically isolated and must not be mixed.</li>
+<li>An empty <code>source_attribute</code> means only <code>default_value</code> is written; a missing source attribute also falls back to the default.</li>
+<li><code>transform</code> holds the conversion function name (such as <code>transparency_to_transmission</code>), with JSON arguments passed through <code>parameters</code> when needed.</li>
+<li><code>.mmap</code> only describes attribute rules and is not the same as the type mapping configuration preset <code>.mlist</code>, which only records which types convert into which.</li>
+</ul>

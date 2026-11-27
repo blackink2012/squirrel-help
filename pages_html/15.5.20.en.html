@@ -1,0 +1,41 @@
+<blockquote><p>One-line summary: <strong>with the cursor over an asset card, pressing Space opens a cross-shaped marking menu around the cursor — up and down, left and right each hold one family of import commands, and dragging toward a direction runs it.</strong> It uses the same commands as the context menu but extracts the most common block into a quick ring.</p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Move the cursor <strong>onto a card</strong> in the asset area (it need not be selected first);</li>
+<li>Press <strong>Space</strong> once (without Ctrl / Shift).</li>
+</ol>
+<p>Details:</p>
+<ul>
+<li>If that card was not selected, the plug-in selects it first — the same rule as right-click (the menu&#x27;s target asset must be in the selection).</li>
+<li>It works in <strong>icon view only</strong>; list view has no ring.</li>
+<li>When the asset has no import-type commands at all, nothing opens.</li>
+</ul>
+<p><img src="media_en/shared/menu-space-marker.webp" alt="Space marking menu (shown with the &quot;up = import&quot; direction expanded; it has zmetal / ma sub-items)" loading="lazy" decoding="async"></p>
+<blockquote><p><strong>How to read the image</strong>: a marking menu <strong>expands on hover</strong>, so a static screenshot can only expand one direction. The image expands &quot;up = import&quot;, while the other three (left reference / right apply / down convert) only expand when the cursor moves there, which is why only the end markers show. A materials asset really has all four: up = import, left = add reference, right = assign material to selection + apply material parameters, down = convert import.</p></blockquote>
+<h2 id="h-2">What the four directions are</h2>
+<table><thead><tr><th>Direction</th><th>Family</th><th>Typical content</th></tr></thead><tbody><tr><td>Up</td><td>Import</td><td>Import / Import ▶ / Import textures ▶ / Import to timeline and so on</td></tr><tr><td>Left</td><td>Reference</td><td>Add reference / Add reference ▶</td></tr><tr><td>Right</td><td>Apply</td><td>Assign material to selection / apply material parameters / create material / assign texture / apply light parameters</td></tr><tr><td>Down</td><td>Convert</td><td>Convert import ▶ (materials, lights)</td></tr></tbody></table>
+<p><strong>A direction with no matching command stays empty</strong> (not even a pill is drawn), following Maya marking menu semantics.</p>
+<h2 id="h-3">How to read the pills</h2>
+<table><thead><tr><th>Appearance</th><th>Meaning</th></tr></thead><tbody><tr><td>One pill (a single line of text)</td><td>A <strong>specific command</strong>; drag onto it and release to run</td></tr><tr><td>Several stacked pills in one direction</td><td>That direction holds several commands (textures, for example, have three to the right)</td></tr><tr><td>A pill with ▸ after it</td><td>It <strong>has sub-items</strong>: hovering or dragging onto it removes the first level and leaves this pill plus its sub-item list</td></tr><tr><td>A submenu with a single sub-item</td><td>It degrades into the pill itself, saving one click</td></tr><tr><td>Many sub-items</td><td>The submenu lists them separately and <strong>the wheel</strong> pages when they exceed the visible rows</td></tr></tbody></table>
+<p>Every row in a sub-item list is an executable command (for example the 18 material types under <strong>Convert import ▶</strong>).</p>
+<h2 id="h-4">How to use it</h2>
+<table><thead><tr><th>Action</th><th>Result</th></tr></thead><tbody><tr><td>Hold Space to open → drag toward a direction → release Space</td><td>Runs the highlighted item (the smoothest usage)</td></tr><tr><td>Click a pill or a sub-item after opening</td><td>Runs it too</td></tr><tr><td>Arrow keys to pick a direction, Enter to enter sub-items / run</td><td>Full keyboard operation</td></tr><tr><td>In the second level, ↑↓ (or Tab) to move, ← to return, Enter to run</td><td>Keyboard inside the submenu</td></tr><tr><td>Esc</td><td>Cancel</td></tr><tr><td>Highlight rests in the center / release without reaching a pill</td><td>Cancels and runs nothing</td></tr></tbody></table>
+<p>The bottom hint reads &quot;Release Space / Enter to run · Esc to cancel&quot;; read it when you forget.</p>
+<h2 id="h-5">The four directions per sub-library (typical form)</h2>
+<table><thead><tr><th>Sub-library</th><th>Up (import)</th><th>Left (reference)</th><th>Right (apply)</th><th>Down (convert)</th></tr></thead><tbody><tr><td>Materials</td><td>Import ▶ (zmetal / ma)</td><td>Add reference</td><td>Assign material to selection, apply material parameters</td><td>Convert import ▶ (18 types)</td></tr><tr><td>Models</td><td>Import ma</td><td>Add reference</td><td>—</td><td>—</td></tr><tr><td>Lights</td><td>Import ▶ (zlight / ma)</td><td>Add reference</td><td>Apply light parameters to selected lights</td><td>Convert import ▶ (4 types)</td></tr><tr><td>Textures</td><td>Import textures ▶ (each texture plus import all)</td><td>—</td><td>Assign material to selection, create material ▶, assign texture to material</td><td>—</td></tr><tr><td>Scenes / node tree</td><td>Import ma</td><td>Add reference</td><td>—</td><td>—</td></tr><tr><td>HDR</td><td>Import hdr</td><td>—</td><td>Create dome light ▶, assign texture</td><td>—</td></tr><tr><td>Animation</td><td>Import ▶ (ma / abc)</td><td>Add reference ▶ (ma / abc)</td><td>—</td><td>—</td></tr><tr><td>Images</td><td>Import as file node, create imagePlane</td><td>—</td><td>Assign to selected material slot</td><td>—</td></tr><tr><td>Audio</td><td>Import to timeline, import to time editor, import to Trax editor, import to camera sequencer</td><td>—</td><td>—</td><td>—</td></tr><tr><td>Animation data</td><td>Import animation ▶, import animation (hierarchy mapping)…, import to selected attributes ▶</td><td>—</td><td>—</td><td>—</td></tr></tbody></table>
+<p>This table shows the <strong>typical form</strong>: the actual number and names of pills depend on which formats the asset really holds (for example a modeling asset with only ma shows a single &quot;Import&quot; pill instead of one with sub-items).</p>
+<h2 id="h-6">How it relates to the context menu</h2>
+<table><thead><tr><th>Item</th><th>Context menu</th><th>Space marking menu</th></tr></thead><tbody><tr><td>Command source</td><td>The same construction code</td><td>The same code (only the &quot;import block&quot;)</td></tr><tr><td>Coverage</td><td>Every item (including favorite, edit, delete, details)</td><td><strong>Only import / reference / apply / convert</strong></td></tr><tr><td>Multi-select semantics</td><td>Applies to all selected assets</td><td>Same (same commands, same semantics)</td></tr><tr><td>Good for</td><td>One-off management</td><td>Placing assets while importing quickly without leaving the mouse</td></tr></tbody></table>
+<h2 id="h-7">Notes</h2>
+<ul>
+<li><strong>Ctrl+Space is something else</strong>: it toggles the selection of the focused card and does not open the marking menu.</li>
+<li><strong>Shift+Space does not respond</strong>: only plain Space opens the ring.</li>
+<li><strong>The marking menu offers no delete / edit</strong>: use the context menu for those.</li>
+<li><strong>Read the sub-items before releasing</strong>: dragging onto a pill with ▸ expands its sub-items immediately, and releasing runs <strong>the currently highlighted row in the sub-items</strong>.</li>
+</ul>
+<h2 id="h-8">Related</h2>
+<ul>
+<li>Context menu overview: <a href="#/en/15.5.1"><code>8.5.1</code></a>; import and reference: <a href="#/en/15.5.13"><code>8.5.13</code></a></li>
+<li>Right-clicking blank space and list view: <a href="#/en/15.5.19"><code>8.5.19</code></a></li>
+<li>Common conventions for click / double-click / right-click: <a href="#/en/3.3.1"><code>3.3.1</code></a>; shortcut summary: <a href="#/en/3.3.6"><code>3.3.6</code></a>; full shortcut table: <a href="#/en/12.6"><code>5.6</code></a></li>
+</ul>

@@ -1,0 +1,34 @@
+<blockquote><p>In one line: <strong>this group decides whether external processes may drive this software — every item is a permission switch, all off by default, enable the minimum you need.</strong></p></blockquote>
+<h2 id="h-1">Why it is its own group, all off</h2>
+<p>They are not ordinary preferences but <strong>permissions</strong>: once on, an external AI or MCP client can read and write your asset library and even make Maya execute code. All off by default so a fresh install never leaves an unattended execution entry.</p>
+<p><img src="media_en/shared/settings-ai-channels.webp" alt="AI settings → AI / MCP channel (off by default)" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What each of the five unlocks</h2>
+<table><thead><tr><th>Switch</th><th>Default</th><th>What happens when on</th><th>Recommendation</th></tr></thead><tbody><tr><td>Connect to the AI backend when the asset manager opens</td><td>Off</td><td>Opens the broker automatically with the main window and registers this machine as an instance, so the web client and external AI can drive this software</td><td>Turn on only when external AI must drive it; otherwise leave it off and connect manually via <code>AI tools → AI assistant</code></td></tr><tr><td>Register this machine with the AI backend when Maya starts</td><td>Off</td><td>Registers even without opening the asset manager window, so external AI clients can drive this machine at any time</td><td>Independent of the previous item; more &quot;resident&quot;, and the permission lasts longer</td></tr><tr><td>Query the official Maya help online when local docs are missing</td><td>Off</td><td>When the local Maya documentation knowledge base misses, allows an online lookup against Autodesk&#x27;s official help as a supplement</td><td>Only for looking up new commands; keep it off on offline or intranet machines</td></tr><tr><td>Allow AI to execute arbitrary Python / MEL in Maya (high risk)</td><td>Off</td><td><code>maya_run_python</code> / <code>maya_run_mel</code> become available: <strong>executed on call, no approval, no rollback</strong>, with the permissions of the current system user</td><td>Enable temporarily only on trusted machines for controlled tasks; turn it off afterwards</td></tr><tr><td>Allow AI to delete or overwrite assets (destructive)</td><td>Off</td><td>AI can delete through the asset interface (soft delete into the recycle bin, restorable) or overwrite on export (old version kept in history)</td><td>Leave it off unless AI must do destructive work; manual operations in the interface are unaffected</td></tr></tbody></table>
+<blockquote><p>The environment variable <code>SQUIRREL_ENABLE_MAYA_EXEC=1</code> can force the universal channel on; the risk is higher, so it is not recommended.</p></blockquote>
+<h2 id="h-3">First enabling a high-risk item: the risk confirmation</h2>
+<p>Going from off to on (the first time) opens <code>「AI 助手授权与风险确认」 (AI assistant authorization and risk confirmation)</code> listing every risk; it only enables after you check the confirmation:</p>
+<p><img src="media_en/shared/dialog-exec-consent.webp" alt="AI assistant authorization and risk confirmation: leaving it unchecked keeps it off" loading="lazy" decoding="async"></p>
+<p>The dialog states:</p>
+<ul>
+<li><strong>No approval</strong>: every command runs directly, with no confirmation dialog;</li>
+<li><strong>Arbitrary Python</strong>: permissions equal the current system user, with read, write and delete access to any file on this machine;</li>
+<li><strong>Protections bypassed</strong>: the recycle bin&#x27;s soft delete and library path restrictions are no technical barrier to arbitrary code;</li>
+<li><strong>System / Maya permissions</strong>: nodes, materials, animation and project settings can be changed, equivalent to you operating the scene by hand;</li>
+<li><strong>Damage risk</strong>: mistaken edits or deletions may be irreversible (soft deletes restore from the recycle bin and overwritten exports keep history, but hard deletes cannot be restored);</li>
+<li><strong>Cloud</strong>: with a cloud service enabled, thumbnails and prompts leave this machine and require separate consent (see <a href="#/en/11.4.7">11.4.7</a>).</li>
+</ul>
+<p>The confirmation record is kept locally for later review; leaving the box unchecked keeps the universal execution channel off.</p>
+<h2 id="h-4">Recommendations</h2>
+<ul>
+<li>Enable only the one or two items the current task truly needs;</li>
+<li>Keep everything off on managed or production machines;</li>
+<li>Turn high-risk items off promptly after use, so the next start exposes no execution entry.</li>
+</ul>
+<h2 id="h-5">Related</h2>
+<ul>
+<li>AI dependency check and install → <a href="#/en/11.4.1">11.4.1</a></li>
+<li>External connection (bridge port) → <a href="#/en/11.4.4">11.4.4</a></li>
+<li>Cloud service consent → <a href="#/en/11.4.7">11.4.7</a></li>
+<li>Item-by-item description of the AI settings page → <a href="#/en/15.9.3">15.9.3</a></li>
+<li>The AI assistant chat surface switch → <a href="#/en/8.3.2">8.3.2</a></li>
+</ul>

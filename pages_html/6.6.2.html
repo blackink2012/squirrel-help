@@ -1,0 +1,28 @@
+<p>「导入贴图」把选中的多张贴图合并成一个 PBR 贴图资产，放进当前分类。</p>
+<p><img src="media/shared/menu-import-texture.webp" alt="从外部导入 → 导入贴图" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已在左侧选中<strong>具体分类</strong>。「全部资产」下「从外部导入」整条菜单被禁用，只显示灰字「当前分类不支持从外部导入」。</li>
+<li>当前顶级分类是<strong>材质</strong>或<strong>贴图</strong>：「导入贴图」只在这两个子库的「从外部导入」里出现，其它子库没有这一项。</li>
+<li>贴图文件的命名能体现用途（如 <code>_basecolor</code>、<code>_normal</code>、<code>_roughness</code>）。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>点击资产区上方工具条的「从外部导入」按钮。</li>
+<li>选择「导入贴图」。</li>
+<li>在文件对话框中多选同一套 PBR 贴图；支持 png、jpg、jpeg、tga、tif、tiff、bmp、exr。</li>
+<li>确认后，插件创建一个 <code>.zasset</code>，贴图统一放进其 <code>textures/</code>。</li>
+<li>资产名取颜色贴图文件名：先去掉 PBR 用途后缀，再去掉 <code>_1k</code>、<code>_2k</code>、<code>_4k</code> 等分辨率后缀。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>网格中出现一个贴图资产，缩略图由颜色贴图生成。</li>
+<li>资产目录下 <code>textures/</code> 中包含本次选择的全部贴图。</li>
+<li>提示「成功导入 N 个贴图资产」；识别不到颜色用途时，缩略图取最后一个文件。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>多选会被视为<strong>同一套</strong> PBR 贴图；不同套请分次导入。</li>
+<li>用途识别依赖 <code>Assets/preset/pbr_mapping.json</code> 中的别名规则，命名不规范时会影响通道匹配。</li>
+<li>入库后可右键「创建材质」，按用途把贴图接到材质通道。</li>
+</ul>

@@ -1,0 +1,30 @@
+<p>Batch thumbnail rendering generates thumbnails for assets inside mayapy: the interface shows options first, then a separate process renders without occupying the current viewport.</p>
+<p><img src="media_en/shared/dialog-headless-watch.webp" alt="Headless batch progress" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Options</h2>
+<ul>
+<li><strong>Renderer</strong>: Arnold, Maya Software, Maya Hardware 2.0, V-Ray, Redshift. Unavailable renderers are greyed out with a reason.</li>
+<li><strong>Preset model</strong>: material, texture and light assets have no geometry of their own, so pick a preset model from <code>Assets/Meshes</code> to carry them.</li>
+<li><strong>Environment light (HDRI)</strong>: check <code>「使用 HDRI 环境光」 (Use HDRI environment light)</code> and pick a preset; light assets do not show this block because a light is its own source.</li>
+<li><strong>Size</strong>: 256, 384, 512, 768 or 1024, defaulting to the configured thumbnail size.</li>
+<li><strong>Quality</strong>: Fast / Standard / High, mapped to the current renderer&#x27;s own sampling settings.</li>
+</ul>
+<h2 id="h-2">Tool requirements</h2>
+<ul>
+<li>Arnold needs <code>kick</code> and <code>oiiotool</code>, which ship with Arnold.</li>
+<li>Maya Hardware 2.0, V-Ray and Redshift need Maya&#x27;s <code>Render.exe</code> in a batch session.</li>
+<li>V-Ray and Redshift also need their plug-ins installed locally; Redshift additionally needs a usable GPU.</li>
+</ul>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Select one or more assets, right-click → <code>「更新缩略图」 (Update thumbnail)</code> → <code>「后台渲染」 (Background render)</code>.</li>
+<li>In the dialog (also titled &quot;background render&quot;) choose the renderer, model (when needed), environment light, size and quality.</li>
+<li>Click <code>「开始生成」 (Start)</code> and wait for the progress window to finish.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>Successful thumbnails are written back to the assets and refresh on the cards; failures and skipped items report reasons one by one (missing geometry, missing preset model, missing render tools and so on). Images are validated before writing, so flat or empty images never overwrite existing thumbnails.</p>
+<h2 id="h-5">Tips and warnings</h2>
+<ul>
+<li>An unavailable renderer is an environment problem; switch to an available one to get images first.</li>
+<li>Higher quality is slower; Arnold uses the standard level by default.</li>
+<li>The environment light only provides lighting and never enters the background, so thumbnails have a transparent background.</li>
+</ul>

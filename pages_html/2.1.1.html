@@ -1,0 +1,25 @@
+<p>安装前先确认 Windows 位数、Maya 版本与权限，能避免大多数「装到一半失败」。</p>
+<p><img src="media/2.1.1-6.webp" alt="安装页面" loading="lazy" decoding="async"></p>
+<h2 id="h-1">最低要求</h2>
+<table><thead><tr><th>项目</th><th>要求</th></tr></thead><tbody><tr><td>操作系统</td><td>Windows 64 位；安装器是 Windows 桌面程序（最低 Windows 版本待确认）</td></tr><tr><td>Maya（插件版）</td><td>Maya 2022–2027</td></tr><tr><td>独立版 / EXE</td><td>内置 Python 3.11.9（amd64）与 PySide6 6.9.2，不需要另装 Python</td></tr><tr><td>界面语言</td><td>安装向导与卸载器支持简体中文 / English，默认跟随系统语言，安装时可切换</td></tr><tr><td>权限</td><td>按当前用户安装，不需要管理员权限</td></tr><tr><td>磁盘</td><td>安装包与运行时占数百 MB；可选 dsh / Node 另占约 300 MB（以实际包为准）</td></tr><tr><td>网络</td><td>基础功能离线可用；在线激活、下载 dsh、云端 AI 需要网络</td></tr></tbody></table>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>双击exe进行安装。如果弹出提醒请点击“更多信息”再点击“仍要运行”。</li>
+<li>确认 Windows 是 64 位；32 位系统不在支持范围内。</li>
+<li>确认磁盘剩余空间足够容纳安装包、运行时与资产库。</li>
+<li>插件版安装前关闭所有正在运行的 Maya。</li>
+<li>如果只用独立版，可不装 Maya；安装器中「Maya 集成」会自动取消勾选。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>能读出 Maya 版本，且该版本在 2022–2027 范围内。</li>
+<li>目标磁盘可写，当前用户对安装目录有写权限。</li>
+<li>没有正在运行的 Maya 占用插件目录。</li>
+</ul>
+<h2 id="h-4">常见失败</h2>
+<ul>
+<li><strong>Maya 版本过旧</strong>：没有对应 ABI 的 <code>.pyd</code>，插件无法加载。</li>
+<li><strong>32 位系统</strong>：内置 Python 与 Qt 均为 64 位，无法运行。</li>
+<li><strong>公司策略限制</strong>：杀毒软件或应用白名单可能拦截安装包，需要先申请放行。</li>
+<li><strong>Mac / Linux</strong>：当前只提供 Windows 安装包（<code>Setup.exe</code>），macOS / Linux 没有安装包，也不在支持范围内。</li>
+</ul>

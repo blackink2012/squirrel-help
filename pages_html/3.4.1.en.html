@@ -1,0 +1,31 @@
+<h2 id="h-1">Turn an external model into an asset</h2>
+<p>Import a model file from outside and the plug-in wraps it into a <code>.zasset</code> inside the current category; this is the first step of the whole workflow. <img src="media/3.4.1-1.webp" alt="Description" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Create an asset from a Maya model</h2>
+<p><img src="media/3.4.1-2.webp" alt="Description" loading="lazy" decoding="async"> <img src="media/3.4.1-3.webp" alt="Description" loading="lazy" decoding="async"></p>
+<h2 id="h-3">Prerequisites</h2>
+<ul>
+<li>The asset library is initialized and its categories display properly.</li>
+<li>A <strong>specific sub-library and category</strong> are selected on the left (while <code>「全部资产」 (All assets)</code> or favorites is active, the import entry is disabled).</li>
+<li>Have a model file ready, for example <code>.ma</code>, <code>.mb</code>, <code>.fbx</code>, <code>.obj</code>, <code>.usd</code>, <code>.abc</code> or <code>.glb</code>.</li>
+</ul>
+<h2 id="h-4">Steps</h2>
+<ol>
+<li>On the <code>「分类」 (Categories)</code> tab on the left, choose the <code>「模型」 (Models)</code> sub-library and then a specific category.</li>
+<li>In the view-control row in the middle click <code>「从外部导入」 (Import from Files)</code> and choose <code>「从文件导入」 (Import from files)</code>.</li>
+<li>In the file dialog select one or more model files and confirm.</li>
+<li>Each file becomes its own <code>.zasset</code>, named after the file; duplicate names get a non-conflicting name automatically.</li>
+<li>The grid refreshes when the import finishes and jumps to the target category showing the new assets.</li>
+<li>Check the name, format and size in the properties panel on the right, and add a thumbnail if needed.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>New cards appear in the target category with the same names as the source files.</li>
+<li>The properties panel shows the asset type, format and file size.</li>
+<li>The source files were not moved or deleted; they were copied into the library.</li>
+</ul>
+<h2 id="h-6">Tips</h2>
+<ul>
+<li><strong>You must select a specific sub-library / category first</strong>: while <code>「全部资产」 (All assets)</code> or favorites is active the <code>「从外部导入」 (Import from Files)</code> button is disabled (greyed out), and the <code>「从外部导入」 (Import from Files)</code> submenu of the empty-area context menu shows a grey line: <code>「当前分类不支持从外部导入」 (this category does not support importing from files)</code>.</li>
+<li>To bring in a <code>.zasset</code>, use <code>「从外部导入 → 导入 .zasset 资产」 (Import from Files → Import a .zasset asset)</code>; do not copy folders by hand.</li>
+<li>Having no thumbnail right after import is normal: capture one in the preview panel or use <code>「更新缩略图 → 后台渲染」 (Update thumbnail → Background render)</code> (see 4.1.7).</li>
+</ul>

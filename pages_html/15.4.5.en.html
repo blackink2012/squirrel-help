@@ -1,0 +1,34 @@
+<blockquote><p>One-line summary: <strong>click Edit tags to open the tag editor and click tags to filter the list down to assets carrying them; it only changes the filter and never touches assets.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>On the right of the asset area toolbar, find the <strong>Edit tags</strong> button (left of <strong>View</strong> and <strong>Sort</strong>);</li>
+<li>Click it → a <strong>non-modal</strong> &quot;Edit tags&quot; window opens (only one at a time; clicking again brings it forward);</li>
+<li>Click tag chips in the window to filter; the filter stays active after you close the window.</li>
+</ol>
+<p><img src="media_en/15.4.5-1.webp" alt="Edit tags window: click tag chips to filter, right-click a tag to delete it" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What the window contains</h2>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Values / actions</th><th>Notes</th></tr></thead><tbody><tr><td>Top hint</td><td>&quot;Click a tag to filter \</td><td>right-click a tag to delete&quot;</td><td>—</td><td>Reminds you of both mouse actions</td></tr><tr><td>Tag chip area</td><td>The <strong>common tags</strong> of the current category type</td><td>Left-click = select / deselect; right-click = remove from common tags</td><td>Scroll when there are many tags; selections apply immediately</td></tr><tr><td>New tag input plus <strong>Add</strong></td><td>Adds a new tag to the common tag list</td><td>Type a name → click <strong>Add</strong></td><td>It only adds the name to the common tag library and does not tag any asset; to tag assets use <strong>Edit</strong> in <a href="#/en/15.5.16"><code>8.5.16</code></a></td></tr><tr><td>Clear filter</td><td>Clears all tag filtering at once</td><td>One click</td><td>It also removes tag keywords from the search box, restoring the list</td></tr><tr><td>Close</td><td>Closes this editor window</td><td>One click</td><td>The filter state is kept; closing the window does not clear it</td></tr></tbody></table>
+<h2 id="h-3">Filtering rules</h2>
+<table><thead><tr><th>Rule</th><th>Description</th></tr></thead><tbody><tr><td>One tag selected</td><td>Shows only assets carrying that tag</td></tr><tr><td>Several tags selected</td><td><strong>Union</strong>: assets carrying any one of them are shown</td></tr><tr><td>Combined with keyword search</td><td>Keywords and tag filters apply together (intersection)</td></tr><tr><td>Combined with a category</td><td>The scope is first limited to the current category (and sub-categories), then filtered by tag inside it</td></tr><tr><td>Visibility of the filter</td><td>Selected tags are <strong>written into the search box as text</strong>, so you can see at a glance what is filtering; the ✕ at the right of the search box appears as well</td></tr><tr><td>Clearing</td><td>Click <strong>Clear filter</strong>, or the ✕ at the right of the search box (both remove keywords and tags together)</td></tr></tbody></table>
+<h2 id="h-4">Submenus</h2>
+<p>The <strong>Edit tags</strong> button itself <strong>has no dropdown</strong>; clicking opens the window directly. The only context item in the window is <strong>Delete</strong> (for one tag), which is not a menu level either.</p>
+<h2 id="h-5">Risks and how to undo</h2>
+<ul>
+<li>Tag filtering is <strong>fully reversible</strong>: <strong>Clear filter</strong> or ✕ restores everything and changes no asset.</li>
+<li>Right-click <strong>Delete</strong> on a common tag <strong>only removes that tag name from the common tag list</strong> (written to configuration); it <strong>never</strong> batch-deletes tags already applied to assets. To undo, add it back manually.</li>
+<li>Adding a tag likewise only extends the common list; deleting a common tag does not change tags shown on existing assets.</li>
+</ul>
+<h2 id="h-6">Beginner pitfalls</h2>
+<ul>
+<li><strong>The word I want is not in the tag list</strong>: common tags are stored per <strong>category type (materials / models…)</strong>, so confirm the current category; if it is missing, add it manually.</li>
+<li><strong>Clicking a tag changes nothing</strong>: the current category may simply have no assets with that tag; try another category or clear the keyword search first.</li>
+<li><strong>Assuming multi-selected tags mean &quot;all of them&quot;</strong>: it is a <strong>union</strong> (any match), not an intersection.</li>
+<li><strong>Assuming deleting a common tag removed it from assets</strong>: it did not. The assets keep their own tags; this filtering entry just no longer lists it.</li>
+<li><strong>Trying to filter tags in the recycle bin</strong>: <strong>Edit tags</strong> is gray (disabled) there; tag filtering only works on the asset page.</li>
+</ul>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>The tutorial version of tag filtering: <a href="#/en/4.5.2"><code>4.1.5.2</code></a>.</li>
+<li>Batch-tagging assets: <a href="#/en/4.6.3"><code>4.1.6.3</code></a>.</li>
+<li>Asset area toolbar overview: <a href="#/en/15.4.1"><code>8.4.1</code></a>.</li>
+</ul>

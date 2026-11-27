@@ -1,0 +1,23 @@
+<p>When the Maya main thread is held by a command that never returns, the interface shows &quot;not responding&quot; and the bridge waits forever for a result; this is usually not a connection problem.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The Maya window shows Not Responding and process CPU is near 0%, meaning it waits rather than computes.</li>
+<li><code>--ping</code> connects to the port but does not reply, or commands time out.</li>
+<li>The backend health check shows <code>in_flight.wedged = true</code> with the current command not returned and no modal dialog present.</li>
+</ul>
+<h2 id="h-2">Causes</h2>
+<ul>
+<li>A slow operation runs synchronously on the main thread: launching a front end, cleaning sessions, a long render or repeated <code>sleep</code>.</li>
+<li><code>QApplication.processEvents()</code> is called nested on the Maya main thread, causing event reentrancy and mutual waiting.</li>
+<li>The command itself never returns, and the bridge only replies once it does.</li>
+</ul>
+<h2 id="h-3">Fixes</h2>
+<ol>
+<li>Check the Maya window for a modal dialog first; dismiss it and retry a read-only query.</li>
+<li>Never rerun a destructive command because of one timeout; check late results first to see whether it already finished.</li>
+<li>Use <code>python maya_bridge.py --doctor</code> to distinguish a real hang from a dialog blocking the thread.</li>
+<li>Only after confirming a hang with no other option decide whether to force-kill Maya; unsaved scenes are lost.</li>
+<li>Prevention: run long jobs as async work, report <code>progress(...)</code> inside loops and check <code>if cancelled(): break</code>; never write your own <code>processEvents()</code> loop on the main thread.</li>
+</ol>
+<h2 id="h-4">If it still fails</h2>
+<p>After force-killing Maya, relaunch as described in &quot;Recovering after a crash&quot;. Auto-save only protects scenes that were already saved, and flush-to-disk has not been observed under programmatic control, so never treat it as the only safety net.</p>

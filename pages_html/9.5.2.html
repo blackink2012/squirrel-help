@@ -1,0 +1,35 @@
+<p>在 Maya 中按「源材质类型 → 目标材质类型」的映射批量转换材质，属性传递由 <code>.mmap</code> 映射文件控制。</p>
+<p><img src="media/shared/maya-quicktool-converter.webp" alt="材质转换工具" loading="lazy" decoding="async"></p>
+<h2 id="h-1">用途</h2>
+<p>把旧材质（如 <code>lambert</code>、<code>phong</code>、<code>blinn</code>）批量换成当前渲染器的材质（如 <code>aiStandardSurface</code>、<code>redshiftStandardMaterial</code>、<code>VRayMtl</code>），适合接手老场景或统一材质标准。</p>
+<h2 id="h-2">输入与输出</h2>
+<ul>
+<li>输入：当前场景中的材质；材质类型映射表；映射文件夹中的 <code>.mmap</code> 文件。</li>
+<li>输出：场景中新建的目标类型材质，并按选项删除或保留原材质、重新指定给对象。</li>
+<li>预设：材质类型映射可另存为 <code>.mlist</code>，放在 <code>Assets/material_mapper_presets/mapping_type_presets/</code>。</li>
+</ul>
+<h2 id="h-3">操作步骤</h2>
+<ol>
+<li>打开「快捷工具 → 材质转换工具」。</li>
+<li>在顶部「映射文件」区域点击「浏览...」选择包含 <code>.mmap</code> 的文件夹（默认 <code>Assets/material_mapper_presets</code>）。</li>
+<li>在「材质类型映射配置」表格中填写源 / 目标材质类型；可从下拉框选择，也可手动输入。</li>
+<li>需要时用「加载源」「加载目标」从 Maya 当前选择读取材质类型，或用「添加行」「删除选中」「清空全部」维护表格。</li>
+<li>在「转换选项」中确认是否复制纹理、保留原始材质、自动应用到选择对象。</li>
+<li>点击「转换选择」只处理选中材质，或「转换全部」处理场景中所有匹配材质。</li>
+<li>完成后查看成功 / 失败统计；有失败时用「在Maya中选中失败材质」定位。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>状态栏显示转换进度与完成信息。</li>
+<li>完成后弹窗给出转换材质数与属性复制统计。</li>
+<li>勾选「自动应用到选择对象」时，视口中的对象已使用新材质。</li>
+<li>失败材质会列入「转换失败材质列表」，可一键选中后逐个修复。</li>
+</ul>
+<h2 id="h-5">参数与注意事项</h2>
+<table><thead><tr><th>选项</th><th>默认</th><th>说明</th></tr></thead><tbody><tr><td>复制纹理连接</td><td>开</td><td>把源材质的贴图连接复制到目标材质</td></tr><tr><td>保留原始材质</td><td>关</td><td>开启后不删除源材质，便于回退</td></tr><tr><td>自动应用到选择对象</td><td>开</td><td>转换后把新材质赋给使用原材质的对象</td></tr><tr><td>无映射→默认材质</td><td>关</td><td>找不到映射时创建目标类型的基础材质；关闭则计入失败列表</td></tr></tbody></table>
+<ul>
+<li>没有直接映射文件时会尝试 openPBR 中转（A → openPBR → B），中间材质会自动清理。</li>
+<li>转换前请保存场景；目标渲染器插件需已加载，材质类型名称区分大小写。</li>
+<li>转换需要有效的 <code>convert</code> 授权。</li>
+<li>「源」留空且只有一行时，表示把所有材质转换为该目标类型。</li>
+</ul>

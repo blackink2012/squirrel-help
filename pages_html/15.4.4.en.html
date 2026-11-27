@@ -1,0 +1,25 @@
+<blockquote><p>One-line summary: <strong>the &quot;A › B › C&quot; line in the middle of the asset area is the path of where you are — click an earlier segment to jump back, and the last segment marks your current position (not clickable).</strong></p></blockquote>
+<h2 id="h-1">Where it is</h2>
+<p>In the middle of the asset area toolbar, right of <strong>Create asset</strong> and left of the result count. It is always shown and needs no opening; it changes when you click a category, enter favorites, or open an asset&#x27;s versions / LODs.</p>
+<p><img src="media_en/15.4.4-1.webp" alt="Breadcrumb: from the library root to the current scope, with the last segment bold and unclickable" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What each segment represents</h2>
+<table><thead><tr><th>Segment</th><th>Example</th><th>Description</th></tr></thead><tbody><tr><td>Library root / All assets</td><td>All assets › Materials › Metal</td><td>The first part is the library root; <strong>All assets</strong> means across every sub-library</td></tr><tr><td>Sub-library root</td><td>Materials, Models, Lights…</td><td>The current sub-library</td></tr><tr><td>Category / sub-category</td><td>Metal › Copper</td><td>The category level you clicked into, possibly several</td></tr><tr><td>Asset name</td><td>Metal › Copper › openpbr_Aluminum_Brushed</td><td>An extra segment after you double-click an asset to enter its <strong>asset scope</strong></td></tr><tr><td>Version / variant / LOD</td><td>… › openpbr_Aluminum_Brushed › Versions › LOD</td><td>Extra segments added while browsing versions / variants / LODs inside an asset</td></tr></tbody></table>
+<h2 id="h-3">Behavior of each segment</h2>
+<table><thead><tr><th>Action</th><th>Effect</th><th>Notes</th></tr></thead><tbody><tr><td>Hover a clickable segment</td><td>The text underlines and the cursor becomes a hand</td><td>Only <strong>non-current</strong> segments are clickable</td></tr><tr><td>Click an earlier category segment</td><td>Jumps back to that category and refilters the grid by it</td><td>Same effect as clicking that category in the left tree</td></tr><tr><td>Click the segment before the asset name</td><td>Leaves the <strong>asset scope</strong> and returns to the category&#x27;s asset list</td><td>This is the way &quot;out of an asset&#x27;s version view&quot;</td></tr><tr><td>Click the version / variant segment</td><td>Switches between the version list and the variant list</td><td>Only appears once you are in the matching scope</td></tr><tr><td>Click the last segment (current scope)</td><td>Nothing happens (bold, unclickable)</td><td>The last segment always marks where you are</td></tr></tbody></table>
+<h2 id="h-4">What happens when space runs out</h2>
+<p>On a narrow window the breadcrumb <strong>protects the tail</strong> (your current position is always visible) and compresses / omits earlier segments from left to right; when clipped, an &quot;…&quot; appears at the far left. Widen the window or collapse the side bars and the full path shows again.</p>
+<h2 id="h-5">Submenus</h2>
+<p>The breadcrumb <strong>is not a menu</strong> and has no dropdown or submenu; clicking a segment jumps directly.</p>
+<h2 id="h-6">Beginner pitfalls</h2>
+<ul>
+<li><strong>Looking for a back button to go up one level</strong>: clicking the previous segment in the breadcrumb is faster.</li>
+<li><strong>The path starts with &quot;…&quot;</strong>: normal; it means outer levels were omitted. Widen the window to see them.</li>
+<li><strong>&quot;The list disappeared&quot; after double-clicking an asset</strong>: you entered that asset&#x27;s <strong>asset scope</strong> (version / LOD views); click a category segment or the segment before the asset name to return to the list.</li>
+<li><strong>The breadcrumb disagrees with the left tree</strong>: trust the breadcrumb — it reflects what the main area really shows (with several categories multi-selected on the left, the grid shows their union).</li>
+</ul>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>Asset area toolbar overview: <a href="#/en/15.4.1"><code>8.4.1</code></a>.</li>
+<li>Selecting categories in the tree: <a href="#/en/15.3.3"><code>8.3.3</code></a>.</li>
+<li>The version browser and <strong>asset scope</strong> usage: <a href="#/en/4.10.7"><code>4.1.10.7</code></a>, <a href="#/en/15.5.18"><code>8.5.18</code></a>.</li>
+</ul>

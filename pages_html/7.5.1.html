@@ -1,0 +1,19 @@
+<p>图像格式转换工具用 OpenCV 读写，支持浮点 HDR/EXR 与常用 8 位格式互转，浮点转 8 位时会自动做色调映射。</p>
+<p><img src="media/shared/dialog-format-convert.webp" alt="图像格式转换" loading="lazy" decoding="async"></p>
+<h2 id="h-1">支持的格式</h2>
+<table><thead><tr><th>格式</th><th>扩展名</th><th>数据模式</th><th>说明</th></tr></thead><tbody><tr><td>Radiance HDR</td><td><code>.hdr</code></td><td>浮点</td><td>高动态范围环境图</td></tr><tr><td>OpenEXR</td><td><code>.exr</code></td><td>浮点</td><td>工业级高动态范围图</td></tr><tr><td>PNG</td><td><code>.png</code></td><td>8 位</td><td>无损，支持透明通道</td></tr><tr><td>JPEG</td><td><code>.jpg</code>、<code>.jpeg</code></td><td>8 位</td><td>有损压缩，体积小</td></tr><tr><td>TIFF</td><td><code>.tif</code>、<code>.tiff</code></td><td>浮点或 8 位</td><td>支持多种压缩</td></tr><tr><td>BMP</td><td><code>.bmp</code></td><td>8 位</td><td>无压缩位图</td></tr><tr><td>WebP</td><td><code>.webp</code></td><td>8 位</td><td>高压缩率</td></tr><tr><td>TGA</td><td><code>.tga</code></td><td>8 位</td><td>游戏常用</td></tr></tbody></table>
+<h2 id="h-2">输出选项</h2>
+<table><thead><tr><th>输出格式</th><th>可用选项</th></tr></thead><tbody><tr><td>JPEG</td><td>品质 1–100，默认 95</td></tr><tr><td>PNG</td><td>压缩级别 0–9，默认 5</td></tr><tr><td>TIFF</td><td>压缩方式 NONE / LZW / DEFLATE，默认 LZW</td></tr><tr><td>EXR</td><td>压缩方式，默认 ZIP</td></tr><tr><td>HDR / 其他</td><td>无额外选项</td></tr></tbody></table>
+<h2 id="h-3">使用与验证</h2>
+<ol>
+<li>在工具里选择文件或文件夹，设置输出格式与选项。</li>
+<li>点「开始转换」，日志显示每个文件的处理结果。</li>
+<li>转换完成后到输出目录确认文件存在、扩展名正确、能被 Maya 的 <code>file</code> 节点读取。</li>
+</ol>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>依赖 <code>opencv-python</code> 与 <code>numpy</code>；<code>imageio</code> 不是必需，但能改善 EXR 兼容性。</li>
+<li>TIFF 可以保留浮点数据，也可以输出 8 位；选了 TIFF 后按用途决定压缩方式即可。</li>
+<li>从 HDR/EXR 转 PNG/JPEG 时按 Reinhard 压缩并做 2.2 gamma，只适合预览或缩略图。</li>
+<li>需要保留完整动态范围时，输出仍选 <code>.exr</code> 或 <code>.hdr</code>。</li>
+</ul>

@@ -1,0 +1,20 @@
+<p>The Maya documentation knowledge base has no separate window; its entry is the <code>maya_docs</code> tool in the AI assistant or <code>maya_doc_search</code> on the command surface. First find the name with a sentence, then read the details by name.</p>
+<p><img src="media_en/shared/menu-ai-tools.webp" alt="The AI tools menu: there is no separate documentation window; open the AI assistant from here and ask with maya_docs" loading="lazy" decoding="async"></p>
+<blockquote><p>The image is only a signpost: there is no separate documentation window and no documentation entry in the menu — click <code>AI 助手 (AI assistant)</code> first and ask it for commands, nodes or the API in the conversation. Results are returned in the chat, not in this menu.</p></blockquote>
+<h2 id="h-1">Prerequisites</h2>
+<p>A local knowledge base exists or the online fallback is available; semantic retrieval also needs Ollama and the documentation index, while lexical retrieval does not.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Ask directly in the AI assistant, for example &quot;how do I use polyReduce&quot; or &quot;how do I put objects along a curve&quot;.</li>
+<li>The assistant calls <code>maya_docs(action=&quot;search&quot;, query=&quot;...&quot;, mode=&quot;auto&quot;)</code>. You can limit <code>type</code> to <code>command</code>, <code>node</code>, <code>api</code>, <code>devguide</code> or <code>doc</code>, with <code>limit</code> up to 20.</li>
+<li>Read the name, type, plug-in, description and <code>match</code> field in the results and pick the exact name.</li>
+<li>Use the name for details: commands go through <code>maya_docs(action=&quot;help&quot;)</code> for live local parameters, nodes and the API through <code>maya_docs(action=&quot;show&quot;)</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>It returns <code>status=ok</code> with a <code>count</code> and a result list; <code>match</code> says whether the hit came from lexical, semantic or both. When a result&#x27;s <code>source</code> starts with <code>online:</code>, the online fallback was used.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>Command parameters should follow the live local help; the knowledge base is only a snapshot.</li>
+<li><code>mode=&quot;keyword&quot;</code> is fastest and fully offline; colloquial questions should use the default <code>auto</code>.</li>
+<li>Commands from installed plug-ins are usually absent from the offline library, so check the plug-in list first and then use live help.</li>
+</ul>

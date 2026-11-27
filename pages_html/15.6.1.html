@@ -1,0 +1,36 @@
+<blockquote><p>一句话定位：<strong>在资产网格里选中一个资产，右侧「属性」区域就会列出它的全部信息字段。</strong></p></blockquote>
+<p>属性面板只负责「看」；要改，用右键菜单（见 <a href="#/15.6.2"><code>8.6.2</code></a>）或标题栏的编辑按钮（见 <a href="#/15.6.3"><code>8.6.3</code></a>）。</p>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>左侧导航里点任意分类，进入资产网格；</li>
+<li>单击任意一张资产卡片（不用双击）；</li>
+<li>右侧「属性」区域立刻显示这个资产的字段。</li>
+</ol>
+<p>面板被关掉了也不怕：顶部「面板」菜单里能把「属性」区域重新打开（见 <a href="#/15.2.5"><code>8.2.5</code></a>）；这个区域本身还能拖动、拆分、撕下来（见 <a href="#/3.2.1"><code>3.2.1</code></a>）。</p>
+<p><img src="media/shared/property-panel.webp" alt="右侧属性面板" loading="lazy" decoding="async"></p>
+<h2 id="h-2">字段总表</h2>
+<p>下表按面板从上到下的顺序排列。「能不能改」里的「可改」指进入编辑态后能改，不是直接点一下就能改。</p>
+<table><thead><tr><th>字段</th><th>显示内容</th><th>能不能改</th><th>怎么改</th><th>注意</th></tr></thead><tbody><tr><td>名称</td><td>易读名（中文名，meta 里的 <code>name_cn</code>）</td><td>可改</td><td>右键该行 →「编辑」，或标题栏铅笔按钮</td><td>卡片上和状态栏显示的就是它；留空后卡片只剩「资产名」</td></tr><tr><td>资产名</td><td>资产真实名（英文名，meta 里的 <code>name</code>），文件与节点用这个名字</td><td>不可改</td><td>—</td><td>没有值时<strong>整行隐藏</strong>；要改名请用右键「编辑」改「名称」，不要改磁盘文件名</td></tr><tr><td>节点类型</td><td>Maya 里的节点类型，如 <code>aiStandardSurface</code>、<code>VRayMtl</code></td><td>可改</td><td>右键该行 →「编辑」（编辑态里这行叫「材质类型」）</td><td>只是可读文本，填错不会改场景里的真实节点；导入时按真实节点类型判断</td></tr><tr><td>资产类型</td><td>它属于哪个子库（材质 / 模型 / 灯光 / 贴图…）</td><td>不可改</td><td>编辑态里该下拉框是灰的</td><td>想换子库请把资产移动到另一个子库的分类（见 <a href="#/4.6.4"><code>4.1.6.4</code></a>）</td></tr><tr><td>分类</td><td>资产所在的分类易读名</td><td>不可改</td><td>编辑态里该下拉框是灰的</td><td>换分类用右键「移动到 / 复制到」（见 <a href="#/15.5.15"><code>8.5.15</code></a>）</td></tr><tr><td>格式</td><td>资产包里实际包含的格式，如 <code>zmetal</code>、<code>ma</code>、<code>fbx</code>；可能有多个小徽标</td><td>不可改</td><td>—</td><td>散文件资产取源文件扩展名；要加格式用右键「更新资产 → 追加格式」（见 <a href="#/15.5.16"><code>8.5.16</code></a>）</td></tr><tr><td>动画格式</td><td>动画数据资产包含的动画格式列表</td><td>不可改</td><td>—</td><td>只有动画类资产才有内容，其它资产<strong>整行隐藏</strong></td></tr><tr><td>大小</td><td>资产文件的磁盘占用（<code>.zasset</code> 是包内所有文件合计）</td><td>不可改</td><td>—</td><td>是磁盘体积，不是显存 / 内存占用</td></tr><tr><td>分辨率</td><td>贴图的像素尺寸，如 <code>2048 × 2048</code></td><td>不可改</td><td>—</td><td>只对能读到图片尺寸的贴图类资产显示，其它资产<strong>整行隐藏</strong></td></tr><tr><td>音频</td><td>时长 · 采样率 · 声道，如 <code>3.2 s · 44.1 kHz · 立体声</code></td><td>不可改</td><td>—</td><td>只在音乐 / 音频资产上显示</td></tr><tr><td>软件</td><td>产出该资产的软件（如 Maya、Substance）</td><td>可改</td><td>右键该行 →「编辑」</td><td>只是记录信息，不影响导入行为；没记录时显示「-」</td></tr><tr><td>渲染器</td><td>材质 / 灯光所属渲染器（arnold / redshift / vray）</td><td>可改</td><td>右键该行 →「编辑」</td><td>同上，是记录信息；导入时看的是真实材质类型</td></tr><tr><td>色彩空间</td><td>该资产约定的色彩空间，如 <code>sRGB</code>、<code>Raw</code>、<code>ACEScg</code></td><td>可改</td><td>右键该行 →「编辑」，可从预设里选，也可直接输入</td><td>改这里<strong>不会</strong>改 Maya 里已导入贴图的色彩空间设置</td></tr><tr><td>创建时间</td><td>资产创建 / 导出的时间，如 <code>2026-11-03 10:24</code></td><td>不可改</td><td>—</td><td>没有记录时<strong>整行隐藏</strong></td></tr><tr><td>标签</td><td>这个资产挂的全部标签胶囊</td><td>可改</td><td>双击某个标签胶囊，或右键标签行 →「编辑」</td><td>单击标签 = 按这个标签筛选；Ctrl + 单击 = 多标签筛选（见 <a href="#/4.6.1"><code>4.1.6.1</code></a>）</td></tr><tr><td>注释</td><td>资产备注文字，可多行</td><td>可改</td><td>右键该行 →「编辑」</td><td>没有注释时显示灰字「右键可编辑」；回收站条目会把删除时间写在这里</td></tr></tbody></table>
+<h2 id="h-3">哪些行会「时隐时现」</h2>
+<p>面板不是每次都把 16 行全画出来，下面这些行按资产情况显隐（看不到不代表坏了）：</p>
+<table><thead><tr><th>行</th><th>出现条件</th></tr></thead><tbody><tr><td>资产名</td><td>meta 里有 <code>name</code> 才显示</td></tr><tr><td>动画格式</td><td>该资产带有动画格式列表</td></tr><tr><td>分辨率</td><td>能读到贴图尺寸（贴图类资产）</td></tr><tr><td>音频</td><td>资产类型是音频 / 音乐</td></tr><tr><td>创建时间</td><td>有 <code>create_date</code> 或 <code>export_date</code></td></tr><tr><td>软件 / 渲染器 / 色彩空间</td><td>选中资产后一直显示，没记录值时是「-」</td></tr></tbody></table>
+<h2 id="h-4">没选中资产时</h2>
+<ul>
+<li>属性列表整体收起，标题行还在，铅笔按钮也还在；</li>
+<li>这时右键 / 点铅笔都不会进入编辑（没有对象可改）。</li>
+</ul>
+<h2 id="h-5">只读状态（回收站条目）</h2>
+<p>在回收站里选中一条记录时，右侧属性与预览都是<strong>只读</strong>的：</p>
+<ul>
+<li>星星（收藏）和铅笔（编辑）按钮隐藏；</li>
+<li>右键菜单里的「编辑」置灰，只剩「复制 / 复制 ID」；</li>
+<li>注释里会多出「已移入回收站 · 删除时间」。</li>
+<li>回收站的用法见 <a href="#/15.8.3"><code>8.8.3</code></a>。</li>
+</ul>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>每个字段怎么改、编辑态里有什么 → <a href="#/15.6.2"><code>8.6.2</code></a></li>
+<li>标题栏收藏 / 编辑 / 保存 / 取消按钮 → <a href="#/15.6.3"><code>8.6.3</code></a></li>
+<li>面板在区域里怎么移动、拆分、撕下 → <a href="#/3.2.1"><code>3.2.1</code></a></li>
+<li>名称、标签、注释的通用规则 → <a href="#/4.6.1"><code>4.1.6.1</code></a></li>
+</ul>

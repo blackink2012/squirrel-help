@@ -1,0 +1,15 @@
+<p>出问题先看三处：Maya Script Editor 的实时 traceback、<code>~/.squirrel_asset_manager/</code> 下的桥接日志，以及 <code>dsh_home</code> 下的底座与审计记录。</p>
+<h2 id="h-1">用户目录</h2>
+<p><code>~/.squirrel_asset_manager/</code>（Windows 为 <code>C:\Users\&lt;用户名&gt;\.squirrel_asset_manager\</code>）：</p>
+<table><thead><tr><th>文件</th><th>内容</th></tr></thead><tbody><tr><td><code>app_settings.json</code></td><td>个人设置；损坏时会重命名为 <code>.bak</code> 或 <code>.corrupt_&lt;时间戳&gt;</code></td></tr><tr><td><code>bridge_port.log</code></td><td>commandPort 开端口结果；默认端口被占、退到 7110~7129 时也记在这里</td></tr><tr><td><code>bridge_recover.log</code></td><td><code>--retry-if-crashed</code> 的自愈记录：断连原因、清理、拉起与重投端口</td></tr><tr><td><code>broker_boot.log</code></td><td>Maya 启动时自动注册到底座的成败原因</td></tr><tr><td><code>broker_endpoint.json</code></td><td>底座实际 TCP/HTTP 端口；客户端据此改连</td></tr><tr><td><code>help_cache/</code></td><td><code>maya_docs</code> 在线兜底的目录树与页面缓存</td></tr></tbody></table>
+<h2 id="h-2">dsh 运行期目录</h2>
+<p>默认 <code>&lt;插件包&gt;/dsh_home/</code>，可用 <code>SQUIRREL_DSH_HOME</code> 或 <code>DSH_HOME</code> 覆盖：</p>
+<table><thead><tr><th>文件/目录</th><th>内容</th></tr></thead><tbody><tr><td><code>broker_daemon.log</code></td><td>独立底座进程的输出；起不来的原因基本都在这里</td></tr><tr><td><code>ai_jobs.jsonl</code></td><td>异步作业历史，含状态、结果与最终进度</td></tr><tr><td><code>audit.jsonl</code></td><td>每次命令调用一条：命令、参数、风险级别、会话、实例与结果摘要</td></tr><tr><td><code>dsh_install.log</code></td><td>dsh 运行时安装日志</td></tr><tr><td><code>squirrel_web_&lt;实例&gt;.log</code></td><td>dsh Web 前端启动输出</td></tr><tr><td><code>sessions/</code>、<code>storages/</code></td><td>会话与存储；坏会话会挪进 <code>quarantine/</code>，改名不删除</td></tr><tr><td><code>skills/</code></td><td>落位后的技能束</td></tr></tbody></table>
+<h2 id="h-3">临时目录</h2>
+<table><thead><tr><th>路径</th><th>内容</th></tr></thead><tbody><tr><td><code>%TEMP%\squirrel_asset_manager\AI依赖检查报告.txt</code></td><td>AI 依赖体检报告</td></tr><tr><td><code>%TEMP%\squirrel_asset_manager\ai_install.log</code></td><td>一键安装 AI 依赖的完整日志</td></tr><tr><td><code>%TEMP%\squirrel_standalone_host.log</code></td><td>独立版挂载宿主的输出</td></tr><tr><td><code>%TEMP%\squirrel_jobs.jsonl</code></td><td>独立底座未指定作业文件时的默认历史</td></tr><tr><td><code>%TEMP%\MayaCrashLog&lt;yyyymmdd&gt;.&lt;hhmm&gt;.dmp</code></td><td>Maya 崩溃转储</td></tr></tbody></table>
+<h2 id="h-4">界面内日志</h2>
+<ul>
+<li>Maya Script Editor 显示插件 traceback 与 <code>print</code> 输出。</li>
+<li>批量处理、批量镜像复制等快捷工具在自己的日志面板里显示过程，部分支持另存为文本。</li>
+</ul>
+<blockquote><p><strong>提示</strong>：崩溃取证可同时看 Windows 事件日志里的「错误模块名称 + 错误偏移」、上述 <code>.dmp</code> 与桥接日志；若崩在渲染器自己的 dll，优先改走进程外渲染。</p></blockquote>

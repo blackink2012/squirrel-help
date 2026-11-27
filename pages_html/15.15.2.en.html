@@ -1,0 +1,75 @@
+<blockquote><p>One-line summary: <strong>the plug-in&#x27;s License manager window — see the current license status, copy the machine code, enter an activation code or activate the trial directly, expand &quot;Offline license activation&quot; to import a manually issued offline license (file or clipboard), and deactivate or restore this machine.</strong></p></blockquote>
+<p>It governs whether &quot;this computer may use the plug-in&quot;. A license is <strong>bound to the current computer</strong> (through the machine code); after expiry you can still browse the library, but import / export / conversion need a valid license.</p>
+<h2 id="h-1">How to open it</h2>
+<table><thead><tr><th>Entry</th><th>How</th></tr></thead><tbody><tr><td>Settings window</td><td>Settings → the <strong>License activation</strong> page in the left navigation → <strong>License management</strong> button</td></tr><tr><td>First launch</td><td>The first time the plug-in opens (or when the license has expired) this window appears automatically; cancelling still lets you browse read-only</td></tr><tr><td>Automatically when features are restricted</td><td>Using import, export, conversion or another restricted feature while expired / unactivated shows a prompt and opens this window</td></tr></tbody></table>
+<p>The window is titled &quot;License manager - &lt;product name&gt;&quot;.</p>
+<p><img src="media_en/shared/dialog-license.webp" alt="License manager window" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What every control does</h2>
+<h3 id="h-3">Card &quot;Current status&quot;</h3>
+<table><thead><tr><th>Control</th><th>Content</th><th>How to read it</th></tr></thead><tbody><tr><td>Status badge</td><td>The license kind: trial / perpetual / subscription / floating / unlicensed</td><td>Shows which kind at a glance</td></tr><tr><td>Status text</td><td>&quot;Trial, N days left&quot; / &quot;Licensed: name (perpetual)&quot; / &quot;Licensed: name (until date)&quot; / &quot;Subscription expired (grace period, N days left)&quot; / &quot;License expired, browsing only&quot; / &quot;Offline validation expired, start once online (read-only)&quot; / &quot;Not activated (read-only)&quot;</td><td>Decides what you can do now; &quot;offline validation expired&quot; means you have been offline too long and one online start renews the lease</td></tr><tr><td>Version scope</td><td>&quot;Version scope: 1.x · free upgrades until 2029-11-15&quot; / &quot;Version scope: unlimited&quot;</td><td>Which major version you may use and until when new versions are free (annual and trial licenses show &quot;unlimited&quot;)</td></tr></tbody></table>
+<h3 id="h-4">Information card (machine code / activation code)</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td><strong>Machine code</strong> read-only input</td><td>This machine&#x27;s code (shaped like <code>E41D-6406-80F7-52A9</code>), needed when buying a license or contacting support</td><td>Do not edit it</td></tr><tr><td><strong>Copy</strong> button</td><td>Copies the machine code to the clipboard (the label briefly reads &quot;Copied&quot;)</td><td>For sending to sales / support</td></tr><tr><td><strong>Activation code</strong> input (placeholder <code>SQAM-XXXX-XXXX-XXXX-XXXX</code>)</td><td>Put the received activation code here</td><td>Fill it when you have one; leave it empty otherwise</td></tr><tr><td><strong>Activate</strong> button</td><td>Activates online: with a code it activates with that code, without one the server decides from the product state (trials are issued by the server; commercial sales require a code)</td><td>Usually this is all you need</td></tr></tbody></table>
+<blockquote><p>Under the activation code there is a note: <strong>&quot;Click Activate directly to start the trial; it includes all features.&quot;</strong> — you can try before buying. On Settings → License activation the same <strong>green Activate</strong> button starts the trial with an empty key (no sign-in window).</p></blockquote>
+<h3 id="h-5">Collapsed card &quot;Offline license activation&quot;</h3>
+<p>Collapsed by default; offline import lives inside it. <strong>Click the title to expand</strong> (the ▸ arrow turns into ▾) and click again to collapse. Everyday online activation does not need it.</p>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td><strong>Import license file…</strong></td><td>Chooses a local <code>.lic</code> / <code>.dat</code> / <code>.json</code> license file to activate</td><td>Use it when you received an <strong>offline license file issued manually by support</strong> rather than a code; files from online activation cannot be imported offline</td></tr><tr><td><strong>Import from clipboard</strong></td><td>Reads the license text from the clipboard and activates directly</td><td>Use it when support only sent text; <strong>the license content is never shown in the UI</strong>, only the result</td></tr></tbody></table>
+<p><img src="media_en/shared/dialog-license-offline.webp" alt="License window: expanding &quot;Offline license activation&quot; reveals file import and clipboard import" loading="lazy" decoding="async"></p>
+<p><strong>You can also drag a <code>.lic</code> / <code>.dat</code> / <code>.json</code> file into this window</strong> and it is handled as &quot;import license file&quot; (no need to expand the section first).</p>
+<h3 id="h-6">Bottom</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Notes</th></tr></thead><tbody><tr><td><strong>Deactivate this machine</strong></td><td>Unbinds this computer</td><td>After server confirmation the seat is released; only the daily release cap applies (3 per 24 hours); the button is gray for offline-issued licenses</td></tr><tr><td><strong>Restore this machine&#x27;s license</strong></td><td>Restores a previously unbound local copy (confirming with the server)</td><td>Always visible; greyed out with a tooltip when no unbound copy exists</td></tr><tr><td><strong>Close</strong></td><td>Closes the window (activations / deactivations already done are in effect)</td><td>—</td></tr><tr><td>Bottom message line</td><td>Shows activation success / failure reason / &quot;[error code] explanation&quot;</td><td>Read this line first when something goes wrong</td></tr></tbody></table>
+<blockquote><p>Purchase and &quot;My Account&quot; now live on Settings → License activation; Sync license is at the top right of its <strong>Current license</strong> card. The license window keeps only the activation code, offline import, deactivate and restore.</p></blockquote>
+<h2 id="h-7">A complete activation flow</h2>
+<p><strong>Case A: you received an activation code</strong></p>
+<ol>
+<li>Open the license window;</li>
+<li>Enter <code>SQAM-…</code> under <strong>Activation code</strong>;</li>
+<li>Click <strong>Activate</strong>;</li>
+<li>Read the bottom message line: &quot;Activated successfully.&quot; and the badge and status text update immediately;</li>
+<li>Close the window and continue working.</li>
+</ol>
+<p><strong>Case B: you received a license file</strong></p>
+<ol>
+<li>Open the license window;</li>
+<li>Expand <strong>Offline license activation</strong>, click <strong>Import license file…</strong> and choose the file (or drag the file into the window);</li>
+<li>The message line reports success and the status refreshes.</li>
+</ol>
+<p><strong>Case C: you only received license text</strong></p>
+<ol>
+<li>Copy the full license text first;</li>
+<li>Expand <strong>Offline license activation</strong> and click <strong>Import from clipboard</strong>;</li>
+<li>The message line reports success and the status refreshes (the license content is never shown).</li>
+</ol>
+<p><strong>Case D: no activation code — start the trial or let the server decide</strong></p>
+<ol>
+<li>Leave <strong>Activation code</strong> empty and click the green <strong>Activate</strong> (same on Settings → License activation, with no sign-in window);</li>
+<li>The server decides from the product state: when trials are available it issues a trial license that <strong>includes all features</strong>; commercial sales answer &quot;the server requires an activation code&quot;, so ask sales for one.</li>
+</ol>
+<h2 id="h-8">Versions and upgrades</h2>
+<p>Licenses fall into two version-scope rules (the <strong>Version scope</strong> line states yours):</p>
+<table><thead><tr><th>License</th><th>Version scope</th><th>Description</th></tr></thead><tbody><tr><td>Annual</td><td>Unlimited</td><td>The latest version is always usable while valid</td></tr><tr><td>Perpetual (one-time purchase)</td><td>The major version at first activation plus 3 years of free upgrades</td><td>The baseline is the current major version the server publishes at first activation (such as <code>1.x</code>); releases within the following 3 years are free and the scope expands automatically on the online heartbeat; older major versions keep working. <strong>Vendor offline-issued perpetual licenses</strong> use the major version <strong>at issue time</strong> and count 3 years from the issue date</td></tr><tr><td>Trial</td><td>Unlimited</td><td>The latest version is usable during the trial</td></tr></tbody></table>
+<ul>
+<li>The perpetual 3 years start from <strong>the first activation date</strong>, shown as &quot;free upgrades until &lt;date&gt;&quot;; the baseline version is the current major version the server published at first activation, not whichever version is installed locally.</li>
+<li><strong>Offline-issued (imported <code>.lic</code>) perpetual licenses have no &quot;first activation&quot; step</strong>: the version scope and the 3-year deadline are written by the vendor at issue time and also show as <strong>Version scope / free upgrades until</strong> in the window; after an online registration the vendor still expands the scope under online-license rules during the upgrade window.</li>
+<li>To use a newer major version after the 3 years you must <strong>purchase again</strong>; the version you already bought keeps working and is never disabled.</li>
+<li>If a newer plug-in reports &quot;the current version exceeds this license&#x27;s scope&quot;, that version is outside your scope — keep using the older version or buy a new license.</li>
+</ul>
+<h2 id="h-9">What you see afterwards</h2>
+<ul>
+<li>The status badge and text immediately reflect the new state (such as &quot;Licensed: name (perpetual)&quot;);</li>
+<li>The badge and status line on Settings → <strong>License activation</strong> refresh too;</li>
+<li>Restricted features (import / export / conversion) become available again.</li>
+</ul>
+<h2 id="h-10">Risks and how to undo</h2>
+<ul>
+<li><strong>A license is bound to the current computer</strong>: changing machines requires activating again; the license file is tied to the machine code, so use the &quot;deactivate this machine → activate on the new one&quot; flow.</li>
+<li><strong>Deactivate this machine only hits the daily release cap</strong>: online deactivation releases the seat after server confirmation, max 3 times per 24 hours. Offline-issued licenses do not support unbinding, and their button is gray.</li>
+<li><strong>Offline deactivation</strong>: when the server cannot be reached it asks once more &quot;delete only the local license?&quot; (the seat stays occupied and no switch is consumed; contact support to unbind later).</li>
+<li><strong>Undo</strong>: after deactivating you must activate again to use restricted features; the same license file exported before unbinding stops working here and cannot be re-imported; when the <strong>Restore this machine&#x27;s license</strong> button is enabled, clicking it is faster (online licenses only).</li>
+<li>The machine code is read-only and determined by this machine, so editing it is pointless; never paste someone else&#x27;s license text / activation code onto a machine it does not belong to, because activation will fail.</li>
+</ul>
+<h2 id="h-11">Related</h2>
+<ul>
+<li>The <strong>License activation</strong> settings page (status, machine code, activation key, account and management entry): <a href="#/en/15.9.10"><code>8.9.10</code></a></li>
+<li>The feedback window (licensing problems can be reported there too): <a href="#/en/15.15.3"><code>8.15.3</code></a></li>
+<li>Where the <strong>Use help</strong> button is: <a href="#/en/15.2.4"><code>8.2.4</code></a></li>
+</ul>

@@ -1,0 +1,37 @@
+<p>AI 对话面设置决定点「AI 助手」时，dsh 对话面板停靠进 Maya 还是用系统浏览器打开。</p>
+<p><img src="media/shared/settings-ai-conversation.webp" alt="AI 对话面" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>选择 dsh 前端的承载方式。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<ul>
+<li>复选框「在 Maya 内嵌 AI 对话面（取消则用系统浏览器打开）」，默认勾选。</li>
+<li>勾选：dsh 作为右侧面板停靠进 Maya。</li>
+<li>取消：交给系统默认浏览器打开，插件侧不建面板。</li>
+</ul>
+<h2 id="h-3">dsh 版本轨（稳定 / 尝鲜）</h2>
+<p>同一组里还有「版本轨」下拉，决定<strong>下次一键安装</strong>装哪一版 dsh：</p>
+<ul>
+<li><strong>稳定轨</strong>（默认）：装插件验证过的钉定版本，出问题有人兜底，推荐。</li>
+<li><strong>尝鲜轨</strong>：点「一键安装」时查询 npm 上的最新版，把查到的<strong>确切版本</strong>装下来并钉住；</li>
+</ul>
+<p>之后不会自动升级。该版本<strong>未经验证</strong>，个别工具行为可能有差异。</p>
+<p>尝鲜安装先落到暂存目录、校验通过才替换，<strong>失败不会破坏已装的稳定版</strong>。 切换下拉本身<strong>不会</strong>改动已经装好的 dsh，要装新版仍需再点一次一键安装。 如果尝鲜版表现异常：把版本轨切回「稳定轨」，再点一次一键安装即可恢复。</p>
+<h2 id="h-4">影响范围</h2>
+<ul>
+<li>两种方式启动的是同一个 dsh 前端，会话、技能与工具调用完全一致。</li>
+<li>内嵌面板会占用 Maya 主窗口右侧空间；浏览器方式适合放到第二块屏幕。</li>
+<li>面板或标签标题会自动带上当前场景名，便于和自己的 dsh 区分。</li>
+<li>修改在下次点「AI 助手」时生效，不需要重启。</li>
+</ul>
+<h2 id="h-5">何时修改</h2>
+<ul>
+<li>想边看视口边对话：保持内嵌。</li>
+<li>双屏工作、或不想让面板压缩 Maya 布局：取消勾选改用浏览器。</li>
+</ul>
+<h2 id="h-6">结果验证</h2>
+<ul>
+<li>点主窗口「AI 工具 → AI 助手」，按所选方式出现对话面。</li>
+</ul>
+<h2 id="h-7">提示</h2>
+<blockquote><p><strong>提示</strong>：这里只决定对话面开在哪，不负责安装 dsh；未安装时按「未装 dsh 的安装引导」处理。</p></blockquote>
+<blockquote><p><strong>提示</strong>：设置窗口是这一项的唯一切换入口，「AI 工具」菜单里没有。</p></blockquote>

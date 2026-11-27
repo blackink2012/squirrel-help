@@ -1,0 +1,24 @@
+<p>贴图导入策略决定从资产库导入材质或贴图时，贴图文件从哪里读取、是否复制到工程。</p>
+<p><img src="media/shared/settings-texture-policy.webp" alt="贴图导入策略" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>控制 <code>.zasset</code> 内 <code>textures/</code> 的贴图在 Maya 中的落点。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<table><thead><tr><th>选项</th><th>行为</th></tr></thead><tbody><tr><td>拷贝贴图到项目</td><td>把贴图解出到 <code>{工程}/sourceimages/squirrel_asset/{资产名}_{ID后4位}/</code>，材质指向该目录</td></tr><tr><td>当前资产目录（默认）</td><td>不复制，材质直接指向 <code>.zasset</code> 内的 <code>textures/</code></td></tr><tr><td>源文件目录</td><td>优先使用导出时记录的原始绝对路径；原路径不存在时回退到资产内路径</td></tr></tbody></table>
+<ul>
+<li>预设文件当前值为 <code>asset_directory</code>；若该键缺失，代码回退为 <code>copy_to_project</code>。</li>
+</ul>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>材质导入、灯光贴图导入、贴图指定、引用导入等所有从资产读取贴图的路径。</li>
+<li>只影响导入后的路径指向，不修改资产包内容。</li>
+<li>保存在 <code>config.json</code> 的 <code>texture_import_policy</code>。</li>
+</ul>
+<h2 id="h-4">何时修改</h2>
+<ul>
+<li>资产要交付到其他机器或工程需要自包含：选「拷贝贴图到项目」。</li>
+<li>单机使用、希望节省磁盘并保持资产集中：保持「当前资产目录」。</li>
+<li>贴图仍在原制作目录且希望继续编辑：选「源文件目录」。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<blockquote><p><strong>警告</strong>：「源文件目录」依赖导出时记录的绝对路径；换机或移动目录后会找不到贴图，此时应改用前两项。</p></blockquote>
+<blockquote><p><strong>提示</strong>：拷贝到项目时会按资产名与 ID 后四位建子目录，避免不同资产互相覆盖。</p></blockquote>

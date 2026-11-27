@@ -1,0 +1,26 @@
+<p>独立版是在 Maya 之外启动的同一套资产界面；EXE 安装包把它、内置 Python 运行时和可选的 Maya 集成一起装好。</p>
+<h2 id="h-1">独立版</h2>
+<ul>
+<li>入口是 <code>squirrel_asset_manager/standalone_preview.py</code>，源码包内可双击 <code>启动独立预览.bat</code>。</li>
+<li>运行环境为系统 Python + PySide6，或使用 Maya 自带的 <code>mayapy</code>（不启动 Maya 界面）。</li>
+<li>它通过本机 commandPort 驱动<strong>正在运行的 Maya</strong>，把导入、导出、缩略图、更新资产等操作投给 Maya 执行；真机验收过 Maya 2025。</li>
+<li>Maya 不在线时，只能浏览、搜索和执行文件层操作，不能做场景导入导出。</li>
+</ul>
+<h2 id="h-2">EXE 安装版</h2>
+<ul>
+<li>安装到 <code>%LOCALAPPDATA%\SquirrelAM</code>（安装时可改），按当前用户安装，不需要管理员权限。</li>
+<li>内置 Python 3.11.9、PySide6 6.9.2、Pillow、requests、pypinyin，启动时由 <code>SquirrelAssetManager.exe</code> 设置环境并拉起 <code>standalone_preview.py</code>。</li>
+<li>安装器可选「Maya 集成」：写入各版本 <code>userSetup.py</code> 的导入路径、状态行按钮与桥接端口，并在安装时创建一次工具架按钮（之后不再自动重建）；没有 Maya 时默认不勾选。</li>
+<li>可选「AI 助手 dsh（离线）」：解压内置 dsh 与便携 Node；不装也不影响资产浏览与管理。</li>
+</ul>
+<h2 id="h-3">适合谁</h2>
+<ul>
+<li>想在不开 Maya 时整理、搜索、预览资产的人。</li>
+<li>需要把资产操作投给已打开 Maya 的美术，或想让外部 AI / 命令行驱动 Maya 的人。</li>
+<li>不熟悉 Python 环境、希望双击即用的人优先选 EXE。</li>
+</ul>
+<h2 id="h-4">已知边界</h2>
+<ul>
+<li>独立版批量导出目前是逐单顺序投递，没有 Maya 内版的进度覆盖层与取消按钮。</li>
+<li>不启动 Maya 时，依赖场景的功能不可用；端口仅监听 <code>127.0.0.1</code>。</li>
+</ul>

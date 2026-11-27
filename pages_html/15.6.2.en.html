@@ -1,0 +1,37 @@
+<blockquote><p>One-line summary: <strong>right-clicking any field in the properties area opens a menu with copy / copy ID / edit, and only Edit enters an editable state.</strong></p></blockquote>
+<p>First, a common misunderstanding: <strong>double-clicking a field no longer enters edit mode</strong> (older versions did, which caused accidental edits when you only wanted to look). Double-click has exactly one use — double-clicking a <strong>tag chip</strong> enters tag editing. The edit entry for fields is <strong>right-click</strong>, or the pencil button in the title bar (see <a href="#/en/15.6.3"><code>8.6.3</code></a>).</p>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Select an asset in the asset grid;</li>
+<li>Hover any row in the properties area (the field name, the value, even blank space);</li>
+<li><strong>Right-click</strong> to open the menu.</li>
+</ol>
+<p>Recycle bin entries open this menu too, but <strong>Edit</strong> is gray (read-only).</p>
+<p><img src="media_en/shared/menu-field-edit.webp" alt="Properties field context menu: copy / copy ID / edit" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Copy</td><td>Puts this field&#x27;s text on the clipboard</td><td>The field has text</td><td>Selected text is copied; with nothing selected the whole value is copied</td><td>Read-only fields (asset name / category / format / size / resolution / audio / created) use this menu too, so copying always happens here</td></tr><tr><td>Copy ID</td><td>Copies the asset&#x27;s unique id (<code>id</code> in meta)</td><td>The asset has an id</td><td>The clipboard holds the id string</td><td>The id is not shown in the properties area, so search-by-id and external communication must start here</td></tr><tr><td>Edit</td><td>Enters edit mode and <strong>focuses the field for this row</strong></td><td>Not a read-only recycle bin entry</td><td>The properties area switches to the edit card with the cursor in the matching input</td><td>Clicking Edit on a read-only field only enters edit mode without focusing that row (it cannot be changed anyway)</td></tr></tbody></table>
+<p>The items gray out automatically: no text means Copy is gray; no id means Copy ID is gray; a read-only entry means Edit is gray.</p>
+<h2 id="h-3">After clicking Edit: what edit mode offers</h2>
+<table><thead><tr><th>Edit-mode field</th><th>Control</th><th>Editable</th><th>Description</th></tr></thead><tbody><tr><td>Name</td><td>Single-line input</td><td>Yes</td><td>The name shown on the card (the readable name)</td></tr><tr><td>Material type</td><td>Single-line input</td><td>Yes</td><td>Corresponds to <strong>Node type</strong> in display mode; plain text</td></tr><tr><td>Asset type</td><td>Dropdown</td><td><strong>No</strong> (gray)</td><td>Decided by the asset&#x27;s sub-library</td></tr><tr><td>Category</td><td>Dropdown</td><td><strong>No</strong> (gray)</td><td>To change category use right-click <strong>Move to</strong></td></tr><tr><td>Software</td><td>Single-line input</td><td>Yes</td><td>Recorded information</td></tr><tr><td>Renderer</td><td>Single-line input</td><td>Yes</td><td>Recorded information</td></tr><tr><td>Color space</td><td>Editable dropdown</td><td>Yes</td><td>Presets: sRGB / Raw / ACEScg / Linear sRGB / Utility - Raw / Output - sRGB, and you may type freely</td></tr><tr><td>Tags</td><td>Tag chips plus <strong>+ Add tag</strong></td><td>Yes</td><td><strong>+ Add tag</strong> opens a popup: type a new tag and press Enter, click a common tag to add it quickly, or click ✖ on a chip to remove it (see <a href="#/en/4.6.1"><code>4.1.6.1</code></a>)</td></tr><tr><td>Notes</td><td>Multi-line input</td><td>Yes</td><td>The input has a maximum height and scrolls internally for long notes</td></tr></tbody></table>
+<p>Two more conventions in edit mode:</p>
+<ul>
+<li>The wheel hovering over the <strong>asset type / category / color space</strong> dropdowns <strong>does not</strong> change their values (to prevent accidents);</li>
+<li>Clicking the <strong>asset card area</strong> (the center grid) while editing applies the current changes and leaves edit mode.</li>
+</ul>
+<h2 id="h-4">Save and cancel</h2>
+<table><thead><tr><th>Action</th><th>Result</th><th>Undoable</th></tr></thead><tbody><tr><td>Title bar ✓ (save)</td><td>Writes the changes back to asset metadata and refreshes the panel and card</td><td>After saving there is <strong>no undo stack</strong>, so Ctrl+Z cannot revert it; edit again to restore the old values</td></tr><tr><td>Title bar × (cancel)</td><td>Discards all changes from this session and restores the pre-edit snapshot</td><td>Fully restored, so clicking it is safe</td></tr><tr><td>Clicking the card area (auto apply)</td><td>Same as save</td><td>Same as the first row</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Property editing changes asset metadata (the meta inside <code>.zasset</code>), which is lost only if the asset is deleted or overwritten; but after saving the plug-in offers no &quot;undo this property change&quot;, so a mistake must be fixed by hand. When changing several fields at once, think it through before saving.</p></div>
+<h2 id="h-5">A typical operation: add notes and tags to an asset</h2>
+<ol>
+<li>Select the asset → right-click the <strong>Notes</strong> row → <strong>Edit</strong>;</li>
+<li>Type the explanation in the notes box; click <strong>+ Add tag</strong> and type a tag or add a common one quickly;</li>
+<li>When everything looks right click ✓ in the title bar (or click the asset card area);</li>
+<li>The panel returns to display mode with the notes and tags immediately visible; the status bar still shows this asset&#x27;s name.</li>
+</ol>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>What each field shows and which cannot be edited → <a href="#/en/15.6.1"><code>8.6.1</code></a></li>
+<li>Title bar favorite / edit / save / cancel buttons → <a href="#/en/15.6.3"><code>8.6.3</code></a></li>
+<li>General rules for name, tags and notes → <a href="#/en/4.6.1"><code>4.1.6.1</code></a></li>
+<li><strong>Edit</strong> in the asset card context menu is a different entry (it opens the property edit window) → <a href="#/en/15.5.16"><code>8.5.16</code></a></li>
+</ul>

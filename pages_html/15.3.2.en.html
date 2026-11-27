@@ -1,0 +1,29 @@
+<blockquote><p>One-line summary: <strong>the dropdown at the very top of the Category tab switches between main asset libraries — switching libraries means switching the whole category tree and asset set.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Left navigation → click the <strong>Category</strong> tab;</li>
+<li>Click the dropdown at the top of the tab (it shows &quot;library name — library path&quot;);</li>
+<li>Click another library in the expanded list.</li>
+</ol>
+<p><img src="media_en/shared/menu-library.webp" alt="Asset library dropdown: configured asset libraries (name — path)" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<p>The number of items equals <strong>how many asset libraries you configured in settings</strong> (2 in the example environment). Every row is formatted as &quot;library name — full library path&quot;.</p>
+<table><thead><tr><th>Menu item / row</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Current library (the one shown in the dropdown)</td><td>Indicates the library you are viewing</td><td>The library is loaded</td><td>— (clicking it does not switch)</td><td>If you cannot tell which library you are in, read the path in the dropdown text</td></tr><tr><td>Another library (one row each)</td><td>Switches the main asset library to this row</td><td>That path really exists</td><td>Reloads the library: the category tree rescans, the asset grid switches to the new library&#x27;s <strong>All assets</strong>, and the status bar numbers update</td><td>Switching <strong>only affects the main asset library</strong>, not the project library or favorites; the currently selected category resets</td></tr></tbody></table>
+<h2 id="h-3">Submenus</h2>
+<p>This dropdown has <strong>no second level</strong>: every row is one library, clicking switches immediately with no further expansion.</p>
+<h2 id="h-4">Adding and removing libraries is not here</h2>
+<p>This dropdown <strong>only switches</strong>; it offers no add / create / remove / set default. Those live in the settings window → <strong>General</strong> page → <strong>Asset library management</strong>:</p>
+<table><thead><tr><th>What you want</th><th>Where to go</th></tr></thead><tbody><tr><td>Add an existing library</td><td>Settings → General → Asset library management → <strong>Add asset library</strong>, see <a href="#/en/15.9.2"><code>8.9.2</code></a></td></tr><tr><td>Create an empty library</td><td>Settings → General → Asset library management → <strong>Create asset library</strong></td></tr><tr><td>Remove a library from the list</td><td>Settings → General → Asset library management → <strong>Delete selected</strong></td></tr><tr><td>Make it the startup default</td><td>Settings → General → Asset library management → <strong>Set as default</strong></td></tr></tbody></table>
+<h2 id="h-5">Beginner pitfalls</h2>
+<ul>
+<li><strong>After switching libraries all assets and categories changed</strong>: normal. Each library has its own category tree and assets; this is &quot;switching libraries&quot;, not &quot;switching categories&quot;. Switch back in the dropdown to return.</li>
+<li><strong>The library I want is not in the dropdown</strong>: it has not been registered in settings yet; go to Settings → General → <strong>Add asset library</strong>.</li>
+<li><strong>Clicking another library does nothing but shows a warning</strong>: that library&#x27;s path no longer exists (drive letter changed, folder moved or renamed). Restore the folder, or remove the invalid entry in settings.</li>
+<li><strong>Thinking switching deletes something</strong>: switching only changes which library is displayed; it moves and deletes no assets.</li>
+</ul>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>Complete description of several libraries: <a href="#/en/4.11.1"><code>4.1.11.1</code></a>; creating a new library: <a href="#/en/4.11.3"><code>4.1.11.3</code></a>.</li>
+<li>Navigation area overview: <a href="#/en/15.3.1"><code>8.3.1</code></a>.</li>
+<li>The settings page holding <strong>Asset library management</strong>: <a href="#/en/15.9.2"><code>8.9.2</code></a>.</li>
+</ul>

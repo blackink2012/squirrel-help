@@ -1,0 +1,24 @@
+<p>An empty shell asset is a <code>.zasset</code> containing only <code>meta.json</code> and a thumbnail, with no geometry, material or textures.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The asset appears in the grid, but opening its folder shows only <code>meta.json</code> and <code>thumb.sicon</code>, with no <code>node.*</code>, <code>node.zmetal</code> or <code>textures/</code>.</li>
+<li>Or the export fails outright: <code>几何体一个文件都没导出（...）</code> (not a single geometry file was exported).</li>
+<li><code>formats</code> in <code>meta.json</code> only lists <code>sicon</code> / <code>aicon</code>.</li>
+</ul>
+<h2 id="h-2">Common causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Fix</th></tr></thead><tbody><tr><td>No content source checked</td><td><code>formats</code> only has <code>sicon</code> / <code>aicon</code> and there is no <code>textures/</code> or <code>deps/</code></td><td>Check at least one format, or keep <code>贴图 textures/</code> (textures)</td></tr><tr><td>&quot;Export materials only&quot; checked without material nodes</td><td>No <code>node.zmetal</code> / <code>node.mcm</code></td><td>Select material nodes or objects carrying materials; uncheck it when materials-only is not needed</td></tr><tr><td>Geometry format checked but the selection has no mesh</td><td>The log says <code>「找不到可导出对象」 (no exportable object found)</code></td><td>Select models with a shape in the viewport, not empty groups or pure transforms</td></tr><tr><td>Format plug-in unavailable</td><td>The format&#x27;s status shows <code>不可用 (unavailable)</code> and the checkbox is greyed out</td><td>Install or load the plug-in, or use <code>.ma</code> / <code>.mb</code></td></tr><tr><td><code>.ma</code> export failed</td><td><code>notes</code> contains <code>ma: 导出失败</code></td><td>Check <code>.mb</code> and re-export; without <code>.mb</code> checked the program falls back to <code>.mb</code> automatically, and if that also fails see the next section</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open <code>.zasset/meta.json</code> and check whether <code>formats</code> contains the expected formats.</li>
+<li>Back in Maya, confirm the selected objects really are nodes with a mesh or a material.</li>
+<li>In the export dialog check at least one content format and confirm the format status reads <code>已就绪 (ready)</code>.</li>
+<li>For material assets prefer <code>材质预设 .zmetal</code> + <code>贴图 textures/</code>; for model assets check at least <code>Maya ASCII .ma</code> or <code>Maya Binary .mb</code>.</li>
+<li>Export again. If geometry formats were checked but not one file was produced, the export stops instead of overwriting an existing asset with empty content.</li>
+</ol>
+<h2 id="h-4">If it still fails</h2>
+<ul>
+<li>Open the Maya Script Editor and search for <code>[Export]</code>, <code>[Export::zmetal]</code> and <code>[Perf]</code> to see which format failed.</li>
+<li>Try a fresh scene containing only the target object, ruling out unknown nodes or data breaking format conversion.</li>
+<li>Export with only <code>.mb</code> checked first to confirm the geometry itself is writable, then add the other formats back one by one.</li>
+<li>Whether specific format keys differ from Maya&#x27;s actual plug-in names is still to be confirmed (for example <code>abc</code> and <code>obj</code>).</li>
+</ul>

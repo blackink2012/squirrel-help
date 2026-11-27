@@ -1,0 +1,24 @@
+<p>A <code>.zlight</code> is a renderer-independent light preset: it records the light&#x27;s physical parameters and its complete upstream node network, and import builds the light for the target renderer.</p>
+<p><img src="media/shared/menu-sublib-lights.webp" alt="The context menu of a light asset: import and light-specific items such as apply light parameters" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>A light asset (a <code>.zasset</code> folder) exists.</li>
+<li>The asset directory can be opened in a file manager.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the light asset in the library and choose <code>「打开文件夹」 (Open folder)</code>.</li>
+<li>Find the <code>.zlight</code> file (normally <code>node.zlight</code>; the import side also recognizes other <code>.zlight</code> file names).</li>
+<li>Open it and confirm the structure: the new format is <code>nodes</code> + <code>root_lights</code>, the old format is a <code>lights</code> list.</li>
+<li>Check the common fields per light: <code>light_type</code>, <code>source_node_type</code>, <code>color</code>, <code>intensity</code>, <code>exposure</code>, <code>temperature</code>, <code>normalize</code>, <code>visible</code>, <code>transform</code>, plus <code>hdr_path</code> and <code>ies_file</code>.</li>
+<li>When a light carries textures or IES, look at <code>connected_files</code>, <code>connections</code> and <code>node_network</code>; the matching files live in the asset&#x27;s <code>textures/</code> and their paths have been rewritten as relative paths.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>After importing the asset the light node appears in the Outliner with a type matching the current renderer; a dome light&#x27;s HDR, an IES light&#x27;s profile and upstream texture nodes all connect back to the light.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li><code>light_type</code> supports <code>area</code>, <code>point</code>, <code>spot</code>, <code>directional</code>, <code>dome</code>, <code>disk</code>, <code>cylinder</code> and <code>ies</code>.</li>
+<li>The new format records <code>source_node_type</code> per light so import can reconstruct it for the source renderer first and then decide whether to convert.</li>
+<li>The old format has only a <code>lights</code> list without per-light source node types; when &quot;build first, then ask&quot; is needed it infers from <code>meta.node_type</code>.</li>
+<li>The file exists only if the zlight format was enabled at export; a light asset with only <code>.ma</code> goes through the ordinary scene import.</li>
+</ul>

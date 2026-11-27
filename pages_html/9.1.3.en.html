@@ -1,0 +1,17 @@
+<p>Quick tools write no central log file: results stay in each tool window, and progress output plus errors go to the Maya Script Editor history.</p>
+<h2 id="h-1">Where to look</h2>
+<table><thead><tr><th>Tool</th><th>Where products and results appear</th></tr></thead><tbody><tr><td>HDR / model / PBR texture to asset</td><td><code>.zasset</code> in the configured output directory; a result tree, status bar and completion dialog in the window</td></tr><tr><td>Image format conversion tool</td><td>Converted images in the output directory; the conversion log, progress bar and completion dialog in the window</td></tr><tr><td>Batch mirror copy</td><td>Files copied with the same structure in the target folder; operation log, progress bar and a completion summary</td></tr><tr><td>Batch process Maya files</td><td>The <code>.ma</code> / <code>.mb</code> files themselves (when saving is checked); an execution log area and a closing summary</td></tr><tr><td>Material import/export tool</td><td><code>.zmetal</code> / <code>.ma</code> / <code>.mcm</code> / <code>.ameta</code> and so on in the export directory; progress details printed to the Script Editor</td></tr><tr><td>Material conversion tool</td><td>New materials in the current scene; status bar, completion summary and a failed-material list</td></tr><tr><td>Material attribute mapping tool</td><td><code>.mmap</code> files in <code>Assets/material_mapper_presets</code>; a save prompt and Script Editor logs</td></tr><tr><td>Script browser</td><td>Success / failure and elapsed time in the status bar; the script&#x27;s <code>print</code>, traceback and <code>RESULT</code> in the Script Editor</td></tr></tbody></table>
+<h2 id="h-2">Verify the result</h2>
+<ol>
+<li>After a conversion tool finishes, open the configured output directory and confirm the new <code>.zasset</code> or target-format files.</li>
+<li>Open a <code>.zasset</code> and you should see <code>meta.json</code>, the source files (for example under <code>textures/</code>) and an optional <code>thumb.sicon</code>.</li>
+<li>Refresh or rescan the asset library and confirm the new assets are listed.</li>
+<li>Search the Maya Script Editor for the tool prefix (such as <code>[HDR Tool]</code>, <code>[材质导出]</code> or <code>[QuickTool]</code>) to read progress output.</li>
+</ol>
+<h2 id="h-3">Notes</h2>
+<ul>
+<li>A single failed file usually does not abort the batch; trust the success / failure counts and the failure list.</li>
+<li>The script browser has no separate output panel: script output and tracebacks only appear in the Script Editor history, and failures open a copyable error dialog.</li>
+<li>The batch Maya file tool can <code>「保存日志」 (Save log)</code> as <code>.txt</code> or <code>「复制日志」 (Copy log)</code> to the clipboard.</li>
+<li>Each tool writes logs only into its own log area in the window (the Script Editor gets output as well); there are no extra log files on disk.</li>
+</ul>

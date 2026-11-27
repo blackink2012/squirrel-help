@@ -1,0 +1,23 @@
+<p>Hand the thumbnails of one or more assets to a vision model; it returns a display name, suggested category, tags and notes, and writes them back into the asset metadata once you confirm.</p>
+<p><img src="media_en/shared/dialog-ai-analysis.webp" alt="AI asset analysis" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The assets have usable thumbnails; assets without one are skipped.</li>
+<li>A model that accepts image input is configured, or a local vision chat model is installed.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select the assets to analyze in the asset grid.</li>
+<li>Right-click an asset and choose <code>「AI 分析缩略图」 (AI thumbnail analysis)</code>, or pick <code>「AI 分析缩略图」 (AI thumbnail analysis)</code> with the selected count from the <code>「AI 工具」 (AI tools)</code> menu.</li>
+<li>In the analysis configuration choose the provider, model and output language, and decide whether to <code>「分析完成后弹出窗口供我审查和编辑」 (open a window for review and editing after analysis)</code> and whether to translate existing tags.</li>
+<li>Click <code>「开始分析」 (Start analysis)</code> and wait for progress.</li>
+<li>Check each item in the result window, edit as needed and click <code>「应用到元数据」 (Apply to metadata)</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The result window shows the thumbnail, the original asset name, the top-level category and four checkable results: display name, sub-category, tags and notes. After applying, the names and tags in the asset grid update.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>When the current model cannot see images it says so directly instead of silently returning an empty result.</li>
+<li>DeepSeek&#x27;s default model is text-only and needs a vision experimental model; Zhipu needs a vision model; OpenAI&#x27;s o series does not support images.</li>
+<li>When a model is unavailable the plug-in tries an available vision model from the list and states the substitution reason in the results.</li>
+</ul>

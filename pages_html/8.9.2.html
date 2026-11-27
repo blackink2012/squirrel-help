@@ -1,0 +1,12 @@
+<p>这类问题通常有明确报错：模型未找到、索引还没建、索引模型与期望不一致，或索引属于另一个库。</p>
+<h2 id="h-1">症状、原因与解决</h2>
+<p><strong>提示模型未找到（model not found）</strong>：要用的模型没拉取，或设置里留着已删除的模型名。用 <code>ollama list</code> 核对，拉取对应模型，或在配置里改选可用模型。</p>
+<p><strong>提示还没有资产库语义索引</strong>：该库从未建过索引。打开库后等后台预热，或执行 <code>python tools\asset_index.py --sync</code>。</p>
+<p><strong>提示索引模型与期望不一致</strong>：换过嵌入模型，或索引来自另一套配置。按提示重建：<code>python tools\asset_index.py --rebuild --model &lt;模型名&gt;</code>。</p>
+<p><strong>提示索引属于另一个库</strong>：索引目录被手工拷贝或指错。去掉覆盖变量让索引回到库内目录，或确认原库不需要后重建接管。</p>
+<p><strong>图像检索不可用</strong>：sidecar venv 不存在、缺 numpy / Pillow，或图像索引没建。重跑一键安装的图像部分，再执行 <code>python tools\asset_vision_encode.py sync --library &quot;&lt;库根&gt;&quot;</code>。</p>
+<p><strong>文档语义不可用</strong>：文档索引没建或模型不符。执行 <code>python tools\build_semantic_index.py --model &lt;模型名&gt;</code>；不重建也能用词法检索。</p>
+<h2 id="h-2">结果验证</h2>
+<p><code>asset_semantic_status</code> 显示可用且模型一致；<code>maya_docs(action=&quot;status&quot;)</code> 的语义部分也显示可用。</p>
+<h2 id="h-3">仍不行</h2>
+<p>先看索引是否指向了错误目录，再查日志；不要靠手工拷贝索引目录绕过归属校验。</p>

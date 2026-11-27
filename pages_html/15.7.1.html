@@ -1,0 +1,44 @@
+<blockquote><p>一句话定位：<strong>右侧「预览」区域显示选中资产的缩略图（可多张），双击能打开更大的查看窗口。</strong></p></blockquote>
+<p>它显示的是<strong>缩略图</strong>，不是 Maya 视口的实时渲染。想换图，用右键菜单（<a href="#/15.7.2"><code>8.7.2</code></a>）或底部四颗按钮（<a href="#/15.7.3"><code>8.7.3</code></a>）。</p>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>左侧导航选任意分类，进资产网格；</li>
+<li>单击任意资产卡片，右侧「预览」区域立刻出图；</li>
+<li>没选中资产时，预览区是空白画布 + 一个淡淡的占位图标。</li>
+</ol>
+<p>面板被关掉时，用顶部「面板」菜单重新打开「预览」区域（见 <a href="#/15.2.5"><code>8.2.5</code></a>）；它也能被拖动、拆分、撕下（见 <a href="#/3.2.1"><code>3.2.1</code></a>）。</p>
+<p><img src="media/shared/preview-panel.webp" alt="预览面板与底部按钮（截图里只有 1 张缩略图，所以看不到切换槽与删除按钮）" loading="lazy" decoding="async"></p>
+<h2 id="h-2">预览区本身</h2>
+<table><thead><tr><th>特性</th><th>说明</th></tr></thead><tbody><tr><td>尺寸</td><td>永远保持 1:1 正方形，边长跟着栏宽自适应；栏太窄时按可用高度收小，不会画出区域外</td></tr><tr><td>空态</td><td>显示深色画布 + 中央半透明占位图标</td></tr><tr><td>右键</td><td>在预览图上按右键 = 弹出「更新缩略图」菜单（<a href="#/15.7.2"><code>8.7.2</code></a>）</td></tr><tr><td>双击</td><td>打开更大的查看窗口：普通资产打开资产详情 / 观察窗口（<a href="#/15.11.1"><code>8.11.1</code></a>）；<strong>有版本或变体的资产</strong>打开版本浏览器（<a href="#/15.11.2"><code>8.11.2</code></a>）</td></tr><tr><td>动图</td><td>资产里带 GIF / MP4 时直接在预览区播放</td></tr><tr><td>视频预览</td><td>动画数据类资产的拍屏视频（<code>.cache</code> 里的 mp4）会在预览区播放</td></tr><tr><td>回收站</td><td>只读展示，缩略图操作按钮与右键菜单全部停用</td></tr></tbody></table>
+<h2 id="h-3">缩略图槽：一个资产可以有好几张图</h2>
+<table><thead><tr><th>槽位</th><th><code>.zasset</code> 资产的命名</th><th>普通文件夹资产的命名</th></tr></thead><tbody><tr><td>第 1 张（主图）</td><td><code>thumb.sicon</code> / <code>thumb.aicon</code> / <code>thumb.png</code> / <code>thumb.mp4</code></td><td><code>资产名.sicon</code></td></tr><tr><td>第 2 张起（附加槽）</td><td><code>thumb_2.sicon</code>、<code>thumb_3.sicon</code>…</td><td><code>资产名_2.sicon</code>、<code>资产名_3.sicon</code>…</td></tr></tbody></table>
+<ul>
+<li><strong>主图</strong>是卡片封面，<strong>不能被删除</strong>，只能用截取 / 导入覆盖；</li>
+<li><strong>附加图</strong>从第 2 张开始，可以删除；</li>
+<li>附加图编号会接着已有的最大号往后排，不会撞号。</li>
+</ul>
+<h2 id="h-4">切换多张缩略图</h2>
+<p>选中有多张图的资产后，预览图下方出现计数（如 <code>2/3</code>），可以用三种方式切换：</p>
+<table><thead><tr><th>方式</th><th>操作</th><th>说明</th></tr></thead><tbody><tr><td>悬浮箭头</td><td>鼠标移进预览图，左右两侧出现 ◀ ▶</td><td>到第一张时 ◀ 变灰，到最后一张时 ▶ 变灰</td></tr><tr><td>滚轮</td><td>鼠标停在预览图上滚动滚轮</td><td>向上 = 上一张，向下 = 下一张</td></tr><tr><td>自动轮播</td><td>不用操作，默认每 2 秒切下一张，到最后回头</td><td>鼠标停在预览图上会暂停；正在播放动图 / 视频时不轮播；只有一张图时不轮播</td></tr></tbody></table>
+<h2 id="h-5">删除附加缩略图</h2>
+<ol>
+<li>先切到要删的那一张（计数不能是 <code>1/n</code>）；</li>
+<li>点预览图下方的「删除」；</li>
+<li>该图片文件立刻从资产目录删掉，预览回到剩余图片。</li>
+</ol>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>删除附加缩略图<strong>没有二次确认</strong>，也不进回收站；删的是磁盘上的图片文件。切图时先看清计数，别在主图上点删除（主图那一步删除按钮是灰的）。</p></div>
+<h2 id="h-6">音频资产的预览</h2>
+<p>音乐 / 音频资产会多出两样东西：</p>
+<ul>
+<li>预览图中央的半透明大按钮：播放 / 暂停（图标随状态切换）；</li>
+<li>下方时间轴：显示 <code>当前时间 / 总时长</code>，可以拖动定位播放位置。</li>
+</ul>
+<h2 id="h-7">常见疑问</h2>
+<table><thead><tr><th>现象</th><th>原因</th></tr></thead><tbody><tr><td>预览区一直是空画布</td><td>没选中资产；或选中的是虚拟条目 / 回收站条目</td></tr><tr><td>预览图很小 / 缩小了</td><td>栏宽或区域高度不够，正方形边长被收小了；拉宽右栏即可</td></tr><tr><td>显示的不是最新截图</td><td>预览读的是缩略图文件，不会实时刷新；重新截取或生成一次</td></tr><tr><td>双击没打开查看窗口</td><td>可能是只读条目；或资产带了版本 / 变体，双击打开的是版本浏览器</td></tr></tbody></table>
+<h2 id="h-8">相关</h2>
+<ul>
+<li>预览图右键的「更新缩略图」菜单 → <a href="#/15.7.2"><code>8.7.2</code></a></li>
+<li>预览区下方四颗按钮的区别 → <a href="#/15.7.3"><code>8.7.3</code></a></li>
+<li>多缩略图槽的通用规则 → <a href="#/4.7.5"><code>4.1.7.5</code></a></li>
+<li>资产详情 / 观察窗口 → <a href="#/15.11.1"><code>8.11.1</code></a></li>
+</ul>

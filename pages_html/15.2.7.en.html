@@ -1,0 +1,29 @@
+<blockquote><p>One-line summary: <strong>the AI entry behind the &quot;brain&quot; icon on the toolbar — analyze thumbnails, chat-search assets, turn the AI assistant on or off, and stop the AI broker all live here.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Find the <strong>brain icon</strong> on the top toolbar (tooltip &quot;AI tools: analyze assets / AI search preview / AI assistant&quot;);</li>
+<li>Click to open the menu, then click an item.</li>
+</ol>
+<p><img src="media_en/shared/menu-ai-tools.webp" alt="AI tools menu: AI thumbnail analysis, AI search preview assets, AI assistant, stop AI broker service" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<p>The menu has <strong>5 items</strong> (including one gray placeholder); when the AI chat panel is <strong>already open</strong> an extra <strong>Recall AI panel</strong> item appears in the middle (making 6).</p>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>AI thumbnail analysis</td><td>Lets AI look at thumbnails and suggest category / tags / Chinese name / notes</td><td>Assets are selected; AI dependencies are available</td><td>Opens the &quot;AI analyze assets&quot; window and starts analyzing</td><td>The text changes with the selection: with a selection it reads &quot;AI thumbnail analysis (N selected assets)&quot;, without one it reads &quot;AI thumbnail analysis (right-click asset → AI analysis)&quot; — <strong>clicking it with nothing selected tells you to select assets in the grid first</strong>; see <a href="#/en/15.13.3"><code>8.13.3</code></a></td></tr><tr><td>AI search preview assets</td><td>Opens the chat-style natural language search surface where you see matches while chatting</td><td>AI dependencies are available</td><td>Opens the &quot;AI search preview assets&quot; panel / window</td><td>Complements AI search in the search bar: this one supports multi-turn dialogue and reference images; see <a href="#/en/8.5.3"><code>4.5.5.3</code></a></td></tr><tr><td>AI assistant (text follows state)</td><td>Turns the dsh chat panel on / off</td><td>None (the first use guides you through installing dsh)</td><td><strong>AI assistant</strong> starts the chat panel; when it is already open the text becomes <strong>Close AI assistant</strong> and clicking it closes the panel</td><td>Whether the chat panel stays in Maya or opens in a browser is decided in settings, see <a href="#/en/15.9.3"><code>8.9.3</code></a>; while starting it shows &quot;Starting AI assistant…&quot;</td></tr><tr><td>Recall AI panel</td><td>Brings the already running AI chat panel back into view</td><td>The chat panel <strong>is running</strong> (state: on)</td><td>Reuses the existing service to show the chat panel again</td><td>Only appears when the chat panel is running; it neither restarts the service nor kills the process</td></tr><tr><td>Stop AI broker service</td><td>Stops the resident AI broker process</td><td>The broker is running</td><td>Stops immediately; AI features in the menu become unavailable afterwards</td><td>AI tasks in progress are interrupted; the next AI feature starts the broker again automatically</td></tr><tr><td>Add more AI tools to this menu...</td><td>Gray placeholder hint</td><td>—</td><td>Not clickable</td><td>Only says the menu can be extended; it is not a broken item</td></tr></tbody></table>
+<blockquote><p>The menu has a dashed line at the top and can be <strong>torn off into a floating window</strong> for repeated clicks.</p></blockquote>
+<h2 id="h-3">Submenus</h2>
+<p>This menu has <strong>no second level</strong> (nothing has ▶; every item either opens a window or runs directly).</p>
+<h2 id="h-4">About &quot;Initializing...&quot;</h2>
+<p>When the interface has just opened and the asset grid is not ready, the whole menu shows only a gray &quot;Initializing...&quot; line and nothing can be clicked. Wait for the main interface to finish loading and click again; no restart is needed.</p>
+<h2 id="h-5">Beginner pitfalls</h2>
+<ul>
+<li><strong>&quot;AI thumbnail analysis&quot; does nothing</strong>: read the menu text — if it says &quot;(right-click asset → AI analysis)&quot; nothing is selected, so select one or more assets in the grid first.</li>
+<li><strong>All AI features are unclickable / dependencies are reported missing</strong>: the local AI dependencies are not installed; go to Settings → AI and run <strong>AI dependency check</strong> and <strong>one-click install</strong>, see <a href="#/en/15.9.3"><code>8.9.3</code></a>.</li>
+<li><strong>The AI assistant will not open</strong>: the first use requires installing dsh, and the plug-in shows an install guide, see <a href="#/en/15.13.6"><code>8.13.6</code></a>.</li>
+<li><strong>Mistaking &quot;Stop AI broker service&quot; for closing the menu</strong>: it really stops the service, cutting off running AI analyses / searches; the next AI feature starts it again automatically.</li>
+</ul>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>Full usage of AI analysis: <a href="#/en/8.4.1"><code>4.5.4.1</code></a>.</li>
+<li>Opening / recalling / stopping the AI assistant: <a href="#/en/8.3.3"><code>4.5.3.3</code></a>.</li>
+<li>The AI search preview assets panel: <a href="#/en/8.5.3"><code>4.5.5.3</code></a>.</li>
+<li>The overall toolbar index: <a href="#/en/15.2.1"><code>8.2.1</code></a>.</li>
+</ul>

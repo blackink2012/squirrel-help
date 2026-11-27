@@ -1,0 +1,40 @@
+<p>The export preset file is <code>Assets/preset/export_preset.json</code>; to back it up, move machines or standardize default formats across a team, simply copy this JSON.</p>
+<p><img src="media_en/shared/dialog-export-preset.webp" alt="Export preset" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The current machine has been configured as described in &quot;Save defaults per sub-library&quot;.</li>
+<li>The plug-in install directory&#x27;s <code>squirrel_asset_manager/Assets/preset/</code> is accessible.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<h3 id="h-3">Export the preset file</h3>
+<ol>
+<li>Locate <code>squirrel_asset_manager/Assets/preset/export_preset.json</code>.</li>
+<li>Copy it to a backup directory or a shared location.</li>
+<li>Include a date or project name in the file name, for example <code>export_preset_20261019.json</code>.</li>
+</ol>
+<h3 id="h-4">Import a preset file</h3>
+<ol>
+<li>Close any open export dialog and Settings window first.</li>
+<li>Back up the current machine&#x27;s <code>export_preset.json</code>.</li>
+<li>Overwrite <code>export_preset.json</code> at the same path with the target file.</li>
+<li>Reopen <code>Create asset</code> or <code>Settings → 导出默认值 (Export defaults)</code>; the new defaults apply immediately.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>Reopening <code>Settings → 导出默认值 (Export defaults)</code> shows checks matching the replaced file.</li>
+<li>Opening <code>Create asset</code> in that sub-library preselects the format checkboxes per the new defaults.</li>
+<li>Opening <code>export_preset.json</code> in a text editor shows the replaced sub-library entries and booleans.</li>
+</ul>
+<h2 id="h-6">File structure</h2>
+<pre><code class="language-json">{
+  "_default": { "ma": true, "zmetal": false },
+  "materials": { "zmetal": true, "ma": true, "material_only": true },
+  "models": { "ma": true, "material_only": false }
+}</code></pre>
+<table><thead><tr><th>Key</th><th>Purpose</th></tr></thead><tbody><tr><td><code>_default</code></td><td>Fallback when a sub-library has no entry of its own</td></tr><tr><td><code>materials</code> / <code>models</code> / <code>lights</code> / <code>textures</code> / <code>scenes</code> / <code>hdr</code> / <code>ani</code> / <code>images</code> / <code>audio</code> / <code>animation</code> / <code>nodetree</code></td><td>Defaults for each built-in sub-library (one-to-one with <code>sub_libraries</code> in <code>config.json</code>, 11 in total)</td></tr><tr><td><code>zmetal</code> / <code>zmetal_merge</code> / <code>mcm</code></td><td>Material nodes and material mapping</td></tr><tr><td><code>ma</code> / <code>mb</code> / <code>fbx</code> / <code>obj</code> / <code>usd</code></td><td>Geometry formats</td></tr><tr><td><code>abc</code> / <code>arnold</code> / <code>vray</code> / <code>redshift</code> / <code>vrmesh</code></td><td>Caches and proxies</td></tr><tr><td><code>material_only</code> / <code>collect_associated</code> / <code>textures</code></td><td>Materials only, collect linked files, package textures</td></tr><tr><td><code>ani_frame_mode</code></td><td><code>current</code> / <code>timeline</code> / <code>keyframe</code></td></tr><tr><td><code>delay_ms</code></td><td>Capture delay in milliseconds; <code>2000</code> means 2 seconds</td></tr><tr><td><code>thumb_source</code></td><td><code>screenshot</code> / <code>playblast</code> / <code>render</code></td></tr></tbody></table>
+<h2 id="h-7">Tips and warnings</h2>
+<blockquote><p><strong>Tip</strong>: the file is read only when the new-asset dialog opens; no Maya restart is needed after replacing it, just reopen the dialog.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: creating assets on the AI side reads <code>export_preset.json</code> as well, so this file is the shared default source for both the UI and the AI.</p></blockquote>
+<blockquote><p><strong>Warning</strong>: on invalid JSON the plug-in logs a load failure and falls back to built-in defaults, which looks like &quot;every format is unchecked&quot;. Validate with any JSON checker before replacing.</p></blockquote>
+<blockquote><p><strong>Current version</strong>: the Settings window has no <code>导入预设 / 导出预设文件 (import preset / export preset file)</code> buttons (verified 2026-11-03); importing and exporting here is done by copying the file, which is the most direct and reliable route.</p>
+<p><strong>Do not confuse it with &quot;export material as preset&quot;</strong>: the plug-in also has an <code>「导出材质为预设」 (Export material as preset)</code> dialog that exports <strong>scene materials</strong> into a <code>.zmetal</code> / JSON preset, which is not the same thing as <code>export_preset.json</code> here (&quot;what is checked by default for a new asset&quot;); that dialog is not wired to any menu entry today (see <a href="#/en/15.12.3">15.12.3</a>), so there is nothing to look for here.</p></blockquote>

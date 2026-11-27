@@ -1,0 +1,12 @@
+<p>For a timeout first decide whether the model is slow, the backend is not running, the network is blocked or the Maya main thread is busy; each layer is handled quite differently.</p>
+<h2 id="h-1">Common symptoms and fixes</h2>
+<p><strong>The first semantic search or AI analysis is slow</strong>: a model needs time to load the first time; wait or retry once, and it should become clearly faster.</p>
+<p><strong>Ollama request timed out</strong>: confirm <code>http://127.0.0.1:11434/api/tags</code> opens; if the system or environment sets a proxy (<code>HTTP_PROXY</code> / <code>HTTPS_PROXY</code>) without <code>127.0.0.1</code> in <code>NO_PROXY</code>, even loopback requests are intercepted. Raise <code>SQUIRREL_EMBED_TIMEOUT</code> when needed.</p>
+<p><strong>Cloud endpoint timed out</strong>: check the API endpoint, key, network and proxy; try another available model.</p>
+<p><strong>AI assistant reports the web client failed to start with an empty log and exit code 0</strong>: almost always the Node version is too old and must be <code>^22.19 || &gt;=24</code>. Use the one-click install for portable Node, or point <code>SQUIRREL_NODE</code> at a qualifying interpreter.</p>
+<p><strong>The backend is unreachable</strong>: confirm it is running and read the actual port from <code>~\.squirrel_asset_manager\broker_endpoint.json</code>; it switches ports automatically when one is taken.</p>
+<p><strong>A Maya command never returned</strong>: the main thread may be busy. Check late results and job state first, and never rerun a destructive command just because of one timeout.</p>
+<h2 id="h-2">Verify the result</h2>
+<p>The timing-out item returns normally, <code>squirrel_list_instances</code> shows the current Maya, and another dependency check reports no new gaps.</p>
+<h2 id="h-3">If it still fails</h2>
+<p>Use the crash / disconnect diagnostic tooling to check whether the port is <strong>really answering</strong> or merely <strong>listening</strong>; listening does not mean healthy.</p>

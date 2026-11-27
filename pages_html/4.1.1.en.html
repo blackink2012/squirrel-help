@@ -1,0 +1,14 @@
+<p>An asset is the smallest unit the plug-in manages: one <code>.zasset</code> folder is one asset. The sub-library decides which kind of asset it is, the category is the folder hierarchy inside the library, and tags are cross-category search terms.</p>
+<h2 id="h-1">Key nouns</h2>
+<table><thead><tr><th>Noun</th><th>Meaning</th><th>Where it appears in the interface</th></tr></thead><tbody><tr><td>Asset</td><td>A <code>.zasset</code> folder containing metadata, thumbnails, materials / geometry / textures and other files</td><td>Every card in the asset grid</td></tr><tr><td>Sub-library</td><td>A top-level container under the library root that decides the asset type</td><td>Top-level nodes of the Categories tree in the left column: materials, models, lights, textures, scenes, HDR, dynamics, images, audio, animation data, node trees (11 built-in sub-libraries)</td></tr><tr><td>Category</td><td>A multi-level folder inside a sub-library (or under a custom top-level category in the library root)</td><td>Nodes at every level of the tree</td></tr><tr><td>Tag</td><td>A free-form word in the asset metadata, used for filtering</td><td><code>「标签」 (Tags)</code> in the properties panel, <code>「编辑标签」 (Edit tags)</code> in the toolbar</td></tr></tbody></table>
+<h2 id="h-2">Why it is split this way</h2>
+<ul>
+<li>The sub-library decides how an asset is imported and which commands its context menu shows.</li>
+<li>A category is a pure folder structure; moving a category moves the folder, and sub-categories travel with their assets.</li>
+<li>Tags do not consume folder levels: one asset can carry several tags, which makes cross-category lookup possible.</li>
+</ul>
+<h2 id="h-3">Notes</h2>
+<ul>
+<li>Do not copy, move or rename <code>.zasset</code> folders by hand, and do not delete category folders inside the library directly. The plug-in indexes assets by metadata and folder structure, so manual changes make assets invisible; do moves, renames and deletions inside the plug-in.</li>
+<li>A category&#x27;s folder name is its internal ID and cannot be changed through the interface after creation.</li>
+</ul>

@@ -1,0 +1,43 @@
+<blockquote><p>One-line summary: <strong>when the plug-in starts separate mayapy / kick processes to render, this small non-modal window lets you keep working while watching which item is running, which stage it is in, and what was just rendered.</strong></p></blockquote>
+<p>The window is titled <strong>Background render · progress</strong>.</p>
+<h2 id="h-1">When it appears</h2>
+<table><thead><tr><th>Job</th><th>Uses this window</th></tr></thead><tbody><tr><td>Background thumbnail rendering (right-click <strong>Update thumbnail ▶ Background render</strong>)</td><td><strong>Yes</strong>, rendering jobs use it</td></tr><tr><td>Format conversion (right-click <strong>Format conversion</strong>)</td><td>No; it uses a modal progress dialog (<a href="#/en/15.12.4"><code>8.12.4</code></a>)</td></tr></tbody></table>
+<p>The window is <strong>non-modal and stays on top</strong>: it does not block you and does not steal focus; closing it does not stop the job.</p>
+<p><img src="media_en/shared/dialog-headless-watch.webp" alt="Background render progress window" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What the window contains</h2>
+<table><thead><tr><th>Area</th><th>Content</th><th>Description</th></tr></thead><tbody><tr><td>Title line</td><td>&quot;Preparing…&quot; → &quot;Asset 1/5: &lt;name&gt;&quot;</td><td>Shows preparing until processing starts</td></tr><tr><td>Stage line</td><td>&quot;Stage: &lt;stage name&gt;&quot;</td><td>Which step is running (building, applying materials, rendering, writing back and so on)</td></tr><tr><td>Progress bar</td><td>0% → 100% with a percentage</td><td>It advances <strong>per asset</strong>, not per rendered frame</td></tr><tr><td>Counter line</td><td>&quot;Done 3/5&quot;</td><td>Same source as the progress bar</td></tr><tr><td>Preview card</td><td>A 256×256 square preview showing &quot;(nothing rendered yet)&quot; when empty</td><td>Takes the <strong>newest</strong> PNG in the job directory</td></tr><tr><td>Render note</td><td>&quot;Latest image: &lt;file name&gt;&quot;</td><td>The file name behind the preview card</td></tr><tr><td>Cancel</td><td>Red danger button</td><td>The only way to stop, see below</td></tr><tr><td>Close</td><td>Secondary button</td><td>Only closes the window; the job keeps running</td></tr></tbody></table>
+<h2 id="h-3">What happens on completion</h2>
+<ol>
+<li>The progress bar fills and the title line becomes &quot;Job finished&quot;.</li>
+<li>The stage line clears and the counter becomes &quot;N succeeded · M failed · K skipped&quot;.</li>
+<li><strong>Cancel</strong> turns gray and unclickable.</li>
+<li><strong>The window closes itself after about 2 seconds</strong> — that delay lets you look at the last thumbnail.</li>
+<li>The job also produces a summary dialog (success / failure / skipped details), so nothing is lost when the window closes.</li>
+</ol>
+<h2 id="h-4">What cancelling means</h2>
+<ul>
+<li>After clicking <strong>Cancel</strong> the stage line immediately reads &quot;Cancelling (waiting for the current asset to finish)…&quot; and the button turns gray.</li>
+<li>This is <strong>cooperative cancellation</strong>: the asset currently being processed finishes first, then the whole job stops.</li>
+<li><strong>Images already rendered are kept</strong> and are never rolled back.</li>
+<li>On Windows the cancel kills the whole process tree (mayapy plus the kick and other child processes it started) so no zombie renderer is left behind.</li>
+</ul>
+<h2 id="h-5">A complete example</h2>
+<ol>
+<li>Right-click an asset → <strong>Update thumbnail ▶</strong> → <strong>Background render</strong> → choose the settings → <strong>Start generating</strong>.</li>
+<li>The progress window appears with &quot;Preparing…&quot;.</li>
+<li>It runs &quot;Asset 1/3&quot; with the stage line showing the current step.</li>
+<li>The first image appears in the preview card.</li>
+<li>If the settings were wrong (the wrong renderer, for example) click <strong>Cancel</strong> and wait for &quot;Cancelling…&quot; to finish.</li>
+<li>When everything is done the window closes itself after 2 seconds; reopen it with the correct settings if needed.</li>
+</ol>
+<h2 id="h-6">Common questions</h2>
+<table><thead><tr><th>Question</th><th>Explanation</th></tr></thead><tbody><tr><td>Does closing the window stop rendering?</td><td><strong>No.</strong> Closing only stops watching; you must click <strong>Cancel</strong> to stop the job</td></tr><tr><td>Why does the progress bar advance per asset?</td><td>The job queues assets and produces one image per asset; the internal frame progress of a single render is not reflected on that bar</td></tr><tr><td>The preview card stays on &quot;(nothing rendered yet)&quot;?</td><td>The first image has not been written yet, or rendering failed (the counter shows failures when the job ends)</td></tr><tr><td>Why did the window close by itself?</td><td>It closes about 2 seconds after completion, by design</td></tr><tr><td>Why is there no such window for format conversion?</td><td>Format conversion uses a modal progress dialog and is not a rendering job</td></tr></tbody></table>
+<h2 id="h-7">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>Cancel appears to do nothing</td><td>The current asset is finishing (cooperative cancellation); wait</td><td>It ends naturally once the stage line reads &quot;Cancelling…&quot;</td></tr><tr><td>The job stays on &quot;Preparing…&quot;</td><td>mayapy will not start (path / environment issue)</td><td>Cancel and check the headless dependencies, see <a href="#/en/15.12.6"><code>8.12.6</code></a></td></tr><tr><td>Everything failed</td><td>The renderer is unavailable, or models / textures are missing</td><td>Read the summary dialog and the Script Editor log</td></tr><tr><td>A few assets were skipped</td><td>Those assets have no usable geometry / material to render</td><td>Normal: they are skipped and counted</td></tr></tbody></table>
+<h2 id="h-8">Related</h2>
+<ul>
+<li>Headless thumbnail options (the previous step): <a href="#/en/15.12.6"><code>8.12.6</code></a></li>
+<li>Format conversion (the other kind of progress dialog): <a href="#/en/15.12.4"><code>8.12.4</code></a></li>
+<li>The user-guide version of job progress and cancellation: <a href="#/en/10.6.5"><code>4.7.6.5</code></a></li>
+<li>How batch headless rendering works: <a href="#/en/10.6.2"><code>4.7.6.2</code></a></li>
+</ul>

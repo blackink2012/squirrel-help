@@ -1,0 +1,50 @@
+<blockquote><p>One-line summary: <strong>batch-pack the .hdr / .exr environment maps on disk into <code>.zasset</code> packages the library understands, optionally generating thumbnails along the way.</strong></p></blockquote>
+<p>This is the first tool under <strong>Quick tools</strong>, and it moves &quot;files outside the library&quot; into &quot;assets inside the library&quot;. It never touches your scene; it only reads source files and writes to the output directory.</p>
+<h2 id="h-1">Where to open it</h2>
+<table><thead><tr><th>Entry</th><th>How</th></tr></thead><tbody><tr><td>Top toolbar <strong>Quick tools</strong> menu</td><td><strong>Quick tools</strong> → <strong>hdr to zasset</strong></td></tr><tr><td>Command</td><td>Called <code>hdr_to_zasset</code> on the command surface (for the AI assistant / command channel; parameters in <a href="#/en/12.1.11"><code>5.1.11</code></a>)</td></tr><tr><td>Script browser</td><td><strong>Quick tools</strong> → <strong>Script browser</strong> → add the plug-in&#x27;s <code>quicktools</code> directory → find <code>hdr_to_zasset.py</code> and double-click it</td></tr></tbody></table>
+<p>All three open the same window, titled &quot;HDR environment map to asset&quot;.</p>
+<p><img src="media_en/shared/quicktool-hdr.webp" alt="HDR to asset window" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What every control does</h2>
+<h3 id="h-3">Card &quot;Detected HDR files&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td><strong>Scan HDR files</strong> button</td><td>Scans according to input mode + input path + format filter + recursion and lists what it finds</td><td><strong>Rescan after every input change</strong>; converting without scanning reports &quot;scan HDR files first&quot;</td></tr><tr><td>Status text &quot;Ready&quot; / &quot;Scanning...&quot; / &quot;Found N HDR files&quot;</td><td>Scan state and result count</td><td>If the count is off, check the path and recursion</td></tr><tr><td>File list</td><td>The files found (files in subfolders show their directory level)</td><td>Use it to confirm &quot;are these the right files&quot;</td></tr><tr><td><strong>Format filter:</strong> input (placeholder &quot;leave empty to scan .hdr and .exr, e.g. hdr or exr&quot;)</td><td>Scans only the given extension; empty = both .hdr and .exr</td><td>Type <code>exr</code> to convert only exr</td></tr></tbody></table>
+<h3 id="h-4">Card &quot;Input mode&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Radio <strong>Choose files</strong></td><td>Hand-pick a few files</td><td>For converting just a few</td></tr><tr><td>Radio <strong>Choose folder</strong></td><td>Convert a whole directory (default)</td><td>Use this for batch import</td></tr></tbody></table>
+<h3 id="h-5">Card &quot;Input&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Path input (placeholder &quot;choose the HDR/EXR files to convert...&quot; / &quot;choose the folder containing .hdr/.exr files...&quot;)</td><td>The source files or folder</td><td>—</td></tr><tr><td><strong>Browse...</strong> button</td><td>Chooses a file or folder per the mode above</td><td>More reliable than typing</td></tr></tbody></table>
+<h3 id="h-6">Card &quot;Output location&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Path input (placeholder &quot;choose the asset output folder...&quot;)</td><td>Where <code>.zasset</code> packages are generated</td><td><strong>Output into an empty directory first</strong> (outside the library), verify, then copy in</td></tr><tr><td><strong>Browse...</strong> button</td><td>Chooses the output directory</td><td>—</td></tr></tbody></table>
+<h3 id="h-7">Card &quot;Conversion options&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Checkbox &quot;Generate thumbnail preview&quot;</td><td>Generates a tone-mapped PNG thumbnail from the HDR and packs it into the asset</td><td>Recommended; otherwise the library shows gray squares</td></tr><tr><td>Checkbox &quot;Prefer existing thumbnails&quot;</td><td>Looks for a same-named PNG / JPG in the same directory instead of decoding the HDR again</td><td>Tick it when previews already sit next to the sources</td></tr><tr><td>Thumbnail format input (placeholder &quot;png, jpg&quot;)</td><td>Which formats to look for when preferring existing thumbnails, comma separated</td><td>Defaults are fine</td></tr><tr><td>Checkbox &quot;Recursively scan subfolders&quot;</td><td>Scans HDRs in subfolders too</td><td>Tick it for deep directory trees</td></tr><tr><td>Checkbox &quot;Keep hierarchy&quot;</td><td>Ticked = output keeps the source directory levels; unticked = every <code>.zasset</code> goes flat into the output directory</td><td><strong>Leave it unticked</strong> for batch import (flat is easier to find)</td></tr><tr><td>Checkbox &quot;Import into the current category after conversion&quot;</td><td>Copies the <code>.zasset</code> into the currently selected category directory (<strong>assets only, no directory structure</strong>)</td><td>Tick it when the output is already a library category; otherwise verify outside the library first</td></tr><tr><td><strong>Format filter:</strong> input (at the bottom of the card)</td><td>The same scan filter as above</td><td>—</td></tr></tbody></table>
+<h3 id="h-8">Bottom buttons</h3>
+<table><thead><tr><th>Button</th><th>Effect</th></tr></thead><tbody><tr><td><strong>Help</strong> icon button</td><td>Opens this tool&#x27;s detailed help</td></tr><tr><td><strong>Cancel</strong></td><td>Closes without converting</td></tr><tr><td><strong>Convert</strong></td><td>Converts file by file, with an <strong>Abort</strong> button while running</td></tr></tbody></table>
+<h2 id="h-9">A complete flow</h2>
+<ol>
+<li>Quick tools → <strong>hdr to zasset</strong>;</li>
+<li>Choose input mode <strong>Choose folder</strong> and browse to the HDR / EXR directory;</li>
+<li>Choose an <strong>empty directory</strong> (outside the library) as the output location;</li>
+<li>Tick <strong>Recursively scan subfolders</strong> if needed, and <strong>Keep hierarchy</strong> as required (leave it off for batch import);</li>
+<li>Tick <strong>Generate thumbnail preview</strong>; add <strong>Prefer existing thumbnails</strong> when same-named PNG/JPG files sit beside the sources;</li>
+<li>Click <strong>Scan HDR files</strong> and confirm &quot;Found N HDR files&quot; matches expectations;</li>
+<li>Click <strong>Convert</strong> and wait (&quot;Conversion finished: X succeeded, Y failed&quot;; failures list error details);</li>
+<li>In the output directory confirm each HDR produced a same-named <code>.zasset</code> folder containing <code>textures/</code>, <code>thumb.sicon</code> and <code>meta.json</code>;</li>
+<li>Once it looks right, copy the <code>.zasset</code> folders into the matching library category and click refresh in the main window (the toolbar refresh button) to see them.</li>
+</ol>
+<h2 id="h-10">Where the output lands</h2>
+<ul>
+<li><code>.zasset</code> packages are generated under the <strong>output location</strong>, one per source file, named after the HDR file;</li>
+<li>A <code>.zasset</code> is a <strong>folder</strong> (not a single file) holding the packed textures, thumbnail and <code>meta.json</code>;</li>
+<li>With <strong>Import into the current category after conversion</strong> ticked it also <strong>copies another set</strong> into the current category directory and the completion message says &quot;imported N into the current category&quot;; refresh the main window to see them.</li>
+</ul>
+<h2 id="h-11">Risks and how to undo</h2>
+<ul>
+<li><strong>A same-named asset is replaced entirely</strong>: when the output directory already holds <code>&lt;name&gt;.zasset</code>, generation deletes the old one first and then writes the new one. So never point the output at a category directory that already contains same-named assets — output to an empty directory, verify, then copy.</li>
+<li>Conversion <strong>only reads the source HDR / EXR files and never changes them</strong>; failing files are listed in the error details and the originals are unaffected.</li>
+<li>When thumbnail generation fails it asks &quot;continue converting (skip thumbnail generation)?&quot; and you may continue.</li>
+<li>To undo, delete the newly generated <code>.zasset</code> folders in the output directory; if they were already copied into the library and refreshed, delete them to the recycle bin in the main window (see <a href="#/en/15.5.16"><code>8.5.16</code></a>).</li>
+</ul>
+<h2 id="h-12">Related</h2>
+<ul>
+<li>Its position in the <strong>Quick tools</strong> menu: <a href="#/en/15.2.6"><code>8.2.6</code></a></li>
+<li>Batch image format conversion (not import): <a href="#/en/15.14.4"><code>8.14.4</code></a></li>
+<li>What an imported HDR asset offers in its context menu: <a href="#/en/15.5.7"><code>8.5.7</code></a></li>
+</ul>

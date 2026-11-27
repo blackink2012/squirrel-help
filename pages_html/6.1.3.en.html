@@ -1,0 +1,35 @@
+<p>A <code>.zasset</code> is a folder holding metadata, geometry, materials, textures, thumbnails and dependencies; the folder itself is the complete asset.</p>
+<h2 id="h-1">Directory layout</h2>
+<pre><code class="language-text">MyAsset.zasset/
+├── meta.json                 # metadata
+├── node.ma / node.mb / node.fbx / node.obj / node.usd
+├── node.zmetal               # material node network (material / model assets)
+├── node.zlight               # light preset (light assets)
+├── node.mcm                  # material → model mapping
+├── textures/                 # material and light textures
+├── deps/                     # collected linked files (optional; associated/ in older versions)
+│   ├── textures/  caches/  proxies/  volumes/
+│   ├── references/  audio/  movies/  imageplanes/  others/
+├── thumb.sicon               # static thumbnail
+├── thumb.aicon / thumb.mp4   # animated or video thumbnail
+├── lods.json                 # current LOD index (lod0 = root geometry)
+├── lod1/                     # LOD1 and later geometry
+├── variants.json             # variant registry (variant geometry / thumbnails, legacy versions and version materials)
+├── variants/                 # variant geometry (&lt;id&gt;.ma flat; older layout &lt;version&gt;/lod*/)
+└── V1/ V2/ …                 # new versions: each a self-contained version asset (registered in meta.json)</code></pre>
+<h2 id="h-2">Key files</h2>
+<table><thead><tr><th>File</th><th>Purpose</th></tr></thead><tbody><tr><td><code>meta.json</code></td><td>Asset identity and index: <code>id</code>, <code>name</code>, <code>name_cn</code>, <code>tags</code>, <code>category</code>, <code>asset_type</code>, <code>formats</code>, <code>ani</code> and so on</td></tr><tr><td><code>node.&lt;ext&gt;</code></td><td>Root geometry, equivalent to <code>lod0</code>; several formats can coexist</td></tr><tr><td><code>node.zmetal</code> / <code>node.zlight</code></td><td>Material or light node network, rebuilt on import</td></tr><tr><td><code>node.mcm</code></td><td>Vertex / face / edge counts and per-face material assignments, used to match models on import</td></tr><tr><td><code>textures/</code></td><td>Textures stored flat; same name and content keeps one copy, same name with different content gets a number appended</td></tr><tr><td><code>deps/</code></td><td>Copied only when &quot;collect linked files&quot; is checked; sub-directories classify by file type (the older name <code>associated/</code> is still read)</td></tr><tr><td><code>lods.json</code></td><td>Current LOD index: <code>default_lod</code> and the <code>lods</code> list; <code>lod0</code> points at the root geometry</td></tr><tr><td><code>variants.json</code></td><td>Registry for variants and legacy versions: <code>variants[]</code> (geometry and thumbnail entries per variant) and <code>versions[]</code> (legacy version labels, LOD lists, per-version material paths)</td></tr><tr><td><code>variants/</code></td><td>Variant geometry: the new layout is flat <code>variants/&lt;variant id&gt;.ma</code> (with several LODs <code>variants/&lt;id&gt;_lod1.ma</code>); the older layout is <code>variants/&lt;version&gt;/lod*/</code>; variant thumbnails also live here</td></tr><tr><td><code>V1/</code>, <code>V2/</code></td><td>Embedded self-contained versions created by <code>Update asset → Create new version</code>, each with its own <code>meta.json</code>; the main asset&#x27;s <code>version_assets</code> registers these sub-versions</td></tr></tbody></table>
+<h2 id="h-3">The dependency ledger in metadata</h2>
+<p>Whether or not collection is checked, export scans dependencies and records the result in <code>meta.json</code>: <code>dependencies_missing</code> lists files that could not be found, <code>dependencies_out_of_scope</code> lists dependencies not packaged this time, and <code>dependencies_unresolved_tokens</code> lists unparsable tokens in paths. <code>texture_map</code> records the mapping from original texture paths to in-package paths, which import uses to remap them.</p>
+<h2 id="h-4">Two indexes: lods.json and variants.json coexist</h2>
+<p><code>lods.json</code> and <code>variants.json</code> are <strong>two indexes used together</strong>, each covering one area, rather than &quot;the new structure replacing the old&quot;:</p>
+<ul>
+<li><code>lods.json</code> covers the current LODs: <code>default_lod</code> plus the <code>lods</code> list, with <code>lod0</code> pointing at the root geometry and <code>lod1/</code>… holding progressively lower detail.</li>
+<li><code>variants.json</code> covers <strong>variants</strong> and <strong>legacy versions</strong>:<ul>
+<li>Variants: one entry per variant in <code>variants[]</code>, geometry stored flat as <code>variants/&lt;id&gt;.ma</code> (or <code>variants/&lt;id&gt;/lod*/</code> in the older structure), thumbnails also under <code>variants/</code>;</li>
+<li>Legacy versions: <code>versions[]</code> records the version id, label and LOD list, with geometry in <code>variants/&lt;version&gt;/lod*/</code>; per-version materials for those versions are exported to <code>variants/&lt;version&gt;/node.zmetal</code> and written into that version&#x27;s <code>material</code> field.</li>
+</ul></li>
+<li>These are <strong>still being written today</strong>: adding and removing variants (<code>add_variant</code> / <code>add_variant_lod</code> / <code>remove_variant</code> in <code>core/zasset_builder.py</code>) and per-version materials (<code>_export_variant_material</code> in <code>core/export_orchestrator.py</code>) all update <code>variants.json</code>. So finding a <code>variants.json</code> in an asset is not legacy residue — it means the asset uses variants or legacy versions.</li>
+<li><code>Update asset → Create new version</code> takes a different path: it creates an embedded self-contained <code>V{n}/</code> inside the main asset and registers it in the main asset&#x27;s <code>meta.json</code> under <code>version_assets</code>; <strong>this path does not write</strong> <code>variants.json</code>.</li>
+<li><code>variant_types</code> in <code>meta.json</code> records which internal structures the asset has (<code>variant</code> / <code>lod</code>); on the read side <code>core/asset_scope.py</code> merges embedded <code>V{n}/</code>, legacy <code>variants/&lt;version&gt;/</code> and sibling child <code>.zasset</code> forms into one view, so older assets need no manual migration.</li>
+</ul>

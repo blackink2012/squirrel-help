@@ -1,0 +1,27 @@
+<blockquote><p>一句话定位：<strong>告诉插件「文件名里出现这些词，就把它认成某个 PBR 通道」——左边选通道，右边逐行写别名。</strong></p></blockquote>
+<p><strong>这一页默认是锁住的</strong>，必须先勾「解锁全部配置」并确认警告才能改（见 <a href="#/15.9.1"><code>8.9.1</code></a>）。</p>
+<p><img src="media/shared/settings-texture-suffix.webp" alt="设置窗口（贴图后缀页）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">怎么打开</h2>
+<p>设置窗口 → 勾「解锁全部配置」→ 页签「贴图后缀」。</p>
+<h2 id="h-2">控件详解</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值</th><th>改了会怎样</th><th>需要先解锁</th></tr></thead><tbody><tr><td>贴图类型列表</td><td>左侧列表</td><td>选要编辑哪个通道</td><td>第一项 <code>baseColor</code></td><td>切换通道时，右侧显示该通道自己的别名表</td><td>是</td></tr><tr><td>别名编辑框</td><td>多行等宽文本框（每行一个贴图名）</td><td>该通道认哪些文件名关键词</td><td>每个通道一组别名（见下表）</td><td>影响 PBR 贴图导入 / 扫描时按文件名分通道；别名命中越多、分得越准</td><td>是</td></tr><tr><td>提示行</td><td>只读文字</td><td>「每行一个贴图名，对应 JSON 中该类型的 aliases」</td><td>—</td><td>—</td><td>否</td></tr><tr><td>恢复默认设置</td><td>按钮（页内）</td><td>丢弃本页未保存的编辑，重新从 <code>pbr_mapping.json</code> 读取</td><td>—</td><td><strong>不是</strong>恢复到出厂值，只是重读磁盘文件（见下方说明）</td><td>是</td></tr></tbody></table>
+<h2 id="h-3">通道与出厂别名</h2>
+<table><thead><tr><th>通道</th><th>默认别名（节选）</th></tr></thead><tbody><tr><td>baseColor</td><td>basecolor、base_color、albedo、diffuse、col、color、base、diff</td></tr><tr><td>normal</td><td>nrm、n、normalmap、norm、nor、nor_dx、nor_gl、normal</td></tr><tr><td>roughness</td><td>rough、rgh、roughnessmap、rough_map、roughness</td></tr><tr><td>metallic</td><td>metal、mtl、metalness、metal_map、metallic_map</td></tr><tr><td>ao</td><td>ambient、occlusion、ambient_occlusion、ao_map、ao、occ</td></tr><tr><td>arm</td><td>arm</td></tr><tr><td>orm</td><td>orm</td></tr><tr><td>emissive</td><td>emit、emission、illumination、emissive_map、glow</td></tr><tr><td>height</td><td>bump、disp、displacement、heightmap、height_map、disp_map、height、bump_map</td></tr><tr><td>opacity</td><td>alpha、transparency、mask、opacity_map、alpha_map、mask_map</td></tr><tr><td>clearcoat</td><td>coat、coating、clearcoat_map</td></tr><tr><td>clearcoatRoughness</td><td>coatRough、ccRough、clearcoat_rough、clearcoat_roughness</td></tr><tr><td>specular</td><td>spec、refl、reflection、specular_map、reflectivity</td></tr><tr><td>subsurface</td><td>sss、subsurface_color、translucency、sss_map、translucent</td></tr><tr><td>anisotropy</td><td>aniso、anisotropy_map、direction</td></tr><tr><td>ior</td><td>index_of_refraction、refractive_index</td></tr></tbody></table>
+<h2 id="h-4">这些别名什么时候起作用</h2>
+<ul>
+<li>导入一整套 PBR 贴图（贴图文件夹 / 快捷工具「PBR 贴图转资产」）时，插件按文件名判断哪张是颜色、哪张是法线……靠的就是这里的别名；</li>
+<li>别名靠<strong>文件名关键词</strong>匹配（如 <code>wood_basecolor.png</code>、<code>wood_diff_4k.jpg</code> 都能认成 baseColor）；</li>
+<li>改完保存后，下一次导入 / 扫描贴图时按新别名走，已入库的资产不受影响。</li>
+</ul>
+<h2 id="h-5">常见问题</h2>
+<table><thead><tr><th>现象</th><th>原因 / 怎么办</th></tr></thead><tbody><tr><td>贴图被分进「未知通道」</td><td>文件名里的词不在任何别名里；把那个词加进对应通道的别名表</td></tr><tr><td>法线被认成了高度图</td><td>两张图可能都命中 <code>bump</code> 一类词；把不想要的别名从对应通道删掉</td></tr><tr><td>改了别名却没生效</td><td>没点「应用 / 确定」；或改的是另一个通道（左侧列表没选中它）</td></tr><tr><td>想恢复出厂别名</td><td>页内「恢复默认设置」只是重读文件，不会改回出厂值；请对照上表手动改回，或用备份的 <code>pbr_mapping.json</code> 覆盖（<code>&lt;插件目录&gt;\Assets\preset\</code>）</td></tr></tbody></table>
+<h2 id="h-6">反悔</h2>
+<table><thead><tr><th>情况</th><th>怎么反悔</th></tr></thead><tbody><tr><td>还没保存</td><td>点「取消」；或点页内「恢复默认设置」重新读文件</td></tr><tr><td>已保存、改乱了</td><td>用备份的 <code>pbr_mapping.json</code> 覆盖回去，再重开设置窗口</td></tr><tr><td>只想撤销某一行</td><td>手动删掉那一行再应用</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p><code>pbr_mapping.json</code> 里除了别名还存着通道映射关系，用文本编辑器手改时要小心保持 JSON 结构完整；改前先备份。</p></div>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>设置窗口总览与全局锁定 → <a href="#/15.9.1"><code>8.9.1</code></a></li>
+<li>「支持格式」页（文件扩展名白名单） → <a href="#/15.9.6"><code>8.9.6</code></a></li>
+<li>材质与 PBR 映射文件的结构 → <a href="#/12.4.3"><code>5.4.3</code></a></li>
+<li>快捷工具「PBR 贴图转资产」 → <a href="#/9.2.3"><code>4.6.2.3</code></a></li>
+</ul>

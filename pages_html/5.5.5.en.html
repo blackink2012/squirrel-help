@@ -1,0 +1,26 @@
+<p><code>「指定贴图」 (Assign texture)</code> connects a texture asset&#x27;s image to the matching channel of the selected material, or connects an HDR to the selected dome light.</p>
+<p><img src="media_en/shared/menu-context-assign-texture.webp" alt="Texture asset context menu: assign texture to material" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The texture asset carries a <code>properties</code> record (describing what each texture is for).</li>
+<li>Texture case: one or more material nodes are selected.</li>
+<li>HDR case: a dome light is selected.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Texture asset: select the material node, right-click the texture asset and choose <code>「指定贴图到材质」 (Assign texture to material)</code>.</li>
+<li>HDR asset: select the dome light, right-click the HDR asset and choose <code>「指定贴图」 (Assign texture)</code>.</li>
+<li>The plug-in takes the texture at the asset&#x27;s default resolution and connects it, according to its PBR role, to the texture attribute of the target material or light.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The target material gains a file node whose <code>fileTextureName</code> points at the matching texture inside the asset.</li>
+<li>The dome light&#x27;s texture attribute points at the HDR file, with the Raw color space.</li>
+<li>The Script Editor reports how many nodes were assigned.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>With nothing selected the messages are <code>「未选中任何对象，请先选中一个材质节点」 (nothing selected; select a material node first)</code> or <code>「请先选中一个穹顶灯」 (select a dome light first)</code>.</li>
+<li><code>「指定贴图」 (Assign texture)</code> only changes connections and never creates material nodes; for a new material use <code>「创建材质」 (Create material)</code>.</li>
+<li>Where textures and HDRs are stored follows the texture import policy.</li>
+</ul>

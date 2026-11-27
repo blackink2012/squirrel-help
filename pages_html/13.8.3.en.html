@@ -1,0 +1,62 @@
+<p>A useful report contains the version, reproduction steps, the full error and the relevant logs, ideally with a minimal reproduction asset attached.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>After reporting, you keep having to add information and the problem stays unlocated.</li>
+<li>The report only says &quot;does not work&quot; or &quot;it errored&quot;, with no version, steps or logs.</li>
+<li>A screenshot was attached, but without the full error text or a timestamp.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>Environment information is missing</td><td>No Maya version, OS or plug-in version</td><td>Fill in the template</td></tr><tr><td>Reproduction steps are incomplete</td><td>The maintainer cannot reproduce from the description</td><td>Write numbered steps starting from opening the plug-in</td></tr><tr><td>The error was truncated</td><td>Only the last line or a blurry screenshot</td><td>Attach the full traceback text</td></tr><tr><td>No logs</td><td>The failing layer cannot be determined</td><td>Attach key snippets per 6.8.1 &quot;Log locations&quot;</td></tr><tr><td>No minimal reproduction</td><td>Only the whole project is available</td><td>Provide a minimal scene or a single asset</td></tr><tr><td>Sensitive information leaked</td><td>A full license or key was attached</td><td>Provide only the status and error code</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Fill in the template below as completely as you can.</li>
+</ol>
+<pre><code class="language-text">[Environment]
+Plug-in version:
+Maya version:
+Operating system:
+Renderer and version:
+
+[Problem]
+One-line description:
+When it first appeared:
+Scope (single asset / whole library / all scenes):
+
+[Reproduction steps]
+1.
+2.
+3.
+
+[Expected result]
+
+[Actual result]
+
+[Full error]
+(Paste the Script Editor traceback, keeping the first and last few lines)
+
+[Logs]
+Log path:
+Key snippets:
+
+[Attachments]
+Screenshots / screen recording:
+Minimal scene or asset:
+What you already tried:
+
+[Other]
+Does it reproduce reliably:
+Does it only happen in one Maya version:</code></pre>
+<ol>
+<li>Error text takes priority over screenshots; use screenshots to show the UI state.</li>
+<li>Attach only the relevant log snippets and state their paths and timestamps.</li>
+<li>You may desensitize assets or scenes, but keep the structure and node types that can trigger the problem.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>The maintainer can reproduce the problem from the report alone, or can tell exactly which layer&#x27;s logs are needed.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>If unsure what to attach, at least provide the version, reproduction steps, the full error and the <code>--doctor</code> output.</li>
+<li>For crashes, attach the event log module name and offset and keep the crash dump.</li>
+<li>Never publish full license files, private keys or credentials containing personal information.</li>
+<li>Use 6.8.2 &quot;Diagnostic workflow&quot; to locate the failing layer first, then add the matching material.</li>
+</ul>

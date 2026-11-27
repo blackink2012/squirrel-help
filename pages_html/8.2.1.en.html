@@ -1,0 +1,19 @@
+<p>One check inspects Ollama, the embedding model, the documentation and asset-library indexes, image retrieval, the vision model, dsh and cloud keys, and produces a report you can follow directly.</p>
+<p><img src="media_en/shared/settings-ai-deps.webp" alt="AI dependencies" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<p>The plug-in main window is open; to check the indexes and the current library, open the target asset library first.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open <code>Settings → AI 设置 (AI settings)</code>.</li>
+<li>In the top <code>「AI 功能与依赖」 (AI features and dependencies)</code> group click <code>「AI 依赖检查」 (AI dependency check)</code>.</li>
+<li>Wait for the background check. The report is written to disk and opened in Notepad automatically, and the status line also gives a summary.</li>
+<li>Work through the report in order: first the items marked unavailable, then the optional ones not installed; every item states the current state, what is missing, which feature it affects and how to fix it.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>Notepad opens <code>%TEMP%\squirrel_asset_manager\AI依赖检查报告.txt</code>, listing each item as available, optional and not installed, or unavailable; the entries should agree with the hints on the settings page.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>The check connects to Ollama once and asks about each model&#x27;s capabilities, which takes a few seconds on a slow machine.</li>
+<li>To inspect local files quickly without contacting services, run the read-only command <code>ai_deps_status(probe=false)</code>.</li>
+<li>The report only diagnoses and never installs; use <code>「一键安装」 (One-click install)</code> to fill gaps (next page).</li>
+</ul>

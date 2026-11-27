@@ -1,0 +1,32 @@
+<p><code>Settings → 导出默认值 (Export defaults)</code> stores the formats and options checked by default when creating a new asset, per sub-library, in <code>Assets/preset/export_preset.json</code> in the plug-in directory.</p>
+<p><img src="media_en/shared/settings-export.webp" alt="Settings → Export defaults" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The plug-in Settings window can be opened.</li>
+<li>It is clear which sub-library&#x27;s defaults should change. The list on the left comes from <code>sub_libraries</code> in <code>Assets/preset/config.json</code>: <strong>11</strong> built-in sub-libraries — materials, models, lights, textures, scenes, HDR, dynamics, images, audio, animation data, node trees — plus any custom sub-libraries.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open <code>「设置」 (Settings)</code> and switch to the <code>「导出默认值」 (Export defaults)</code> tab.</li>
+<li>Choose a sub-library in the list on the left, for example <code>materials</code>.</li>
+<li>Check the defaults on the right:<ul>
+<li>Material formats: <code>材质节点 (.zmetal)</code>, <code>合并材质 (.zmetal_merge)</code>, <code>材质→模型映射 (.mcm)</code>.</li>
+<li>Geometry formats: <code>ma</code>, <code>mb</code>, <code>fbx</code>, <code>obj</code>, <code>usd</code>.</li>
+<li>Caches and proxies: <code>abc</code>, <code>arnold</code>, <code>vray</code>, <code>redshift</code>, <code>vrmesh</code>.</li>
+<li>Collect linked files: whether caches / proxies / references and textures are collected by default.</li>
+<li>Export options: whether &quot;export materials only&quot; is the default.</li>
+</ul></li>
+<li>Switch to another sub-library and continue; the current sub-library&#x27;s checks are held in memory first.</li>
+<li>Click <code>「应用」 (Apply)</code> or <code>「确定」 (OK)</code> to write <code>export_preset.json</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>After closing and reopening Settings the <code>「导出默认值」 (Export defaults)</code> tab still shows the checks you made.</li>
+<li>Clicking <code>「创建资产」 (Create asset)</code> in that sub-library opens a dialog whose format checks match the defaults.</li>
+<li>The booleans for that sub-library in <code>Assets/preset/export_preset.json</code> are updated.</li>
+</ul>
+<h2 id="h-4">Tips and warnings</h2>
+<blockquote><p><strong>Tip</strong>: the defaults only affect <code>Create asset</code>; <code>Update asset</code> restores checks from the asset&#x27;s existing formats, and choosing <code>Append format</code> starts with everything unchecked.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: checks changed temporarily in the export dialog apply to that one export only and are not written back to the defaults.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: when a sub-library has no entry in the preset file, <code>_default</code> is read; when <code>_default</code> is missing too it falls back to the <code>materials</code> section.</p></blockquote>
+<blockquote><p><strong>Current version</strong>: the buttons on this tab are <code>「应用」 (Apply)</code> and <code>「确定」 (OK)</code>; there is no separate <code>「保存」 (Save)</code> button.</p></blockquote>

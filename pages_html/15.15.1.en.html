@@ -1,0 +1,47 @@
+<blockquote><p>One-line summary: <strong>the plug-in&#x27;s own offline help site — clicking the Use help button at the far right of the toolbar opens a local web page with contents on the left, search on top and on-this-page navigation on the right.</strong></p></blockquote>
+<p>It is a <strong>local web page</strong>, not online documentation: the plug-in starts a small HTTP service on this machine (<code>127.0.0.1</code>, ports 8790–8799) and opens it in the system browser. So it works offline and is fast. Besides keywords, search also uses local semantic retrieval (when the AI dependencies are installed).</p>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>The <strong>Use help</strong> button at the <strong>far right of the top toolbar</strong> (an icon button, tooltip &quot;Use help&quot;);</li>
+<li>The browser opens the help home page at an address like <code>http://127.0.0.1:8793/</code> (the port may differ).</li>
+</ol>
+<p>Notes:</p>
+<ul>
+<li>Clicking it again within the same plug-in process <strong>reuses</strong> the running service (the port does not change).</li>
+<li>If no browser appears, look for <code>[Help] opened help center: &lt;url&gt;</code> in the Maya Script Editor and paste that URL into a browser manually.</li>
+<li>When the help service cannot start it <strong>falls back to the legacy help page</strong> (<code>Assets/help/help.html</code>), which has fewer features.</li>
+</ul>
+<h2 id="h-2">Interface areas</h2>
+<p><img src="media/shared/help-search.webp" alt="Help center and search" loading="lazy" decoding="async"></p>
+<table><thead><tr><th>Area</th><th>Contents</th><th>How to use it</th></tr></thead><tbody><tr><td>Top bar</td><td>Contents toggle (☰) on the left, the site name &quot;Squirrel Asset Manager Help&quot;, the <strong>search box</strong> (placeholder &quot;search features, settings, commands…&quot;), the version on the right</td><td>The search box is the main entry</td></tr><tr><td>Left <strong>Contents</strong></td><td>The whole book as a chapter tree, expandable level by level</td><td>Expansion state is remembered for next time</td></tr><tr><td>Center body</td><td>Title, breadcrumb, body; &quot;Was this page helpful?&quot; at the bottom</td><td>Read it</td></tr><tr><td>Right <strong>On this page</strong></td><td>The current page&#x27;s h2 / h3 headings</td><td>Click a heading to jump; the current section highlights as you scroll</td></tr><tr><td>Breadcrumb above the body</td><td>Help home / chapter / section / current page</td><td>Click any level to go up</td></tr><tr><td><strong>Previous / Next</strong> at the bottom</td><td>Pages in contents order</td><td>Use them for sequential reading</td></tr><tr><td>Home cards</td><td>&quot;What&#x27;s new / 5-minute start / Interface overview / Common workflows / Shortcuts / Command reference / FAQ / Support and feedback&quot;</td><td>Click a card when unsure where to start</td></tr><tr><td>Home <strong>Recent</strong></td><td>Pages you viewed recently (up to 8)</td><td>Continue where you left off</td></tr></tbody></table>
+<h2 id="h-3">How to use search</h2>
+<table><thead><tr><th>Action</th><th>Effect</th></tr></thead><tbody><tr><td>Type in the top search box</td><td>Each keystroke filters (lightly debounced); <strong>local lexical</strong> results appear first, then semantic results replace or merge in</td></tr><tr><td>↑ / ↓</td><td>Move through the result list</td></tr><tr><td>Enter</td><td>Open the selected result</td></tr><tr><td>Esc</td><td>Closes the dropdown and leaves the search box</td></tr><tr><td>Click a result</td><td>Jumps to that page</td></tr></tbody></table>
+<p>Each result tells you at a glance whether it is worth clicking:</p>
+<table><thead><tr><th>Element</th><th>Meaning</th></tr></thead><tbody><tr><td>Title</td><td>The matched page title</td></tr><tr><td>Type badge</td><td>Page / concept / reference / troubleshooting / command</td></tr><tr><td>Path line</td><td>Its position in the book (chapter / section)</td></tr><tr><td>Snippet</td><td>Surrounding text with the matched word highlighted</td></tr><tr><td>Mode note at the top</td><td>&quot;semantic + lexical&quot; = both were used; &quot;lexical search&quot; = keywords only; &quot;lexical search · semantic temporarily unavailable&quot; = semantic retrieval is not active</td></tr></tbody></table>
+<h2 id="h-4">Deep links: opening a specific page</h2>
+<p>The part after <code>#/</code> in the address is the page id, so you can use:</p>
+<ul>
+<li><code>http://127.0.0.1:8793/#/15.14.9</code> — open &quot;Material conversion tool&quot; directly;</li>
+<li><code>http://127.0.0.1:8793/#/15.16.2</code> — open the menu item master index directly;</li>
+<li><code>http://127.0.0.1:8793/#/12.1.1?cmd=hdr_to_zasset</code> — open the command reference page and <strong>highlight</strong> that command (<code>cmd=</code> takes the command id).</li>
+</ul>
+<p>The page id is the <code>id</code> in each page&#x27;s frontmatter, and it matches the heading under each page title in this dictionary. The plug-in also supports calls such as <code>open_help_center(&quot;8.14.9&quot;)</code> with an id, which behave like deep links.</p>
+<h2 id="h-5">When search finds nothing (keyword tips)</h2>
+<ol>
+<li><strong>Speak plainly first, then use jargon.</strong> Search expands synonyms and many colloquial phrasings are already included (such as &quot;font too small&quot;, &quot;scale the UI&quot;, &quot;model import&quot;, &quot;material import&quot;, &quot;missing textures&quot;, &quot;crash&quot;, &quot;frozen&quot;, &quot;cannot find&quot;, &quot;inaccurate search&quot;, &quot;shortcuts&quot;, &quot;semantic search&quot;). Start with how you would normally say it.</li>
+<li><strong>Use the exact UI wording.</strong> Help headings and bodies largely copy the interface text, so searching a button or menu name (&quot;Quick tools&quot;, &quot;Edit tags&quot;, &quot;Update thumbnail&quot;, &quot;License management&quot;) hits most often.</li>
+<li><strong>Shorten the keywords.</strong> A long sentence is tokenized and all tokens must match, which easily yields nothing. Reduce &quot;how do I batch convert HDR environment maps into assets&quot; to &quot;HDR to asset&quot; or just &quot;HDR&quot;.</li>
+<li><strong>Try synonyms or switch languages.</strong> Search proper nouns directly (<code>zmetal</code>, <code>mmap</code>, <code>mcp</code>, <code>dsh</code>), or the other way round for Chinese names (&quot;material conversion&quot;, &quot;external AI tools&quot;).</li>
+<li><strong>Read the mode note.</strong> If it always shows &quot;lexical search · semantic temporarily unavailable&quot;, semantic retrieval is inactive (missing embedding dependency / index), so only keywords work; the fix is in <a href="#/en/13.5.1"><code>6.5.1</code></a>.</li>
+<li><strong>Fall back to contents and indexes.</strong> Browse chapters in the left contents, or go straight to <a href="#/en/15.16.1"><code>8.16.1</code></a> (find menus by task) and <a href="#/en/15.16.2"><code>8.16.2</code></a> (menu item master index).</li>
+<li><strong>If a page fails to load</strong> (&quot;page failed to load&quot; / &quot;run python tools/build_help.py at the project root&quot;), the help data was never generated or is stale and must be rebuilt (a developer-side action; regular users can reinstall / update the plug-in).</li>
+</ol>
+<h2 id="h-6">Common questions</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>Clicking <strong>Use help</strong> does nothing</td><td>The browser was not launched, or the service did not start</td><td>Check the <code>[Help]</code> URL line in the Maya Script Editor and open it manually; if that fails it fell back to the legacy help page</td></tr><tr><td>The old help version opens</td><td>The new help service could not start and <code>help.html</code> was used instead</td><td>Restart the plug-in and retry; if it persists, send the plug-in log to support</td></tr><tr><td>Search stays on &quot;searching…&quot;</td><td>Semantic retrieval is waiting for the model / a result never arrives</td><td>Wait a few seconds; if it persists, check whether the mode note has degraded</td></tr><tr><td>A just-updated page is missing from results</td><td>Help data is generated at build time and the in-plug-in help does not hot-reload</td><td>Use the help pages matching the plug-in version</td></tr></tbody></table>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>Where the <strong>Use help</strong> button sits in the toolbar: <a href="#/en/15.2.4"><code>8.2.4</code></a></li>
+<li>How this dictionary is organized and read: <a href="#/en/15.1.1"><code>8.1.1</code></a></li>
+<li>Fixing unavailable semantic retrieval: <a href="#/en/13.5.1"><code>6.5.1</code></a></li>
+<li>Finding menus by task: <a href="#/en/15.16.1"><code>8.16.1</code></a></li>
+</ul>

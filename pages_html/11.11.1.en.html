@@ -1,0 +1,21 @@
+<p>Plug-in configuration lives in two places: presets inside the package and the user directory. Backing up means copying these JSON files; migrating means putting them back in the right place.</p>
+<h2 id="h-1">Prerequisites</h2>
+<p>Close Maya first, or at least close the settings window, so you do not copy a half-written file.</p>
+<h2 id="h-2">Configuration files</h2>
+<table><thead><tr><th>File</th><th>Location</th><th>Content</th></tr></thead><tbody><tr><td><code>config.json</code></td><td><code>&lt;plugin package&gt;/Assets/preset/</code></td><td>Sub-libraries, default categories, supported formats, extensions, material node types, import strategy and more</td></tr><tr><td><code>context_menu_preset.json</code></td><td>Same</td><td>Checked state of the context menu per sub-library</td></tr><tr><td><code>double_click_preset.json</code></td><td>Same</td><td>Double-click commands and sub-options</td></tr><tr><td><code>export_preset.json</code></td><td>Same</td><td>Default export format</td></tr><tr><td><code>pbr_mapping.json</code></td><td>Same</td><td>Texture type aliases and PBR mapping</td></tr><tr><td><code>app_settings.json</code></td><td><code>~/.squirrel_asset_manager/</code></td><td>Personal settings: font size, theme, language, library list, hidden categories, AI configuration and keys</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Close Maya.</li>
+<li>Copy the six files above into a backup folder.</li>
+<li>On the new machine, put them back at the same relative locations: preset files into the plug-in package&#x27;s <code>Assets/preset/</code>, and <code>app_settings.json</code> into the current user&#x27;s <code>~/.squirrel_asset_manager/</code>.</li>
+<li>Start Maya and the plug-in, then check each settings page.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>Each settings page shows the same values as before the backup, and the asset library list opens normally.</p>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>Preset files live inside the EXE installation directory, and <strong>an overwrite install replaces them with the presets from the new package</strong> (your edits under <code>Assets/preset/</code> are lost), so back them up before upgrading. <code>~/.squirrel_asset_manager/app_settings.json</code> is outside the install directory and is not affected by an overwrite install.</li>
+<li>Library paths in <code>app_settings.json</code> are absolute; after moving to another machine you may need to reselect them in settings.</li>
+<li>These files contain sensitive data such as AI API keys, so keep backups and transfers private.</li>
+<li>The asset library itself is not in these files; see <strong>Backup and restore</strong> for how to back it up.</li>
+</ul>

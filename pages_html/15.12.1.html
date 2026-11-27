@@ -1,0 +1,37 @@
+<blockquote><p>一句话定位：<strong>一次给多个资产改名——加前缀、加后缀、或把名字里的某段文字替换掉，改之前能先看预览。</strong></p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>在资产网格里选中要改名的资产（多选：Ctrl 点选 / Shift 连选）。</li>
+<li>网格下方出现「批量操作栏」，点「批量重命名」。</li>
+<li>弹出窗口；底部按钮显示进度「执行重命名 (已处理/总数)」。</li>
+</ol>
+<blockquote><p>只选一个资产时批量操作栏通常不出现，请用属性面板或右键「编辑」改单个名字；下面的截图是窗口示意（1 个资产，按钮显示 <code>(0/1)</code>）。</p></blockquote>
+<p><img src="media/shared/dialog-batch-rename.webp" alt="批量重命名" loading="lazy" decoding="async"></p>
+<h2 id="h-2">控件逐项</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>重命名</td><td>下拉</td><td>选改哪个字段：<code>显示名 (name_cn)</code> 或 <code>文件名 (name)</code></td><td>一般选「显示名」</td><td>选「文件名」会<strong>改磁盘上的 .zasset 目录名</strong>，见下方风险</td></tr><tr><td>前缀追加</td><td>单选（默认）</td><td>在原名前加文字</td><td>如 <code>SM_</code></td><td>加错前缀要再改一次（无撤销）</td></tr><tr><td>后缀追加</td><td>单选</td><td>在原名后加文字</td><td>如 <code>_low</code></td><td>同上</td></tr><tr><td>查找替换</td><td>单选</td><td>把名字里的某段文字换成另一段</td><td>统一改拼写/编号时用</td><td>「查找」留空时什么都不会替换（按钮也会灰）</td></tr><tr><td>输入框（单个）</td><td>单行输入</td><td>前缀/后缀模式下的追加文字</td><td>短、无空格</td><td>留空 → 名字不变，按钮禁用</td></tr><tr><td>查找 / 替换为</td><td>两个单行输入</td><td>查找替换模式下的一对输入</td><td>查找内容要与原名完全一致（区分大小写）</td><td>填错大小写会「一个都没替换」</td></tr><tr><td>预览</td><td>列表</td><td>每行「旧名 → 新名」，变色的行表示会改；未变的行标「（不变）」</td><td>点执行前逐行扫一眼</td><td>不看预览容易批量改错，例如把 <code>_001</code> 也加了一遍前缀</td></tr><tr><td>取消</td><td>次按钮</td><td>关窗，不改任何东西</td><td>—</td><td>—</td></tr><tr><td>执行重命名 (X/Y)</td><td>主按钮</td><td>X = 会变的条数，Y = 选中总数；只有 X&gt;0 才可点</td><td>确认预览后点</td><td>执行后立即写库，<strong>没有撤销</strong></td></tr></tbody></table>
+<h2 id="h-3">三种模式怎么选</h2>
+<table><thead><tr><th>想要的效果</th><th>用哪个模式</th><th>例子</th></tr></thead><tbody><tr><td>给一批资产加统一前缀（项目/类型缩写）</td><td>前缀追加</td><td><code>chair</code> → <code>SM_chair</code></td></tr><tr><td>给一批资产加统一后缀（精度/版本）</td><td>后缀追加</td><td><code>chair</code> → <code>chair_low</code></td></tr><tr><td>把老命名规则里的词换成新词</td><td>查找替换</td><td><code>SM_chair</code>、<code>SM_table</code> 里的 <code>SM_</code> 换成 <code>ENV_</code></td></tr></tbody></table>
+<h2 id="h-4">一次完整操作</h2>
+<ol>
+<li>多选要改名的资产（2 个以上）。</li>
+<li>批量操作栏 →「批量重命名」。</li>
+<li>「重命名」选「显示名 (name_cn)」。</li>
+<li>点「前缀追加」，输入 <code>SM_</code>。</li>
+<li>看预览：应显示每行 <code>旧名 → SM_旧名</code>，全部变色。</li>
+<li>检查有没有本来就带 <code>SM_</code> 的资产（会出现 <code>SM_SM_xxx</code>）。</li>
+<li>点「执行重命名 (N/N)」。</li>
+<li>完成后弹提示「批量重命名完成：成功 N 个」；网格自动刷新。</li>
+<li>核对：随机点两个资产看属性面板里的名字。</li>
+</ol>
+<h2 id="h-5">风险与反悔</h2>
+<table><thead><tr><th>操作</th><th>风险</th><th>反悔</th></tr></thead><tbody><tr><td>改「显示名 (name_cn)」</td><td>只影响界面显示，磁盘不变</td><td>再批量改回（无撤销）</td></tr><tr><td>改「文件名 (name)」</td><td><strong>会改磁盘上 <code>.zasset</code> 目录名</strong>，资产路径随之变化；外部脚本/工单里写死旧路径的地方会失效</td><td>再批量改回；旧路径引用需要手工修</td></tr><tr><td>批量执行</td><td>一次改很多，改错要一个个修</td><td>没有撤销；改名前可先复制一份资产或做库备份（<a href="#/4.12.4"><code>4.1.12.4</code></a>）</td></tr></tbody></table>
+<blockquote><p>如果只是想让界面更好读，<strong>优先改显示名</strong>；「文件名」涉及磁盘路径，谨慎。</p></blockquote>
+<h2 id="h-6">出问题怎么办</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>处理</th></tr></thead><tbody><tr><td>「执行重命名」灰着</td><td>预览里没有任何名字会变（输入为空，或查找内容没命中）</td><td>检查输入框；「查找替换」要区分大小写</td></tr><tr><td>改了「文件名」后资产不见了</td><td>索引还没跟上磁盘改名</td><td>刷新/重建索引（<a href="#/4.12.2"><code>4.1.12.2</code></a>）</td></tr><tr><td>名字里出现重复前缀</td><td>批量里混了本来就带该前缀的资产</td><td>重新改：用「查找替换」把重复段删掉</td></tr><tr><td>提示成功数少于选中数</td><td>个别资产改名失败（文件被占用/权限）</td><td>看脚本编辑器 <code>[BatchRename]</code> 日志，单独重试</td></tr></tbody></table>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>批量标签（另一个批量整理窗口）：<a href="#/15.12.2"><code>8.12.2</code></a></li>
+<li>用户指南版批量重命名：<a href="#/4.8.3"><code>4.1.8.3</code></a></li>
+<li>名称、标签、注释字段说明：<a href="#/4.6.1"><code>4.1.6.1</code></a></li>
+<li>多选批量操作栏：<a href="#/15.5.21"><code>8.5.21</code></a></li>
+</ul>

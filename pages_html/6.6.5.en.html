@@ -1,0 +1,14 @@
+<p>Where textures and linked files land on import is decided by two settings in <code>Settings → 常规 (General)</code>: the texture import policy and the dependency file import policy.</p>
+<table><thead><tr><th>Option</th><th>Texture location</th><th>Linked files and references</th></tr></thead><tbody><tr><td>Copy textures into the project / copy into the project</td><td>Project <code>sourceimages/squirrel_asset/&lt;asset name&gt;_&lt;last 4 of ID&gt;/</code></td><td>Project <code>cache/squirrel_asset/&lt;asset name&gt;_&lt;last 4 of ID&gt;/</code>; references go to <code>references/squirrel_asset/&lt;asset name&gt;_&lt;last 4 of ID&gt;/</code></td></tr><tr><td>Current asset directory</td><td>Reads the files inside <code>.zasset/textures/</code> directly, no copy</td><td>Reads the files inside <code>.zasset/deps/</code> directly, no copy</td></tr><tr><td>Source file directory</td><td>Keeps the original absolute paths recorded at export, unmodified</td><td>Keeps the original absolute paths recorded at export, unmodified</td></tr></tbody></table>
+<h2 id="h-1">Where they apply</h2>
+<ul>
+<li>The texture policy applies to ma/mb import, zmetal material import, zlight light import, texture import, HDR texture assignment and environment light creation.</li>
+<li>The dependency policy applies to ma/mb import and <code>「添加引用」 (Add reference)</code>, preferring a full source-path match against <code>meta.dependency_map</code> and falling back to file-name matching.</li>
+<li>Both policies are persisted in <code>Assets/preset/config.json</code>; the current repository default is <code>asset_directory</code>, and the Settings window shows the effective value.</li>
+</ul>
+<h2 id="h-2">Recommendations</h2>
+<ul>
+<li>Library and project on the same machine, with asset directories often reorganized: choose <code>「当前资产目录」 (current asset directory)</code> so no copies are made.</li>
+<li>The project must be copied elsewhere or handed to someone else: choose <code>「拷贝到项目」 (copy into the project)</code>, which gives the most stable paths.</li>
+<li>Source files live at fixed locations and disk space is tight: choose <code>「源文件目录」 (source file directory)</code>; once a source file moves, textures and dependencies break.</li>
+</ul>

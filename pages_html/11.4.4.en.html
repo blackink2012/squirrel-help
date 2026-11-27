@@ -1,0 +1,29 @@
+<p>When on, Maya listens on a local loopback port at startup so the standalone edition, a command line or the AI backend can connect to the current Maya.</p>
+<p><img src="media_en/shared/settings-ext-conn.webp" alt="External connection" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>It gives external tools a channel to read scene information and import or export assets, and is also the fallback connection when the backend is unavailable.</p>
+<h2 id="h-2">Values and default</h2>
+<ul>
+<li>The checkbox <code>「允许外部工具连接 Maya（独立版 / 命令行）」 (allow external tools to connect to Maya, standalone / command line)</code> is <strong>off</strong> by default, so it must be checked for Maya to listen at startup.</li>
+</ul>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>When on, Maya listens on a loopback port at startup, assigned by version: 2026 → 7001, 2025 → 7002 and so on.</li>
+<li>A second instance of the same version uses the backup range 7110–7129.</li>
+<li>The port only binds <code>127.0.0.1</code> and is never opened to the LAN.</li>
+<li>Clicking <code>「应用」 (Apply)</code> tries to open or close it immediately without restarting Maya; on failure it reports that the port could not listen, still saves the setting and retries at the next start.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<ul>
+<li>Turn it off when security requirements are high and no external tool needs to connect.</li>
+<li>When a firewall or security software blocks the port, confirm an exception first, or disable this item temporarily to isolate the cause.</li>
+</ul>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>External tools connect to the current Maya and the connection page shows the matching version and port.</li>
+<li>After disabling and restarting Maya, external tools can no longer connect.</li>
+</ul>
+<h2 id="h-6">Tips</h2>
+<blockquote><p><strong>Warning</strong>: this channel is equivalent to an arbitrary-code-execution entry; even though it binds loopback only, do not leave it on long term in untrusted environments.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: with several sessions of the same version the port steps aside automatically; no manual port changes are needed.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: the port-to-instance mapping is described in &quot;Connection method and ports&quot;.</p></blockquote>

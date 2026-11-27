@@ -1,0 +1,27 @@
+<blockquote><p>一句话定位：<strong>在资产网格里右键一张动态资产卡片时，弹出的就是这个菜单。</strong> 动态资产是「带动态内容」（动画 / 缓存 / 变形）的资产，所以导入和引用都多了一个 <code>abc</code> 选项。</p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>左侧「分类」页签 → 点「动态」或它下面的任一分类；</li>
+<li>中间资产网格里<strong>右键任意动态卡片</strong>。</li>
+</ol>
+<p><img src="media/shared/menu-sublib-ani.webp" alt="动态资产右键菜单" loading="lazy" decoding="async"></p>
+<h2 id="h-2">菜单从上到下的顺序</h2>
+<table><thead><tr><th>段</th><th>条目</th></tr></thead><tbody><tr><td>① 子库专属</td><td>导入 ▶（ma / abc）、添加引用 ▶（ma / abc）</td></tr><tr><td>② 收藏与选择</td><td>添加到收藏夹 ▶、全选、复制、打开文件夹</td></tr><tr><td>③ 整理</td><td>移动到 ▶、复制到 ▶</td></tr><tr><td>④ 维护</td><td>编辑、更新缩略图 ▶、更新资产 ▶、删除 ▶、格式转换</td></tr><tr><td>⑤ 查看与 AI</td><td>预览节点 ▶、AI 分析缩略图</td></tr><tr><td>⑥ 最后一条</td><td>资产详情</td></tr></tbody></table>
+<p><strong>动态是唯一「导入」和「添加引用」都带子菜单</strong>（两种格式）的子库。</p>
+<h2 id="h-3">菜单逐项详解</h2>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>导入 ▶</td><td>把动态内容导入当前 Maya 场景</td><td>Maya 已连接</td><td>子菜单选格式（见下节）后导入</td><td>选 ma 与选 abc 导进来的东西不一样，下面有对照</td></tr><tr><td>添加引用 ▶</td><td>以 Reference 方式引入</td><td>资产里含 .ma / .abc 等可引用格式</td><td>子菜单选格式后，场景里多一个引用节点</td><td>abc 引用后缓存文件仍留在资产包里</td></tr><tr><td>添加到收藏夹 ▶</td><td>把资产加入收藏夹</td><td>资产库已加载</td><td>子菜单列「默认收藏夹」+ 你自建的收藏夹；点一下加入、再点一下移出</td><td>多选时对全部选中的资产生效</td></tr><tr><td>全选</td><td>选中网格里当前可见的全部卡片</td><td>有卡片</td><td>全部高亮</td><td>只选当前筛选 / 搜索结果</td></tr><tr><td>复制</td><td>把资产放进剪贴板</td><td>无</td><td>内部剪贴板记录资产，同时把资产文件夹写进系统剪贴板</td><td>真正复制一份要再到目标分类空白处「粘贴」</td></tr><tr><td>打开文件夹</td><td>打开资产在磁盘上的位置</td><td>资产是 .zasset 目录</td><td>文件管理器定位到资产文件夹</td><td>只打开，不改内容</td></tr><tr><td>移动到 ▶</td><td>把资产移到别的分类</td><td>资产库已加载</td><td>级联选目标分类，资产从当前分类消失</td><td>见 <a href="#/15.5.15"><code>8.5.15</code></a></td></tr><tr><td>复制到 ▶</td><td>把资产复制一份到别的分类</td><td>资产库已加载</td><td>目标分类多出同一资产</td><td>占双份磁盘空间</td></tr><tr><td>编辑</td><td>改中文名、分类、标签、注释</td><td>无</td><td>弹「编辑资产」对话框</td><td>见 <a href="#/15.5.16"><code>8.5.16</code></a></td></tr><tr><td>更新缩略图 ▶</td><td>换掉或新增缩略图</td><td>「后台渲染」需本机有 mayapy</td><td>子菜单 7 项：截取 / 导入 / Maya拍屏 / 渲染图 / 添加 / 截取添加 / 后台渲染</td><td>拍屏 / 渲染图会先问帧模式</td></tr><tr><td>更新资产 ▶</td><td>把资产内容换成 / 扩成新的</td><td>「替换资产」等需要场景里有选中物体</td><td>替换资产 / 追加格式 / 追加为 LOD / 创建新版本 / 添加新变体… / 批量添加变体… / 变体管理…</td><td>都会写磁盘，先看清目标资产</td></tr><tr><td>删除 ▶</td><td>删掉这个资产</td><td>无</td><td>子菜单：移到回收站 / 彻底删除</td><td>「彻底删除」不可还原</td></tr><tr><td>格式转换</td><td>把资产里的几何体转成其它格式并<strong>追加</strong>进资产包</td><td>本机有 mayapy</td><td>弹「格式转换」对话框，勾选目标格式后开始</td><td>原有格式保留；缓存类内容不在转换范围内</td></tr><tr><td>预览节点 ▶</td><td>看资产内部的节点连接</td><td>资产里有 .zmetal 或具名 .ma</td><td>子菜单列出节点文件（样本资产：<code>pSphere2.ma</code>），点一项打开节点编辑器预览</td><td>只读预览，不导入场景</td></tr><tr><td>AI 分析缩略图</td><td>让 AI 读缩略图给建议</td><td>AI 依赖已装好</td><td>打开 AI 分析窗口，确认后写回资产</td><td>见 <a href="#/15.5.17"><code>8.5.17</code></a></td></tr><tr><td>资产详情</td><td>单独看这个资产的详情</td><td>无</td><td>有版本 / 变体打开版本浏览器，否则打开资产观察窗口</td><td>与双击右侧预览图同一条链路</td></tr></tbody></table>
+<h2 id="h-4">子菜单：导入 / 添加引用（ma / abc）</h2>
+<table><thead><tr><th>子项</th><th>导进来的是什么</th><th>适合什么时候用</th></tr></thead><tbody><tr><td>ma</td><td>Maya 场景文件里的完整内容：物体 + 可能带的动画曲线 / 设置</td><td>想在场景里继续改、动画也要一起进来</td></tr><tr><td>abc</td><td>Alembic 缓存：主要是烘焙好的几何 / 点缓存</td><td>只要形态变化、不需要原动画曲线；文件小、播放稳定</td></tr></tbody></table>
+<p>引用同理：选 ma 是引用一个 Maya 场景文件，选 abc 是引用一个缓存文件。</p>
+<h2 id="h-5">这个子库特有的注意点</h2>
+<ul>
+<li><strong>它是唯一带两种导入 / 引用格式的子库</strong>：所以「导入」和「添加引用」都是子菜单，不像模型 / 场景是一行。</li>
+<li><strong>abc 不是动画曲线</strong>：Alembic 存的是烘焙后的结果，导入后时间轴上没有可编辑的关键帧——想要曲线用 ma 或动画数据子库。</li>
+<li><strong>格式转换只转几何体</strong>：缓存与动画数据不参与转换。</li>
+</ul>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>公共条目详解：<a href="#/15.5.13"><code>8.5.13</code></a>、<a href="#/15.5.14"><code>8.5.14</code></a>、<a href="#/15.5.15"><code>8.5.15</code></a>、<a href="#/15.5.16"><code>8.5.16</code></a>、<a href="#/15.5.17"><code>8.5.17</code></a></li>
+<li>导入场景与动画：<a href="#/5.3.7"><code>4.2.3.7</code></a>；引用几何体：<a href="#/5.4.1"><code>4.2.4.1</code></a></li>
+<li>模型菜单对比：<a href="#/15.5.3"><code>8.5.3</code></a>；子库差异总表：<a href="#/15.5.1"><code>8.5.1</code></a></li>
+</ul>

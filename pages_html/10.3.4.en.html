@@ -1,0 +1,23 @@
+<p>Creating a dome light builds the matching dome light node for the current renderer and connects the HDR texture to it as environment lighting.</p>
+<p><img src="media_en/shared/menu-context-dome-light.webp" alt="HDR asset context menu → create environment light" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>Maya is online and the current renderer is decided.</li>
+<li>When using presets, the matching <code>.ma</code> preset exists under the plug-in&#x27;s <code>Assets/HDR_ligt</code>.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the HDR asset in the library and expand the <code>「创建环境光」 (Create environment light)</code> submenu.</li>
+<li>The submenu lists the presets under <code>Assets/HDR_ligt</code>; running inside Maya imports that preset and replaces the HDR path, while the standalone edition builds the light from a built-in template through the command channel and connects the chosen HDR.</li>
+<li>You can also call <code>create_dome_light</code>; pass <code>hdr_path</code> for the texture, or leave it empty for the built-in default IBL.</li>
+<li>After the light exists, to swap the HDR or connect another HDR to an existing dome light use the HDR branch of &quot;assign texture&quot;.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>It returns <code>status=ok</code> with <code>node</code>; the Outliner shows the renderer&#x27;s dome light node (Arnold <code>aiSkyDomeLight</code>, Redshift <code>RedshiftDomeLight</code>, V-Ray <code>VRayLightDomeShape</code>) and the light&#x27;s texture path points at the chosen HDR.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>The dome light node type varies by renderer, so after switching renderers re-check the light&#x27;s attributes and texture wiring.</li>
+<li>When the current renderer has no usable template the command returns <code>「创建失败（渲染器不支持或 Maya 未就绪）」 (creation failed; renderer unsupported or Maya not ready)</code>.</li>
+<li>Light attributes normally live on the shape; expand it in the Attribute Editor when checking.</li>
+<li>Without <code>hdr_path</code> the built-in default IBL is used; to change the texture afterwards use the HDR branch of &quot;assign texture&quot;.</li>
+</ul>

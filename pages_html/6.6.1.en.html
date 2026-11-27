@@ -1,0 +1,28 @@
+<p><code>「从文件导入」 (Import from files)</code> packages each asset file on disk into its own <code>.zasset</code> inside the current category; it never imports directly into the Maya scene.</p>
+<p><img src="media_en/shared/menu-import-file.webp" alt="Import from Files → Import from files" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>A <strong>specific category</strong> is selected on the left. On <code>「全部资产」 (All assets)</code> or across top-level categories the whole <code>「从外部导入」 (Import from Files)</code> menu is disabled and shows one grey line: <code>「当前分类不支持从外部导入」 (this category does not support importing from files)</code>; dropping files onto the grid is blocked the same way with <code>「请先在左侧选中一个分类，再把文件拖进来。」 (select a category on the left first, then drag the files in.)</code>.</li>
+<li>The current category supports <code>「从文件导入」 (Import from files)</code>: materials, models, lights, scenes, dynamics, node trees. The textures and HDR sub-libraries only have <code>「导入 .zasset 资产」 (Import a .zasset asset)</code> plus their own imports (import texture / import HDR); the images, audio and animation data sub-libraries only have their own loose-file entries.</li>
+<li>The files to import are readable on disk.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Click <code>「从外部导入」 (Import from Files)</code> in the toolbar above the asset area (tooltip <code>「导入外部资产（支持文件夹或单个文件）」 (import external assets; folders or single files)</code>).</li>
+<li>Choose <code>「从文件导入」 (Import from files)</code>.</li>
+<li>Select one or more files in the file dialog; the filter covers the configured asset extensions.</li>
+<li>On confirm the plug-in creates one independent <code>.zasset</code> <strong>per file</strong> inside the current category.</li>
+<li>When the target category already has a same-named asset, the new name gets <code>_001</code>, <code>_002</code> suffixes automatically.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>New assets appear in the grid, matching the number of files chosen.</li>
+<li>Opening the asset directory shows same-named <code>.zasset</code> folders containing the source files.</li>
+<li><code>「未能导入任何资产」 (no asset could be imported)</code> means not one file succeeded; check that the files are readable.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>This only adds to the library and never changes the Maya scene; to put an asset into the scene, right-click <code>「导入」 (Import)</code> or double-click it afterwards.</li>
+<li>The asset name comes from the file name without extension and can be changed in the properties panel on the right.</li>
+<li>The menu is trimmed by the current top-level category: <code>「从文件导入」 (Import from files)</code> does not appear under the textures, HDR, images, audio or animation data sub-libraries, which is intentional (those sub-libraries only accept their own kind of file); not finding the entry elsewhere is not a broken plug-in.</li>
+</ul>

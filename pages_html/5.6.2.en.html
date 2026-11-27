@@ -1,0 +1,29 @@
+<p>With snapping on, dropped models, dynamics, scenes and lights land on the model surface under the cursor instead of at the origin.</p>
+<p><img src="media/shared/maya-scene.webp" alt="After releasing, the model lands on the surface under the cursor (Maya viewport)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li><code>Settings → 常规 → 拖放 (General → Drag and drop) → 拖入资产（模型 / 动态 / 场景 / 灯光）时吸附到场景表面 (snap assets dragged into the scene onto the surface)</code> is checked, which is the default.</li>
+<li>A hittable mesh surface exists under the cursor.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Drag a snappable asset to the target position in the viewport.</li>
+<li>Release.</li>
+<li>The plug-in casts a ray at the cursor position to get the hit point and normal.</li>
+<li>After importing, it places the new root node at the hit point: models, dynamics and scenes stand up along the normal and lights shine along it.</li>
+<li>For a multi-selection drop the groups line up side by side by average width, and lights keep a gap based on the hit distance.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The asset lands on the surface under the cursor, not at the world origin.</li>
+<li>The model&#x27;s local Y axis aligns with the surface normal, and the light&#x27;s direction follows the normal.</li>
+<li>The Script Editor prints <code>[DragDrop] 已吸附到 &lt;mesh&gt; 表面</code> with the drop point and normal.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>When there is no snappable surface under the cursor or the drop point is outside the viewport, the asset imports at its original position and is never lost.</li>
+<li>A failed snap placement only falls back to &quot;import at the original position&quot;; the import itself still completes.</li>
+<li>With snapping off, the drop position is the asset&#x27;s original position and no drop preview is shown.</li>
+<li>Images, audio, animation data and node trees <strong>do not snap</strong>: images and audio are not imported when dropped into the viewport, and animation data and node trees import straight into the scene (no placement and no drop preview).</li>
+<li>A mixed selection with different placement rules does not snap, avoiding two orientations in one batch.</li>
+</ul>

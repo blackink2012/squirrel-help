@@ -1,0 +1,26 @@
+<p>Configuration pages such as <code>「右键菜单」 (Context menu)</code> are read-only by default; check <code>「解锁全部配置」 (Unlock all configuration)</code> before changing them.</p>
+<p><img src="media_en/shared/settings-bottom-general.webp" alt="Settings footer: restore default settings / cancel / apply / OK (Apply saves, OK saves and closes)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>The lock prevents accidental changes. While locked, checkboxes, inputs and buttons are not editable, though current values stay visible.</p>
+<h2 id="h-2">Values and defaults</h2>
+<ul>
+<li>The <code>「解锁全部配置」 (Unlock all configuration)</code> checkbox at the bottom of the Settings window is unchecked by default, meaning locked.</li>
+<li>Checking it opens a <code>「配置修改警告」 (Configuration change warning)</code>; confirming unlocks it, and choosing <code>「否」 (No)</code> unchecks it automatically.</li>
+<li>Unlocking affects the export defaults, context menu, supported formats, texture suffixes, sub-libraries and categories and other configuration pages; General, AI settings and About (which holds the license) are never locked, and <code>「显示在主 UI」 (Show in the main UI)</code> under sub-libraries and categories is directly editable.</li>
+</ul>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open <code>Settings → 右键菜单 (Context menu)</code>, check <code>「解锁全部配置」 (Unlock all configuration)</code> at the bottom and choose <code>「是」 (Yes)</code> in the warning.</li>
+<li>Change the menu item checks.</li>
+<li>Click <code>「应用」 (Apply)</code> or <code>「确定」 (OK)</code>. While unlocked, applying opens one more <code>「配置变更确认」 (Configuration change confirmation)</code> before writing.</li>
+</ol>
+<h2 id="h-4">Restoring</h2>
+<ul>
+<li>Click <code>「恢复默认设置」 (Restore default settings)</code> at the bottom left; after confirming, values in the dialog return to factory state and only <code>「应用」 (Apply)</code> writes them.</li>
+<li>For the context menu this step rereads <code>Assets/preset/context_menu_preset.json</code> and does not rewrite that file to factory content; if the file was edited before, the edited values are read again.</li>
+<li>To really restore the factory menu, overwrite that JSON with a backup or change each item back to its default.</li>
+</ul>
+<h2 id="h-5">Verify the result</h2>
+<p>Being able to change checkboxes proves it is unlocked; closing and reopening Settings still shows the bottom box unchecked (locked), matching the unlocked state having lapsed.</p>
+<h2 id="h-6">Tips</h2>
+<p>Do not unlock when a setting&#x27;s meaning is unclear; a wrong configuration can leave the context menu missing items or make library features misbehave.</p>

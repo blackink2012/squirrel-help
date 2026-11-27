@@ -1,0 +1,31 @@
+<p>The script browser uses &quot;categories on the left, script list on the right&quot;, with a search box at the top that filters live.</p>
+<p><img src="media_en/shared/quicktool-script-browser.webp" alt="Script browser" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Purpose</h2>
+<p>It gathers scripts scattered across the script asset library, project folders and personal folders in one place, so you can double-click to run them instead of remembering paths or pasting into the Script Editor.</p>
+<h2 id="h-2">Interface</h2>
+<ul>
+<li>Left column: script asset categories plus <code>「全部」 (All)</code>, <code>「★ 收藏」 (Favorites)</code>, <code>「🕘 最近运行」 (Recently run)</code> and <code>「未登记」 (Unregistered)</code>; extra script roots are grouped by their first-level sub-directories. Empty categories are shown too.</li>
+<li>Right column: the script list showing the Chinese name, risk level and whether it has been verified live; hovering shows its purpose and trigger scenario.</li>
+<li>Top: the search box, <code>「▶ 运行」 (Run)</code>, <code>「添加目录」 (Add directory)</code> and <code>「刷新」 (Refresh)</code>.</li>
+<li>Bottom: a status bar with success / failure and the elapsed time.</li>
+</ul>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open <code>快捷工具 (Quick tools) → 脚本浏览器 (Script browser)</code>.</li>
+<li>Choose a category on the left; on first use click <code>「添加目录」 (Add directory)</code> or drop a folder into the window to add an extra script root.</li>
+<li>Type a keyword in the search box and the list filters as you type.</li>
+<li>Select a script to read its list information; double-click, press Enter or click <code>「▶ 运行」 (Run)</code> to execute it.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The number of list entries changes with the category and search terms.</li>
+<li>After running, the status bar shows <code>「已运行 &lt;name&gt;（用时 x.xxs）」 (ran &lt;name&gt;, x.xx s)</code> or <code>「运行失败」 (run failed)</code>.</li>
+<li>The script&#x27;s <code>print</code> output and tracebacks appear in the Maya Script Editor history.</li>
+</ul>
+<h2 id="h-5">Notes</h2>
+<ul>
+<li>The scan covers <code>script_assets/</code> and extra script roots; files starting with <code>.</code> or <code>_</code> are not listed.</li>
+<li><code>F5</code> refreshes, <code>Ctrl+F</code> focuses the search and <code>Ctrl+C</code> copies the selected script path.</li>
+<li>The script browser has no separate output panel; all output goes to the Script Editor.</li>
+<li>The search and filter syntax is described in 9.6.4.</li>
+</ul>

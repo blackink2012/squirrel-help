@@ -1,0 +1,62 @@
+<blockquote><p>一句话定位：<strong>把一个场景里调好的材质网络导成文件（<code>.zmetal</code> 或 MA+JSON），再在另一个场景里导回来并自动指定给对应模型。</strong></p></blockquote>
+<p>它解决的是&quot;材质要跨场景 / 跨机器搬&quot;这件事。两个页签是两种产物格式，能力一样、格式不同：</p>
+<table><thead><tr><th>页签</th><th>产物</th><th>适合什么情况</th></tr></thead><tbody><tr><td>全频雷达版</td><td>完整材质网络 → <code>.zmetal</code>（可选带 <code>.ameta</code> 元数据、<code>.mcm</code> 物体映射、贴图文件夹）</td><td>只想搬材质，用插件自己的格式</td></tr><tr><td>MA+JSON 版</td><td>材质网络 → Maya <code>.ma</code> 脚本 + <code>.json</code> 数据</td><td>对方不装插件 / 想用原生 MA 还原</td></tr></tbody></table>
+<h2 id="h-1">从哪打开</h2>
+<table><thead><tr><th>入口</th><th>具体怎么做</th></tr></thead><tbody><tr><td>顶部工具栏「快捷工具」菜单</td><td>「快捷工具」→「材质导入导出工具(材质管理)」</td></tr><tr><td>脚本浏览器</td><td>「脚本浏览器」→ 添加插件目录下的 <code>quicktools</code> 目录 → <code>材质导入导出工具(材质管理).py</code> 双击运行</td></tr></tbody></table>
+<p>窗口标题是「材质导入导出工具」，两个页签在窗口顶部。</p>
+<p><img src="media/shared/quicktool-material-transfer.webp" alt="材质导入导出工具：上方「全频雷达版 / MA+JSON 版」两个页签" loading="lazy" decoding="async"></p>
+<h2 id="h-2">通用前提</h2>
+<ul>
+<li>导出前<strong>先在场景里选好要导的东西</strong>（模型或材质都可以，看下面选项）；</li>
+<li>导出的文件会<strong>写到「工作目录」</strong>，所以先定工作目录；</li>
+<li>导入前先把场景准备好（MA+JSON 版窗口顶部那行红字就写着：「&gt;&gt; [重要] 请确保当前场景里已经有需要被赋值的模型！」）。</li>
+</ul>
+<h2 id="h-3">页签一：全频雷达版（.zmetal）</h2>
+<h3 id="h-4">卡片「导出 - 基础设置」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「工作目录:」+ 「浏览」</td><td>导出文件存哪</td><td>一个专用目录，别跟工程文件混放</td></tr><tr><td>「文件名:」输入框（占位「留空使用默认命名」）</td><td>导出的文件名（不含扩展名）</td><td>留空 = 按当前时间命名，不容易撞名</td></tr></tbody></table>
+<h3 id="h-5">卡片「导出 - 选项」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「导出模式:」单选「导出所选」/「导出所有」</td><td>只导当前选择的，还是导场景里全部材质</td><td>默认「导出所选」；导全场景时确认场景干净</td></tr><tr><td>勾选「选择的是材质」</td><td>当前选中的是材质节点而不是模型时勾上</td><td>选材质时<strong>必须勾</strong>，否则会提示&quot;所选对象没有关联的材质&quot;</td></tr><tr><td>勾选「材质单独文件」</td><td>每个材质生成一个独立文件，而不是打包成一个</td><td>想之后单独挑某个材质导入时勾</td></tr><tr><td>勾选「导出物体映射」（默认勾）</td><td>额外生成 <code>.mcm</code>，记录材质与模型的对应关系</td><td><strong>建议保持勾</strong>，导入时才能自动指定回模型</td></tr><tr><td>勾选「导出元数据」（默认勾）</td><td>额外生成 <code>.ameta</code>，记录版本 / 渲染器 / 色彩空间 / 分类 / 标签等</td><td>建议保持勾</td></tr><tr><td>勾选「创建文件夹」</td><td>每个材质建独立文件夹（内含材质文件 + 元数据 + <code>textures/</code>）</td><td>材质多、贴图多时推荐</td></tr><tr><td>勾选「打包纹理」</td><td>把材质连接的贴图拷进 <code>textures/</code> 并把路径改成相对路径</td><td><strong>换机器必勾</strong>，否则对方缺贴图</td></tr><tr><td>「执行导出」</td><td>开始导出</td><td>—</td></tr></tbody></table>
+<h3 id="h-6">可折叠「导出 - 元数据设置 ►」（点了才展开）</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>色彩空间</td><td>写进元数据的色彩空间（默认自动检测，如 ACEScg）</td><td>自动检测对就别改</td></tr><tr><td>分类</td><td>材质的分类信息（如 金属/布料/皮肤）</td><td>给材质库管理用，可留空</td></tr><tr><td>标签</td><td>逗号分隔的标签</td><td>同上</td></tr><tr><td>中文名</td><td>材质的中文名称，留空用英文原名</td><td>团队有中文命名规范时填</td></tr><tr><td>命名空间</td><td>引用模型时自带的前缀（如 ns1）</td><td>有引用命名空间时填</td></tr><tr><td>原模型前缀 / 后缀</td><td>导出时模型路径的前缀 / 后缀</td><td>导入时要做路径替换才需要填</td></tr><tr><td>新模型前缀 / 后缀</td><td>导入时要替换成的路径前缀 / 后缀</td><td>同上</td></tr></tbody></table>
+<h3 id="h-7">可折叠「导入 - 基础设置 ►」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>命名空间</td><td>给导入的材质加命名空间，避免重名</td><td>场景里已有同名材质时填一个</td></tr><tr><td>材质前缀 / 后缀</td><td>给导入的材质名加前后缀，避免冲突</td><td>反复导入时有用</td></tr><tr><td>原模型前缀 / 后缀</td><td>导出时的模型路径前后缀</td><td>与导出侧对应</td></tr><tr><td>新模型前缀 / 后缀</td><td>导入后要替换成的模型路径前后缀</td><td>与导出侧对应</td></tr><tr><td>「执行导入」</td><td>选文件并导入</td><td>—</td></tr><tr><td>「从文件夹导入...」</td><td>递归导入文件夹里所有材质文件</td><td>批量还原时用</td></tr></tbody></table>
+<h3 id="h-8">卡片「导入 - 选项」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「导入模式:」单选「导入所选」/「导入所有」</td><td>只导入文件里选中的材质 / 全部导入</td><td>默认「导入所有」</td></tr><tr><td>勾选「自动指定物体」（默认勾）</td><td>按 <code>.mcm</code> 映射把材质指定给对应模型</td><td><strong>建议勾</strong>，否则只有材质没有指派</td></tr><tr><td>勾选「模糊匹配」</td><td>精确匹配失败时，按名称子串包含关系匹配</td><td>模型名在导出/导入后变了（如多出 <code>_temp</code>）时勾</td></tr><tr><td>勾选「拷贝纹理」（默认勾）</td><td>把贴图拷到当前工程的 <code>sourceimages</code></td><td>换成&quot;用相对路径&quot;时取消勾选</td></tr><tr><td>「执行导入」</td><td>选文件导入</td><td>—</td></tr><tr><td>「从文件夹导入...」</td><td>选文件夹递归导入</td><td>批量时用</td></tr></tbody></table>
+<h2 id="h-9">页签二：MA+JSON 版</h2>
+<p>结构基本一致，差别是产物与部分选项：</p>
+<table><thead><tr><th>区域</th><th>控件</th><th>说明</th></tr></thead><tbody><tr><td>顶部红字提示</td><td>「&gt;&gt; [重要] 请确保当前场景里已经有需要被赋值的模型！」</td><td>导入前必须有可被赋值的模型</td></tr><tr><td>导出 - 基础设置</td><td>工作目录 / 文件名</td><td>文件名留空按时间命名</td></tr><tr><td>导出 - 选项</td><td>材质单独文件（默认勾）/ 导出元数据（默认勾）/ 创建文件夹 / 打包纹理 / 执行导出</td><td>每个材质生成独立的 MA + JSON</td></tr><tr><td>导出 - 元数据设置 ►</td><td>色彩空间 / 分类 / 标签 / 中文名 / 命名空间 / 原·新 前后缀</td><td>同页签一</td></tr><tr><td>导入 - 基础设置 ►</td><td>命名空间 / 材质前缀 / 材质后缀 / 原·新 前后缀 / 执行导入 / 从文件夹导入...</td><td>同页签一</td></tr><tr><td>导入 - 选项</td><td>导入模式（导入所选 / 导入所有）/ 模糊匹配 / 拷贝纹理 / 执行导入 / 从文件夹导入...</td><td>比页签一少了「自动指定物体」</td></tr></tbody></table>
+<h2 id="h-10">底部按钮（两个页签都有）</h2>
+<table><thead><tr><th>按钮</th><th>作用</th></tr></thead><tbody><tr><td>「ℹ 使用帮助」</td><td>打开当前页签对应的详细帮助窗（全频雷达版 / MA+JSON 版各一份说明）</td></tr><tr><td>「关闭」</td><td>关窗（已导出的文件不受影响）</td></tr></tbody></table>
+<h2 id="h-11">一次完整的导出 → 导入流程</h2>
+<ol>
+<li>快捷工具 →「材质导入导出工具」；</li>
+<li>选「全频雷达版」页签（或 MA+JSON 版，按对方需不需要装插件决定）；</li>
+<li>「工作目录」选一个空目录；</li>
+<li>回到 Maya 选中要导的模型（或材质，并在「导出 - 选项」里勾「选择的是材质」）；</li>
+<li>决定导出模式（默认「导出所选」），把「导出物体映射」「导出元数据」保持勾上；要换机器就勾「打包纹理」；</li>
+<li>点「执行导出」，等提示；</li>
+<li>去工作目录确认产物：<code>.zmetal</code>（+ <code>.ameta</code> / <code>.mcm</code> / <code>textures/</code>），或 <code>.ma</code> + <code>.json</code>；</li>
+<li>换到目标场景：先把要赋材质的模型准备好；</li>
+<li>展开「导入 - 基础设置 ►」，必要时填命名空间 / 前后缀；「导入 - 选项」里保持「自动指定物体」勾上；</li>
+<li>点「执行导入」（或「从文件夹导入...」批量），确认材质出现在场景里且已指定给模型。</li>
+</ol>
+<h2 id="h-12">输出结果在哪</h2>
+<ul>
+<li><strong>导出</strong>：文件写进「工作目录」，文件名来自「文件名」输入框或默认时间戳；</li>
+<li><strong>导入</strong>：材质节点出现在当前 Maya 场景的材质编辑器里，并在勾了「自动指定物体」时赋给对应模型；</li>
+<li>勾了「打包纹理」时贴图在材质的 <code>textures/</code>（或导入时拷到工程 <code>sourceimages/</code>）。</li>
+</ul>
+<h2 id="h-13">风险与反悔</h2>
+<ul>
+<li><strong>导出会直接覆盖同名文件</strong>：工作目录里已有同名 <code>.zmetal</code> / <code>.ma</code> / <code>.json</code> 时会被写掉，没有任何提示。留空文件名（按时间戳命名）能避免大多数撞名；或每次导出换一个工作目录。</li>
+<li><strong>导入会往场景里加材质节点并改指定关系</strong>：做之前先把场景存一下（Ctrl+S），改坏了直接不保存 / 重开。</li>
+<li>导入时的「自动指定物体」依赖 <code>.mcm</code> 映射；模型名变了就勾「模糊匹配」，但模糊匹配可能配错人 —— 大批量导入前先拿一两个试。</li>
+<li>反悔：导出错了 → 覆盖的工作目录文件拿不回来（下次把导出目录单独分开）；导入错了 → 不保存场景重开。</li>
+</ul>
+<h2 id="h-14">相关</h2>
+<ul>
+<li>它在「快捷工具」菜单里的位置：<a href="#/15.2.6"><code>8.2.6</code></a></li>
+<li>自定义属性映射（先配映射再转）：<a href="#/15.14.8"><code>8.14.8</code></a></li>
+<li>跨渲染器材质转换：<a href="#/15.14.9"><code>8.14.9</code></a></li>
+<li>材质在用户手册里的完整说明：<a href="#/9.5.1"><code>4.6.5.1</code></a></li>
+</ul>

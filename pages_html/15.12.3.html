@@ -1,0 +1,27 @@
+<blockquote><p>一句话定位：<strong>把场景里的材质导出成「预设文件」的配置窗（窗口标题「导出材质为预设」），供以后导入复用。</strong></p></blockquote>
+<blockquote><p><strong>当前版本入口说明</strong>：这个窗口的界面与逻辑都还在（点击「开始导出」会真的执行导出），但<strong>资产右键菜单里没有登记这一项</strong>，正常操作路径下点不到它。所以本页按源码写清窗口里有什么、每个控件管什么；<strong>现在要把预设存成文件</strong>，请走下面的「现在该走哪条路」。</p></blockquote>
+<p><img src="media/shared/dialog-export-preset.webp" alt="导出材质为预设" loading="lazy" decoding="async"></p>
+<h2 id="h-1">现在该走哪条路</h2>
+<table><thead><tr><th>你想做的事</th><th>当前版本的做法</th></tr></thead><tbody><tr><td>让「创建资产」默认勾好某些格式</td><td>改导出默认值：设置 →「导出默认值」页（<a href="#/15.9.4"><code>8.9.4</code></a>），对应文件 <code>export_preset.json</code>（<a href="#/6.4.2"><code>4.3.4.2</code></a>）</td></tr><tr><td>把场景里的材质导出成可在别处复用的文件</td><td>用快捷工具「材质导入导出工具」（<a href="#/15.14.7"><code>8.14.7</code></a>），可导出 JSON / .ma / .zmetal</td></tr><tr><td>导出成 zasset 资产里的 .zmetal</td><td>用「创建资产」并勾「材质预设 .zmetal」（<a href="#/15.10.6"><code>8.10.6</code></a>）</td></tr></tbody></table>
+<h2 id="h-2">窗口结构（按源码）</h2>
+<h3 id="h-3">分区一：导出格式与路径</h3>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>导出目录</td><td>单行输入 +「浏览」按钮</td><td>预设文件写到哪</td><td>选一个专门目录，别写进资产库</td><td>目录不存在会尝试新建；建不了会弹「无法创建目录」</td></tr><tr><td>文件名</td><td>单行输入</td><td>自定义文件名</td><td>留空 = 用当前时间命名</td><td>和已有文件同名会被覆盖（插件不另确认）</td></tr><tr><td>导出为 JSON 格式 (默认)</td><td>复选框</td><td>导出为 JSON 材质描述</td><td>一般保持勾选</td><td>不勾且不勾 .ma → 可能没有可导出产物</td></tr><tr><td>同时导出 .ma 格式 (可选)</td><td>复选框</td><td>额外导出一份 Maya .ma（材质节点网络）</td><td>需要在 Maya 里直接引用时勾</td><td>大材质网络导 .ma 会慢、文件偏大</td></tr><tr><td>每个材质导出为独立文件</td><td>复选框</td><td>勾选=每个材质一个文件；不勾=合并成一个</td><td>材质多且要分别挑时勾</td><td>不勾会全部写在一个文件里</td></tr><tr><td>导出材质对应模型数据 (.mcm)</td><td>复选框</td><td>附带「材质→模型」映射</td><td>材质原本挂在模型上、要还原贴回关系时勾</td><td>不勾只保材质</td></tr></tbody></table>
+<h3 id="h-4">分区二：元数据设置</h3>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>色彩空间</td><td>下拉（ACEScg / sRGB / Rec709 / linear）</td><td>记录预设的色彩空间</td><td>与项目一致（一般 ACEScg）</td><td>记录错会导致以后导入时色彩解释错</td></tr><tr><td>材质分类</td><td>下拉（不指定 / 金属 / 铬 / 钢 / …… / 自定义）</td><td>给预设归类，便于以后筛选</td><td>按材质实际类型选</td><td>选错只会影响分类检索，不影响导出本身</td></tr><tr><td>中文名</td><td>单行输入</td><td>预设的显示名</td><td>留空 = 用英文原名</td><td>只影响显示</td></tr><tr><td>标签</td><td>标签芯片区 +「编辑标签」</td><td>给预设打标签；「编辑标签」可增删常用标签</td><td>用常用标签</td><td>标签只在预设元数据里，不会自动进资产库</td></tr><tr><td>自定义标签输入 +「添加标签」</td><td>单行输入 + 按钮</td><td>手动补标签（逗号分隔）</td><td>短词</td><td>同上</td></tr></tbody></table>
+<h3 id="h-5">分区三：截图预览</h3>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>截图预览画布</td><td>图片区</td><td>显示当前截到的预览图；空着时提示「点击截图获取预览图」</td><td>—</td><td>—</td></tr><tr><td>256×256 / 512×512 / 自定义</td><td>单选 + 两个宽高输入</td><td>截图分辨率</td><td>512×512 足够</td><td>自定义填 0 或非数字可能截出空图</td></tr><tr><td>截取当前视图</td><td>主按钮（导出色）</td><td>截当前 Maya 视口作为预览</td><td>先在视口摆好物体与角度</td><td>没物体/视口为空会提示「请先在视图中选择物体或调整视角」</td></tr><tr><td>从文件导入缩略图</td><td>次按钮</td><td>用磁盘图片当预览（png/jpg/bmp/tga/tiff）</td><td>已有渲染图时用</td><td>选到非图片/损坏文件会失败</td></tr></tbody></table>
+<h3 id="h-6">分区四：批量导出选项</h3>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>导出选择 / 导出全部</td><td>单选</td><td>只导当前选择 / 导场景里全部材质</td><td>先在视口里选好再用「导出选择」</td><td>选「导出全部」会连场景里临时材质一起导</td></tr><tr><td>批量导出时自动截图</td><td>复选框（默认勾）</td><td>批量时为每个材质自动取预览图</td><td>批量时勾</td><td>按源码实现，批量截图方式尚未完全落地——勾了也可能只有第一张预览图</td></tr></tbody></table>
+<h3 id="h-7">底部</h3>
+<table><thead><tr><th>按钮</th><th>作用</th></tr></thead><tbody><tr><td>取消</td><td>关窗，不导出</td></tr><tr><td>开始导出</td><td>校验目录 → 执行导出 → 关窗；状态显示在底部左侧一行小字</td></tr></tbody></table>
+<h2 id="h-8">风险与反悔</h2>
+<table><thead><tr><th>操作</th><th>风险</th><th>反悔</th></tr></thead><tbody><tr><td>开始导出</td><td>目标目录里同名文件会被覆盖</td><td>导出前先确认目录；重要文件先备份</td></tr><tr><td>导出全部</td><td>场景里临时材质也会进预设</td><td>只选需要的材质用「导出选择」</td></tr><tr><td>截图</td><td>只是取一张图，不写场景</td><td>无需反悔</td></tr></tbody></table>
+<h2 id="h-9">出问题怎么办</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>处理</th></tr></thead><tbody><tr><td>点「开始导出」提示「请选择导出目录」</td><td>目录输入框空着</td><td>先点「浏览」选目录</td></tr><tr><td>导出后目录里没文件</td><td>目标环境不是 Maya（独立版/无 maya.cmds），或渲染导出模块加载失败</td><td>看脚本编辑器 <code>[ExportPreset]</code> 日志</td></tr><tr><td>截图失败</td><td>视口里没有可截内容</td><td>在视口里选中物体、调好视角再点「截取当前视图」</td></tr><tr><td>找不到这个窗口的入口</td><td>当前版本右键菜单没登记它（见页首说明）</td><td>走「现在该走哪条路」里的替代入口</td></tr></tbody></table>
+<h2 id="h-10">相关</h2>
+<ul>
+<li>导出默认值（改「创建资产」默认勾选）：<a href="#/15.9.4"><code>8.9.4</code></a>、<a href="#/6.4.1"><code>4.3.4.1</code></a></li>
+<li>预设文件 <code>export_preset.json</code> 的导入导出：<a href="#/6.4.2"><code>4.3.4.2</code></a></li>
+<li>材质导入导出工具（当前可用的替代入口）：<a href="#/15.14.7"><code>8.14.7</code></a></li>
+<li>.zmetal 材质预设是什么：<a href="#/7.1.1"><code>4.4.1.1</code></a></li>
+</ul>

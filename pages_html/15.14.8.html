@@ -1,0 +1,55 @@
+<blockquote><p>一句话定位：<strong>做一张&quot;源材质的哪个属性 → 目标材质的哪个属性&quot;的对照表，还能给每一步加转换函数；这张表存成预设后，就交给材质转换工具去批量执行。</strong></p></blockquote>
+<p>它本身<strong>不改场景、不改材质</strong>：只是读你选中的材质节点类型、读属性名，然后产出一张映射表（和一个 <code>.mmap</code> 预设文件）。真正拿这张表去改材质的是 <a href="#/15.14.9"><code>8.14.9</code></a>。</p>
+<h2 id="h-1">从哪打开</h2>
+<table><thead><tr><th>入口</th><th>具体怎么做</th></tr></thead><tbody><tr><td>顶部工具栏「快捷工具」菜单</td><td>「快捷工具」→「材质节点属性映射工具」</td></tr><tr><td>脚本浏览器</td><td>「脚本浏览器」→ 添加插件目录下的 <code>quicktools</code> 目录 → <code>材质节点属性映射工具.py</code> 双击运行</td></tr></tbody></table>
+<p>窗口标题是「材质属性映射工具 - Maya 2025」（版本号跟着当前 Maya 走）。</p>
+<p><img src="media/shared/quicktool-material-map.webp" alt="材质节点属性映射工具窗口" loading="lazy" decoding="async"></p>
+<h2 id="h-2">界面上每个控件做什么</h2>
+<h3 id="h-3">顶部工具条</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「使用帮助」</td><td>打开本工具详细帮助（橙色按钮）</td><td>第一次用先点它</td></tr><tr><td>「属性浏览」</td><td>弹出属性浏览器，列出当前选中节点有哪些属性（属性名 / 类型 / 当前值），可一键「用作源属性」/「用作目标属性」</td><td><strong>不想手打属性名就用它</strong></td></tr><tr><td>「保存预设」</td><td>把当前映射表存成 <code>.mmap</code> 文件</td><td>配好一张表就存</td></tr><tr><td>「加载预设」</td><td>读回之前存的 <code>.mmap</code></td><td>—</td></tr><tr><td>「打开文件夹」</td><td>在资源管理器里打开预设所在目录</td><td>找 <code>.mmap</code>、备份预设</td></tr></tbody></table>
+<h3 id="h-4">源 / 目标材质</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「源节点类型:」显示</td><td>源材质的节点类型（如 <code>VRayMtl</code>）</td><td>由「加载源材质」决定</td></tr><tr><td>「加载源材质」</td><td>把 <strong>Maya 里当前选中的材质节点</strong>设为源，并读出它有哪些属性</td><td>先在 Maya 里选好材质再点</td></tr><tr><td>「清除」</td><td>清空源材质与它的属性列表</td><td>换一套材质前点</td></tr><tr><td>「目标节点类型:」显示</td><td>目标材质的节点类型（如 <code>aiStandardSurface</code>）</td><td>由「加载目标材质」决定</td></tr><tr><td>「加载目标材质」</td><td>把当前选中的材质节点设为目标，读出目标属性</td><td>同上</td></tr><tr><td>「清除」</td><td>清空目标材质</td><td>—</td></tr><tr><td>「载入默认值」</td><td>把目标材质上<strong>各目标属性当前的值</strong>填进表格的「默认值」列</td><td>想让&quot;没映射到的属性&quot;保持目标材质原值时有用</td></tr></tbody></table>
+<h3 id="h-5">表格区与它的工具条</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「添加行」</td><td>加一行空白映射</td><td>—</td></tr><tr><td>「删除选中行」</td><td>删掉勾选的行</td><td>—</td></tr><tr><td>「搜索:」输入框（占位「输入关键词筛选属性...」）</td><td>在属性名里过滤，长属性表时用它找</td><td>—</td></tr><tr><td>「反向映射」</td><td>把源→目标整体翻过来（目标变源、源变目标）</td><td>想反过来配一遍时点，<strong>会改掉整张表</strong></td></tr><tr><td>「清空表格」</td><td>清空所有映射行</td><td>清空前先「保存预设」</td></tr><tr><td>状态「共 N 行」</td><td>当前有多少条映射</td><td>—</td></tr></tbody></table>
+<p>表格每一行是一组映射（勾选 + 五个字段）；要删行，先勾上该行左侧的复选框，再点工具条上的「删除选中行」（表格里没有单独的删除按钮）。</p>
+<table><thead><tr><th>列（从左到右）</th><th>填什么</th><th>说明</th></tr></thead><tbody><tr><td>材质属性（源）</td><td>源材质的属性名下拉（来自源节点类型）</td><td>从「加载源材质」读出来的属性里选</td></tr><tr><td>目标属性</td><td>目标材质上要被写入的属性</td><td>从「加载目标材质」读出来的属性里选</td></tr><tr><td>转换函数</td><td>需要换算时选一个函数，默认「(无)」</td><td>不换算就留「(无)」</td></tr><tr><td>参数(JSON)</td><td>转换函数的参数，如 <code>{&quot;scalar&quot;: 2.0}</code></td><td><strong>选好转换函数会自动填默认参数</strong>，可手改</td></tr><tr><td>默认值</td><td>目标属性没被映射时用什么值</td><td>一般由「载入默认值」填</td></tr></tbody></table>
+<p>转换函数下拉里有一批现成的（完整清单以下拉为准），常见的有：</p>
+<table><thead><tr><th>类别</th><th>函数举例</th></tr></thead><tbody><tr><td>通道拆取</td><td>RGB转单通道、RGB取红 / 取绿 / 取蓝、RGB转灰度</td></tr><tr><td>粗糙度 / 光泽度换算</td><td>光泽度转粗糙度、Blinn高光锐度转粗糙度、Phong光泽度转粗糙度、漫反射粗糙度转PBR粗糙度、PBR粗糙度转漫反射粗糙度、粗糙度转光泽度</td></tr><tr><td>金属度 / 反射</td><td>从镜面反射估算金属度、镜面反射强度转权重、镜面反射颜色转F0、F0转镜面反射颜色、F0转折射率、折射率转F0</td></tr><tr><td>透明度 / 透射</td><td>透明度转透射、透明度转透射权重、透射转透明度</td></tr><tr><td>自发光 / 次表面</td><td>自发光转发光亮度、半透明度转次表面散射</td></tr><tr><td>涂层</td><td>薄膜厚度转涂层权重、涂层权重转薄膜厚度</td></tr><tr><td>纯数值</td><td>反转值、限制范围、颜色乘标量、颜色除标量、颜色相加、颜色插值</td></tr></tbody></table>
+<h3 id="h-6">「▾ AI 智能映射」折叠区</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>折叠标题按钮（▾ / ▸）</td><td>展开 / 收起 AI 区</td><td>—</td></tr><tr><td>「刷新」</td><td>重新拉一次模型 / 状态</td><td>换了服务商后点</td></tr><tr><td>「一键映射」</td><td>让 AI 根据源/目标材质类型，<strong>自动给出整张映射表</strong></td><td>先「保存预设」再点，方便点坏了退回来</td></tr><tr><td>「AI 服务:」下拉</td><td>Ollama（本地）/ DeepSeek / 通义千问 / 智谱 / OpenAI / 自定义</td><td>本地有 Ollama 就用它</td></tr><tr><td>「AI 模型:」下拉</td><td>具体模型（实时拉取，可输入）</td><td>—</td></tr><tr><td>「API Key:」输入框</td><td>云端密钥；本地服务留空（占位写「API Key（本地服务无需填写）」）</td><td>—</td></tr></tbody></table>
+<h3 id="h-7">底部状态行</h3>
+<table><thead><tr><th>内容</th><th>作用</th></tr></thead><tbody><tr><td>「预设路径: …」</td><td>预设文件存在哪个目录（「保存预设」默认往这里存）</td></tr><tr><td>「共 N 行」</td><td>同表格区状态</td></tr></tbody></table>
+<h2 id="h-8">一次完整的操作流程</h2>
+<ol>
+<li>在 Maya 里选中<strong>源材质</strong>节点（比如一个 VRayMtl）；</li>
+<li>快捷工具 →「材质节点属性映射工具」→ 点「加载源材质」，确认「源节点类型:」显示对了；</li>
+<li>在 Maya 里选中<strong>目标材质</strong>节点（比如一个 aiStandardSurface）→ 点「加载目标材质」；</li>
+<li>点「载入默认值」，把目标属性当前值填进默认值列（可选，但推荐）；</li>
+<li>配映射：<ul>
+<li>手工：点「添加行」，源属性下拉选一个、目标属性下拉选一个，需要换算再选转换函数；</li>
+<li>或点 AI 区的「一键映射」，让它先给一版，再逐行核对；</li>
+</ul></li>
+<li>写不出来的属性名用「属性浏览」找；</li>
+<li>配好后点「保存预设」，给个名字；</li>
+<li>打开材质转换工具（<a href="#/15.14.9"><code>8.14.9</code></a>）→「加载预设」把这个 <code>.mmap</code> 读进去 → 批量转换。</li>
+</ol>
+<h2 id="h-9">输出结果在哪</h2>
+<ul>
+<li><strong>映射表</strong>本身在窗口里（不落盘）；</li>
+<li>点「保存预设」后生成 <code>.mmap</code> 文件，路径见底部「预设路径: …」；</li>
+<li>这张表之后被材质转换工具（<a href="#/15.14.9"><code>8.14.9</code></a>）加载使用；</li>
+<li>这个工具<strong>不修改场景里的任何材质</strong>。</li>
+</ul>
+<h2 id="h-10">风险与反悔</h2>
+<ul>
+<li>它对场景是<strong>只读</strong>的：不会新建、不会改材质、不会动指定。所以配错表不会立刻造成损失 —— 损失发生在你拿它去批量转换那一步。</li>
+<li>「清空表格」「反向映射」「一键映射」都会<strong>直接改掉当前表格内容</strong>，没有撤销键。操作前先「保存预设」；点错了就「加载预设」把刚才那份读回来。</li>
+<li>「保存预设」会覆盖同名 <code>.mmap</code> 文件 —— 重要映射表请用不同名字存。</li>
+<li>反悔路径很干净：读回旧预设 / 关掉窗口重开（未保存的表格改动会丢）。</li>
+</ul>
+<h2 id="h-11">相关</h2>
+<ul>
+<li>它在「快捷工具」菜单里的位置：<a href="#/15.2.6"><code>8.2.6</code></a></li>
+<li>拿这张表去批量转换：<a href="#/15.14.9"><code>8.14.9</code></a></li>
+<li>材质导入导出（不改属性、整包搬）：<a href="#/15.14.7"><code>8.14.7</code></a></li>
+</ul>

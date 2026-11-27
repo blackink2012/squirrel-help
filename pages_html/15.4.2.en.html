@@ -1,0 +1,38 @@
+<blockquote><p>One-line summary: <strong>this button turns files and folders on disk into assets in the library — it is a dropdown, and which items it contains depends on the category you selected.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>In the left category tree, select a <strong>specific category</strong> (not All assets, and not inside the recycle bin);</li>
+<li>Click the dropdown arrow next to <strong>Import from outside</strong> at the far left of the asset area toolbar;</li>
+<li>Choose an import mode from the menu.</li>
+</ol>
+<p><img src="media_en/shared/menu-import-file.webp" alt="Import from outside menu (in the Materials category): import from file, import .zasset asset, import textures" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<p>In the <strong>Materials</strong> category the menu has <strong>3 items</strong> (separators not counted), exactly the three in the screenshot:</p>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Import from file</td><td>Packs a project file (.ma/.mb/.fbx and so on) into a new asset</td><td>The current category supports &quot;file&quot; assets; Maya is online (for thumbnails / dependency cleanup)</td><td>Opens a file chooser (multi-select allowed), runs the packing flow and then adds asset cards to the grid</td><td>It <strong>creates</strong> an asset and never overwrites an existing one with the same name; same-name behavior follows the <strong>name conflict</strong> setting, see <a href="#/en/15.12.5"><code>8.12.5</code></a></td></tr><tr><td>Import .zasset asset</td><td>Registers a ready-made <code>.zasset</code> package (folder) into the current library</td><td>A <code>.zasset</code> directory is selected</td><td>Opens a directory chooser and starts import / copy</td><td>Use this to move assets between machines; it fails when the package structure is not <code>.zasset</code>, see <a href="#/en/6.6.4"><code>4.3.6.4</code></a></td></tr><tr><td>Import textures</td><td>Combines several textures into one PBR texture asset</td><td>The current category supports textures; one or more images are selected</td><td>Opens a file chooser, detects basecolor / roughness / normal and so on from suffixes, and combines them into one texture asset</td><td>A multi-selection counts as <strong>one set</strong>; when a suffix cannot be recognized it falls back to the name of the last file; suffix rules can be changed in settings, see <a href="#/en/15.9.7"><code>8.9.7</code></a></td></tr></tbody></table>
+<h2 id="h-3">Submenus</h2>
+<p>This menu has <strong>no second level</strong> (nothing with ▶) — the layer opened by <strong>Import from outside ▾</strong> is the final menu, and every item opens a file / directory chooser directly.</p>
+<h2 id="h-4">Items change with the current category</h2>
+<p>The same button shows different items per category (the plug-in lists only the import modes that category really supports), which explains &quot;someone else&#x27;s menu has more items than mine&quot;:</p>
+<table><thead><tr><th>Current category</th><th>Items that appear</th></tr></thead><tbody><tr><td>Materials</td><td>Import from file, import .zasset asset, (separator) import textures</td></tr><tr><td>Textures</td><td>Import .zasset asset, import textures (<strong>does not accept</strong> project / model files)</td></tr><tr><td>Models / lights / scenes / animation / node tree</td><td>Import from file, import .zasset asset</td></tr><tr><td>HDR</td><td>Import .zasset asset, import HDR</td></tr><tr><td>Images</td><td>Import images</td></tr><tr><td>Audio</td><td>Import audio</td></tr><tr><td>Animation data</td><td>Import animation data, import .zasset asset</td></tr><tr><td>All assets / recycle bin</td><td>The button itself is disabled (gray) and the menu does not open</td></tr></tbody></table>
+<h2 id="h-5">Not in the mood for menus? Drop files in</h2>
+<p>Dropping files or folders from Explorer <strong>straight onto the asset grid</strong> is equivalent: the plug-in first checks whether the category accepts them and which import mode applies, then runs the same flow. Rejected files are explained in the log and in the dialog.</p>
+<h2 id="h-6">Risks and how to undo</h2>
+<ul>
+<li>Importing <strong>adds to the library</strong> and never deletes or overwrites existing assets (same-name conflicts follow your settings and may ask you to rename or overwrite).</li>
+<li>Importing <strong>writes to disk</strong> (copying / packing files, generating thumbnails), so large files or batches take time.</li>
+<li>Imported by mistake: delete the new asset with right-click <strong>Move to recycle bin</strong> (restorable), see <a href="#/en/15.5.16"><code>8.5.16</code></a>.</li>
+<li>The dependency collection policy (textures / caches) decides whether an asset is self-contained, see <a href="#/en/6.6.5"><code>4.3.6.5</code></a>.</li>
+</ul>
+<h2 id="h-7">Beginner pitfalls</h2>
+<ul>
+<li><strong>The menu will not open / the button is gray</strong>: no specific category is selected, or you are in the recycle bin. Select a category first.</li>
+<li><strong>The new card is a hollow shell / has no thumbnail</strong>: usually Maya is not connected or dependencies were not fully collected; see the prerequisites in <a href="#/en/15.4.3"><code>8.4.3</code></a> and the checks in <a href="#/en/6.6.1"><code>4.3.6.1</code></a>.</li>
+<li><strong>Import textures brought in only one image</strong>: texture import follows the &quot;one PBR set&quot; logic and suffixes must line up; to place a single image choose <strong>Import images</strong> (Images category).</li>
+<li><strong>Cannot find the new asset among same-name assets</strong>: the import may have renamed it per the conflict policy; search its name or sort by newest.</li>
+</ul>
+<h2 id="h-8">Related</h2>
+<ul>
+<li>The tutorial version of <strong>Import from outside</strong>: <a href="#/en/6.6"><code>4.3.6</code></a>; import from file: <a href="#/en/6.6.1"><code>4.3.6.1</code></a>.</li>
+<li>The other way into the library is <strong>Create asset</strong> (export from the Maya scene), see <a href="#/en/15.4.3"><code>8.4.3</code></a>.</li>
+<li>The name conflict dialog: <a href="#/en/15.12.5"><code>8.12.5</code></a>.</li>
+</ul>

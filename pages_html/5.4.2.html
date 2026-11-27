@@ -1,0 +1,18 @@
+<p>版本表示资产的不同设计稿，LOD 表示同一版本的不同精度；导入时两者都要选。</p>
+<h2 id="h-1">版本与 LOD 的区别</h2>
+<table><thead><tr><th>概念</th><th>含义</th><th>存放方式</th><th>导入影响</th></tr></thead><tbody><tr><td>版本</td><td>同一资产的不同设计稿（如 V1、V2）</td><td>父资产下的版本目录，或旧模型的 <code>variants/</code></td><td>决定导入哪一份设计</td></tr><tr><td>LOD</td><td>同一版本的不同精度（如 lod0、lod1）</td><td><code>lods.json</code> 索引；lod0 指向版本根几何体，其余在子目录</td><td>决定导入多少面</td></tr></tbody></table>
+<h2 id="h-2">选择规则</h2>
+<ol>
+<li>右键资产的「导入版本 / LOD」只在<strong>多版本</strong>或<strong>主版本多 LOD</strong>时出现。</li>
+<li>先选版本，再选 LOD；菜单显示 LOD 标签与面数。</li>
+<li>同一 LOD 有多个几何格式时，最后选格式。</li>
+<li>不指定时使用 <code>lods.json</code> 的 <code>default_lod</code>；没有索引时按根目录 <code>node.*</code> 取默认几何体。</li>
+</ol>
+<h2 id="h-3">为什么分开</h2>
+<p>版本用于保留设计迭代，LOD 用于控制场景成本。把两者拆开，才能在同一版本内切换高低模，而不影响其他版本。</p>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>版本根目录里的 <code>.zmetal</code>、<code>.mcm</code> 会与几何文件并列出现在子菜单中，点击后走材质导入。</li>
+<li>只想用当前版本自己的材质，请在导入几何体后再导入该版本目录下的 <code>.zmetal</code>。</li>
+<li>版本与 LOD 的索引由导出阶段写入；手工改目录不会自动更新索引。</li>
+</ul>

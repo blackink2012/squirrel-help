@@ -1,0 +1,33 @@
+<blockquote><p>One-line summary: <strong>the top two checkboxes in the right column decide whether, besides the asset itself, textures and scene dependencies are copied into the package.</strong></p></blockquote>
+<h2 id="h-1">Item-by-item details</h2>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Suggested value</th><th>What filling it in wrongly does</th></tr></thead><tbody><tr><td>Collect caches / proxies / references loaded in the scene</td><td>Checkbox</td><td>Copies caches (.abc and so on), proxies (.ass/.vrmesh/.rs) and referenced files into the package&#x27;s <code>deps/</code></td><td>Tick it when delivering &quot;open and it works&quot; assets</td><td>Off: only a dependency list is recorded, no files are copied, so opening the asset on another machine misses references</td></tr><tr><td>Textures textures/</td><td>Checkbox</td><td>Collects the textures used by materials into the package&#x27;s <code>textures/</code></td><td><strong>Ticked by default; almost always keep it</strong></td><td>Off: the asset holds no textures, and materials are empty or lost after import</td></tr></tbody></table>
+<blockquote><p>The two switches are independent: textures only is fine, associated files only is fine, and both give the most complete self-contained asset (and the largest package).</p></blockquote>
+<p><img src="media_en/shared/dialog-export-right.webp" alt="The &quot;Collect associated files&quot; block in the right column" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Scanning and collecting are different things</h2>
+<ul>
+<li><strong>Scanning always happens</strong>: on export the plug-in always scans which external files the asset depends on, which are missing and which lie outside the allowed scope, and records the result in the export log.</li>
+<li><strong>Only collecting copies</strong>: files are really copied into the package only when <strong>Collect caches / proxies / references</strong> is ticked; otherwise only a list is kept.</li>
+<li>So a log line such as &quot;<code>collect_associated=False → list only, no copy</code>&quot; is normal behavior, not a failure.</li>
+</ul>
+<h2 id="h-3">Where the dependency strategy is changed</h2>
+<p>Once textures and dependencies are copied into the package, path handling is decided by settings, not this dialog:</p>
+<table><thead><tr><th>Setting</th><th>Location</th><th>Effect</th></tr></thead><tbody><tr><td>Texture import strategy</td><td>Settings → Asset library</td><td>One of &quot;copy into the project / put in the asset directory / keep the source path&quot;</td></tr><tr><td>Dependency import strategy</td><td>Settings → Asset library</td><td>Same options, applied to caches / proxies / references</td></tr></tbody></table>
+<p>See <a href="#/en/11.3.3"><code>4.8.3.3</code></a>, <a href="#/en/11.3.4"><code>4.8.3.4</code></a>.</p>
+<h2 id="h-4">A complete example (adding a material with its textures)</h2>
+<ol>
+<li>Select the material node in Maya.</li>
+<li>Open the export dialog and confirm <strong>Textures textures/</strong> is <strong>ticked</strong> in the right column.</li>
+<li>If the material also references external models / caches (for example it sits on a referenced model), tick <strong>Collect caches / proxies / references loaded in the scene</strong> too.</li>
+<li>Tick <strong>Material preset .zmetal</strong> (see 8.10.6).</li>
+<li>Click <strong>Create asset</strong> and finish the capture.</li>
+<li>Verify: right-click the new asset → <strong>Asset details</strong> and check the included formats and size; a clearly larger size means the textures came in. Details are in <a href="#/en/15.11.1"><code>8.11.1</code></a>.</li>
+</ol>
+<h2 id="h-5">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>The material has no textures after import</td><td><strong>Textures textures/</strong> was unticked on export, or the texture paths were outside the supported scope</td><td>Re-export with textures ticked, or bring the export back with <strong>Update asset → Append format</strong></td></tr><tr><td>The package is huge</td><td>Collect associated files was ticked and a whole cache set was copied in</td><td>For such assets turn <strong>Collect associated files</strong> off and manage caches separately</td></tr><tr><td>References are lost after moving machines</td><td>Only scanned, never collected</td><td>Re-export with <strong>Collect caches / proxies / references</strong> ticked</td></tr><tr><td>The log says &quot;list only, no copy&quot;</td><td>Collect associated files is off (by design)</td><td>Tick it when you need a self-contained asset</td></tr></tbody></table>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>Other right column blocks: <a href="#/en/15.10.6"><code>8.10.6</code></a>, <a href="#/en/15.10.7"><code>8.10.7</code></a></li>
+<li>The user-guide version of dependency collection: <a href="#/en/6.2.4"><code>4.3.2.4</code></a></li>
+<li>The dependency collection strategy: <a href="#/en/6.6.5"><code>4.3.6.5</code></a></li>
+<li>Troubleshooting missing textures / dependencies: <a href="#/en/6.5.2"><code>4.3.5.2</code></a></li>
+</ul>

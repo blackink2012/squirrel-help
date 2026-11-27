@@ -1,0 +1,31 @@
+<blockquote><p>一句话定位：<strong>在右侧预览图上按右键，弹出的就是这份缩略图操作菜单 —— 和资产卡片右键里的「更新缩略图 ▶」是同一份实现。</strong></p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>在资产网格选中一个资产（右侧预览区有图）；</li>
+<li>把鼠标放到预览图上，<strong>按右键</strong>（按下即弹，不用等松手）。</li>
+</ol>
+<p>回收站条目、版本 / 变体这类虚拟条目没有这个菜单。</p>
+<p><img src="media/shared/menu-thumbnail.webp" alt="缩略图操作菜单" loading="lazy" decoding="async"></p>
+<h2 id="h-2">菜单逐项详解</h2>
+<p>菜单分四组，中间用横线隔开：</p>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>截取</td><td>打开<strong>完整截图工具</strong>截屏，结果覆盖主图</td><td>Maya 窗口可见（截的是屏幕）</td><td>出现截图覆盖层（带工具栏，可录屏），截完写回主图</td><td>与底部「截取」不同：底部那个是框选即取（见 <a href="#/15.7.3"><code>8.7.3</code></a>）</td></tr><tr><td>导入</td><td>选一张本地图片当缩略图，覆盖主图</td><td>有本地图片</td><td>弹文件选择框，选完立刻替换主图</td><td>文件过滤器是 <code>*.sicon *.jpg *.jpeg *.aicon *.bmp</code>（可切「所有文件」）；覆盖没有撤销</td></tr><tr><td>Maya拍屏</td><td>用当前 Maya 视口拍屏生成缩略图</td><td>在 Maya 里、场景有内容</td><td>先弹「帧模式选择」，选完开始拍屏</td><td>帧模式：当前帧 / 序列帧（按时间轴范围截取）</td></tr><tr><td>渲染图</td><td>用当前渲染器渲一张图当缩略图</td><td>当前渲染器可用、场景有内容</td><td>先弹「帧模式选择」，选完开始渲染</td><td>比拍屏慢；渲染器的材质 / 灯光要已经搭好</td></tr><tr><td>添加</td><td>选本地图片，存到<strong>新的缩略图槽</strong></td><td>有本地图片</td><td>弹文件选择框（可多选），逐张存成附加图</td><td>不覆盖主图（底部「添加」按钮同一行为）</td></tr><tr><td>截取添加</td><td>截图并存到<strong>新的缩略图槽</strong></td><td>Maya 窗口可见</td><td>打开截图覆盖层，截完变成附加图</td><td>不覆盖主图</td></tr><tr><td>后台渲染</td><td>起一个独立的 mayapy 无头进程渲染出新缩略图</td><td>本机有可用的无头渲染器</td><td>后台任务出图，完成后再替换主图</td><td>不碰当前视口与场景，可以继续干活；耗时最长，详见 <a href="#/4.7.1"><code>4.1.7.1</code></a></td></tr></tbody></table>
+<h2 id="h-3">什么时候整份菜单不出现</h2>
+<p>菜单的显示 / 隐藏由 <strong>设置 → 右键菜单</strong> 里对应子库的开关决定（见 <a href="#/15.9.5"><code>8.9.5</code></a>）：</p>
+<table><thead><tr><th>开关</th><th>关掉后的表现</th></tr></thead><tbody><tr><td>「更新缩略图」</td><td>在预览图上按右键<strong>什么都不弹</strong>；资产卡片右键里也不再有这个子菜单</td></tr><tr><td>「后台渲染」</td><td>菜单还在，但最后一项「后台渲染」不显示</td></tr><tr><td>子库适用范围</td><td>某些子库不允许无头出图时，「后台渲染」本来就不显示</td></tr></tbody></table>
+<h2 id="h-4">和底部四颗按钮的区别</h2>
+<table><thead><tr><th>动作</th><th>本菜单（预览图右键）</th><th>底部按钮（<a href="#/15.7.3"><code>8.7.3</code></a>）</th></tr></thead><tbody><tr><td>截取</td><td>完整截图工具（工具栏 / 录屏）</td><td><strong>框选即取</strong>，框完直接覆盖主图</td></tr><tr><td>导入</td><td>覆盖主图</td><td>覆盖主图（同一个动作）</td></tr><tr><td>添加</td><td>导入文件到新槽位</td><td>导入文件到新槽位（同一个动作）</td></tr><tr><td>截取添加</td><td>截图到新槽位</td><td>截图到新槽位（同一个动作）</td></tr><tr><td>拍屏 / 渲染图 / 后台渲染</td><td>有</td><td>没有（只在右键菜单里）</td></tr></tbody></table>
+<h2 id="h-5">风险与反悔</h2>
+<ul>
+<li>「截取 / 导入 / Maya拍屏 / 渲染图 / 后台渲染」都是<strong>覆盖主图</strong>：旧封面直接没了，没有撤销。</li>
+<li>反悔办法：重新做一次（最稳的是「后台渲染」或再截一张）；实在没有好图，可以从资产目录找回旧图的备份。</li>
+<li>「添加 / 截取添加」是<strong>新增槽位</strong>，不动主图；不想要了在预览区切到那一张点「删除」即可（删除不可恢复，同样没有二次确认）。</li>
+</ul>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>只想换个封面、又不想开会话截图？直接用「导入」挑一张现成图片最快；批量资产要换图时，用右键「后台渲染」可以一次排队出图（见 <a href="#/4.7.1"><code>4.1.7.1</code></a>）。</p></div>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>预览区与缩略图槽的规则 → <a href="#/15.7.1"><code>8.7.1</code></a></li>
+<li>底部四颗按钮的用法 → <a href="#/15.7.3"><code>8.7.3</code></a></li>
+<li>资产卡片右键里的「更新缩略图」 → <a href="#/15.5.16"><code>8.5.16</code></a></li>
+<li>在设置里开关这些右键菜单项 → <a href="#/15.9.5"><code>8.9.5</code></a></li>
+<li>生成缩略图的完整流程 → <a href="#/4.7.1"><code>4.1.7.1</code></a></li>
+</ul>

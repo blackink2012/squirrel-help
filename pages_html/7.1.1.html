@@ -1,0 +1,24 @@
+<p>zmetal 是材质资产的节点网络数据，存放在 <code>.zasset</code> 里，导入时按它重建整条着色网络。</p>
+<p><img src="media/shared/area-icon-view.webp" alt="材质子库的卡片：每张是一个 zmetal 材质资产" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已有一个材质资产（<code>.zasset</code> 文件夹）。</li>
+<li>能在文件管理器中打开资产目录。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在资产库中右键材质资产，选择「打开文件夹」。</li>
+<li>打开 <code>meta.json</code>，核对 <code>name</code>、<code>name_cn</code>、<code>node_type</code>、<code>renderer</code>、<code>color_space</code> 与 <code>formats</code>。</li>
+<li>找到 <code>node.zmetal</code>。它是 JSON，不是 Maya 场景文件；部分外部资产会用资产名命名 <code>.zmetal</code>，导入时先找 <code>node.zmetal</code>，找不到才取任意 <code>.zmetal</code>。</li>
+<li>打开 <code>node.zmetal</code>，确认顶层有 <code>root_materials</code> 与 <code>nodes</code> 两项；材质节点、贴图节点都在 <code>nodes</code> 里。</li>
+<li>如果资产带贴图，查看 <code>textures/</code>；<code>node.zmetal</code> 中的 <code>fileTextureName</code> 已改写为 <code>textures/...</code> 相对路径。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>用右键「预览节点」打开同一个 <code>.zmetal</code>，画布上能看到与 <code>root_materials</code> 对应的材质节点及其上游连接；把它导入场景后，Hypershade 中出现同名材质。</p>
+<h2 id="h-4">提示</h2>
+<ul>
+<li><code>.zmetal</code> 只记录材质节点与连接，不含几何体、相机和灯光。</li>
+<li><code>node.mcm</code> 记录材质与物体的拓扑对应，与 zmetal 是两份独立数据。</li>
+<li>导入材质时优先用 <code>.zmetal</code>，因为它保存的是节点属性与连接；缺失时才回退到 <code>.ma/.mb</code> 里的材质网络。</li>
+<li>只有导出时启用了 zmetal 格式，资产里才会有这个文件。</li>
+</ul>

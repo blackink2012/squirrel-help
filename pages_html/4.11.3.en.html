@@ -1,0 +1,25 @@
+<p>Creating an asset library makes a standard library directory (<code>library.json</code> plus six sub-libraries) and adds it to the library list.</p>
+<p><img src="media_en/shared/settings-general.webp" alt="Settings → General → Asset library management: create an asset library (a new standard library directory)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Steps</h2>
+<ol>
+<li>Open the Settings window and go to the <code>「资产库管理」 (Asset library management)</code> group on the <code>「常规」 (General)</code> tab.</li>
+<li>Click <code>「创建资产库」 (Create asset library)</code>.</li>
+<li>Choose the parent directory for the library.</li>
+<li>Type the asset library name; the default is <code>SquirrelLib</code>.</li>
+<li>Confirm and wait for the <code>「创建成功」 (created successfully)</code> message.</li>
+<li>Click <code>「确定」 (OK)</code> in the Settings window to save the list.</li>
+</ol>
+<h2 id="h-2">Verify the result</h2>
+<ul>
+<li>A folder named after the library appears under the parent directory.</li>
+<li>It contains <code>library.json</code> plus the six sub-library directories <code>materials</code>, <code>models</code>, <code>lights</code>, <code>textures</code>, <code>scenes</code> and <code>hdr</code>.</li>
+<li>Each sub-library directory contains a <code>FolderMetadata.fdata</code>.</li>
+<li>The new library shows up both in the settings list and in the main window&#x27;s library dropdown.</li>
+</ul>
+<h2 id="h-3">Tips</h2>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Creating is refused when the target directory already exists; choose another name or clean up the same-named directory first.</p></div>
+<ul>
+<li>The first time the new library loads it completes the standard structure such as the <code>「自定义」 (Custom)</code> sub-category and merges in the remaining <strong>built-in sub-libraries</strong> from the configuration (images, audio, animation data, node trees and so on) — that is why creating a library writes only six base directories, and loading / switching to it completes all 11 built-in sub-libraries.</li>
+<li>On the command side <code>library_manage op=create</code> accepts <code>path</code> or <code>parent_dir + name</code>; on failure it rolls back the half-built directory and never leaves an empty library behind.</li>
+<li>It does not switch to the new library automatically; select it in the library dropdown.</li>
+</ul>

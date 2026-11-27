@@ -1,0 +1,26 @@
+<p>用鼠标框选屏幕区域作为资产缩略图，适合快速记录视口效果或现成参考画面。</p>
+<p><img src="media/shared/menu-thumbnail.webp" alt="缩略图操作菜单" loading="lazy" decoding="async"></p>
+<h2 id="h-1">两种截取入口</h2>
+<table><thead><tr><th>入口</th><th>特点</th></tr></thead><tbody><tr><td>预览面板「截取」按钮</td><td>全屏框选即取，不弹工具栏、不录屏，结果按默认缩略图大小保存</td></tr><tr><td>右键 → 更新缩略图 → 截取</td><td>完整截图工具，带宽高、强制分辨率、录屏等工具栏选项</td></tr></tbody></table>
+<h2 id="h-2">操作步骤（预览面板快速截取）</h2>
+<ol>
+<li>选中资产，右侧预览面板底部点「截取」。</li>
+<li>屏幕变暗后拖出选区，松手即截取；拖拽时按住 Ctrl 可锁定正方形。</li>
+<li>按 Esc 或右键取消。</li>
+<li>截图按「默认缩略图大小」等比缩放到长边，写入资产主缩略图。</li>
+</ol>
+<h2 id="h-3">操作步骤（完整截图工具）</h2>
+<ol>
+<li>右键资产，选「更新缩略图 → 截取」。</li>
+<li>在截屏覆盖层上框选区域，可在工具栏调整宽高、勾选强制分辨率。</li>
+<li>点截图按钮确认，结果写入主缩略图并复制到系统剪贴板。</li>
+<li>需要连续处理多个资产时，工具会保持打开；点「截取添加」可写入新的附加槽位。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>网格卡片和右侧预览立即显示新图。</li>
+<li>完整截图工具截取后，系统剪贴板中已有同一张图。</li>
+<li>使用「截取添加」时，预览面板的缩略图计数增加。</li>
+</ul>
+<div class="admonition note"><div class="admonition-title">注意</div><p>完整截图工具还提供录屏按钮，录制完成后生成 <code>.aicon</code> 动图缩略图；生成依赖随包的 ffmpeg。</p></div>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>「截取」会替换主缩略图。想保留原主图时，请使用「截取添加」写入新槽位。</p></div>

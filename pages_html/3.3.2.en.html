@@ -1,0 +1,22 @@
+<p>Multi-selection follows Windows Explorer habits: <code>Ctrl</code>-click toggles a single item, <code>Shift</code>-click selects a range, and dragging on empty space draws a marquee.</p>
+<p><img src="media_en/shared/area-multi-select.webp" alt="Multi-selection: several cards selected at once (blue frame); the batch operation bar appears below the grid (see the next section)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Mouse multi-selection</h2>
+<table><thead><tr><th>Action</th><th>Result</th></tr></thead><tbody><tr><td><code>Ctrl + click</code></td><td>Toggles this card, keeping the other selected cards</td></tr><tr><td><code>Shift + click</code></td><td>Adds the range from the anchor to this card; the anchor stays put</td></tr><tr><td><code>Ctrl + Shift + click</code></td><td>Same as above, adding the range to the existing selection</td></tr><tr><td>Drag on empty space</td><td>Marquee select; no modifier = replace the selection, <code>Ctrl</code> / <code>Shift</code> = add</td></tr><tr><td>Click empty space</td><td>No modifier = clear; <code>Ctrl</code> / <code>Shift</code> = keep the existing selection</td></tr></tbody></table>
+<p>The anchor is the card where the last plain or <code>Ctrl</code> click landed; repeated <code>Shift</code> clicks stretch the same range instead of measuring from scratch.</p>
+<h2 id="h-2">Keyboard multi-selection</h2>
+<ol>
+<li>Click into the asset grid to give it keyboard focus.</li>
+<li>Arrow keys move the focus and the selection; <code>Shift + arrow</code> extends the range; <code>Ctrl + arrow</code> moves only the focus without changing the selection.</li>
+<li><code>Ctrl + A</code> selects all; <code>Ctrl + F</code> scrolls the current selection to the center of the viewport.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>After multi-selecting, the batch operation bar appears in the toolbar and the status bar shows how many are selected.</li>
+<li>Dragging on empty space shows a marquee rectangle and the cards inside highlight live.</li>
+<li><code>Ctrl</code>-clicking a selected card deselects it without clearing the rest.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>List view also supports <code>ExtendedSelection</code>, with the same <code>Ctrl</code> / <code>Shift</code> semantics as icon view.</li>
+<li>With several cards selected, dragging any one of them drags the whole batch into Maya (see 3.3.5).</li>
+</ul>

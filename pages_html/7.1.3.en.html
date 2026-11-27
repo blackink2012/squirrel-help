@@ -1,0 +1,36 @@
+<p>The material network structure is <code>zmetal</code>&#x27;s complete description of a Maya shading network: which nodes exist, each attribute&#x27;s value, and who connects to whom.</p>
+<h2 id="h-1">The top level has two parts</h2>
+<pre><code class="language-json">{
+  "root_materials": ["Gold_ai"],
+  "nodes": {
+    "Gold_ai": {
+      "node_type": "aiStandardSurface",
+      "attrs": {
+        "base": {"type": "value", "value": 1.0},
+        "baseColor": {
+          "type": "connection",
+          "source_node": "file1",
+          "source_attr": "outColor"
+        }
+      },
+      "displacement_node": "displacementShader1"
+    }
+  }
+}</code></pre>
+<p><code>root_materials</code> are the material node names to build on import; <code>nodes</code> is the node table keyed by node name.</p>
+<h2 id="h-2">What a single node contains</h2>
+<ul>
+<li><code>node_type</code>: the Maya node type, such as <code>aiStandardSurface</code>, <code>file</code> or <code>place2dTexture</code>.</li>
+<li><code>attrs</code>: the attribute table. Plain values are written as <code>{&quot;type&quot;: &quot;value&quot;, &quot;value&quot;: ...}</code>; connections are written as <code>{&quot;type&quot;: &quot;connection&quot;, &quot;source_node&quot;: ..., &quot;source_attr&quot;: ...}</code>, and upstream nodes are written recursively into <code>nodes</code>.</li>
+<li><code>displacement_node</code>: the displacement node associated with the material; on import the plug-in creates the shading engine and links it instead of serializing the SE directly.</li>
+</ul>
+<h2 id="h-3">Why it is designed this way</h2>
+<ul>
+<li>Import does not depend on the original <code>.ma</code>: as long as the node types exist in the current Maya, the network can be rebuilt from attribute values.</li>
+<li>Textures are not embedded; they are collected into <code>textures/</code> and <code>fileTextureName</code> is rewritten to a relative path, so the asset can be moved as a whole.</li>
+<li>Array element attributes (such as a <code>ramp</code>&#x27;s <code>colorEntryList[i].color</code>) are collected separately to avoid falling back to defaults after import.</li>
+<li>Scene global nodes (<code>time1</code>, <code>defaultColorMgtGlobals</code> and similar) are not written, avoiding duplicate globals at import time.</li>
+</ul>
+<h2 id="h-4">Notes</h2>
+<p>A connection attribute&#x27;s static value is only a reference; import honors the connection. Same-named attributes do not imply the same semantics, and cross-renderer work still needs a <code>.mmap</code> to define the mapping explicitly.</p>
+<p>On import every node is rebuilt under the key names in <code>nodes</code>, and <code>root_materials</code> then decides which materials to assign to objects. When names clash Maya adds numbers automatically, and the plug-in keeps reconnecting through an old-name to new-name map, so the original node names in the asset need not match the scene exactly.</p>

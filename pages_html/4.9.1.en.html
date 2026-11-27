@@ -1,0 +1,27 @@
+<p>Favoriting puts frequently used assets into a collection; the star on a card shows whether the asset belongs to the <strong>active collection</strong>, and the data is stored per library in <code>favorites.json</code>.</p>
+<p><img src="media_en/shared/nav-favorites.webp" alt="Favorites tab: the default collection and the asset counts of each collection" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The asset library is loaded and the <code>「收藏」 (Favorites)</code> tab is available on the left.</li>
+<li>The target collection exists. A missing collection is not created automatically, and the write is ignored.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open the <code>「收藏」 (Favorites)</code> tab on the left and select a collection in the list (the default is <code>「默认收藏夹」 (default collection)</code>).</li>
+<li>In the asset grid or list view click the star icon on a card; its tooltip reads &quot;click to add / remove favorite&quot;.</li>
+<li>Clicking the same star again removes the favorite.</li>
+<li>You can also right-click an asset and choose <code>「添加到收藏夹」 (Add to favorites)</code>, then pick a collection in the submenu: a filled gold star means it is in that collection, an outlined grey star means it is not.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The star toggles between filled and outlined and the count next to the collection changes.</li>
+<li>With that collection selected on the <code>「收藏」 (Favorites)</code> tab the grid lists only its assets.</li>
+<li>In <code>favorites.json</code> in the library root the asset ID appears under the collection&#x27;s <code>materials</code> entry.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<div class="admonition note"><div class="admonition-title">注意</div><p>The star writes into the <strong>active collection</strong>. Select the collection first and then click the star so assets are not filed into the wrong one.</p></div>
+<ul>
+<li>Favorites are stored per library: the main asset library and the project library each have their own, and the top of the panel shows the current library (main asset library / project library).</li>
+<li>A plain drag <strong>moves</strong> an asset into the target collection (removing it from others); holding <code>Ctrl</code> while dragging <strong>adds</strong> it and keeps the previous membership.</li>
+<li>The default collection cannot be deleted; on the command side use <code>favorite</code> (<code>op=list/add/remove/toggle</code>), which returns <code>COLLECTION_NOT_FOUND</code> when the collection does not exist.</li>
+</ul>

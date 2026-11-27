@@ -1,0 +1,64 @@
+<blockquote><p>One-line summary: <strong>convert a batch of same-type materials in the scene (such as VRayMtl) into another type (such as aiStandardSurface) using a mapping configuration, creating new materials, copying textures and reassigning as needed.</strong></p></blockquote>
+<p>It is &quot;heavier&quot; than material import/export: importing/exposing moves whole packages, while this one <strong>rebuilds by rules</strong>. That is why it involves two prerequisite files:</p>
+<ul>
+<li><strong>Material type mapping</strong>: which material type → which material type (configure it in the window or save it as a preset);</li>
+<li><strong>Attribute mapping file (<code>.mmap</code>)</strong>: which source attribute → which target attribute, with conversion functions. That file is produced by <a href="#/en/15.14.8"><code>8.14.8</code></a>.</li>
+</ul>
+<blockquote><p><strong>About the screenshot on this page</strong>: this tool currently has <strong>no dedicated screenshot</strong> (automatic capture did not catch its window). The image below is a style reference from the same Kit window family (the image format conversion tool) and <strong>is not</strong> the material conversion tool&#x27;s interface — use this page&#x27;s control tables as the authority.</p></blockquote>
+<p><img src="media_en/shared/quicktool-image-format.webp" alt="Style reference from the same Kit window family (not this tool&#x27;s interface)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Where to open it</h2>
+<table><thead><tr><th>Entry</th><th>How</th></tr></thead><tbody><tr><td>Top toolbar <strong>Quick tools</strong> menu</td><td><strong>Quick tools</strong> → <strong>Material conversion tool</strong></td></tr><tr><td>Script browser</td><td><strong>Script browser</strong> → add the plug-in&#x27;s <code>quicktools</code> directory → double-click <code>材质转换工具.py</code></td></tr></tbody></table>
+<p>The window is titled &quot;Material conversion tool - Maya 2025&quot; (the version follows the current Maya).</p>
+<h2 id="h-2">What every control does</h2>
+<h3 id="h-3">Card &quot;Material type mapping configuration&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Mapping table</td><td>One row per mapping: source material type → target material type (double-click a cell to edit; <strong>an empty source type means &quot;convert every material into this target type&quot;</strong>)</td><td>Load source / target first, then check the row count</td></tr><tr><td><strong>Load source</strong></td><td>Adds the currently selected material node in Maya to the source type column by its type</td><td>Select a source material first</td></tr><tr><td><strong>Load target</strong></td><td>Sets the currently selected material node&#x27;s type as the target type</td><td>Select a target material first</td></tr><tr><td><strong>+ Add row</strong></td><td>Adds a mapping row manually (several rows convert several types)</td><td>For converting several source types together</td></tr><tr><td><strong>Delete selected</strong></td><td>Deletes the selected rows</td><td>—</td></tr><tr><td><strong>Clear all</strong></td><td>Empties the whole mapping table</td><td>Click it before switching conversions; <strong>Save preset</strong> first</td></tr><tr><td><strong>Save preset</strong></td><td>Saves this table as a <code>.mlist</code> preset</td><td>Save once configured</td></tr><tr><td><strong>Load preset</strong></td><td>Reads a previously saved <code>.mlist</code></td><td>—</td></tr></tbody></table>
+<h3 id="h-4">Card &quot;Material information&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th></tr></thead><tbody><tr><td><strong>Source material:</strong> (not selected / name) plus type</td><td>Shows the loaded source material and whether one is selected</td></tr><tr><td><strong>Target material:</strong> (not selected / name) plus type</td><td>Shows the loaded target material</td></tr></tbody></table>
+<h3 id="h-5">Card &quot;Mapping file&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td><strong>Mapping file directory</strong> input (placeholder &quot;choose the mapping relationship file...&quot;)</td><td>The <strong>folder</strong> holding <code>.mmap</code> files</td><td>Point it at the directory where 8.14.8 saved its presets</td></tr><tr><td><strong>Browse...</strong></td><td>Chooses the directory; the tool loads every <code>.mmap</code> inside</td><td>—</td></tr><tr><td><strong>Open folder</strong></td><td>Opens that directory in Explorer</td><td>To find files / add mappings</td></tr><tr><td>Mapping status label</td><td>&quot;Mapping: not loaded&quot; / &quot;N mappings loaded&quot;</td><td>Read it before converting</td></tr><tr><td>Mapping info label</td><td>Shows the folder path of the current mapping files</td><td>—</td></tr></tbody></table>
+<h3 id="h-6">Card &quot;Attribute mapping preview&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th></tr></thead><tbody><tr><td>Tab area</td><td>One tab per loaded <code>.mmap</code>; switch to see that file&#x27;s attribute table and conversion functions</td></tr><tr><td>&quot;Attribute mapping preview&quot; title</td><td>Lets you verify <strong>before</strong> converting which attribute writes to which</td></tr></tbody></table>
+<h3 id="h-7">Card &quot;Conversion options&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Checkbox <strong>Copy texture connections</strong></td><td>Keeps the source material&#x27;s texture connections when converting (texture nodes are carried over)</td><td><strong>Recommended</strong>, otherwise the new material is flat color</td></tr><tr><td>Checkbox <strong>Keep the original material</strong></td><td>Leaves the original material node in place and only creates the new target material</td><td><strong>Recommended on first use</strong> as a fallback; untick once confident</td></tr><tr><td>Checkbox <strong>Auto-apply to selected objects</strong></td><td>Assigns the new material to the objects that used the old one</td><td>Tick it to switch the whole scene over</td></tr><tr><td>Checkbox <strong>No mapping → default material</strong></td><td>Creates a basic target material to replace the source when no mapping file matches</td><td>A fallback; leave it off if you do not want surprise default materials</td></tr></tbody></table>
+<h3 id="h-8">Bottom buttons</h3>
+<table><thead><tr><th>Button</th><th>Effect</th><th>Notes</th></tr></thead><tbody><tr><td><strong>Convert selection</strong></td><td><strong>Converts only the currently selected objects / materials in Maya</strong></td><td>Use it for a small trial first</td></tr><tr><td><strong>Convert all</strong></td><td>Converts <strong>every</strong> material in the scene matching the mapping configuration (it first asks &quot;batch convert N xxx materials, continue?&quot;)</td><td>Save the scene first on large scenes</td></tr><tr><td><strong>Help</strong></td><td>Opens the full usage documentation</td><td>—</td></tr><tr><td><strong>Close</strong></td><td>Closes the window</td><td>—</td></tr><tr><td>Bottom status line</td><td>&quot;Ready - choose source and target materials, then load the mapping file&quot; / &quot;Converting (i/n): material name...&quot; / &quot;Conversion finished&quot; / &quot;Mapping: N entries&quot;</td><td>Watch progress here</td></tr></tbody></table>
+<h2 id="h-9">A complete conversion flow</h2>
+<ol>
+<li>Prepare the mapping file first: configure source/target attribute mappings in <a href="#/en/15.14.8"><code>8.14.8</code></a> and <strong>Save preset</strong> to get a <code>.mmap</code>;</li>
+<li>Select a <strong>source material</strong> in Maya → Quick tools → <strong>Material conversion tool</strong> → click <strong>Load source</strong>;</li>
+<li>Select a <strong>target material</strong> (or just pick the target type) → click <strong>Load target</strong>;</li>
+<li>Confirm the mapping table holds one row &quot;source type → target type&quot;; add rows for more source types;</li>
+<li>Under <strong>Mapping file</strong> click <strong>Browse...</strong> to the <code>.mmap</code> folder and confirm the status becomes &quot;N mappings loaded&quot;;</li>
+<li>Scan the <strong>attribute mapping preview</strong> to confirm roughness / metalness / normal and other key attributes are mapped;</li>
+<li>Under <strong>conversion options</strong>, tick <strong>Copy texture connections</strong>; on the first run also tick <strong>Keep the original material</strong> and leave <strong>Auto-apply to selected objects</strong> off;</li>
+<li>Click <strong>Convert selection</strong> for a small trial: check what the new material looks like and whether textures are connected;</li>
+<li>Once satisfied, decide whether to tick <strong>Auto-apply to selected objects</strong>, click <strong>Convert all</strong> and confirm in the dialog;</li>
+<li>Read the statistics dialog (materials converted / attributes copied / defaults used / textures copied / failed attributes).</li>
+</ol>
+<h2 id="h-10">Where the output lands</h2>
+<ul>
+<li>New material nodes are created <strong>in the current Maya scene</strong> (the target type, such as aiStandardSurface);</li>
+<li>With <strong>Auto-apply to selected objects</strong> ticked, objects that used the old material switch to the new one;</li>
+<li>With <strong>Keep the original material</strong> ticked the old material remains (handy for comparison / rollback);</li>
+<li>When some materials fail, a &quot;materials that failed to convert&quot; dialog appears with a <strong>select failed materials in Maya</strong> button that locates them;</li>
+<li>When the batch ends, statistics appear: materials converted, attributes copied, attributes using defaults, textures copied, failed attributes.</li>
+</ul>
+<h2 id="h-11">Risks and how to undo (conversion changes the scene)</h2>
+<ul>
+<li><strong>It creates materials in the scene and may change assignments.</strong> Press <code>Ctrl+S</code> before starting — that is the most reliable undo (do not save / reopen to return to the pre-conversion state).</li>
+<li><strong>Always tick Keep the original material and try one material with Convert selection first</strong>: with a bad attribute mapping the new material can come out black or full of defaults, so inspect the result before batching.</li>
+<li><strong>Convert all</strong> walks <strong>every material in the scene that matches the configuration</strong>, not only the selected ones — read the number in the confirmation dialog.</li>
+<li>With <strong>No mapping → default material</strong> ticked, materials without a mapping are replaced by a basic default material — leave it off if you do not want that.</li>
+<li>To undo:<ul>
+<li>the scene was not saved → simply do not save and reopen;</li>
+<li>it was already saved → recover the old material via <strong>Keep the original material</strong> and reassign (or use Maya&#x27;s undo, see the undo conventions in <a href="#/en/15.1.2"><code>8.1.2</code></a>);</li>
+<li>the mapping was wrong → go back to <a href="#/en/15.14.8"><code>8.14.8</code></a>, fix the preset, reload and convert again.</li>
+</ul></li>
+</ul>
+<h2 id="h-12">Related</h2>
+<ul>
+<li>Its position in the <strong>Quick tools</strong> menu: <a href="#/en/15.2.6"><code>8.2.6</code></a></li>
+<li>Creating the attribute mapping first (where the <code>.mmap</code> comes from): <a href="#/en/15.14.8"><code>8.14.8</code></a></li>
+<li>Moving whole material packages (without changing attributes): <a href="#/en/15.14.7"><code>8.14.7</code></a></li>
+<li><strong>Convert import</strong> for library materials: <a href="#/en/15.5.2"><code>8.5.2</code></a></li>
+</ul>

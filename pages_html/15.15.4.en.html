@@ -1,0 +1,42 @@
+<blockquote><p>One-line summary: <strong>the plug-in&#x27;s built-in purchase page — plans, prices, benefits and the payment QR code all come from the server; scan and pay on your phone and the activation code is filled in automatically, then click Activate.</strong></p></blockquote>
+<p><img src="media_en/shared/dialog-purchase.webp" alt="Bottom of the purchase window: activation code input and activation" loading="lazy" decoding="async"></p>
+<h2 id="h-1">How to open it</h2>
+<table><thead><tr><th>Entry</th><th>Condition</th></tr></thead><tbody><tr><td>Settings → <strong>License activation</strong> page → <strong>Buy license</strong></td><td>Always visible; clickable when <strong>unlicensed, expired, or within 15 days of expiry</strong>; greyed out with a hover reason otherwise</td></tr><tr><td>Account window → <strong>Purchase / renew</strong></td><td>Visible after signing in; same condition</td></tr></tbody></table>
+<p>With plenty of license time left the button is gray and hovering explains why — this reduces invalid orders and is not a fault.</p>
+<h2 id="h-2">Window structure</h2>
+<table><thead><tr><th>Area</th><th>Content</th></tr></thead><tbody><tr><td>Title / subtitle</td><td>The sales page title and description delivered by the server</td></tr><tr><td>Notice bar</td><td>Server-configured announcements (campaigns, invoice notes); hidden when none</td></tr><tr><td>Content card area</td><td>Sales cards: plans and prices, benefit descriptions, link cards; content and layout are decided by the server; cards with an amount and working payment have <strong>Buy now</strong></td></tr><tr><td>QR area</td><td>The &quot;scan to pay&quot; card that appears after clicking <strong>Buy now</strong>, see the next section</td></tr><tr><td>Activation code area</td><td>The <strong>Activation code</strong> input (placeholder <code>SQAM-XXXX-XXXX-XXXX-XXXX</code>) plus <strong>Paste</strong> and <strong>Activate</strong></td></tr><tr><td>Bottom</td><td><strong>Refresh</strong> on the left, <strong>Close</strong> on the right, and a status line at the very bottom</td></tr></tbody></table>
+<h2 id="h-3">How QR payment works</h2>
+<ol>
+<li>Click <strong>Buy now</strong> on a card with an amount;</li>
+<li>The server creates an order and a <strong>scan to pay</strong> card is inserted at the top of the window: the payment QR code plus payment notes (including a payment reference code when one exists);</li>
+<li>Scan the code on your phone and pay;</li>
+<li>The client polls the order in the background (up to about 10 minutes); on success it:<ul>
+<li><strong>fills the activation code</strong> into the input below;</li>
+<li>sets the status line to &quot;activation code received, click Activate to finish.&quot;;</li>
+</ul></li>
+<li>Click <strong>Activate</strong> and the license takes effect with the status line &quot;licensed, you can close this window.&quot;.</li>
+</ol>
+<p>The QR image comes from the server; when it fails to load the card reads &quot;payment code failed to load&quot;, so click <strong>Refresh</strong> at the bottom.</p>
+<h2 id="h-4">Entering or pasting a code manually</h2>
+<p>If you did not scan, or support sent you an activation code directly:</p>
+<ol>
+<li>Put the code in the <strong>Activation code</strong> input (or click <strong>Paste</strong> to take it from the clipboard);</li>
+<li>Click <strong>Activate</strong>.</li>
+</ol>
+<p>With an empty input, activating reports &quot;enter or wait for an activation code first.&quot;</p>
+<h2 id="h-5">Status text and exceptions</h2>
+<table><thead><tr><th>Status / message</th><th>Meaning</th><th>What to do</th></tr></thead><tbody><tr><td>Fetching purchase information…</td><td>Fetching the server&#x27;s sales content</td><td>Wait; click <strong>Refresh</strong> if it stalls</td></tr><tr><td>Showing the content fetched last time (network unavailable)</td><td>The fetch failed and the local cache was used</td><td>Check the network and click <strong>Refresh</strong></td></tr><tr><td>The server has no sales content configured</td><td>Nothing sellable was delivered</td><td>Try later or contact sales</td></tr><tr><td>Unable to fetch purchase information: …</td><td>Network / server error</td><td>Read the reason after the colon and retry or contact support</td></tr><tr><td>Waiting for payment confirmation… (order xxx)</td><td>The order exists and the payment result is being polled</td><td>Finish the QR payment; simply close the window if you change your mind</td></tr><tr><td>This order has expired, click Refresh to fetch again</td><td>The order timed out (about 10 minutes)</td><td>Click <strong>Refresh</strong> to create a new order</td></tr><tr><td>The order was closed, refresh and retry</td><td>The order was closed</td><td>As above</td></tr><tr><td>Cannot get the machine code…</td><td>The licensing module is unavailable</td><td>Open the license window first to check the status (<a href="#/en/15.15.2"><code>8.15.2</code></a>)</td></tr></tbody></table>
+<h2 id="h-6">Risks and how to undo</h2>
+<ul>
+<li>The purchase window <strong>never changes the license itself</strong>: only clicking <strong>Activate</strong> (or activating in the license window) takes effect;</li>
+<li>Orders and QR codes come from the server; closing the window does not cancel an existing order, but unpaid orders expire on their own;</li>
+<li>Paid but the window is closed: reopen the purchase window and activate with the received code in the <strong>Activation code</strong> area;</li>
+<li>Clicking <strong>Buy now</strong> repeatedly creates new orders; the last QR code is the valid one.</li>
+</ul>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>The license window (activate / deactivate / version scope): <a href="#/en/15.15.2"><code>8.15.2</code></a></li>
+<li>The <strong>License activation</strong> settings page: <a href="#/en/15.9.10"><code>8.9.10</code></a></li>
+<li>Licensing modes and the machine code: <a href="#/en/2.5.1"><code>2.5.1</code></a></li>
+<li>Activation, renewal and transfer: <a href="#/en/2.5.2"><code>2.5.2</code></a></li>
+</ul>

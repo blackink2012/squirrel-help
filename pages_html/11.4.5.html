@@ -1,0 +1,25 @@
+<p>把插件的技能与 MCP 通道接给 Claude Code、Codex、Trae 等外部 AI 工具，需要技能落位与 MCP 两半都完成。</p>
+<p><img src="media/shared/settings-ext-agents.webp" alt="外部 AI 工具" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>目标 AI 工具已安装；使用自定义目录时知道它的技能根目录。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>打开「设置 → AI 设置 → 外部 AI 工具」，点「外部 AI 工具…」。</li>
+<li>面板每行一家工具，先看两段状态：技能是否就位、MCP 通道是否已挂。</li>
+<li>未识别或装在别处时，点「选择路径…」指定技能目录。</li>
+<li>点「安装技能」把 <code>squirrel-*</code> 技能拷进对方目录；点「移除技能」可撤销。</li>
+<li>支持 MCP 的工具勾选「MCP 通道」写入对方配置；不支持或路径未确认的工具点「复制配置片段」手工粘贴。</li>
+<li>改动后点「重新探测」刷新状态；设置页状态行会显示已选定目录数与已挂 MCP 家数。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>面板显示「技能已就位（n 个）」「MCP 通道：已挂上」。</li>
+<li>在对方工具里能看到 <code>squirrel-assets</code> 等技能与 <code>squirrel_*</code> 工具。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<blockquote><p><strong>提示</strong>：只装技能不挂 MCP，模型会知道有资产库却调不动工具。</p></blockquote>
+<blockquote><p><strong>警告</strong>：面板中的操作会当场写入对方目录，与设置窗口的「取消」无关；写入前会备份原配置。</p></blockquote>
+<blockquote><p><strong>提示</strong>：标「待实测」的工具路径未在本机验证，装上不一定生效；dsh 桌面版改完需重启后读取。</p></blockquote>
+<blockquote><p><strong>提示</strong>：没收录 MCP 格式的工具可用「手工配置说明」获取完整路径与片段。</p></blockquote>

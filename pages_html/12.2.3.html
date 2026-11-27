@@ -1,0 +1,14 @@
+<p><code>dry_run</code> 用来预演，<code>undo_last</code> 是插件里唯一的回滚入口：前者不写状态，后者按执行前留下的快照恢复。</p>
+<h2 id="h-1">dry_run</h2>
+<p>当前 146 条命令中有 106 条声明 <code>dry_run_supported=true</code>。传 <code>dry_run=true</code> 时：</p>
+<ul>
+<li>不修改资产库、场景或配置，也不写回滚快照；审计记录的状态标为 <code>dry_run</code>。</li>
+<li>命令返回 <code>status=&quot;preview&quot;</code>，内容随命令而异，例如 <code>move</code> 返回每个节点的 <code>from</code> / <code>to</code>，<code>batch_move_to</code> 返回整批去向计划，导入类命令返回将创建或复制的文件清单。</li>
+<li><code>dry_run</code> 既可以作为独立参数，也可以放进 <code>params</code>；执行器会把后者取出并按它执行。</li>
+</ul>
+<p>只读命令不支持预览，直接返回当前数据。</p>
+<h2 id="h-2">undo</h2>
+<p>清单中有 30 条命令声明 <code>undo_supported=true</code>。执行器在真正执行前调用 <code>snapshot_fn</code> 记录快照，执行后再用 <code>snapshot_after_fn</code> 补全（例如复制类要拿到新生成的 id），最后压入内存中的 <code>UndoStack</code>。</p>
+<table><thead><tr><th>覆盖范围</th><th>回滚方式</th></tr></thead><tbody><tr><td>场景变换、父子、分组、显隐、属性、材质指定、归零</td><td>反向操作</td></tr><tr><td>场景删除 <code>delete_objects</code></td><td>Maya 自身撤销栈（快照标 <code>maya_undo</code>）</td></tr><tr><td>资产库移动、复制、重命名、编辑、删除、导入</td><td>按快照恢复原分类或删除新建目录</td></tr></tbody></table>
+<p>调用 <code>undo_last</code> 时，<code>steps=N</code> 可连续回滚最近 N 条；<code>dry_run=true</code> 只报告将回滚哪几条。某条回滚失败时，它的快照会放回栈顶以便重试。</p>
+<blockquote><p><strong>警告</strong>：<code>UndoStack</code> 只在内存里，插件重载或 Maya 重启后清空。<code>maya_run_python</code> / <code>maya_run_mel</code> 不进入 <code>undo_last</code>；使用前应单独备份场景。</p></blockquote>

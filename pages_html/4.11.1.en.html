@@ -1,0 +1,28 @@
+<p>The dropdown at the top of the main window&#x27;s <code>「分类」 (Categories)</code> tab lists every registered asset library; switching reloads that library and refreshes the category tree and asset grid.</p>
+<p><img src="media_en/shared/menu-library.webp" alt="Asset library dropdown" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>At least one asset library is registered (usually true when the plug-in opens by default).</li>
+<li>The library directory to switch to actually exists on disk.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open the <code>「分类」 (Categories)</code> tab on the left.</li>
+<li>Click the asset library dropdown above the category tree; entries read &quot;name — path&quot;.</li>
+<li>Choose the target library.</li>
+<li>Wait for it to load. Loading happens on a background thread, so the window does not freeze.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The dropdown and the status bar show the new library, and the category tree and asset grid switch to its contents.</li>
+<li>The Script Editor prints <code>「已切换资产库: 路径」 (switched asset library: &lt;path&gt;)</code>.</li>
+<li>On the <code>「收藏」 (Favorites)</code> tab the collections follow the current library.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>When the library directory is missing the plug-in reports <code>「资产库路径不存在」 (the asset library path does not exist)</code> and stays on the previous library. Fix or remove that entry in settings first.</p></div>
+<ul>
+<li>The load priority when the window opens is: explicitly given path → default library → last used library → order in the library list.</li>
+<li>&quot;Library&quot; here means the main asset library; <code>「项目」 (Projects)</code> is a separate tab and the project library is not in this dropdown.</li>
+<li>Collections and <code>favorites.json</code> are stored per library, so switching never mixes data.</li>
+<li>On the command side use <code>library_manage op=switch</code>; the switch writes <code>last_library_path</code>, and an open window refreshes its interface as well.</li>
+</ul>

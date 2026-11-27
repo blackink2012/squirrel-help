@@ -1,0 +1,33 @@
+<p>Build an attribute-by-attribute mapping between two material node types and save it as an <code>.mmap</code> for the material conversion tool.</p>
+<p><img src="media_en/shared/quicktool-material-map.webp" alt="Material node attribute mapping tool" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Purpose</h2>
+<p>It decides &quot;which source material attribute goes to which target attribute&quot; and can add transform functions and default values; it is the key configuration behind material conversion quality.</p>
+<h2 id="h-2">Input and output</h2>
+<ul>
+<li>Input: source / target material nodes (loaded from the current Maya selection), or node types and attributes typed by hand.</li>
+<li>Output: <code>.mmap</code> presets (JSON) saved in <code>Assets/material_mapper_presets/</code> by default, named <code>source node type_target node type.mmap</code>.</li>
+<li>The mapping table has five columns: select, source material attribute, target attribute, transform function, default value.</li>
+</ul>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open <code>快捷工具 (Quick tools) → 材质节点属性映射工具 (Material node attribute mapping tool)</code>.</li>
+<li>Select the source material node in Maya and click <code>「加载」 (Load)</code> next to the source node; then select the target material node and click <code>「加载」 (Load)</code> next to it.</li>
+<li>Click <code>「添加行」 (Add row)</code> and pick the source and target attributes from the dropdowns; <code>「属性浏览器」 (Attribute browser)</code> also lets you pick attributes from the current selection.</li>
+<li>Fill the transform function and default value as needed; <code>「载入默认值」 (Load defaults)</code> reads the target node&#x27;s current values into the whole column.</li>
+<li>For automatic inference choose the AI service and model and click <code>「AI 智能映射」 (AI smart mapping)</code>; right-clicking a single row also infers locally.</li>
+<li>Click <code>「保存预设」 (Save preset)</code> to save the <code>.mmap</code>; reload it later with <code>「加载预设」 (Load preset)</code>.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>Saving reports <code>「预设已保存到: &lt;path&gt;」 (preset saved to: &lt;path&gt;)</code> and the <code>.mmap</code> appears in the preset directory.</li>
+<li>Closing the window saves <code>_last_preset.mmap</code> automatically and restores the previous configuration next time.</li>
+<li>After loading the same mapping folder in the material conversion tool the table shows the source / target types and attribute counts.</li>
+</ul>
+<h2 id="h-5">Options and notes</h2>
+<ul>
+<li>Transform functions cover RGB channel splitting, transparency to transmission, glossiness to roughness, metalness estimation, emission, color math and more; function arguments are JSON (such as <code>{&quot;scalar&quot;: 2.0}</code>) and switching a function fills in default arguments automatically.</li>
+<li>AI services include Ollama (local, no API key), DeepSeek and Qwen (API key required); the local default model is <code>qwen3-vl:8b</code>, so when it is missing pick a pulled model in the dropdown or run <code>ollama pull</code>.</li>
+<li>An empty attribute dropdown usually means no node was loaded; use the attribute browser to add attributes one by one instead.</li>
+<li>When AI returns nothing useful, first confirm the service is reachable and the model available; with many attributes run it in batches on selected rows.</li>
+<li>The preset directory opens directly with <code>「打开文件夹」 (Open folder)</code>; a duplicate source attribute is cleared automatically.</li>
+</ul>

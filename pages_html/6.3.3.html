@@ -1,0 +1,27 @@
+<p>每个版本都是自包含的版本资产；创建新版本时勾选 <code>.zmetal</code>，新版本就会带上自己的材质与贴图，而不是共用主版本。</p>
+<p><img src="media/shared/dialog-version-browser.webp" alt="版本浏览器：每个版本可持有独立材质" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>主资产已经存在，并且已经有一个或多个 <code>V{n}</code> 子版本，或准备创建新版本。</li>
+<li>在 Maya 中已经为新版本设置好材质和贴图。</li>
+<li>准备在导出对话框里勾选 <code>材质预设 .zmetal</code>；需要贴图时保留 <code>贴图 textures/</code>。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在 Maya 中给新版本模型设置材质和贴图。</li>
+<li>选中该模型。</li>
+<li>右键主资产卡片 →「更新资产」→「创建新版本」。</li>
+<li>在导出对话框中勾选 <code>材质预设 .zmetal</code> 和所需几何格式；需要贴图时保留 <code>贴图 textures/</code>。</li>
+<li>点击「创建资产」。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li><code>V1/</code> 内出现 <code>node.zmetal</code> 和 <code>textures/</code>。</li>
+<li>右键资产 →「导入版本 / LOD」→ <code>V1</code>，菜单里能看到该版本的 <code>zmetal</code>（或 <code>mcm</code>）条目；选择后按材质导入。</li>
+<li>主版本根目录的 <code>node.zmetal</code> 和 <code>textures/</code> 保持不变。</li>
+</ul>
+<h2 id="h-4">提示与警告</h2>
+<blockquote><p><strong>提示</strong>：版本的“独立性”来自完整的 <code>V{n}</code> 目录，而不是共享的 <code>variants/</code> 材质目录；每个版本可以有自己的材质和贴图。</p></blockquote>
+<blockquote><p><strong>提示</strong>：只勾几何格式、不勾 <code>.zmetal</code> 时，新版本不会写入独立材质文件；此时导入的 <code>ma</code>/<code>mb</code> 里带什么材质就以文件内容为准。需要稳定复用时请显式勾选 <code>.zmetal</code>。</p></blockquote>
+<blockquote><p><strong>警告</strong>：勾选 <code>.zmetal</code> 会把当前场景的材质网络写入新版本；写入后修改主版本材质不会同步到子版本，反之亦然。</p></blockquote>
+<blockquote><p><strong>当前版本</strong>：旧帮助描述的 <code>variants/v2/node.zmetal</code> 是历史结构；当前版本使用 <code>V1/node.zmetal</code>。</p></blockquote>

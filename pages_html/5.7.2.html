@@ -1,0 +1,29 @@
+<p>贴图发黑、代理或缓存找不到，通常是导入策略指向的路径已经失效，或资产包内没有收集依赖。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>材质存在，但 file 节点的贴图路径不存在，视口显示黑或默认色。</li>
+<li>abc、vdb、ass、vrmesh 等代理节点报找不到文件。</li>
+<li>File Path Editor 中出现缺失条目。</li>
+<li>日志出现贴图拷贝失败、依赖重定向失败。</li>
+</ul>
+<h2 id="h-2">常见原因</h2>
+<table><thead><tr><th>原因</th><th>典型场景</th></tr></thead><tbody><tr><td>贴图策略为「源文件目录」，源文件被移动或删除</td><td>换机器、整理磁盘后</td></tr><tr><td>贴图或依赖策略为「当前资产目录」，<code>.zasset</code> 被移动</td><td>手动移动资产库</td></tr><tr><td>导出时未勾选关联文件，<code>deps/</code> 为空</td><td>只导出了几何体</td></tr><tr><td><code>meta.json</code> 的 <code>texture_map</code> 与实际文件名不一致</td><td>老版本资产或手工改过文件</td></tr><tr><td>缓存未复制到工程目录</td><td>abc、vrmesh、vrscene 等格式直接引用临时路径</td></tr><tr><td>图片资产的图片文件被移出分类目录</td><td>手工整理了库文件夹，<code>file</code> 节点还指向旧路径</td></tr><tr><td>音频编码不被 Maya 接受 / 转 WAV 失败</td><td>源文件损坏，或 mp3 / flac 等转码失败</td></tr></tbody></table>
+<h2 id="h-3">处理步骤</h2>
+<ol>
+<li>在 File Path Editor 中确认缺失文件的原路径与新路径。</li>
+<li>打开「设置 → 常规」，把贴图与依赖策略改为「拷贝到项目」，重新导入。</li>
+<li>检查 <code>.zasset/deps/</code> 是否包含对应缓存、代理与引用文件；为空则重新导出并勾选收集关联文件。</li>
+<li>重新导入资产，确认 file 节点与代理节点指向新路径。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>File Path Editor 中不再有缺失条目。</li>
+<li>视口中贴图正常显示，代理节点能加载出模型。</li>
+<li>脚本编辑器不再输出拷贝失败或路径重定向失败。</li>
+</ul>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>从资产包内直接指定贴图，确认文件本身可读。</li>
+<li>用「应用材质到选中」重建材质网络，排除旧材质路径残留。</li>
+<li>图片 file 节点丢路径时，重新入库这张图片，或把 <code>fileTextureName</code> 指回分类目录里的图片文件；音频转 WAV 失败时先把源文件转成标准 wav 再入库。</li>
+</ul>

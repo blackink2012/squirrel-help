@@ -1,0 +1,35 @@
+<blockquote><p>一句话定位：<strong>从「维护 → 补缺失缩略图…」打开的整库扫描窗口 —— 它先列出缺图 / 只有占位图的资产，让你挑，再把选中的交给无头渲染批量出图。</strong></p></blockquote>
+<p><img src="media/shared/dialog-fill-thumbnails.webp" alt="补缺失缩略图窗口" loading="lazy" decoding="async"></p>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>顶部工具栏 →「维护 ▾」→「补缺失缩略图…」；</li>
+<li>打开后立即扫描当前库（整库读一遍 meta，资产多时需要等一会儿，光标会变成等待状态）。</li>
+</ol>
+<p>前置条件：已经加载一个资产库；没加载库时会提示先打开库。</p>
+<h2 id="h-2">窗口里有什么</h2>
+<table><thead><tr><th>区块</th><th>内容</th></tr></thead><tbody><tr><td>摘要行</td><td>「扫描到 N 个需要出图的资产（缺缩略图或只有占位图）」；没有时为「没有需要出图的资产：整库都有缩略图。」</td></tr><tr><td>提示行</td><td>说明可多选、右键菜单与「开始生成」之后会发生什么</td></tr><tr><td>资产列表</td><td>每条显示「名称 / 资产路径 · 状态」，状态只有两种：<strong>缺缩略图</strong>、<strong>只有占位图</strong>；<strong>默认全选</strong></td></tr><tr><td>底部按钮</td><td>左起「重新扫描」、「开始生成（N 个）」（未选中时禁用）、「取消」</td></tr></tbody></table>
+<h2 id="h-3">怎么挑</h2>
+<ul>
+<li>默认全选，批量维护通常不用改；</li>
+<li>想只补一部分：Ctrl 点选 / Shift 连选，把不要的点掉；</li>
+<li>右键条目（按下即弹）有三项：</li>
+</ul>
+<table><thead><tr><th>右键项</th><th>作用</th><th>说明</th></tr></thead><tbody><tr><td>定位到资产</td><td>让主窗口切到该资产所在子库 / 分类并选中、抬到前面</td><td>查不到记录时退回按路径选中；本窗口不碰资产库状态</td></tr><tr><td>打开资产路径</td><td>在资源管理器打开该资产的磁盘目录</td><td>用来人工确认资产内容</td></tr><tr><td>从列表移除</td><td>把条目移出<strong>本次列表</strong></td><td>只影响界面，不动磁盘；点「重新扫描」会恢复</td></tr></tbody></table>
+<h2 id="h-4">点「开始生成」之后</h2>
+<ol>
+<li>先弹「后台渲染」选项窗：选渲染器、预设模型、环境光、尺寸与质量（<a href="#/15.12.6"><code>8.12.6</code></a>）；</li>
+<li>确认后起独立的 mayapy 进程，按选中资产逐个出图，观察窗见 <a href="#/15.12.7"><code>8.12.7</code></a>；</li>
+<li>作业在后台跑，<strong>不占用当前视口、不改当前场景</strong>，可以继续在 Maya 里干活；</li>
+<li>出完主窗口刷新，卡片图更新。</li>
+</ol>
+<h2 id="h-5">风险与反悔</h2>
+<table><thead><tr><th>操作</th><th>风险</th><th>反悔</th></tr></thead><tbody><tr><td>开始生成</td><td>会<strong>覆盖</strong>这些资产现有的缩略图（占位图也被替换）</td><td>重出一次即可，旧图无备份；重要图先用「更新缩略图 → 导入」另存</td></tr><tr><td>从列表移除</td><td>只是本次不处理</td><td>「重新扫描」即恢复</td></tr><tr><td>中途取消</td><td>协作式取消：当前资产收尾后才停</td><td>已出的图保留，下次只补剩下的</td></tr></tbody></table>
+<h2 id="h-6">出问题怎么办</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>处理</th></tr></thead><tbody><tr><td>扫描结果为空</td><td>整库确实都有缩略图</td><td>换「更新缩略图 → 后台渲染」单独重做某几个</td></tr><tr><td>提示没有可用的无头渲染器</td><td>缺 kick / oiiotool，或没有同版本 mayapy</td><td>见 <a href="#/15.12.6"><code>8.12.6</code></a> 的「出问题怎么办」</td></tr><tr><td>出图后还是灰的</td><td>资产本身缺几何 / 渲染失败</td><td>看观察窗日志，或改用「截取 / 导入」手动补图</td></tr></tbody></table>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>维护菜单其它项：<a href="#/15.2.8"><code>8.2.8</code></a></li>
+<li>后台渲染选项窗：<a href="#/15.12.6"><code>8.12.6</code></a> ；无头作业进度窗口：<a href="#/15.12.7"><code>8.12.7</code></a></li>
+<li>单个资产的缩略图流程：<a href="#/4.7.1"><code>4.1.7.1</code></a></li>
+<li>批量出图与作业取消：<a href="#/10.6.2"><code>4.7.6.2</code></a></li>
+</ul>

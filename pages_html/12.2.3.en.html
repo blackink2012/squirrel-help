@@ -1,0 +1,14 @@
+<p><code>dry_run</code> previews, and <code>undo_last</code> is the plug-in&#x27;s only rollback entry: the first writes no state, the second restores from the snapshot taken before execution.</p>
+<h2 id="h-1">dry_run</h2>
+<p>Of the current 146 commands, 106 declare <code>dry_run_supported=true</code>. With <code>dry_run=true</code>:</p>
+<ul>
+<li>The library, scene and configuration are unchanged, and no rollback snapshot is written; the audit record is marked <code>dry_run</code>.</li>
+<li>The command returns <code>status=&quot;preview&quot;</code> whose content varies: <code>move</code> returns <code>from</code> / <code>to</code> for each node, <code>batch_move_to</code> returns the whole destination plan, and import commands return the list of files that would be created or copied.</li>
+<li><code>dry_run</code> can be a standalone parameter or a key inside <code>params</code>; the executor pulls the latter out and honors it.</li>
+</ul>
+<p>Read-only commands do not support preview; they return current data directly.</p>
+<h2 id="h-2">undo</h2>
+<p>Thirty commands in the manifest declare <code>undo_supported=true</code>. Before executing, the executor calls <code>snapshot_fn</code> to record a snapshot, then completes it with <code>snapshot_after_fn</code> afterwards (for example, copy operations need the newly generated ids), and finally pushes it onto the in-memory <code>UndoStack</code>.</p>
+<table><thead><tr><th>Coverage</th><th>Rollback method</th></tr></thead><tbody><tr><td>Scene transforms, parenting, grouping, visibility, attributes, material assignment, zeroing</td><td>Inverse operation</td></tr><tr><td>Scene deletion <code>delete_objects</code></td><td>Maya&#x27;s own undo stack (snapshot marked <code>maya_undo</code>)</td></tr><tr><td>Library move, copy, rename, edit, delete, import</td><td>Restore the original category from the snapshot, or delete newly created folders</td></tr></tbody></table>
+<p>When calling <code>undo_last</code>, <code>steps=N</code> rolls back the most recent N entries consecutively; <code>dry_run=true</code> only reports which entries would be rolled back. If one entry fails to roll back, its snapshot is returned to the top of the stack for a retry.</p>
+<blockquote><p><strong>Warning</strong>: The <code>UndoStack</code> lives only in memory and is cleared when the plug-in reloads or Maya restarts. <code>maya_run_python</code> / <code>maya_run_mel</code> do not enter <code>undo_last</code>; back up the scene separately before using them.</p></blockquote>

@@ -1,0 +1,23 @@
+<p>缩略图取景会给指定对象拍一张干净的方形 PNG：自动取景、关掉取景框与遮罩装饰，拍完把场景状态全部还原。</p>
+<p><img src="media/shared/menu-thumbnail.webp" alt="更新缩略图菜单：截取 / 导入 / Maya 拍屏 / 渲染图" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>有明确的取景对象；命令不会猜「场景里唯一那个」。</li>
+<li>需要写入资产时，准备好资产的 <code>material_id</code>。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在 Maya 中选中对象，或调用 <code>thumbnail_shot</code> 时用 <code>objects</code> 指定。</li>
+<li>设置边长：<code>size</code> 为正方形像素，省略时用设置里的默认缩略图大小（出厂 512）。</li>
+<li>调整构图：<code>fill</code> 控制物体占画面的比例（默认 0.85），<code>fit_factor</code> 控制 <code>viewFit</code> 松紧（默认 1.0）。</li>
+<li>需要线框时传 <code>wire=true</code>；需要指定相机或面板时传 <code>camera</code> / <code>panel</code>。</li>
+<li>要让这张图直接写进资产，传 <code>material_id</code>，等价于同时执行「更新缩略图」。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>返回 <code>ok</code> 与 <code>path</code>，并附带 <code>format</code>、<code>stats</code>、<code>warnings</code> 等自检信息；打开 PNG 确认主体居中、画面不是纯色。格式不是 PNG 或画面纯色时 <code>status</code> 会降为 <code>partial</code>；目标在画面里一个像素都没有时直接报错，这张图不能使用。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>没有取景对象时会直接报错；先选对象或显式传 <code>objects</code>。</li>
+<li>相机焦距默认只在相机仍是 Maya 默认 35mm 时替换为 70mm；传 <code>focal_length=0</code> 表示不干预。</li>
+<li>拍摄过程会临时隔离目标、隐藏取景框装饰，结束后相机、面板、选中、当前帧与隔离状态都会还原，场景零改动。</li>
+</ul>

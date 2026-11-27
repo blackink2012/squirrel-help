@@ -1,0 +1,31 @@
+<p>Batch rename uses a prefix, a suffix or find-and-replace to change the display names or file names of several assets at once.</p>
+<p><img src="media_en/shared/dialog-batch-rename.webp" alt="Batch rename" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>At least two assets are selected and the batch operation bar is visible.</li>
+<li>The rename target and rule are decided; the operation writes straight into the asset metadata.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Multi-select assets and click <code>「批量重命名」 (Batch rename)</code> in the batch operation bar.</li>
+<li>Choose the target in the <code>「重命名」 (Rename)</code> dropdown:<ul>
+<li>Display name (<code>name_cn</code>): changes only the name shown in the interface.</li>
+<li>File name (<code>name</code>): also renames the <code>.zasset</code> asset directory.</li>
+</ul></li>
+<li>Choose the mode:<ul>
+<li>Add prefix: puts the typed text in front of the old name.</li>
+<li>Add suffix: puts the typed text after the old name.</li>
+<li>Find and replace: fill in the search text and the replacement text.</li>
+</ul></li>
+<li>Check every &quot;old name → new name&quot; row in the preview list; unchanged rows are marked <code>「不变」 (unchanged)</code>.</li>
+<li>The main button shows the changeable count and the total, for example <code>「执行重命名 (8/10)」 (Run rename (8/10))</code>; it is disabled when the changeable count is 0.</li>
+<li>Click <code>「执行重命名」 (Run rename)</code>; the number of successes is reported and failures are appended to the same message.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>Grid card names update immediately.</li>
+<li>The status message reports the number of successes and failures.</li>
+<li>With <code>「文件名」 (File name)</code> chosen the asset directory names change too, and the renamed assets are still visible after reopening the library.</li>
+</ul>
+<div class="admonition note"><div class="admonition-title">注意</div><p>Find and replace is a literal, case-sensitive replacement; prefixes and suffixes do not add separators automatically, so type a space or underscore yourself when needed.</p></div>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Never rename <code>.zasset</code> directories outside the plug-in. Always use this dialog for file-name mode.</p></div>

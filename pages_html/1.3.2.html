@@ -1,0 +1,16 @@
+<p>插件围绕 Maya 已安装的渲染器工作，不内置渲染器；材质节点、代理格式与转换能力随对应插件是否加载而不同。</p>
+<h2 id="h-1">渲染器对照</h2>
+<table><thead><tr><th>渲染器</th><th>常见材质节点</th><th>代理格式</th></tr></thead><tbody><tr><td>Arnold</td><td><code>aiStandardSurface</code></td><td><code>.ass</code></td></tr><tr><td>V-Ray</td><td><code>VRayMtl</code></td><td><code>.vrmesh</code></td></tr><tr><td>Redshift</td><td><code>RedshiftMaterial</code></td><td><code>.rs</code></td></tr><tr><td>Maya 原生</td><td><code>standardSurface</code> / <code>lambert</code> / <code>blinn</code> / <code>phong</code></td><td>—</td></tr></tbody></table>
+<p>材质映射预设还覆盖 <code>openPBRSurface</code>、<code>RedshiftOpenPBRMaterial</code> 等较新的节点组合；转换后仍建议检查贴图连接与特殊属性。</p>
+<h2 id="h-2">已装插件检测</h2>
+<ul>
+<li>通过 Maya 的 <code>pluginInfo</code> 查询插件是否已加载、已注册或不可用，常见插件名为 <code>mtoa</code>（Arnold）、<code>vrayformaya</code>（V-Ray）、<code>redshift4maya</code>（Redshift）。</li>
+<li>检测结果分为「已加载」「存在但未加载」「不可用」，用于决定代理导入、材质转换与渲染相关入口是否可用。</li>
+<li>MASH、Bifrost、USD 等能力以 Maya 实际安装的插件为准，本插件不自带这些插件（具体支持范围待确认）。</li>
+</ul>
+<h2 id="h-3">使用建议</h2>
+<ul>
+<li>导入或转换前先确认目标渲染器已加载，否则材质节点或代理文件可能无法创建。</li>
+<li>跨渲染器转换只处理映射表覆盖的属性；复杂节点网络、渐变、程序纹理需要人工复核。</li>
+<li>代理文件导入依赖对应渲染器的 stand-in/proxy 节点；缺少插件时只能保留文件，不能在视口显示。</li>
+</ul>

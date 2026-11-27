@@ -1,0 +1,29 @@
+<p>A port showing LISTENING in <code>netstat</code> does not mean Maya is alive; liveness must be proven by actually dispatching a command and seeing whether it answers.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The tool reports a failed connection or timeout, yet <code>netstat</code> still shows the port listening.</li>
+<li><code>--ping</code> returns no version or scene, or the connection is refused (<code>WinError 10061</code>).</li>
+<li>The Maya window appears open but the UI does not respond, or a dialog is in front of it.</li>
+<li>A newly started Maya did not take the default port, and the client keeps reporting that it cannot connect.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>The Maya main thread is hung</td><td>The process exists and the port listens, but commands time out or are refused</td><td>Confirm, then clean the hung instance</td></tr><tr><td>A modal dialog blocks the main thread</td><td>The Maya window shows crash recovery, an error or an unsaved-changes prompt</td><td>Dismiss the dialog, then retry</td></tr><tr><td>The crash reporter still holds the port</td><td>After a crash the port still listens but never answers</td><td>Follow the crash recovery flow</td></tr><tr><td>The port moved to the fallback range</td><td>The default port is taken by an instance of the same version</td><td>Scan the fallback range 7110–7129</td></tr><tr><td>The client only knows a fixed port</td><td>The actual instance is on a fallback port</td><td>Use auto-discovery, or set the port environment variable</td></tr><tr><td>Another process owns the port</td><td>The port owner is not Maya</td><td>Change ports, or end the owning process</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Look at the Maya window first; if a modal dialog is present, dismiss it and probe again.</li>
+<li>Run <code>python maya_bridge.py --doctor</code> and check <code>listening</code>, <code>responsive</code> and <code>verdict</code> for each port.</li>
+<li>Run <code>python maya_bridge.py --ping</code> to confirm which Maya and which scene answer.</li>
+<li>Run <code>python maya_bridge.py --scan</code> to see whether the instance landed in the fallback range 7110–7129.</li>
+<li>Once you confirm it is hung and not a modal dialog, run <code>python maya_bridge.py --doctor --kill-hung</code>; it only cleans instances that listen but do not answer.</li>
+<li>When no instance is available, run <code>python maya_bridge.py --doctor --launch</code> and wait until it really answers.</li>
+<li>If the client must use a fixed port, set <code>SQUIRREL_MAYA_PORT</code> to the actual port.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p><code>--ping</code> returns &quot;Maya version | current scene&quot;, <code>--doctor</code> shows <code>verdict=healthy</code> for that port, and commands round-trip normally.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Check the latest port assignments in <code>~\.squirrel_asset_manager\bridge_port.log</code> to see whether it keeps falling back.</li>
+<li>Look in <code>%TEMP%</code> for a new <code>MayaCrashLog*.dmp</code> to tell a hang from an actual crash.</li>
+<li>Never kill a process based on <code>netstat</code> alone; healthy instances and the user&#x27;s work must stay untouched.</li>
+<li>Continue with 6.7.2 &quot;Three steps to recover after a crash&quot;, or collect information per 6.8.2 &quot;Diagnostic workflow&quot;.</li>
+</ul>

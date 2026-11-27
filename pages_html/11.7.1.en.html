@@ -1,0 +1,27 @@
+<p>Which command runs when an asset thumbnail is double-clicked is configured per sub-library, and only one can be chosen.</p>
+<p><img src="media_en/shared/settings-dblclick.webp" alt="Double-click commands" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>The lower half of <code>Settings → 右键菜单 (Context menu)</code> is the double-click command area, sharing the sub-library list on the left. Selecting a sub-library lists its available commands on the right, and one can be chosen.</p>
+<h2 id="h-2">Values and defaults</h2>
+<table><thead><tr><th>Sub-library</th><th>Available commands</th><th>Factory setting</th></tr></thead><tbody><tr><td>materials</td><td>None / Import / Assign material to current selection</td><td>Import, sub-option <code>zmetal</code></td></tr><tr><td>models</td><td>None / Import</td><td>Import, sub-option <code>ma</code></td></tr><tr><td>nodetree</td><td>None / Import</td><td>Import, sub-option <code>ma</code></td></tr><tr><td>lights</td><td>None / Import / Apply light parameters to selected light</td><td>Import, sub-option <code>zlight</code></td></tr><tr><td>textures</td><td>None / Import / Import texture / Create material / Assign material to current selection / Assign texture to material</td><td>Create material, sub-option <code>openPBRSurface</code></td></tr><tr><td>scenes / ani</td><td>None / Import</td><td>Import, sub-option <code>ma</code></td></tr><tr><td>hdr</td><td>None / Import / Create environment light / Assign texture</td><td>Create environment light, sub-option <code>aiSkyDomeLight.ma</code></td></tr><tr><td>images</td><td>None / Import (generic fallback)</td><td>Import: create a file node (the same action as the context menu&#x27;s import as texture)</td></tr><tr><td>audio</td><td>None / Import (generic fallback)</td><td>Import: import to the Maya timeline (current frame = first audio frame)</td></tr><tr><td>animation</td><td>None / Import (generic fallback)</td><td>Import: hierarchy mapping plus the channel selection dialog</td></tr><tr><td>Custom sub-libraries</td><td>None / Import</td><td>Inherits <code>default</code>: import, format chosen automatically</td></tr></tbody></table>
+<p>Images, audio and animation data have no separately registered commands, so they only offer None / Import; what Import really does is decided by the sub-library (see the table above).</p>
+<p>Factory values live in the <code>cmd</code> and <code>option</code> fields of <code>Assets/preset/double_click_preset.json</code>.</p>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>It only affects double-clicking a thumbnail, never &quot;Import&quot; in the context menu.</li>
+<li>When the command has a secondary action a <code>「子选项:」 (Sub-option:)</code> dropdown appears below; without one it is hidden.</li>
+<li>With <code>「无操作」 (None)</code> chosen a double-click does nothing at all.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<p>When double-clicking a texture should build a material directly, double-clicking an HDR should create a dome light, or double-clicking should never import by accident.</p>
+<h2 id="h-5">Steps</h2>
+<ol>
+<li>Open Settings and check <code>「解锁全部配置」 (Unlock all configuration)</code>.</li>
+<li>Select a sub-library on the left of the <code>「右键菜单」 (Context menu)</code> page.</li>
+<li>Choose a command in the double-click command area below and pick a sub-option when needed.</li>
+<li>Click <code>「应用」 (Apply)</code> or <code>「确定」 (OK)</code>.</li>
+</ol>
+<h2 id="h-6">Verify the result</h2>
+<p>Back in the asset grid, double-click an asset of that type and confirm the new command runs; reopening Settings shows the configuration still there.</p>
+<h2 id="h-7">Tips</h2>
+<p>This area is also locked by <code>「解锁全部配置」 (Unlock all configuration)</code> and is read-only until unlocked.</p>

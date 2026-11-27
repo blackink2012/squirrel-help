@@ -1,0 +1,26 @@
+<p><code>「仅导出材质」 (Export materials only)</code> packages only material nodes and textures, skipping model meshes, caches and proxies; it is checked by default when creating an asset in the materials sub-library.</p>
+<p><img src="media_en/shared/dialog-export-left.webp" alt="Left side of the export dialog: export mode / naming / thumbnail source / tags" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>Material nodes are selected in Maya, or objects that already carry materials.</li>
+<li>At least <code>材质预设 .zmetal</code> (material preset) or <code>材质映射 .mcm</code> (material mapping) is checked so the material is stored with the asset.</li>
+<li>Keep <code>贴图 textures/</code> (textures) when textures are needed.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Check <code>「仅导出材质（跳过几何体/代理）」 (export materials only, skipping geometry / proxies)</code> in the right column&#x27;s <code>「导出选项」 (Export options)</code>. It is already checked by default for the materials sub-library.</li>
+<li>Check <code>材质预设 .zmetal</code> (material preset) under material formats; also check <code>.mcm</code> when materials should be assigned by model matching.</li>
+<li>Keep <code>贴图 textures/</code> (textures) when textures are needed.</li>
+<li>For a snapshot of the material nodes you can additionally check <code>Maya ASCII .ma</code> or <code>Maya Binary .mb</code>; those formats still export in this mode but contain only material nodes, no mesh.</li>
+<li>Choose the thumbnail source and click <code>「创建资产」 (Create asset)</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The <code>.zasset</code> contains <code>node.zmetal</code> (and/or <code>node.mcm</code>) and <code>textures/</code>, and no <code>node.fbx</code>, <code>node.obj</code>, <code>node.usd</code>, <code>.abc</code> or proxy files.</li>
+<li>Importing the asset rebuilds the material network; a <code>.mcm</code> asset can assign materials by topology matching when a target model is selected.</li>
+<li>If no material node was resolved this time, no material file is produced and the asset keeps only <code>meta.json</code> and a thumbnail.</li>
+</ul>
+<h2 id="h-4">Tips and warnings</h2>
+<blockquote><p><strong>Tip</strong>: this mode does not isolate objects automatically, so the screenshot overlay captures whatever the viewport currently shows; to give a material a preview, place a carrier with <code>创建模型 (Create model)</code> first.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: <code>ma</code> / <code>mb</code> are not part of the &quot;skipped geometry&quot;: they still write files in materials-only mode, but the file contains material nodes instead of a mesh.</p></blockquote>
+<blockquote><p><strong>Warning</strong>: when entering from <code>Update asset</code> with materials-only checked, if no material node can be resolved from the selection the program stops before exporting and says so; creating a new asset has no such precheck, so confirm yourself that material nodes or material-carrying objects are selected.</p></blockquote>

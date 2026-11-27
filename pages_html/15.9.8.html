@@ -1,0 +1,42 @@
+<blockquote><p>一句话定位：<strong>这里管左栏有哪些子库、它们叫什么、每个子库默认带哪些分类。</strong></p></blockquote>
+<p><strong>这一页默认是锁住的</strong>，必须先勾「解锁全部配置」并确认警告才能改；只有右上角的「显示在主 UI」例外，随时可点（见 <a href="#/15.9.1"><code>8.9.1</code></a>）。</p>
+<p><img src="media/shared/settings-sublibraries.webp" alt="设置窗口（子库与分类页）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">怎么打开</h2>
+<p>设置窗口 → 勾「解锁全部配置」→ 页签「子库与分类」。</p>
+<h2 id="h-2">控件详解</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值</th><th>改了会怎样</th><th>需要先解锁</th></tr></thead><tbody><tr><td>子库列表（左侧）</td><td>列表</td><td>显示所有子库，格式「显示名 (子库ID)」</td><td>材质 / 模型 / 灯光 / 贴图 / 场景 / HDR / 动态 / 图片 / 音频 / 动画数据 / 节点树</td><td>选中一项，右侧就编辑它</td><td>是</td></tr><tr><td>子库列表右键菜单</td><td>右键菜单</td><td>「添加子库」；用户自建的子库还有「删除子库」</td><td>—</td><td>新增的自定义子库 ID 形如 <code>custom_1</code>；内置默认子库不允许删除</td><td>是</td></tr><tr><td>显示在主 UI</td><td>复选框</td><td>勾选 = 这个顶级分类显示在主界面左栏（含收起状态的图标条）</td><td>全部勾选，<strong>节点树默认隐藏</strong></td><td>只影响左栏入口，不影响「全部资产」的内容与搜索；改完保存后左栏重建</td><td>否</td></tr><tr><td>读取当前分类文件夹</td><td>按钮</td><td>按当前资产库的真实文件夹结构，重建「默认分类列表」</td><td>—</td><td>先弹确认，确认后覆盖设置里的默认分类列表；<strong>不删除 / 不修改磁盘上任何文件夹</strong></td><td>是</td></tr><tr><td>子库ID</td><td>单行输入框</td><td>这个子库在配置里的键名（如 <code>materials</code>）</td><td>与出厂一致（<code>materials</code>、<code>models</code>…）</td><td>改名等于重命名配置键：左栏、配置匹配都跟着变；与已有 ID 冲突会提示</td><td>是</td></tr><tr><td>显示名</td><td>单行输入框</td><td>左栏里显示的名字</td><td>材质 / 模型 / 灯光…</td><td>左栏名字变化（保存后刷新）</td><td>是</td></tr><tr><td>默认分类列表</td><td>多行文本框（每行 <code>id 名称</code>）</td><td>建库 / 新建子库时默认带的分类</td><td>每个子库一条 <code>AAAcustom 自定义</code></td><td>影响新建库时生成的分类；不影响已有分类文件夹</td><td>是</td></tr></tbody></table>
+<h2 id="h-3">常见操作</h2>
+<h3 id="h-4">把某个子库从左栏隐藏</h3>
+<ol>
+<li>左侧选中该子库；</li>
+<li>取消勾选「显示在主 UI」；</li>
+<li>点「应用 / 确定」→ 左栏不再显示它（「全部资产」里仍能看到这类资产）。</li>
+</ol>
+<p>想恢复：重新勾上即可。节点树默认是隐藏的，需要时才勾。</p>
+<h3 id="h-5">从库的实际目录同步分类</h3>
+<ol>
+<li>先在主界面选中并加载好资产库；</li>
+<li>回到设置 → 本页 → 点「读取当前分类文件夹」；</li>
+<li>确认提示（会覆盖设置里的默认分类列表，不动磁盘）；</li>
+<li>左侧列表与各子库的分类列表按库里的实际结构刷新。</li>
+</ol>
+<h3 id="h-6">加一个自定义子库</h3>
+<ol>
+<li>在左侧列表里右键 →「添加子库」；</li>
+<li>出现 <code>custom_1</code> 一类的条目，改显示名、按需填默认分类；</li>
+<li>保存后左栏会出现这个子库（前提是「显示在主 UI」勾着）。</li>
+</ol>
+<p>删除自定义子库：在左侧右键它 →「删除子库」→ 确认；11 个内置默认子库（材质 / 模型 / 灯光 / 贴图 / 场景 / HDR / 动态 / 图片 / 音频 / 动画数据 / 节点树）不允许删，只能在「显示在主 UI」里取消勾选隐藏。</p>
+<h2 id="h-7">容易踩的点</h2>
+<table><thead><tr><th>现象</th><th>说明</th></tr></thead><tbody><tr><td>改了显示名，左栏没马上变</td><td>保存后需要左栏重建；切换一次分类或重开插件即可看到</td></tr><tr><td>改子库 ID 后，某些分类配置对不上了</td><td>改 ID 等于换配置键，属于高级操作；改前备份 <code>config.json</code>，并先在副本库试</td></tr><tr><td>点了「读取当前分类文件夹」分类少了一半</td><td>它按磁盘实际目录来；空目录 / 没建文件夹的分类不会出现</td></tr><tr><td>「显示在主 UI」勾不动</td><td>这个复选框不参与锁定；如果连它也灰，说明窗口状态异常，重开设置窗口</td></tr><tr><td>项目库的分类也被改了</td><td>这个页面改的是<strong>设置里的默认分类列表</strong>，不直接改任何库；已经存在的库目录不受影响</td></tr></tbody></table>
+<h2 id="h-8">反悔</h2>
+<table><thead><tr><th>情况</th><th>怎么反悔</th></tr></thead><tbody><tr><td>还没保存</td><td>点「取消」</td></tr><tr><td>已保存、想回到之前</td><td>「恢复默认设置」<strong>不会</strong>重置这一页（见 <a href="#/15.9.1"><code>8.9.1</code></a>）；用备份的 <code>config.json</code> 覆盖回去最稳</td></tr><tr><td>只想恢复左栏可见性</td><td>重新勾选「显示在主 UI」，不需要动别的</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>这一页里「读取当前分类文件夹」和「改子库 ID」都是会重写配置的动作。前者只影响配置，后者可能让已有配置匹配不上；不确定时先备份 <code>&lt;插件目录&gt;\Assets\preset\config.json</code>。</p></div>
+<h2 id="h-9">相关</h2>
+<ul>
+<li>设置窗口总览与全局锁定 → <a href="#/15.9.1"><code>8.9.1</code></a></li>
+<li>「其它配置」页 → <a href="#/15.9.9"><code>8.9.9</code></a></li>
+<li>显示与隐藏顶级分类（用户指南） → <a href="#/4.2.4"><code>4.1.2.4</code></a></li>
+<li>新建顶级分类与子分类 → <a href="#/4.3.1"><code>4.1.3.1</code></a></li>
+<li>从文件夹同步分类 → <a href="#/4.3.5"><code>4.1.3.5</code></a></li>
+</ul>

@@ -1,0 +1,30 @@
+<blockquote><p>One-line summary: <strong>the scan window opened from Maintenance → Clean invalid assets: it lists assets missing <code>meta.json</code> or holding only an empty directory so you can verify, repair, clear from the list, or move them to the recycle bin.</strong></p></blockquote>
+<p><img src="media_en/shared/dialog-invalid-assets.webp" alt="Clean invalid assets window" loading="lazy" decoding="async"></p>
+<h2 id="h-1">How to open it</h2>
+<p>Top toolbar → <strong>Maintenance ▾</strong> → <strong>Clean invalid assets</strong>. It scans the current library as soon as it opens; the cursor becomes a wait cursor while scanning.</p>
+<p>Prerequisite: an asset library is loaded; with none loaded it asks you to open one first.</p>
+<h2 id="h-2">What counts as an invalid asset</h2>
+<table><thead><tr><th>Status</th><th>How it is judged</th><th>Auto-repairable</th></tr></thead><tbody><tr><td>Missing <code>meta.json</code> (repairable)</td><td>The directory holds <strong>valid format files</strong> but lacks asset metadata</td><td>Yes: infer from the files and restore <code>meta.json</code></td></tr><tr><td>Empty shell: no meta, no valid files</td><td>The directory holds neither <code>meta.json</code> nor a recognizable asset file</td><td>No: it can only be moved to the recycle bin or handled by hand</td></tr></tbody></table>
+<h2 id="h-3">What the window contains</h2>
+<table><thead><tr><th>Area</th><th>Content</th></tr></thead><tbody><tr><td>Summary line</td><td>&quot;Scanned N invalid assets (missing meta.json or empty directories only).&quot;; with none it reads &quot;No invalid assets found.&quot;</td></tr><tr><td>Hint line</td><td>Explains multi-select and what the context menu / bottom buttons do</td></tr><tr><td>Asset list</td><td>Each row shows &quot;name / relative path · status&quot;</td></tr><tr><td>Bottom buttons</td><td>From the left: <strong>Rescan</strong>, <strong>Repair all</strong>, <strong>Clean all (move to recycle bin)</strong>, and <strong>Close</strong> at the far right</td></tr></tbody></table>
+<p><strong>Repair all</strong> is enabled only while the list holds <strong>repairable</strong> entries; <strong>Clean all</strong> is clickable whenever there are entries.</p>
+<h2 id="h-4">Context menu</h2>
+<table><thead><tr><th>Item</th><th>Effect</th><th>Description</th></tr></thead><tbody><tr><td>Open asset path</td><td>Opens the directory in Explorer</td><td>Check what is really inside</td></tr><tr><td>Remove from list</td><td>Takes the row out of <strong>this list only</strong></td><td>UI only, nothing on disk; <strong>Rescan</strong> restores it</td></tr><tr><td>Repair: restore meta.json</td><td>Restores metadata for the selected entries</td><td>Only available for entries that miss <code>meta.json</code> and hold valid format files; empty shells are skipped with a reason</td></tr></tbody></table>
+<p>With a multi-selection the items act on <strong>all selected entries</strong> (the text states the count).</p>
+<h2 id="h-5">Cleaning: the only action that touches disk</h2>
+<ul>
+<li>Clicking <strong>Clean all (move to recycle bin)</strong> asks for confirmation stating the entry count;</li>
+<li>After confirming, those directories <strong>move to the recycle bin</strong>, not permanent deletion;</li>
+<li>The main window rescans and refreshes afterwards; to recover something, restore it from <strong>Recycle bin</strong> in the left column (<a href="#/en/15.8.3"><code>8.8.3</code></a>).</li>
+</ul>
+<h2 id="h-6">Risks and how to undo</h2>
+<table><thead><tr><th>Operation</th><th>Risk</th><th>Undo</th></tr></thead><tbody><tr><td>Repairing meta.json</td><td>Metadata is inferred from files and may not match the original intent</td><td>Adjust it in the properties panel; the generated meta is saved with the asset</td></tr><tr><td>Clean all</td><td>The directories move to the recycle bin and disappear from the list</td><td>Restore in the recycle bin (the whole asset comes back)</td></tr><tr><td>Remove from list</td><td>Only skipped this time</td><td><strong>Rescan</strong> restores it</td></tr></tbody></table>
+<h2 id="h-7">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>The repair button is gray</td><td>The selected entries are all empty shells with no valid format files</td><td>Open the path to check by hand; if it really is junk, clean it</td></tr><tr><td>The asset still does not show after repair</td><td>The directory structure or category is not inside the library</td><td>Run <strong>Rebuild asset index</strong> (<a href="#/en/4.12.2"><code>4.1.12.2</code></a>) first, then see <a href="#/en/13.5.1"><code>6.5.1</code></a></td></tr><tr><td>Want to recover after cleaning</td><td>It went to the recycle bin</td><td>Left column <strong>Recycle bin</strong> → right-click <strong>Restore</strong></td></tr></tbody></table>
+<h2 id="h-8">Related</h2>
+<ul>
+<li>Other Maintenance menu items: <a href="#/en/15.2.8"><code>8.2.8</code></a></li>
+<li>The recycle bin and restoring: <a href="#/en/15.8.3"><code>8.8.3</code></a></li>
+<li>Rebuilding the index: <a href="#/en/4.12.2"><code>4.1.12.2</code></a></li>
+<li>Troubleshooting asset list anomalies: <a href="#/en/13.5.1"><code>6.5.1</code></a></li>
+</ul>

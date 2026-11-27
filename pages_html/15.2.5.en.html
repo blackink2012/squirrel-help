@@ -1,0 +1,27 @@
+<blockquote><p>One-line summary: <strong>when the interface is dragged into a mess, panels are closed, or you want another properties / preview panel, come here — it is both the layout&#x27;s main entry and its fallback.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Find the <strong>grid-like icon</strong> on the top toolbar (tooltip &quot;Panels and layout&quot;), left of the dropdown arrow;</li>
+<li>Click to open the menu (no prior selection needed; it works on any tab).</li>
+</ol>
+<p><img src="media_en/shared/menu-panels.webp" alt="&quot;Panels and layout&quot; menu: new panel, reset layout, lock layout (currently unlocked)" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<p>The menu has <strong>11 items</strong> in total (including <strong>New panel</strong> and its 8 sub-items).</p>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>New panel ▶</td><td>Create another panel of a given type</td><td>None</td><td>Expands 8 sub-items (next section); after choosing a type it <strong>opens as a floating window</strong></td><td>Several panels of the same type can be open at once; to dock a floating window back, drag it onto the main interface</td></tr><tr><td>Reset layout</td><td>Restores the default layout</td><td>None</td><td>Existing areas are cleared and rebuilt by default into the three columns &quot;navigation / assets / properties and preview&quot;</td><td><strong>Cannot be undone</strong>; your custom splits, ratios and floating positions are lost; asset library data is unaffected</td></tr><tr><td>Unlock layout (reads &quot;Unlock layout&quot; when checked, otherwise &quot;Lock layout&quot;)</td><td>Locking forbids dragging / splitting / closing areas</td><td>None</td><td>The checked state toggles immediately; the menu rebuilds its text and icon from the current state each time it opens</td><td>Checked = <strong>locked</strong>; areas still work while locked, only layout changes are blocked; <strong>Reset layout</strong> still works while locked</td></tr></tbody></table>
+<h2 id="h-3">Submenu: New panel ▶</h2>
+<p>The submenu has <strong>8 items</strong>: the first 7 are panel types and the last is an empty area.</p>
+<table><thead><tr><th>Sub-item</th><th>Description</th></tr></thead><tbody><tr><td>Navigation</td><td>Creates a left navigation panel (Category / Project / Favorites tabs plus the category tree)</td></tr><tr><td>Assets</td><td>Creates a center asset grid</td></tr><tr><td>Properties</td><td>Creates a properties panel (fields / tags / notes)</td></tr><tr><td>Preview</td><td>Creates a preview panel (thumbnail and action buttons)</td></tr><tr><td>AI assistant</td><td>Creates an AI assistant area (opens / closes the dsh chat panel)</td></tr><tr><td>AI search preview assets</td><td>Creates an &quot;AI search preview assets&quot; panel (chat-style natural language search)</td></tr><tr><td>Script browser</td><td>Creates a script browser panel (browse / run script assets)</td></tr><tr><td>New area</td><td>Creates an <strong>empty area</strong> whose panel type you pick later from the area header menu</td></tr></tbody></table>
+<blockquote><p>Submenu items always <strong>open as a torn-off floating window</strong> and do not dock to the main interface; to dock one back, drag it onto the edge of the main interface (this uses Qt&#x27;s own docking mechanism).</p></blockquote>
+<h2 id="h-4">Beginner pitfalls</h2>
+<ul>
+<li><strong>A panel was closed / the properties panel is missing</strong>: no need to reopen the plug-in. <strong>New panel → Properties</strong> restores one immediately; if the whole layout is a mess, use <strong>Reset layout</strong>.</li>
+<li><strong>Regretted clicking &quot;Reset layout&quot;</strong>: there is no undo. The reset rebuilds areas, so previous ratios, splits and torn-off windows are gone — you must arrange them again. Layout saving and restoring are covered in <a href="#/en/3.2.5"><code>3.2.5</code></a>.</li>
+<li><strong>Areas will not drag or split</strong>: the layout is probably locked; check whether the menu item reads &quot;Unlock layout&quot; (= currently locked) and click it, see <a href="#/en/3.2.4"><code>3.2.4</code></a>.</li>
+<li><strong>Thinking &quot;Unlock layout&quot; means &quot;click to lock&quot;</strong>: it is the opposite. The menu text says <strong>what will happen when you click it</strong>: &quot;Unlock layout&quot; means it is locked right now.</li>
+</ul>
+<h2 id="h-5">Related</h2>
+<ul>
+<li>How areas dock, float and tear off: <a href="#/en/3.2.1"><code>3.2.1</code></a>; splitting and merging: <a href="#/en/3.2.2"><code>3.2.2</code></a>.</li>
+<li>Switching panel types and the area header menu: <a href="#/en/3.2.6"><code>3.2.6</code></a>.</li>
+<li>Saving, restoring and resetting the layout: <a href="#/en/3.2.5"><code>3.2.5</code></a>.</li>
+</ul>

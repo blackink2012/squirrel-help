@@ -1,0 +1,26 @@
+<p>All quick tools live behind the <code>「快捷工具」 (Quick tools)</code> button in the main window toolbar, and the menu lists the scripts in the plug-in&#x27;s <code>quicktools/</code> directory.</p>
+<p><img src="media_en/shared/menu-quicktools.webp" alt="Quick tools menu" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Purpose</h2>
+<p>The menu gathers HDR, model and PBR texture to asset conversion plus image conversion, batch processing, material tools and the script browser in one place, so you do not have to remember each script path.</p>
+<h2 id="h-2">Tool list</h2>
+<table><thead><tr><th>Script file</th><th>Purpose</th><th>Details</th></tr></thead><tbody><tr><td><code>hdr_to_zasset.py</code></td><td>HDR/EXR environment texture → <code>.zasset</code></td><td>9.2.1</td></tr><tr><td><code>model_to_zasset.py</code></td><td>Model file → <code>.zasset</code></td><td>9.2.2</td></tr><tr><td><code>pbr_to_zasset.py</code></td><td>PBR textures → <code>.zasset</code></td><td>9.2.3</td></tr><tr><td><code>图像格式转换工具.py</code> (image format conversion tool)</td><td>Batch image format conversion</td><td>9.3.1</td></tr><tr><td><code>批量处理maya文件.py</code> (batch process Maya files)</td><td>Run one script against several <code>.ma</code> / <code>.mb</code> files</td><td>9.4.1</td></tr><tr><td><code>批量镜像复制.py</code> (batch mirror copy)</td><td>Mirror a directory filtered by extension</td><td>9.4.2</td></tr><tr><td><code>材质导入导出工具(材质管理).py</code> (material import/export tool)</td><td>Material import and export (<code>.zmetal</code>, MA+JSON)</td><td>9.5.1</td></tr><tr><td><code>材质转换工具.py</code> (material conversion tool)</td><td>Batch material type conversion</td><td>9.5.2</td></tr><tr><td><code>材质节点属性映射工具.py</code> (material attribute mapping tool)</td><td>Edit <code>.mmap</code> attribute mappings</td><td>9.5.3</td></tr><tr><td><code>脚本浏览器.py</code> (script browser)</td><td>Browse, search and run scripts</td><td>9.6.1</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Click <code>「快捷工具」 (Quick tools)</code> in the main window toolbar (tooltip <code>「快捷工具：运行 quicktools 目录里的脚本」 (quick tools: run scripts in the quicktools directory)</code>).</li>
+<li>The menu rescans <code>quicktools/</code> every time it opens and lists the <code>.py</code> files inside.</li>
+<li>Click an entry to open the tool window, then choose inputs, set parameters and run it there.</li>
+<li>For conversion tools, check the configured output directory afterwards for the <code>.zasset</code> or converted files.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The menu lists tool entries instead of <code>「暂无快捷工具」 (no quick tools yet)</code>.</li>
+<li>Clicking an entry opens its window normally.</li>
+<li>Conversion tools report success / failure counts in the status bar or a dialog, and the output directory contains the products.</li>
+</ul>
+<h2 id="h-5">Notes</h2>
+<ul>
+<li>The menu loads only <code>.py</code> files in the root of <code>quicktools/</code> and never scans sub-directories; an entry name is the file name without <code>.py</code> and with underscores turned into spaces.</li>
+<li>New scripts need no registration and appear the next time the menu opens (see 9.7.1).</li>
+<li>A tool needs a <code>main()</code>, <code>run()</code> or <code>if __name__ == &quot;__main__&quot;</code> entry, otherwise clicking it does nothing (see 9.7.2).</li>
+<li>In the standalone edition, tools that need Maya are dispatched to an online Maya; <code>图像格式转换工具.py</code> and <code>批量镜像复制.py</code> are pure file tools that run locally.</li>
+</ul>

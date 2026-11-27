@@ -1,0 +1,24 @@
+<p><code>.zlight</code> 是与渲染器无关的灯光预设：记录灯光的物理参数和完整上游节点网络，导入时再按目标渲染器建灯。</p>
+<p><img src="media/shared/menu-sublib-lights.webp" alt="灯光资产的右键菜单：导入 / 应用灯光参数等灯光专属项" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已有一个灯光资产（<code>.zasset</code> 文件夹）。</li>
+<li>能在文件管理器中打开资产目录。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在资产库中右键灯光资产，选择「打开文件夹」。</li>
+<li>找到 <code>.zlight</code> 文件（标准位置为 <code>node.zlight</code>，导入端也会识别其它 <code>.zlight</code> 文件名）。</li>
+<li>打开它，确认结构：新版是 <code>nodes</code> + <code>root_lights</code>，旧版是 <code>lights</code> 列表。</li>
+<li>逐灯核对通用字段：<code>light_type</code>、<code>source_node_type</code>、<code>color</code>、<code>intensity</code>、<code>exposure</code>、<code>temperature</code>、<code>normalize</code>、<code>visible</code>、<code>transform</code>，以及 <code>hdr_path</code>、<code>ies_file</code>。</li>
+<li>若灯光带贴图或 IES，查看 <code>connected_files</code>、<code>connections</code> 与 <code>node_network</code>；对应文件在资产的 <code>textures/</code> 下，路径已改写为相对路径。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>把资产导入场景后，Outliner 中出现灯光节点，类型符合当前渲染器；穹顶灯的 HDR、IES 灯的 profile 和上游贴图节点都能连回灯光。</p>
+<h2 id="h-4">提示</h2>
+<ul>
+<li><code>light_type</code> 支持 <code>area</code>、<code>point</code>、<code>spot</code>、<code>directional</code>、<code>dome</code>、<code>disk</code>、<code>cylinder</code>、<code>ies</code>。</li>
+<li>新版逐灯记录 <code>source_node_type</code>，导入时可据此先按源渲染器还原，再决定是否转换。</li>
+<li>旧版只有 <code>lights</code> 列表，没有逐灯的源节点类型；需要「先建后问」时会用 <code>meta.node_type</code> 补推。</li>
+<li>只有导出时启用了 zlight 格式，灯光资产里才会有这个文件；只有 <code>.ma</code> 的灯光资产会走普通场景导入。</li>
+</ul>

@@ -1,0 +1,28 @@
+<p>崩在 <code>redshift-core-*.dll</code>、<code>vray_*.dll</code> 这类渲染器模块上，是渲染器自己崩、Maya 陪葬，先换进程外渲染并确认修复已生效。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>点渲染或「更新缩略图 → 渲染图」时 Maya 直接消失。</li>
+<li>同一进程里第二次渲染必崩，第一次正常。</li>
+<li>Windows 事件日志显示同一 DLL、同一错误偏移。</li>
+<li><code>%TEMP%</code> 出现新的 <code>MayaCrashLog*.dmp</code>，崩溃后端口还可能被崩溃报告器占着。</li>
+</ul>
+<h2 id="h-2">可能原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>Redshift 同进程第二次渲染</td><td>第一次成功、第二次必崩</td><td>升级到带阻塞渲染修复的版本并重启 Maya</td></tr><tr><td>插件部署副本没有更新</td><td>源码改了，Maya 里还是旧代码</td><td>重新部署并完全重启 Maya</td></tr><tr><td>Redshift 版本或许可异常</td><td>日志出现许可错误</td><td>检查许可，必要时回退或重装渲染器</td></tr><tr><td>其他渲染器自身 DLL 崩溃</td><td>事件日志指向 <code>vray_*.dll</code> 等</td><td>改用进程外 <code>Render.exe</code></td></tr><tr><td>崩溃报告器占用端口</td><td>端口仍监听，但命令不应答</td><td>按 6.7.1「端口监听但不应答」处理</td></tr><tr><td>反复在进程内重试</td><td>每次重试都产生新崩溃</td><td>停止重试，改用进程外通道</td></tr></tbody></table>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>确认插件已升级到包含 Redshift 阻塞渲染修复的版本，然后完全退出并重启 Maya；只热重载不算生效。</li>
+<li>连续做 2 到 4 次缩略图渲染，确认不再在第二次崩溃。</li>
+<li>仍然崩溃时，设置环境变量 <code>SQUIRREL_MAYA_RENDER_VIA_EXE=1</code>，走进程外 <code>Render.exe</code>。它更慢，但渲染器崩了也不会带走 Maya。</li>
+<li>检查 Redshift 版本与许可状态；日志出现许可错误时先解决许可。</li>
+<li>用事件查看器记录崩溃模块名与偏移，并保留对应的崩溃转储。</li>
+<li>不要在同一个 Maya 进程里反复重试同一条渲染路径，避免产生更多崩溃转储。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p>连续 4 次缩略图渲染都能出图，Maya 不退出，<code>%TEMP%</code> 没有新增同签名崩溃转储。</p>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>换一台干净 Maya 实例或最小场景复现，确认是否与场景内容有关。</li>
+<li>收集事件日志、崩溃转储、Redshift 版本和许可状态后再反馈。</li>
+<li>临时改用拍屏或导入图片生成缩略图，避免阻塞资产整理。</li>
+<li>AI 的逐帧渲染命令是否也走阻塞路径，目前待确认；批量渲染前先小批验证。</li>
+</ul>

@@ -1,0 +1,15 @@
+<p>资产索引是把资产元数据与缩略图提前编码成向量，搜索时只做一次查询编码和相似度比较，不必每次调用大模型。</p>
+<h2 id="h-1">三类索引</h2>
+<table><thead><tr><th>索引</th><th>内容</th><th>默认位置</th><th>用途</th></tr></thead><tbody><tr><td>文本语义索引</td><td>名称、易读名、标签、分类、注释、描述等</td><td><code>&lt;资产库&gt;\.squirrel_ai_index\&lt;official / ollama&gt;\</code></td><td>中文口语搜资产</td></tr><tr><td>图像向量索引</td><td>缩略图的图像向量（sidecar 编码）</td><td>同目录下的 <code>img\</code></td><td>以图搜图</td></tr><tr><td>媒体向量索引</td><td>音频 / 视频向量</td><td>同目录下的 <code>media\</code></td><td>文字搜音乐、录音搜音乐、视频搜视频</td></tr></tbody></table>
+<p><strong>索引按后端分家</strong>：官方管线与 Ollama 的向量不在同一空间，所以两种后端各用各的子目录（<code>official\</code> / <code>ollama\</code>）。切换后端时读各自那一份，不会互相判过期、也不会互相覆盖重建。</p>
+<p>设置 <code>ai_asset_index_dir</code> 后，索引改放到该根目录下按「库 + 后端」分开的子目录：文本 <code>&lt;根&gt;\&lt;库标识&gt;-&lt;official|ollama&gt;</code>，图像 <code>&lt;根&gt;\&lt;库标识&gt;-&lt;official|ollama&gt;\img</code>。</p>
+<h2 id="h-2">关键设计</h2>
+<ul>
+<li><strong>主键是库内相对路径</strong>，不是资产 uuid。uuid 在缓存、运行中的库与索引之间会变，用它会静默错配。</li>
+<li>每条记录带签名与文本摘要，只重嵌变化的行；新增、修改、删除都不需要全量重建。</li>
+<li>索引里记着所属库与所用模型；对不上时判为不可用并给出重建命令，而不是照常返回错误结果。</li>
+</ul>
+<h2 id="h-3">它不是什么</h2>
+<p>索引是派生数据，不包含资产文件本身；删掉索引不会损坏资产，只会让下一次搜索重新编码。索引跟着库走，但多人共用库时建议把索引放到各自本地盘，避免同一后端的并发写入互相等待。</p>
+<h2 id="h-4">自动维护</h2>
+<p>打开库、切换库时会在后台预热当前库的索引；检索前做增量同步。第一次建索引会慢一些，之后通常只处理变化行。</p>

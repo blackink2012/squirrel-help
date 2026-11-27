@@ -1,0 +1,26 @@
+<p>Type a name, tag or ID fragment into the top search box and the grid filters matching assets within the current category immediately.</p>
+<p><img src="media_en/shared/search-keyword-bar.webp" alt="Search box: typing a keyword shows the built-in ✕ (click to clear) and the AI search checkbox on the right" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>An asset library is open and a sub-library or category is selected in the left tree; the search only covers that scope.</li>
+<li><code>「AI 搜索」 (AI search)</code> is unchecked. When it is checked, typing does not filter live and you must press Enter to run a semantic search.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select the sub-library or category to search in the left tree.</li>
+<li>Type a keyword in the top search box. About 150 ms after you stop typing the grid refreshes, no Enter needed.</li>
+<li>Separate several keywords with spaces, for example <code>metal arnold</code>; any matching fragment counts.</li>
+<li>Click the ✕ on the right of the search box to clear the keyword and restore every asset of the current category.</li>
+</ol>
+<h2 id="h-3">What is matched</h2>
+<table><thead><tr><th>Matched against</th><th>Notes</th></tr></thead><tbody><tr><td>Asset ID</td><td>Full ID or a prefix; no arbitrary substring matching</td></tr><tr><td>Display name and name</td><td>Case-insensitive</td></tr><tr><td>Tags</td><td>A hit when any tag contains the keyword</td></tr><tr><td>Material type, asset type, sub-library</td><td>Includes sub-library display names (such as <code>「材质」 (Materials)</code>)</td></tr><tr><td>Category</td><td>Includes category display names</td></tr><tr><td>Export format, software, renderer, color space</td><td>A hit when the field value contains the keyword</td></tr></tbody></table>
+<h2 id="h-4">Verify the result</h2>
+<p><img src="media_en/shared/search-keyword-grid.webp" alt="Filtered grid: only matching asset cards remain" loading="lazy" decoding="async"></p>
+<p><img src="media_en/shared/search-count.webp" alt="Status bar: visible / total on the left, current selection on the right" loading="lazy" decoding="async"></p>
+<ul>
+<li>The status bar shows the visible count and the total.</li>
+<li>The grid keeps only matching assets and is empty when nothing matches.</li>
+<li>Clicking ✕ returns to the complete list of the current category.</li>
+</ul>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>Keyword search combines with tag filtering: when both are active an asset must satisfy both.</p></div>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>With <code>「AI 搜索」 (AI search)</code> checked, typing a non-empty keyword does not trigger the ordinary filter; press Enter or uncheck it first.</p></div>

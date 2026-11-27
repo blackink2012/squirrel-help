@@ -1,0 +1,28 @@
+<p>When library health looks wrong, check the four criteria of <code>library_health</code> first: whether it is loaded, asset and category counts, duplicate UUIDs, and the load-failure list.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The asset total does not match the number of <code>.zasset</code> folders on disk.</li>
+<li>Assets clearly exist in the library directory but cannot be found in the plug-in grid.</li>
+<li>Favorites, versions or category references are scrambled and do not recover after a rescan.</li>
+<li><code>library_health</code> returns <code>is_loaded</code> false, <code>has_duplicate_uuids</code> true, or <code>load_failure_count</code> greater than 0.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>The library did not load</td><td><code>is_loaded</code> is false and the asset count is 0</td><td>Check the library path and permissions, then rescan</td></tr><tr><td>Index cache is stale</td><td>The category tree or asset count disagrees with disk</td><td>Clear the cache and reload</td></tr><tr><td>Duplicate UUIDs</td><td><code>has_duplicate_uuids</code> is true</td><td>Preview, then fix the duplicates and rescan</td></tr><tr><td>Asset metadata corrupted</td><td>An entry in <code>load_failures</code> carries a <code>reason</code></td><td>Restore from backup, or re-import that asset</td></tr><tr><td>Configuration disagrees with disk</td><td>Sub-library or category counts do not line up</td><td>Re-read the configuration</td></tr><tr><td>Several people or machines edit the library at once</td><td>The index lags or entries overwrite each other</td><td>Keep the index in a local directory and rebuild when necessary</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Run <code>library_health</code> with <code>op=status</code> and record the library root, whether it is loaded, asset and category counts, duplicate ids and load-failure count.</li>
+<li>Read the <code>reason</code> of each asset in <code>load_failures</code> to see whether a file is missing, metadata is corrupted, or the version is incompatible.</li>
+<li>For cache problems run <code>op=clear_cache</code> first, then <code>op=reload</code>, so the plug-in rebuilds the index from disk.</li>
+<li>For configuration problems run <code>op=reload_config</code> to re-read sub-library and category configuration.</li>
+<li>For duplicate UUIDs, preview with <code>op=fix_uuids</code> plus <code>dry_run=True</code> before running it for real; a rescan happens automatically afterwards.</li>
+<li>If one asset&#x27;s metadata is corrupted, back up that <code>.zasset</code> first, then restore from backup or delete it and import again.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>Running <code>op=status</code> again shows <code>is_loaded</code> true, <code>has_duplicate_uuids</code> false and <code>load_failure_count</code> 0, with the asset count matching disk.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>After fixing duplicate UUIDs, places that stored the old ids (such as favorites) may need rechecking.</li>
+<li>Back up the whole asset library before going through the failing assets one by one; never bulk-delete library directories.</li>
+<li>When several machines share a library, put the semantic index in a local directory so index files do not overwrite each other.</li>
+<li>When reporting, include the <code>status</code> return of <code>library_health</code>, the load-failure list and the most recent rescan log.</li>
+</ul>

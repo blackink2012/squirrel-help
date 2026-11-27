@@ -1,0 +1,28 @@
+<blockquote><p>One-line summary: <strong>the Project tab manages the asset library that belongs only to the current Maya project — it lives in the project&#x27;s <code>SquirrelLib</code> folder, so switching projects switches libraries.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<p>Left navigation → click the <strong>Project</strong> tab. The plug-in tries to load the project library automatically; when the project has none yet it shows &quot;Project library not created&quot;.</p>
+<p><img src="media_en/15.3.5-1.webp" alt="Project tab: shows &quot;Project library not created&quot; when the project has no library yet; click Create to initialize" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What this page offers</h2>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Create</td><td>Initializes the project library in the current Maya project directory</td><td>The project directory has no <code>SquirrelLib</code> yet</td><td>Creates the <code>SquirrelLib</code> folder and the standard sub-library directories, writes the library configuration and loads it</td><td>It never overwrites existing assets; when a library already exists, clicking it simply re-confirms the directory structure</td></tr><tr><td>Refresh</td><td>Re-reads the project library from disk</td><td>The project library exists</td><td>Redraws the project category tree and asset grid from the latest disk content, keeping the current category where possible</td><td>It rescans <code>.zasset</code> packages on disk (a complete package copied in by hand appears after refreshing); loose files still need the import flow</td></tr><tr><td>Project library category tree</td><td>The same tree as the Category tab (All assets / sub-library / category / sub-category)</td><td>The project library is loaded</td><td>Click to filter, right-click to change categories, same behavior as the main library</td><td>Node behavior in <a href="#/en/15.3.3"><code>8.3.3</code></a>, context menus in <a href="#/en/15.3.4.2"><code>8.3.4.2</code></a> / <a href="#/en/15.3.4.3"><code>8.3.4.3</code></a></td></tr><tr><td>Recycle bin</td><td>The project library&#x27;s own recycle bin</td><td>The project library is loaded</td><td>Opens the project library recycle bin view</td><td><strong>Separate</strong> from the main library&#x27;s recycle bin; items deleted from the main library never appear here</td></tr><tr><td>Status hint</td><td>Shows the project library path / &quot;Project library not created&quot;</td><td>None</td><td>—</td><td>The path is &quot;project directory / SquirrelLib&quot;</td></tr></tbody></table>
+<h2 id="h-3">Where the project library lives</h2>
+<ul>
+<li>Path = <strong>the workspace root of the current Maya project</strong> + <code>SquirrelLib</code>.</li>
+<li>In Maya you can query the project directory with <code>cmds.workspace(q=True, rootDirectory=True)</code>.</li>
+<li>The standalone edition (with no Maya running) reads its own current working directory — so the project library location there may differ from inside Maya; trust the path shown in the status hint.</li>
+</ul>
+<h2 id="h-4">When to use the Project tab</h2>
+<table><thead><tr><th>Scenario</th><th>Which tab</th></tr></thead><tbody><tr><td>A set of assets reused across projects</td><td>The <strong>Category</strong> tab (main asset library)</td></tr><tr><td>Assets for this project only, packaged / delivered with it</td><td>The <strong>Project</strong> tab (project library)</td></tr><tr><td>Picking frequently used assets out separately</td><td>The <strong>Favorites</strong> tab, see <a href="#/en/15.3.6"><code>8.3.6</code></a></td></tr></tbody></table>
+<p>The difference between the main library and the project library, and how favorites relate to them, is covered in <a href="#/en/4.1.3"><code>4.1.1.3</code></a>.</p>
+<h2 id="h-5">Beginner pitfalls</h2>
+<ul>
+<li><strong>Switching here only shows &quot;Project library not created&quot;</strong>: that is the normal state (a new project has none by default); click <strong>Create</strong>.</li>
+<li><strong>Assets imported on the Project tab cannot be found on the Category tab</strong>: they are not lost, they are in the project library; switch back to the <strong>Project</strong> tab to see them.</li>
+<li><strong>Assets deleted on the Project tab are missing from the main recycle bin</strong>: the two recycle bins are separate; look in the one at the bottom left of the Project tab.</li>
+<li><strong>The project library is &quot;empty&quot; after switching projects</strong>: the project library follows the project directory, so switching projects switches libraries rather than losing data.</li>
+</ul>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>Tutorial for using the project library: <a href="#/en/4.2.2"><code>4.1.2.2</code></a>; main library versus project library: <a href="#/en/4.1.3"><code>4.1.1.3</code></a>.</li>
+<li>Category tree node behavior and context menus: <a href="#/en/15.3.3"><code>8.3.3</code></a>, <a href="#/en/15.3.4.1"><code>8.3.4.1</code></a> ~ <a href="#/en/15.3.4.4"><code>8.3.4.4</code></a>.</li>
+<li>The recycle bin view and its context menu: <a href="#/en/15.8.3"><code>8.8.3</code></a>.</li>
+</ul>

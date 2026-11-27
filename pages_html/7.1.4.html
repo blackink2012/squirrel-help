@@ -1,0 +1,23 @@
+<p>材质节点预览用节点编辑器直接画出资产里的 <code>.zmetal</code> 或 <code>.ma</code>，用来确认节点和连接是否完整。</p>
+<p><img src="media/shared/area-icon-view.webp" alt="材质节点预览：卡片缩略图就是着色网络的渲染结果" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>资产是 <code>.zasset</code> 文件夹，且里面有 <code>.zmetal</code> 或 <code>.ma</code> 节点文件。</li>
+<li>已安装插件并能在 Maya 中打开窗口。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在资产库中右键材质资产，指向「预览节点」。</li>
+<li>子菜单会列出资产根目录下的 <code>.zmetal</code> 和 <code>.ma</code>（<code>node.ma</code> 作为几何体不列出），以及 <code>variants/...</code> 下的节点文件。</li>
+<li>选择一项，节点编辑器打开并自动做层级布局。</li>
+<li>用鼠标中键或 Ctrl+左键拖拽平移，滚轮缩放（10%–1000%）；工具栏「层级布局」可重新排列。</li>
+<li>需要对比时点「打开文件」选另一个 <code>.ma</code> / <code>.zmetal</code>，或把文件直接拖进窗口。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>画布上出现节点卡片和连接线；<code>.zmetal</code> 显示的节点名与资产 <code>root_materials</code>、<code>nodes</code> 一致；绿色线为单属性连接，黄色线表示同一对节点间有多条连接。</p>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>节点编辑器以只读方式看结构最安全；保存会覆盖原文件，编辑前先备份资产。</li>
+<li>当前版本不支持手动添加新节点；要加节点请先在 Maya 中创建，再保存为 <code>.ma</code> 后打开。</li>
+<li>如果打开后没有节点，先确认文件里确有 <code>createNode</code> / <code>connectAttr</code>（<code>.ma</code>）或 <code>nodes</code>（<code>.zmetal</code>）。</li>
+</ul>

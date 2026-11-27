@@ -1,0 +1,28 @@
+<p>导入后材质只剩纯色或变黑，通常是资产里没有贴图、贴图路径仍指向原机器，或 <code>fileTextureName</code> 没有改写成功。</p>
+<p><img src="media/shared/dialog-mapping-preview.webp" alt="贴图丢失：在映射预览里核对贴图通道是否已建立对应关系" loading="lazy" decoding="async"></p>
+<h2 id="h-1">症状</h2>
+<p>Hypershade 中 <code>file</code> 节点路径显示为黄色/红色或指向不存在的目录；视口材质没有图案；灯光资产的 HDR / IES 也没有连上。</p>
+<h2 id="h-2">常见原因</h2>
+<ol>
+<li>导出时没有勾选贴图，<code>.zasset</code> 里根本没有 <code>textures/</code>。</li>
+<li>导入策略设为「源文件目录」，路径仍是导出机器的绝对路径。</li>
+<li>资产被移动或改名后，<code>meta.texture_map</code> 里的原路径失效。</li>
+<li>灯光贴图/HDR/IES 未被收集，或文件在资产外被删除。</li>
+<li>多精度贴图只导入了当前选中的那一档，其它精度缺失。</li>
+</ol>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>打开 <code>.zasset</code>，确认 <code>textures/</code> 下确有对应文件。</li>
+<li>在设置中把贴图导入策略改为复制到工程或资产目录，再重新导入。</li>
+<li>回到源场景，重新导出并勾选贴图，避免只导出材质节点。</li>
+<li>查看脚本编辑器中的「贴图路径已解析」「复制依赖失败」等日志，定位是哪个文件。</li>
+<li>少量缺失时，可在属性编辑器中手动把 <code>file.fileTextureName</code> 指回正确文件。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p><code>file</code> 节点的路径指向现存文件；视口显示贴图；穹顶灯的环境贴图和 IES 灯的光域网恢复正常。</p>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>检查 <code>meta.texture_map</code> 是否记录了「原始路径 → <code>textures/...</code>」，没有记录时导入端无法精确匹配。</li>
+<li>不要手动改 <code>textures/</code> 里的文件名，<code>.zmetal</code> / <code>.zlight</code> 内的相对路径会对不上。</li>
+<li>资产源文件已丢失时，只能从原始工程重新导出。</li>
+</ul>

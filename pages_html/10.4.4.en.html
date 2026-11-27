@@ -1,0 +1,23 @@
+<p>The encoding command compiles a set of frame images into a GIF or a video, with the output format decided by the file extension.</p>
+<p><img src="media_en/shared/menu-thumbnail.webp" alt="Compiling a sequence into MP4 / GIF goes through the same thumbnail update entry" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The frame files exist and are named consecutively by frame number (such as <code>frame_0001.png</code>).</li>
+<li>An <code>.mp4</code> output needs ffmpeg; the plug-in ships <code>bin/ffmpeg.exe</code>. A <code>.gif</code> output falls back to Pillow when ffmpeg is missing.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Call <code>encode_sequence</code> with <code>image_dir</code> for the frame directory, or pass an explicit <code>files</code> list.</li>
+<li>Set the output file <code>output</code>: <code>.mp4</code> (<code>.mov</code> / <code>.mkv</code> / <code>.webm</code> also work) or <code>.gif</code>.</li>
+<li>Set <code>fps</code> (24 by default); to shrink a GIF use <code>max_width</code> to scale the frames.</li>
+<li>When frame names vary, set the scan pattern with <code>pattern</code>, <code>frame_*.png</code> by default.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The command succeeds and the output file exists; open it in a player and confirm the frame order and duration. On cancel the partial file is deleted, and errors state whether it was <code>NO_ENCODER</code> or <code>FRAMES_NOT_SEQUENTIAL</code>.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>Frame names must be consistent and consecutive; with gaps ffmpeg would produce a wrong order, so the command reports <code>FRAMES_NOT_SEQUENTIAL</code> instead of forcing an encode.</li>
+<li>When neither ffmpeg nor Pillow is available it reports <code>NO_ENCODER</code> honestly and gives the frame directory, never pretending to succeed.</li>
+<li>Encoding is pure file and subprocess work that never touches Maya, so it can run on a worker thread and still supports progress and cancel.</li>
+<li>Frame rate and total frame count decide the duration; pair GIF output with <code>max_width</code> to keep the file size reasonable.</li>
+</ul>

@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "tabs": [
+    {
+      "key": "general",
+      "label": "常规",
+      "builder": "_create_general_tab",
+      "groups": [
+        "字体大小",
+        "界面缩放",
+        "默认视图",
+        "拖放",
+        "界面语言",
+        "外观",
+        "彻底删除",
+        "缩略图",
+        "资产库管理",
+        "同名冲突处理",
+        "贴图导入策略",
+        "依赖文件导入策略",
+        "导入命名空间",
+        "设置预设"
+      ],
+      "pages": [
+        "11.2",
+        "11.3"
+      ]
+    },
+    {
+      "key": "ai",
+      "label": "AI 设置",
+      "builder": "_create_ai_tab",
+      "groups": [
+        "AI 功能与依赖",
+        "向量索引维护",
+        "全局大模型（默认）",
+        "云端服务同意（单独同意 · 可撤回）",
+        "AI 对话面",
+        "外部连接",
+        "AI / MCP 通道（默认关闭）",
+        "外部 AI 工具"
+      ],
+      "pages": [
+        "11.4"
+      ]
+    },
+    {
+      "key": "export_defaults",
+      "label": "导出默认值",
+      "builder": "_create_export_defaults_tab",
+      "groups": [
+        "材质格式",
+        "几何体格式",
+        "缓存与代理",
+        "收集关联文件",
+        "导出选项"
+      ],
+      "pages": [
+        "11.5"
+      ]
+    },
+    {
+      "key": "context_menu",
+      "label": "右键菜单",
+      "builder": "_create_context_menu_tab",
+      "groups": [],
+      "pages": [
+        "11.6",
+        "11.7"
+      ]
+    },
+    {
+      "key": "supported_formats",
+      "label": "支持格式",
+      "builder": "_create_formats_tab",
+      "groups": [],
+      "pages": [
+        "11.8"
+      ]
+    },
+    {
+      "key": "texture_suffixes",
+      "label": "贴图后缀",
+      "builder": "_create_texture_suffixes_tab",
+      "groups": [],
+      "pages": [
+        "11.8"
+      ]
+    },
+    {
+      "key": "sub_libraries",
+      "label": "子库与分类",
+      "builder": "_create_subs_tab",
+      "groups": [],
+      "pages": [
+        "11.9"
+      ]
+    },
+    {
+      "key": "other",
+      "label": "其它配置",
+      "builder": "_create_advanced_tab",
+      "groups": [],
+      "pages": [
+        "11.8"
+      ]
+    },
+    {
+      "key": "license_activation",
+      "label": "授权激活",
+      "builder": "_create_license_activation_tab",
+      "groups": [
+        "账号与我的授权（可选）"
+      ],
+      "pages": [
+        "11.10",
+        "15.9.10"
+      ]
+    },
+    {
+      "key": "about",
+      "label": "关于",
+      "builder": "_create_about_tab",
+      "groups": [
+        "软件信息",
+        "服务器通知",
+        "反馈与建议",
+        "协议与声明"
+      ],
+      "pages": [
+        "15.9.10"
+      ]
+    }
+  ],
+  "errors": []
+}

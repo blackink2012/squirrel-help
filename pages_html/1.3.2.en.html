@@ -1,0 +1,16 @@
+<p>The plug-in works with the renderers installed in Maya and does not bundle any renderer; material nodes, proxy formats and conversion depend on whether the matching plug-in is loaded.</p>
+<h2 id="h-1">Renderer comparison</h2>
+<table><thead><tr><th>Renderer</th><th>Common material nodes</th><th>Proxy format</th></tr></thead><tbody><tr><td>Arnold</td><td><code>aiStandardSurface</code></td><td><code>.ass</code></td></tr><tr><td>V-Ray</td><td><code>VRayMtl</code></td><td><code>.vrmesh</code></td></tr><tr><td>Redshift</td><td><code>RedshiftMaterial</code></td><td><code>.rs</code></td></tr><tr><td>Native Maya</td><td><code>standardSurface</code> / <code>lambert</code> / <code>blinn</code> / <code>phong</code></td><td>—</td></tr></tbody></table>
+<p>The material mapping presets also cover newer node combinations such as <code>openPBRSurface</code> and <code>RedshiftOpenPBRMaterial</code>; after conversion, still check texture connections and special attributes.</p>
+<h2 id="h-2">Installed plug-in detection</h2>
+<ul>
+<li>It queries Maya&#x27;s <code>pluginInfo</code> to see whether a plug-in is loaded, registered or unavailable; common plug-in names are <code>mtoa</code> (Arnold), <code>vrayformaya</code> (V-Ray) and <code>redshift4maya</code> (Redshift).</li>
+<li>Results are reported as loaded, present but not loaded, or unavailable, and decide whether proxy import, material conversion and rendering entry points are enabled.</li>
+<li>Capabilities for MASH, Bifrost and USD follow the plug-ins actually installed in Maya; this product does not ship them (the exact support scope is to be confirmed).</li>
+</ul>
+<h2 id="h-3">Recommendations</h2>
+<ul>
+<li>Confirm the target renderer is loaded before importing or converting, otherwise material nodes or proxy files may not be created.</li>
+<li>Cross-renderer conversion only handles attributes covered by the mapping table; complex node networks, gradients and procedural textures need a manual review.</li>
+<li>Proxy import relies on the matching renderer&#x27;s stand-in or proxy nodes; without the plug-in you can only keep the file, not display it in the viewport.</li>
+</ul>

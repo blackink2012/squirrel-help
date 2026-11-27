@@ -1,0 +1,17 @@
+<p>快捷工具不写集中日志文件：执行结果留在各工具窗口里，过程输出与报错进 Maya 脚本编辑器历史。</p>
+<h2 id="h-1">结果在哪看</h2>
+<table><thead><tr><th>工具</th><th>产物 / 结果位置</th></tr></thead><tbody><tr><td>HDR 转资产、模型转资产、PBR 贴图转资产</td><td>所设输出目录下的 <code>.zasset</code>；窗口内有结果树、状态栏与完成弹窗</td></tr><tr><td>图像格式转换工具</td><td>输出目录下的转换后图像；窗口内「转换日志」、进度条与完成弹窗</td></tr><tr><td>批量镜像复制</td><td>目标文件夹内按结构复制的文件；「操作日志」、进度条与完成统计弹窗</td></tr><tr><td>批量处理 Maya 文件</td><td>被处理的 <code>.ma</code> / <code>.mb</code> 本身（勾选保存时）；「执行日志」区与结束统计</td></tr><tr><td>材质导入导出工具</td><td>导出目录下的 <code>.zmetal</code> / <code>.ma</code> / <code>.mcm</code> / <code>.ameta</code> 等；过程信息打印到脚本编辑器</td></tr><tr><td>材质转换工具</td><td>当前场景中的新材质；状态栏、完成统计与失败材质列表</td></tr><tr><td>材质节点属性映射工具</td><td><code>Assets/material_mapper_presets</code> 下的 <code>.mmap</code>；保存提示与脚本编辑器日志</td></tr><tr><td>脚本浏览器</td><td>状态栏的成功 / 失败与用时；脚本的 <code>print</code>、异常 traceback 与 <code>RESULT</code> 进脚本编辑器</td></tr></tbody></table>
+<h2 id="h-2">结果验证</h2>
+<ol>
+<li>转换类工具结束后，打开所设输出目录，确认新增 <code>.zasset</code> 或目标格式文件。</li>
+<li>打开一个 <code>.zasset</code>，应能看到 <code>meta.json</code>、源文件（如 <code>textures/</code> 下）以及可选的 <code>thumb.sicon</code>。</li>
+<li>回到资产库刷新 / 重扫，确认新资产可被列出。</li>
+<li>到 Maya 脚本编辑器搜索工具前缀（如 <code>[HDR Tool]</code>、<code>[材质导出]</code>、<code>[QuickTool]</code>）查看过程输出。</li>
+</ol>
+<h2 id="h-3">注意事项</h2>
+<ul>
+<li>单个文件失败通常不会中断整批任务，最终以成功 / 失败计数和失败列表为准。</li>
+<li>脚本浏览器没有独立的输出面板，脚本输出与 traceback 只在脚本编辑器历史里；失败时会弹出可复制的报错框。</li>
+<li>批量处理 Maya 文件的日志可「保存日志」为 <code>.txt</code> 或「复制日志」到剪贴板。</li>
+<li>各工具只把日志写进界面里的日志区（脚本编辑器另有输出），没有额外的磁盘日志文件。</li>
+</ul>

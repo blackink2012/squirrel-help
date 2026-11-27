@@ -1,0 +1,30 @@
+<p>Core modules are compiled per Python ABI into several coexisting <code>.pyd</code> files; when Maya&#x27;s Python version does not match the <code>.pyd</code> <code>cp</code> tag, the import fails.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>Opening the plug-in or importing a core module raises an extension module error such as <code>ImportError</code> or <code>DLL load failed while importing ...</code>.</li>
+<li>The same installation works in some Maya versions but not in another.</li>
+<li>After an update only some features fail: the UI opens, but import, export or material operations fail.</li>
+<li>When both <code>.py</code> and <code>.pyd</code> exist in the source tree, this machine loads <code>.py</code> first, so the problem may only appear in the release build.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>The ABI build for this Maya is missing</td><td>The core directory has no <code>.pyd</code> with the matching <code>cp</code> tag</td><td>Use an installer that contains that ABI, or run from source</td></tr><tr><td>Installer does not match the Maya version</td><td><code>cmds.about(version=True)</code> disagrees with the <code>.pyd</code> tag</td><td>Confirm the mapping in the table below</td></tr><tr><td>Compiled artifacts from another Maya got mixed in</td><td>A <code>.pyd</code> of unknown origin appears in the directory</td><td>Reinstall the complete package; never rename files by hand</td></tr><tr><td>The <code>.pyd</code>-only release is missing files</td><td>Only some core modules have <code>.pyd</code></td><td>Obtain the complete release package again</td></tr><tr><td>Hot reload still uses the old module</td><td>Source changed but behavior did not</td><td>Fully restart Maya instead of refreshing the UI</td></tr></tbody></table>
+<h2 id="h-3">ABI mapping</h2>
+<table><thead><tr><th><code>.pyd</code> tag</th><th>Maya version</th><th>Python</th></tr></thead><tbody><tr><td><code>cp37</code></td><td>Maya 2022</td><td>3.7</td></tr><tr><td><code>cp39</code></td><td>Maya 2023</td><td>3.9</td></tr><tr><td><code>cp310</code></td><td>Maya 2024</td><td>3.10</td></tr><tr><td><code>cp311</code></td><td>Maya 2025 / 2026</td><td>3.11</td></tr><tr><td><code>cp313</code></td><td>Maya 2027</td><td>3.13</td></tr></tbody></table>
+<h2 id="h-4">Steps</h2>
+<ol>
+<li>In the Maya Script Editor run <code>import maya.cmds as cmds; print(cmds.about(version=True))</code> and confirm the Maya year.</li>
+<li>Run <code>import sys; print(sys.version_info)</code> and confirm the Python major/minor version.</li>
+<li>Look in the core module directory and confirm a <code>.pyd</code> matching the Python version exists (for example Maya 2026 needs <code>cp311</code>).</li>
+<li>If the tag does not match, switch to a matching installer; never rename a <code>.pyd</code> across versions.</li>
+<li>For local debugging you may keep the <code>.py</code> sources, since the package entry loads <code>.py</code> first; a <code>.pyd</code>-only release must match the ABI.</li>
+<li>After replacing files, fully quit and restart Maya.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<p>The plug-in opens, and importing core modules such as <code>import squirrel_asset_manager.core.manager</code> no longer raises extension module errors.</p>
+<h2 id="h-6">If it still fails</h2>
+<ul>
+<li>Record <code>cmds.about(version=True)</code>, <code>sys.version_info</code> and the failing module name together.</li>
+<li>Confirm no <code>.pyd</code> left over from an older version is overwriting the current one.</li>
+<li>If only one core module fails, check whether that module is missing from the installer instead of continuing to change the environment.</li>
+<li>If you still cannot tell, follow 6.1.3 &quot;Startup errors&quot; to capture the full traceback and report it.</li>
+</ul>

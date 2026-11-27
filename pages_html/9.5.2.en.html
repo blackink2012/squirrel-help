@@ -1,0 +1,35 @@
+<p>Convert materials in Maya in bulk following &quot;source material type → target material type&quot; mappings, with attribute transfer controlled by <code>.mmap</code> mapping files.</p>
+<p><img src="media/shared/maya-quicktool-converter.webp" alt="Material conversion tool" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Purpose</h2>
+<p>Replace legacy materials (<code>lambert</code>, <code>phong</code>, <code>blinn</code> and so on) in bulk with the current renderer&#x27;s materials (<code>aiStandardSurface</code>, <code>redshiftStandardMaterial</code>, <code>VRayMtl</code> and so on); useful when taking over an old scene or unifying material standards.</p>
+<h2 id="h-2">Input and output</h2>
+<ul>
+<li>Input: materials in the current scene, the material type mapping table and the <code>.mmap</code> files in the mapping folder.</li>
+<li>Output: newly created target-type materials in the scene, with the originals deleted or kept and reassigned to objects according to the options.</li>
+<li>Presets: the material type mapping can be saved as an <code>.mlist</code> in <code>Assets/material_mapper_presets/mapping_type_presets/</code>.</li>
+</ul>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open <code>快捷工具 (Quick tools) → 材质转换工具 (Material conversion tool)</code>.</li>
+<li>In the <code>「映射文件」 (Mapping files)</code> area at the top click <code>「浏览...」 (Browse...)</code> and choose the folder containing <code>.mmap</code> files (default <code>Assets/material_mapper_presets</code>).</li>
+<li>Fill the source / target material types in the <code>「材质类型映射配置」 (Material type mapping configuration)</code> table; pick from the dropdowns or type them by hand.</li>
+<li>When needed use <code>「加载源」 (Load source)</code> / <code>「加载目标」 (Load target)</code> to read types from the current Maya selection, or maintain the table with <code>「添加行」 (Add row)</code>, <code>「删除选中」 (Remove selected)</code> and <code>「清空全部」 (Clear all)</code>.</li>
+<li>Under <code>「转换选项」 (Conversion options)</code> confirm copying textures, keeping the original material and applying to the selected objects automatically.</li>
+<li>Click <code>「转换选择」 (Convert selection)</code> to process only the selected materials, or <code>「转换全部」 (Convert all)</code> to process every matching material in the scene.</li>
+<li>Read the success / failure summary afterwards; on failures use <code>「在Maya中选中失败材质」 (Select failed materials in Maya)</code> to locate them.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The status bar shows progress and completion information.</li>
+<li>A dialog afterwards reports the converted material count and attribute copy statistics.</li>
+<li>With <code>「自动应用到选择对象」 (Apply to selected objects automatically)</code> checked the objects in the viewport already use the new materials.</li>
+<li>Failed materials go into <code>「转换失败材质列表」 (Failed material list)</code> and can be selected in one click to fix one by one.</li>
+</ul>
+<h2 id="h-5">Options and notes</h2>
+<table><thead><tr><th>Option</th><th>Default</th><th>Notes</th></tr></thead><tbody><tr><td>Copy texture connections</td><td>On</td><td>Copies the source material&#x27;s texture connections to the target</td></tr><tr><td>Keep the original material</td><td>Off</td><td>When on the source material is not deleted, which makes rollback easy</td></tr><tr><td>Apply to selected objects automatically</td><td>On</td><td>Assigns the new material to the objects using the original</td></tr><tr><td>No mapping → default material</td><td>Off</td><td>Creates a basic material of the target type when no mapping exists; when off it counts as a failure</td></tr></tbody></table>
+<ul>
+<li>Without a direct mapping file it tries an openPBR detour (A → openPBR → B), and the intermediate materials are cleaned up automatically.</li>
+<li>Save the scene before converting; the target renderer plug-in must be loaded and material type names are case-sensitive.</li>
+<li>Conversion needs a valid <code>convert</code> license.</li>
+<li>With <code>「源」 (Source)</code> left empty and only one row, every material is converted to that target type.</li>
+</ul>

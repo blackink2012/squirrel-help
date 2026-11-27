@@ -1,0 +1,26 @@
+<p>The standalone edition is the same asset interface started outside Maya; the EXE installer sets it up together with a bundled Python runtime and an optional Maya integration.</p>
+<h2 id="h-1">Standalone edition</h2>
+<ul>
+<li>The entry point is <code>squirrel_asset_manager/standalone_preview.py</code>; in the source package you can also double-click <code>启动独立预览.bat</code> (Start standalone preview).</li>
+<li>It runs on system Python with PySide6, or on the <code>mayapy</code> that ships with Maya (without starting the Maya UI).</li>
+<li>It drives <strong>the running Maya</strong> through the local commandPort, sending import, export, thumbnail and asset-update jobs to Maya; it has been verified on Maya 2025.</li>
+<li>When Maya is offline you can only browse, search and run file-level operations; scene import and export are unavailable.</li>
+</ul>
+<h2 id="h-2">EXE installer version</h2>
+<ul>
+<li>Installs to <code>%LOCALAPPDATA%\SquirrelAM</code> (changeable during installation), per user, with no administrator rights required.</li>
+<li>Bundles Python 3.11.9, PySide6 6.9.2, Pillow, requests and pypinyin; on startup <code>SquirrelAssetManager.exe</code> sets up the environment and launches <code>standalone_preview.py</code>.</li>
+<li>The installer offers an optional <code>「Maya 集成」 (Maya integration)</code>: it writes the import path, status-line button and bridge port into each version&#x27;s <code>userSetup.py</code>, and creates the shelf button once during installation (it is not rebuilt later); when no Maya is found the option is unchecked by default.</li>
+<li>An optional <code>「AI 助手 dsh（离线）」 (offline AI assistant dsh)</code> unpacks a bundled dsh and portable Node; skipping it does not affect asset browsing and management.</li>
+</ul>
+<h2 id="h-3">Who it is for</h2>
+<ul>
+<li>People who want to organize, search and preview assets without opening Maya.</li>
+<li>Artists who send asset operations to an already open Maya, or who want an external AI or command line to drive Maya.</li>
+<li>Users who are not comfortable with Python environments and prefer a double-click install: choose the EXE.</li>
+</ul>
+<h2 id="h-4">Known limits</h2>
+<ul>
+<li>Batch export in the standalone edition is dispatched job by job, without the progress overlay and cancel button of the in-Maya version.</li>
+<li>Without Maya, scene-dependent features are unavailable; the port only listens on <code>127.0.0.1</code>.</li>
+</ul>

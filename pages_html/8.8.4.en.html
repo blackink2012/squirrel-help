@@ -1,0 +1,13 @@
+<p>The plug-in finds Maya through two layers of ports: the backend port routes commands and Maya&#x27;s commandPort provides the direct fallback; every Maya process is a separate instance.</p>
+<h2 id="h-1">Backend and instances</h2>
+<ul>
+<li>The backend listens on <code>http://127.0.0.1:39002</code> by default; when that port is taken it switches automatically and writes the actual address into the endpoint file <code>~\.squirrel_asset_manager\broker_endpoint.json</code>.</li>
+<li>Each Maya registers as an instance named <code>maya-&lt;version&gt;-&lt;process id&gt;</code>. Tools act only on the instance bound to this conversation by default; cross-instance work must be allowed explicitly so multiple sessions are not confused.</li>
+<li>The AI assistant and external MCP clients connect to the same backend but can each choose which instance to bind; AI search reads the current library&#x27;s index directly and does not go through the backend.</li>
+</ul>
+<h2 id="h-2">Maya fallback ports</h2>
+<p>When the backend is unavailable the plug-in can talk to Maya&#x27;s commandPort directly. Ports are assigned by version: 7001 for 2026, 7002 for 2025 and so on; with several sessions of the same version the later one falls back to the 7110–7129 range and records it in <code>bridge_port.log</code>.</p>
+<h2 id="h-3">Security boundaries</h2>
+<p>All ports bind <code>127.0.0.1</code> only and are never exposed to the LAN. But a commandPort is equivalent to an arbitrary-code-execution entry: do not forward it to the internet and do not leave it open on untrusted networks.</p>
+<h2 id="h-4">Confirming with several sessions</h2>
+<p>First list the instances to see which are online and then decide what to operate on; never rely on &quot;whichever responds first&quot;, which is the usual cause of cross-session mix-ups.</p>

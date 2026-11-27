@@ -1,0 +1,88 @@
+<p>启动报错先看 Maya 脚本编辑器里的完整 traceback，它通常能直接指出缺失模块、旧副本、权限或授权问题。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>点击插件入口后没有窗口，或窗口一闪就关闭。</li>
+<li>脚本编辑器出现红色 traceback，包含 <code>ImportError</code>、<code>AttributeError</code>、<code>PermissionError</code> 等。</li>
+<li>窗口能打开，但状态行、分类树或 AI 面板初始化失败。</li>
+<li>启动时提示 <code>sq_license 不可用，进入只读模式</code>，功能受限但程序没有崩溃。</li>
+</ul>
+<h2 id="h-2">可能原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>包或子模块找不到</td><td>traceback 顶部是 <code>No module named ...</code></td><td>按 6.1.1「插件未加载」检查安装路径与 <code>userSetup.py</code></td></tr><tr><td>加载了旧副本或半成品目录</td><td><code>sq.__file__</code> 不在安装目录，或目录里只有 <code>Assets\</code></td><td>删除旧副本，重新安装</td></tr><tr><td>核心模块 ABI 不匹配</td><td>报扩展模块加载失败</td><td>按 6.1.2「版本与 ABI 不匹配」处理</td></tr><tr><td>授权模块缺失</td><td>日志出现 <code>sq_license 不可用</code></td><td>程序进入只读；确认安装包完整，或按授权页激活</td></tr><tr><td>安装目录没有写权限</td><td>traceback 指向创建目录、写配置或写日志</td><td>恢复目录权限，或换到用户可写位置</td></tr><tr><td>旧配置/旧缓存与新版本冲突</td><td>报错集中在设置、索引或分类加载</td><td>备份配置后重置对应缓存，再重启 Maya</td></tr></tbody></table>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>打开 Maya 脚本编辑器，清空输出后重新点击插件入口，复现一次。</li>
+<li>复制 traceback 的第一行错误和最后几行调用栈，不要只截「出错」两个字。</li>
+<li>执行 <code>import squirrel_asset_manager as sq; print(sq.__file__)</code>，确认实际加载的是哪一份。</li>
+<li>如果是模块缺失或旧副本，按 6.1.1「插件未加载」重新安装；如果是 ABI 错误，按 6.1.2「版本与 ABI 不匹配」换包。</li>
+<li>如果只在 AI、桥接或状态行初始化时报错，检查 <code>~\.squirrel_asset_manager\broker_boot.log</code> 与 <code>bridge_port.log</code>。</li>
+<li>修改后完全重启 Maya，再验证一次。</li>
+</ol>
+<h2 id="h-4">手动启动（启动脚本没生效时）</h2>
+<p>如果工具架、状态行都点不开，但安装目录是完整的，可以在 Maya 脚本编辑器（Python）里手动跑一遍启动代码。</p>
+<p><strong>先确认自己的安装目录</strong>（要填的是「包含 <code>squirrel_asset_manager</code> 文件夹」的那一层）：</p>
+<table><thead><tr><th>安装方式</th><th>默认位置</th></tr></thead><tbody><tr><td>EXE 安装（含 Maya 集成）</td><td>安装向导里选择的目录，默认 <code>%LOCALAPPDATA%\SquirrelAM</code>；<code>SquirrelAssetManager.exe</code> 与 <code>squirrel_asset_manager\</code> 都在这一层</td></tr></tbody></table>
+<p>判断标准：该目录下能看到 <code>squirrel_asset_manager</code> 文件夹，里面有 <code>__init__.py</code> 与 <code>ui\main_window.py</code>。如果插件以前能启动，也可以在脚本编辑器执行 <code>import squirrel_asset_manager as sq; print(sq.__file__)</code>，把结果末尾的 <code>\squirrel_asset_manager\__init__.py</code> 去掉，剩下的就是安装根目录。</p>
+<p>把路径填到下面代码的 <code>INSTALL_DIR</code>（保留 <code>r&quot;...&quot;</code> 的原样字符串写法，路径里的反斜杠不用转义）；<strong>留空则按上表默认位置自动检测</strong>：</p>
+<pre><code class="language-python">import os
+import sys
+import maya.cmds as cmds
+
+# ① 自定义安装目录：只改这一行。填「包含 squirrel_asset_manager 文件夹」的目录，
+#    例如 r"D:\Tools\SquirrelAM"；留空 = 按默认位置自动检测。
+INSTALL_DIR = r""
+
+# ② 整理候选目录：填了只认填的，没填就自动找
+app_dir = os.path.normpath(cmds.internalVar(userAppDir=True))
+local_appdata = os.environ.get("LOCALAPPDATA") or ""
+if INSTALL_DIR.strip():
+    candidates = [os.path.normpath(INSTALL_DIR.strip())]
+else:
+    candidates = [
+        app_dir,                                      # 旧版脚本安装：%MAYA_APP_DIR%
+        os.path.join(app_dir, "scripts"),             # 更早的脚本安装
+    ]
+    if local_appdata:
+        candidates += [
+            os.path.join(local_appdata, "SquirrelAM"),            # 独立版默认
+            os.path.join(local_appdata, "SquirrelAssetManager"),  # 独立版旧默认
+        ]
+# 也允许直接把 …\squirrel_asset_manager 这一层填进来
+candidates += [os.path.dirname(p) for p in list(candidates)]
+
+install_root = next(
+    (p for p in candidates
+     if os.path.isfile(os.path.join(p, "squirrel_asset_manager", "ui", "main_window.py"))),
+    "")
+if not install_root:
+    raise RuntimeError("没找到 squirrel_asset_manager，请把包含它的目录填到 INSTALL_DIR")
+if install_root not in sys.path:
+    sys.path.insert(0, install_root)
+
+# ③ 清掉早先被缓存的空命名空间包
+pkg = sys.modules.get("squirrel_asset_manager")
+if pkg is not None and not getattr(pkg, "__file__", None):
+    for name in [n for n in list(sys.modules)
+                 if n == "squirrel_asset_manager"
+                 or n.startswith("squirrel_asset_manager.")]:
+        del sys.modules[name]
+
+# ④ 打开主窗口（重复执行只会召回已有窗口）
+from squirrel_asset_manager.ui.main_window import MaterialLibraryWindow
+MaterialLibraryWindow.show_window()
+print("已从 %s 启动" % install_root)</code></pre>
+<p>执行结果这样判断：</p>
+<ul>
+<li><strong>窗口正常打开</strong>：说明插件本体没问题，只是 <code>userSetup.py</code> 启动段没生效。可把上面代码追加到当前版本的 <code>Documents\maya\&lt;版本&gt;[\&lt;语言&gt;]\scripts\userSetup.py</code> 末尾，或重新运行安装器写入启动段（见 6.1.1「插件未加载」）。</li>
+<li><strong>仍报 <code>No module named &#x27;squirrel_asset_manager&#x27;</code></strong>：<code>INSTALL_DIR</code> 没填或填错了层级；按上面的判断标准核对，并确认该目录下有完整的包（不是只剩 <code>Assets\</code>）。</li>
+<li><strong>报扩展模块或 DLL 错误</strong>：ABI 不匹配，按 6.1.2「版本与 ABI 不匹配」换包。</li>
+</ul>
+<p>手动执行只在当前 Maya 会话有效；要每次启动都自动就绪，还是需要 <code>userSetup.py</code> 里的启动段。写进 <code>userSetup.py</code> 时请保留 <code>INSTALL_DIR</code> 的填写——自动检测只覆盖默认位置，自定义目录不填就找不到。</p>
+<h2 id="h-5">结果验证</h2>
+<p>插件窗口正常出现，脚本编辑器不再出现同类 traceback，分类树与状态栏能完成初始化。</p>
+<h2 id="h-6">仍不行怎么办</h2>
+<ul>
+<li>先用空场景启动，排除场景本身或第三方插件造成的干扰。</li>
+<li>暂时禁用其他启动脚本，确认不是多个工具同时改写 <code>userSetup.py</code>。</li>
+<li>按 6.8.2「诊断流程」收集信息；反馈时附完整 traceback、Maya 版本和安装目录树。</li>
+<li>涉及授权的报错不要提交完整许可证文件或密钥，只提供状态与错误码。</li>
+</ul>

@@ -1,0 +1,16 @@
+<p>右栏决定「这次打包什么」：关联文件、材质/灯光节点、几何体、动画、缓存和代理，都按分区勾选。</p>
+<table><thead><tr><th>分区</th><th>控件</th><th>说明</th></tr></thead><tbody><tr><td>收集关联文件</td><td><code>收集场景中已挂载的缓存/代理/引用文件</code></td><td>勾选后把磁盘上已有的缓存、代理、引用等复制到 <code>deps/</code>；不勾选只扫描并记录清单</td></tr><tr><td>收集关联文件</td><td><code>贴图 textures/</code></td><td>默认勾选，把材质和灯光关联的贴图复制到 <code>textures/</code></td></tr><tr><td>导出选项</td><td><code>仅导出材质（跳过几何体/代理）</code></td><td>只打包材质节点与贴图；材质子库默认勾选，详见「仅导出材质」</td></tr><tr><td>材质格式 / 灯光格式 / 节点格式</td><td><code>材质预设 .zmetal</code> / <code>灯光预设 .zlight</code> / <code>节点预设 .zmetal</code></td><td>分区标题随当前子库变化：材质与其它子库是 <code>.zmetal</code>，灯光子库是 <code>.zlight</code></td></tr><tr><td>同上</td><td><code>全部材质写入一个 .zmetal</code></td><td>勾选后合并为一个文件；不勾选且选中的是材质节点时按材质分别写文件；灯光资产不显示此项</td></tr><tr><td>同上</td><td><code>材质映射 .mcm (检测到 N 个材质)</code></td><td>记录材质对应的模型和面级指派；灯光资产不显示此项</td></tr><tr><td>几何体格式（通过 Maya 原生导出）</td><td><code>Maya ASCII .ma</code> / <code>Maya Binary .mb</code> / <code>FBX .fbx</code> / <code>OBJ .obj</code> / <code>USD .usd</code></td><td>可多选；通过 Maya 原生导出，<code>.ma</code>/<code>.mb</code> 保持引用关系不烘焙</td></tr><tr><td>动画导出</td><td><code>当前帧</code> / <code>时间轴</code> / <code>关键帧</code></td><td>决定 <code>abc/usd/ass/rs/vrmesh</code> 的帧范围；<code>当前帧</code> 为静帧</td></tr><tr><td>缓存格式</td><td><code>Alembic .abc</code></td><td>导出 Alembic 缓存，帧范围由「动画导出」决定</td></tr><tr><td>代理格式</td><td><code>Arnold .ass</code> / <code>Redshift .rs</code> / <code>V-Ray .vrscene</code> / <code>V-Ray .vrmesh</code></td><td>渲染器代理；需要对应插件已加载</td></tr></tbody></table>
+<h2 id="h-1">插件状态</h2>
+<p>几何体、缓存和代理格式的复选框右侧会显示插件状态：<code>已就绪</code>、<code>未加载</code>、<code>不可用</code>。显示不可用时该复选框被置灰，本次不能选；显示未加载时可先到 Maya 插件管理器加载插件，再关闭并重新打开导出对话框。</p>
+<h2 id="h-2">被锁定的格式</h2>
+<p>不适用于当前分类的格式会<strong>变灰且勾不进导出配置</strong>，鼠标悬停提示「该格式不适用于当前分类，已锁定（可在 设置 → 导出默认值 中调整）」。默认锁定规则：材质、灯光锁掉几何与全部代理格式（这类资产没有几何）；贴图、HDR、图片、音乐、动画数据几乎锁掉所有节点与几何格式。要解锁：设置 →「导出默认值」页把对应格式的锁定关掉（见 <a href="#/6.4.1"><code>4.3.4.1</code></a>）。</p>
+<h2 id="h-3">追加格式模式的提示</h2>
+<p>从「更新资产 → 追加格式」进入时，右栏<strong>最上方会多一条黄色提示</strong>：默认一个格式都不勾；资产已有的格式后面标注「（已存在）」，勾上=用本次导出结果替换该格式原文件，不勾=保持原样。正常的「创建资产」则按导出默认值预先勾选，两者不同。</p>
+<h2 id="h-4">勾选组合的结果</h2>
+<ul>
+<li>只勾 <code>.zmetal</code> + <code>贴图 textures/</code>：得到材质资产，导入后重建材质网络。</li>
+<li>勾几何体格式：得到模型资产；需要材质随模型走时同时勾 <code>.zmetal</code> 或 <code>.mcm</code>。</li>
+<li>勾缓存或代理：得到动画/渲染器专用文件，是否能导入取决于目标 Maya 是否装了对应插件。</li>
+</ul>
+<h2 id="h-5">当前版本说明</h2>
+<p>旧帮助把「资产名称、中文名称、标签」也画在右侧；当前版本这些在左栏，右栏从「收集关联文件」开始。分区名称与复选框文案以当前界面为准。</p>

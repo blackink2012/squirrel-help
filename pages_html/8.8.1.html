@@ -1,0 +1,10 @@
+<p>MCP 是外部 AI 工具调用插件能力的标准通道；只装技能不够，技能正文里写的工具必须真的存在。</p>
+<h2 id="h-1">两条服务器</h2>
+<table><thead><tr><th>名称</th><th>作用</th><th>是否依赖 Maya</th></tr></thead><tbody><tr><td><code>squirrel-assets</code></td><td>查资产、驱动 Maya / Blender 的场景与导入导出</td><td>依赖在线实例</td></tr><tr><td><code>maya-kb</code></td><td>查 Maya 离线知识库</td><td>不依赖，Maya 没开也能用</td></tr></tbody></table>
+<p>两条都通过 stdio 启动：源码形态是 <code>python mcp\squirrel_mcp_server.py</code>，打包形态由主程序带哨兵参数拉起。<code>squirrel-assets</code> 还会写入 <code>--broker-url</code> 与 <code>--instance-id</code>，默认底座是 <code>http://127.0.0.1:39002</code>。</p>
+<h2 id="h-2">暴露哪些工具</h2>
+<p>不是全部命令都暴露，而是一份高频白名单，覆盖场景、资产、渲染与执行四组；命令清单始终从底座的 <code>/commands</code> 现取，不写死。高风险命令（如执行 Python）也在白名单里，调用方应先预览再执行。</p>
+<h2 id="h-3">怎么挂</h2>
+<p>在「设置 → AI 设置 →『外部 AI 工具』组 →『外部 AI 工具…』」里对目标工具勾选 MCP，插件会把条目写进对方的配置文件；没有可安全写入的配置时，只能复制片段手工粘贴。</p>
+<h2 id="h-4">边界</h2>
+<p>MCP 入口不直连 Maya，也不 import maya；它只与本地底座说话。写入别人的配置前会备份，解析失败宁可不写，且只增删我们自己的条目。</p>

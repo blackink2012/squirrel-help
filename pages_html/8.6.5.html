@@ -1,0 +1,25 @@
+<p>嵌入模型决定向量空间；模型、维度或文本模板一变，旧索引就必须重建，否则只能被判定不可用。</p>
+<p><img src="media/shared/settings-global-llm.webp" alt="全局大模型" loading="lazy" decoding="async"></p>
+<h2 id="h-1">什么时候必须重建</h2>
+<ul>
+<li>换了嵌入模型，或索引记录的模型与当前期望不一致。</li>
+<li>索引维度、主键方案或文本模板升级。</li>
+<li>索引目录被手工拷贝、指向了另一个库。</li>
+<li>索引文件损坏或一致性校验失败。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>先确认目标模型已在 Ollama 中：<code>ollama list</code>。</li>
+<li>重建资产文本索引：<code>python tools\asset_index.py --rebuild --model &lt;模型名&gt;</code>。默认模型是 <code>embeddinggemma-2:740m</code>。</li>
+<li>重建文档索引：<code>python tools\build_semantic_index.py --model &lt;模型名&gt;</code>。</li>
+<li>重建图像索引：<code>python tools\asset_vision_encode.py sync --library &quot;&lt;库根&gt;&quot; --rebuild --model gemma2</code>。</li>
+<li>回到插件查状态；有必要时重开插件窗口让设置与环境变量生效。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p><code>asset_semantic_status</code> 的 <code>available</code> 为真，<code>model</code> 与目标一致，<code>count</code> 与库内资产量相符；<code>maya_docs(action=&quot;status&quot;)</code> 的语义部分也应显示可用。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>换模型会让全库重新编码，资产多时耗时明显；不要在没有必要的时候换。</li>
+<li>环境变量与索引记录里的模型都要对得上：资产索引看 <code>SQUIRREL_ASSET_EMBED_MODEL</code>，文档索引看 <code>SQUIRREL_EMBED_MODEL</code>，两边要一致才不会一半可用。</li>
+<li>重建图像索引是重活，建议在不用 Maya 或空闲时做。</li>
+</ul>

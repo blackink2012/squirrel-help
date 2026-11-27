@@ -1,0 +1,33 @@
+<blockquote><p>一句话定位：<strong>右栏最上面两块复选框，决定资产包里除了本体之外，还要不要把贴图和场景依赖一起拷进去。</strong></p></blockquote>
+<h2 id="h-1">控件逐项</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>收集场景中已挂载的缓存/代理/引用文件</td><td>复选框</td><td>把场景里挂着的缓存（.abc 等）、代理（.ass/.vrmesh/.rs）、Reference 进来的文件拷进资产包 <code>deps/</code></td><td>要交付「打开即用」的资产时勾上</td><td>不勾：只记录依赖清单，不拷文件——换台机器打开资产会缺引用</td></tr><tr><td>贴图 textures/</td><td>复选框</td><td>收集材质用到的贴图，放进资产包 <code>textures/</code></td><td><strong>默认勾选，基本都该留着</strong></td><td>不勾：资产里没有贴图，导入后材质是空图/丢失</td></tr></tbody></table>
+<blockquote><p>这两个开关互相独立：只勾贴图可以；只勾关联文件也可以；都勾就是最完整的自包含资产（包也最大）。</p></blockquote>
+<p><img src="media/shared/dialog-export-right.webp" alt="右栏「收集关联文件」区块" loading="lazy" decoding="async"></p>
+<h2 id="h-2">「扫描」和「收集」不是一回事</h2>
+<ul>
+<li><strong>扫描始终会做</strong>：导出时插件一定会扫一遍「这个资产依赖了哪些外部文件、缺了哪些、哪些在允许范围外」，结果写进导出日志。</li>
+<li><strong>收集才拷贝</strong>：只有勾了「收集场景中已挂载的缓存/代理/引用文件」，才会把这些文件真的复制到资产包里；不勾则只留清单。</li>
+<li>所以导出日志里出现「<code>collect_associated=False → 只留清单，不拷贝</code>」是正常行为，不是失败。</li>
+</ul>
+<h2 id="h-3">依赖策略在哪里改</h2>
+<p>贴图和依赖被拷进资产包之后，路径怎么处理由设置决定，不在这个对话框里：</p>
+<table><thead><tr><th>设置项</th><th>位置</th><th>影响</th></tr></thead><tbody><tr><td>贴图导入策略</td><td>设置 → 资产库</td><td>「拷贝到工程 / 放进资产目录 / 保留源文件路径」三选一</td></tr><tr><td>依赖文件导入策略</td><td>设置 → 资产库</td><td>同上口径，作用于缓存/代理/引用</td></tr></tbody></table>
+<p>见 <a href="#/11.3.3"><code>4.8.3.3</code></a>、<a href="#/11.3.4"><code>4.8.3.4</code></a>。</p>
+<h2 id="h-4">一次完整操作（把材质和它的贴图一起入库）</h2>
+<ol>
+<li>Maya 里选中材质节点。</li>
+<li>打开导出对话框，右栏确认「贴图 textures/」<strong>勾着</strong>。</li>
+<li>如果这个材质还引用了外部模型/缓存（比如材质贴在 Reference 进来的模型上），把「收集场景中已挂载的缓存/代理/引用文件」也勾上。</li>
+<li>勾「材质预设 .zmetal」（见 8.10.6）。</li>
+<li>点「创建资产」，截图完成。</li>
+<li>验证：右键新资产 →「资产详情」，看「包含格式」和「大小」；大小明显变大说明贴图收进来了。资产详情见 <a href="#/15.11.1"><code>8.11.1</code></a>。</li>
+</ol>
+<h2 id="h-5">出问题怎么办</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>处理</th></tr></thead><tbody><tr><td>导入资产后材质没贴图</td><td>导出时没勾「贴图 textures/」，或贴图路径在支持范围外</td><td>重新导出并勾上贴图；或用「更新资产 → 追加格式」把本次导出结果导回去</td></tr><tr><td>资产包特别大</td><td>勾了收集关联文件，把整套缓存都拷了进来</td><td>这类资产建议关掉「收集关联文件」，缓存单独管理</td></tr><tr><td>换机器后 Reference 丢失</td><td>只扫描没收集</td><td>重新导出并勾「收集场景中已挂载的缓存/代理/引用文件」</td></tr><tr><td>导出日志说「只留清单，不拷贝」</td><td>没勾收集关联文件（设计如此）</td><td>需要自包含就勾上</td></tr></tbody></table>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>右栏其他分区：<a href="#/15.10.6"><code>8.10.6</code></a>、<a href="#/15.10.7"><code>8.10.7</code></a></li>
+<li>用户指南版依赖收集说明：<a href="#/6.2.4"><code>4.3.2.4</code></a></li>
+<li>依赖文件收集策略：<a href="#/6.6.5"><code>4.3.6.5</code></a></li>
+<li>贴图/依赖缺失的排查：<a href="#/6.5.2"><code>4.3.5.2</code></a></li>
+</ul>

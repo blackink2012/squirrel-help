@@ -1,0 +1,33 @@
+<p>Filter the files in a source folder by extension and mirror them into a target folder with the full directory hierarchy preserved.</p>
+<p><img src="media_en/shared/quicktool-mirror.webp" alt="Batch mirror copy" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Purpose</h2>
+<p>Good for archiving assets, distributing textures and backing up a directory structure: pick only the formats you need while keeping the original hierarchy.</p>
+<h2 id="h-2">Input and output</h2>
+<ul>
+<li>Input: a source folder, a target folder and the list of extensions to copy.</li>
+<li>Output: files rebuilt under the target folder with the source relative paths; with <code>「复制层级结构」 (Copy hierarchy)</code> off they are flattened and name clashes get the parent folder name or a number.</li>
+<li>Files already present at the target are skipped and never overwritten.</li>
+</ul>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open <code>快捷工具 (Quick tools) → 批量镜像复制 (Batch mirror copy)</code>.</li>
+<li>Click <code>「浏览」 (Browse)</code> next to the source folder and choose the source.</li>
+<li>Click <code>「浏览」 (Browse)</code> next to the target folder and choose the destination.</li>
+<li>Fill the extensions under <code>「文件格式」 (File formats)</code>, comma separated; the default is <code>.exr, .hdr, .png, .jpg</code>, and a leading dot is optional.</li>
+<li>Optionally check <code>「仅预览（不实际复制）」 (Preview only, do not copy)</code> and click <code>「开始复制」 (Start copy)</code> to check the matches.</li>
+<li>Uncheck preview and click <code>「开始复制」 (Start copy)</code> again.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>Preview mode: the log ends with <code>「预览完成，共匹配 N 个文件」 (preview finished, N files matched)</code> and nothing is written to disk.</li>
+<li>Real copy: the progress bar completes and a summary appears (total / copied / skipped / failed).</li>
+<li>The target directory shows the same relative paths as the source (when keeping hierarchy).</li>
+</ul>
+<h2 id="h-5">Options and notes</h2>
+<table><thead><tr><th>Option</th><th>Default</th><th>Notes</th></tr></thead><tbody><tr><td>File formats</td><td><code>.exr, .hdr, .png, .jpg</code></td><td>Comma separated, case-insensitive, leading dots are added automatically</td></tr><tr><td>Preview only (do not copy)</td><td>Off</td><td>Only counts and lists the files that would be copied</td></tr><tr><td>Copy hierarchy</td><td>On</td><td>When off everything is flattened into the target root, with automatic name disambiguation</td></tr></tbody></table>
+<ul>
+<li>The source and target folders cannot be the same, otherwise the tool refuses to run.</li>
+<li>Copying uses <code>shutil.copy2</code> to preserve metadata such as modification times where possible.</li>
+<li>A single failing file never aborts the whole run; failures with reasons are listed in the summary dialog afterwards.</li>
+<li>Copying runs on a background thread so the interface stays responsive; with many files the &quot;scanning files…&quot; stage can take a while.</li>
+</ul>

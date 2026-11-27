@@ -1,0 +1,13 @@
+<p>风险级别只描述命令的影响面，不设审批闸门：三个级别都会直接执行，调用方应据此决定是否先 <code>dry_run</code>。</p>
+<p>当前 146 条命令中，<code>readonly</code> 42 条、<code>low</code> 67 条、<code>high</code> 37 条（据 <code>generated/commands.json</code> 统计）。</p>
+<h2 id="h-1">三个级别</h2>
+<table><thead><tr><th>级别</th><th>含义</th><th>典型命令</th><th><code>dry_run</code></th><th><code>undo_last</code></th></tr></thead><tbody><tr><td><code>readonly</code></td><td>只读，不改变资产库或场景</td><td><code>search_assets</code>、<code>get_asset_info</code>、<code>scene_info</code>、<code>list_category</code></td><td>不支持</td><td>不需要</td></tr><tr><td><code>low</code></td><td>可逆写操作，改动范围明确</td><td><code>move</code>、<code>rotate</code>、<code>rename</code>、<code>set_visibility</code>、<code>set_attr</code>、<code>assign_material</code></td><td>支持</td><td>支持</td></tr><tr><td><code>high</code></td><td>破坏性、批量化或执行任意代码</td><td><code>delete</code>、<code>batch_delete</code>、<code>batch_move_to</code>、<code>maya_run_python</code>、<code>maya_run_mel</code></td><td>支持</td><td>多数支持，见下</td></tr></tbody></table>
+<h2 id="h-2">使用规则</h2>
+<ul>
+<li>只读命令没有预览分支，返回的就是当前事实。</li>
+<li>低危写命令传 <code>dry_run=true</code> 时返回 <code>status=&quot;preview&quot;</code>，并列出将变化的对象或字段。</li>
+<li>高危命令执行前应先 <code>dry_run</code> 自查；底座不会返回 <code>approval_required</code>，看到该状态说明宿主在跑旧代码。</li>
+<li>契约要求高危命令提供回滚或撤销能力：资产库写命令走快照，<code>delete_objects</code> 走 Maya 自身撤销栈。<code>maya_run_python</code> / <code>maya_run_mel</code> 是明确例外——它们会尝试把整次调用包进一个 Maya 撤销块，但 <code>undo_last</code> 不覆盖，执行前应自行备份场景。</li>
+<li>万能执行通道<strong>默认关闭</strong>：在设置里开启 <code>allow_maya_exec</code> 才可用（首次开启会走独立确认弹窗）；环境变量 <code>SQUIRREL_ENABLE_MAYA_EXEC=1</code> 可强制开启。</li>
+</ul>
+<blockquote><p><strong>警告</strong>：<code>risk_level</code> 不会拦住命令。它只是给调用方和用户看的判断依据，破坏性操作仍需自行确认目标与备份。</p></blockquote>

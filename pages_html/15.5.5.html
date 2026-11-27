@@ -1,0 +1,36 @@
+<blockquote><p>一句话定位：<strong>在资产网格里右键一张贴图资产卡片时，弹出的就是这个菜单。</strong> 贴图资产是一整套 PBR 贴图（多精度、带类型后缀），所以菜单里给的是「建材质」「导贴图」「贴到材质上」三条路，而不是一行通用导入。</p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>左侧「分类」页签 → 点「贴图」或它下面的任一分类；</li>
+<li>中间资产网格里<strong>右键任意贴图卡片</strong>。</li>
+</ol>
+<p><img src="media/shared/menu-sublib-textures.webp" alt="贴图资产右键菜单" loading="lazy" decoding="async"></p>
+<h2 id="h-2">菜单从上到下的顺序</h2>
+<table><thead><tr><th>段</th><th>条目</th></tr></thead><tbody><tr><td>① 子库专属</td><td>为当前选择指定材质、创建材质 ▶、导入贴图 ▶、指定贴图到材质、打开图像</td></tr><tr><td>② 收藏与选择</td><td>添加到收藏夹 ▶、全选、复制、打开文件夹</td></tr><tr><td>③ 整理</td><td>移动到 ▶、复制到 ▶</td></tr><tr><td>④ 维护</td><td>编辑、更新缩略图 ▶、更新资产 ▶、删除 ▶</td></tr><tr><td>⑤ 查看与 AI</td><td>AI 分析缩略图</td></tr><tr><td>⑥ 最后一条</td><td>资产详情</td></tr></tbody></table>
+<p>贴图菜单里<strong>没有</strong>通用「导入」和「添加引用」——从外部把贴图收进库走工具条的「从外部导入 → 导入贴图」，见 <a href="#/15.4.2"><code>8.4.2</code></a>。</p>
+<h2 id="h-3">菜单逐项详解</h2>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>为当前选择指定材质</td><td>用这套贴图在场景里建材质并赋给选中物体</td><td>场景里选中了物体</td><td>按贴图类型先把贴图接成材质网络，再赋给选中物体</td><td>会顶掉物体原材质；按 Ctrl+Z 撤销</td></tr><tr><td>创建材质 ▶</td><td>建指定类型的材质并把贴图接好</td><td>Maya 已连接</td><td>子菜单选材质类型（见下节），场景里生成一个已连好贴图的材质节点</td><td>材质类型不可用时该项置灰，并标注「插件未加载」或「当前版本不支持」</td></tr><tr><td>导入贴图 ▶</td><td>把贴图文件导进场景（只导图，不建材质）</td><td>资产里有贴图文件</td><td>子菜单列出每张贴图；点一张导入一个</td><td>多精度时子菜单会先按精度分组</td></tr><tr><td>指定贴图到材质</td><td>把整套贴图贴到场景中<strong>已选中的材质</strong>上</td><td>场景里选中了材质节点</td><td>按贴图后缀匹配槽位（diff / rough / nor …）写进材质</td><td>不建新材质；槽位匹配不上时会提示失败</td></tr><tr><td>打开图像</td><td>用内置图像浏览器看这套贴图</td><td>资产里有图片文件</td><td>打开图像浏览器窗口，可在该资产的几张图之间切换</td><td>窗口复用，不会堆出一屏窗口</td></tr><tr><td>添加到收藏夹 ▶</td><td>把资产加入收藏夹</td><td>资产库已加载</td><td>子菜单列「默认收藏夹」+ 你自建的收藏夹；点一下加入、再点一下移出</td><td>多选时对全部选中的资产生效</td></tr><tr><td>全选</td><td>选中网格里当前可见的全部卡片</td><td>有卡片</td><td>全部高亮</td><td>只选当前筛选 / 搜索结果</td></tr><tr><td>复制</td><td>把资产放进剪贴板</td><td>无</td><td>内部剪贴板记录资产，同时把资产文件夹写进系统剪贴板</td><td>真正复制一份要再到目标分类空白处「粘贴」</td></tr><tr><td>打开文件夹</td><td>打开资产在磁盘上的位置</td><td>资产是 .zasset 目录</td><td>文件管理器定位到资产文件夹</td><td>只打开，不改内容</td></tr><tr><td>移动到 ▶</td><td>把资产移到别的分类</td><td>资产库已加载</td><td>级联选目标分类，资产从当前分类消失</td><td>见 <a href="#/15.5.15"><code>8.5.15</code></a></td></tr><tr><td>复制到 ▶</td><td>把资产复制一份到别的分类</td><td>资产库已加载</td><td>目标分类多出同一资产</td><td>占双份磁盘空间</td></tr><tr><td>编辑</td><td>改中文名、分类、标签、注释</td><td>无</td><td>弹「编辑资产」对话框</td><td>见 <a href="#/15.5.16"><code>8.5.16</code></a></td></tr><tr><td>更新缩略图 ▶</td><td>换掉或新增缩略图</td><td>「后台渲染」需本机有 mayapy</td><td>子菜单 7 项：截取 / 导入 / Maya拍屏 / 渲染图 / 添加 / 截取添加 / 后台渲染</td><td>拍屏 / 渲染图会先问帧模式</td></tr><tr><td>更新资产 ▶</td><td>把资产内容换成 / 扩成新的</td><td>「替换资产」等需要场景里有选中物体</td><td>替换资产 / 追加格式 / 追加为 LOD / 创建新版本 / 添加新变体… / 批量添加变体… / 变体管理…</td><td>都会写磁盘，先看清目标资产</td></tr><tr><td>删除 ▶</td><td>删掉这个资产</td><td>无</td><td>子菜单：移到回收站 / 彻底删除</td><td>「彻底删除」不可还原</td></tr><tr><td>AI 分析缩略图</td><td>让 AI 读缩略图给建议</td><td>AI 依赖已装好</td><td>打开 AI 分析窗口，确认后写回资产</td><td>见 <a href="#/15.5.17"><code>8.5.17</code></a></td></tr><tr><td>资产详情</td><td>单独看这个资产的详情</td><td>无</td><td>有版本 / 变体打开版本浏览器，否则打开资产观察窗口</td><td>与双击右侧预览图同一条链路</td></tr></tbody></table>
+<h2 id="h-4">子菜单：创建材质 ▶</h2>
+<p>样本资产上的 7 种目标材质：</p>
+<table><thead><tr><th>子项</th><th>说明</th></tr></thead><tbody><tr><td>openPBRSurface</td><td>Maya 原生 OpenPBR 材质（不标渲染器族）</td></tr><tr><td>aiStandardSurface（AI）</td><td>Arnold 标准材质</td></tr><tr><td>VRayMtl（VR）</td><td>V-Ray 通用材质</td></tr><tr><td>rsStandardMaterial（RS）</td><td>Redshift 标准材质</td></tr><tr><td>RedshiftOpenPBR（RS）</td><td>Redshift 的 OpenPBR 材质</td></tr><tr><td>standardSurface</td><td>Maya 原生 Standard Surface</td></tr><tr><td>lambert</td><td>Maya 原生 Lambert</td></tr></tbody></table>
+<p>两个细节：</p>
+<ul>
+<li>子项的括号标注是<strong>渲染器族</strong>（AI / RS / VR）；没标的是 Maya 原生材质。</li>
+<li>资产里如果有多套精度的贴图目录，点材质类型后还会再弹一层<strong>精度选择</strong>（如 2K / 4K），只有一套精度时直接创建。</li>
+</ul>
+<h2 id="h-5">子菜单：导入贴图 ▶</h2>
+<table><thead><tr><th>子项形态</th><th>说明</th></tr></thead><tbody><tr><td>单张贴图（如 <code>aerial_beach_02_diff_2k.jpg</code>）</td><td>只导入这一张，生成一个 file 节点</td></tr><tr><td>导入全部</td><td>把该资产（或该精度下）的所有贴图作为一套导入，<strong>共用同一个 place2dTexture 节点</strong></td></tr></tbody></table>
+<p>资产里有多套精度时，子菜单会先按精度分组，每组末尾有一个「导入全部 (该精度)」。</p>
+<h2 id="h-6">这个子库特有的注意点</h2>
+<ul>
+<li><strong>三条路的区别</strong>：<code>创建材质</code> = 建新材质 + 接图；<code>导入贴图</code> = 只把图导进来（自己接）；<code>指定贴图到材质</code> = 把图贴到你<strong>已经选中的材质</strong>上。先想清楚是「从零建」「只要图」还是「补到现有材质」。</li>
+<li><strong>「指定贴图到材质」不弹选择框</strong>：它只看场景当前选中了什么材质。没选材质就点，会提示失败。</li>
+<li><strong>贴图导入全部会共用 UV</strong>：一套 PBR 贴图共享一个 place2dTexture，改 UV 一处生效，这是刻意的，别手动拆开。</li>
+</ul>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>公共条目详解：<a href="#/15.5.13"><code>8.5.13</code></a>~<a href="#/15.5.17"><code>8.5.17</code></a></li>
+<li>导入贴图：<a href="#/5.3.4"><code>4.2.3.4</code></a>；指定贴图：<a href="#/5.5.5"><code>4.2.5.5</code></a>；创建材质：<a href="#/5.5.6"><code>4.2.5.6</code></a></li>
+<li>贴图类型别名（diff / rough / nor 怎么认）：<a href="#/11.8.2"><code>4.8.8.2</code></a></li>
+<li>子库差异总表：<a href="#/15.5.1"><code>8.5.1</code></a></li>
+</ul>

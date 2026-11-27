@@ -1,0 +1,32 @@
+<p>HDR 资产在场景中的用法有两种：新建一盏穹顶灯，或把 HDR 指定给已有穹顶灯。</p>
+<p><img src="media/shared/menu-context-hdr-import.webp" alt="HDR 资产右键：导入 exr（示例资产是 .exr；.hdr 资产显示「导入 hdr」）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>Maya 场景已打开。</li>
+<li>HDR 资产的 <code>textures/</code> 中有 <code>.hdr</code> 或 <code>.exr</code> 文件。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<h3 id="h-3">新建穹顶灯</h3>
+<ol>
+<li>右键 HDR 资产，展开「创建环境光」。</li>
+<li>选择灯模板；模板来自插件 <code>Assets/HDR_ligt/</code> 下的 <code>.ma</code>，按渲染器区分。</li>
+<li>插件导入模板、按贴图导入策略准备 HDR 路径，并替换模板中的贴图属性。</li>
+</ol>
+<h3 id="h-4">指定给已有穹顶灯</h3>
+<ol>
+<li>在视口或 Outliner 中选中一盏穹顶灯。</li>
+<li>右键 HDR 资产，选择「指定贴图」。</li>
+<li>插件把 HDR 接到所选灯光上。</li>
+</ol>
+<h2 id="h-5">结果验证</h2>
+<ul>
+<li>Outliner 中出现新灯光，或已有灯光的贴图属性被更新。</li>
+<li>HDR 的 file 节点色彩空间为 Raw。</li>
+<li>渲染预览中环境光生效，背景出现对应 HDR 内容。</li>
+</ul>
+<h2 id="h-6">提示</h2>
+<ul>
+<li>贴图导入策略决定 HDR 是复制到工程、直接读资产目录，还是保持源路径。</li>
+<li>把 HDR 直接拖入视口时，插件静默按当前渲染器或双击预设选择灯模板，不弹选择框。</li>
+<li>新建环境光完成后插件会清空选择；需要继续调灯请手动选中。</li>
+</ul>

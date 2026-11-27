@@ -1,0 +1,18 @@
+<p>The <code>「分类」 (Categories)</code> tab, the category library view, mirrors the folders of the current main asset library: <code>「全部资产」 (All assets)</code> at the top, then sub-libraries and categories level by level.</p>
+<p><img src="media_en/shared/ui-nav.webp" alt="Category library: library dropdown at the top, All assets and the sub-library category tree (this example hides Node trees; the last row, Scripts, is the script library entry)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">What the panel contains</h2>
+<ul>
+<li>Library dropdown at the top: switches the current asset library.</li>
+<li><code>「全部资产」 (All assets)</code>: shows every asset across all sub-libraries, counted as the sum of them; it is always shown and never affected by hiding settings.</li>
+<li>Top-level nodes: the sub-libraries (materials, models, lights, textures, scenes, HDR, dynamics, images, audio, animation data, node trees — 11 built-in sub-libraries) plus custom top-level categories in the library root; a sub-library can be hidden with <code>Settings → 子库与分类 → 显示在主 UI (Sub-libraries and categories → Show in the main UI)</code> (the screenshot hides <code>「节点树」 (Node trees)</code>).</li>
+<li>The last row, <code>「脚本」 (Scripts)</code>, is the script library entry and not a sub-library; the <code>「回收站」 (Recycle bin)</code> entry sits below it (see <a href="#/en/15.3.4.4">15.3.4.4</a>).</li>
+<li>Counts: the number after a category name is the asset count of that category and all its descendants.</li>
+</ul>
+<h2 id="h-2">Actions</h2>
+<ul>
+<li>Clicking a category shows only the assets of that category and its sub-categories in the middle grid, and refreshes the properties / preview on the right.</li>
+<li><code>Ctrl</code>-click and <code>Shift</code>-click select several categories, and the grid shows the union of all selected categories (including their descendants); selections can span sub-libraries.</li>
+<li>Right-clicking a category offers new sub-category, open folder, move, edit and delete; parent nodes also offer <code>「全部展开 / 全部折叠」 (Expand all / Collapse all)</code>.</li>
+<li>When collapsed, the left column becomes a narrow icon strip that still switches top-level categories.</li>
+</ul>
+<p>The tree order follows the folders on disk; after adding, moving or deleting a category the tree is rebuilt and keeps the previous expansion and selection where possible.</p>

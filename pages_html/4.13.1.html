@@ -1,0 +1,25 @@
+<p>变体是<strong>同一资产下共用一套贴图与材质的多个几何形态</strong>：贴图和材质只存一份放在资产根，变体目录里只有几何体。它解决的是「一套依赖、多种造型」的体积重复问题。</p>
+<h2 id="h-1">与版本、LOD 的区别</h2>
+<table><thead><tr><th>维度</th><th>存什么</th><th>材质与贴图</th><th>典型用途</th></tr></thead><tbody><tr><td>版本（<code>V1/</code>、<code>V2/</code>）</td><td>完整自包含的一份资产</td><td>每份独立，可各不相同</td><td>改破损、改 UV、改造型的可回溯迭代</td></tr><tr><td>LOD（<code>lod1/</code>、<code>lod2/</code>）</td><td>同一形态的不同精度</td><td>跟随所属版本</td><td>高模展示、低模摆放</td></tr><tr><td>变体（<code>variants/</code>）</td><td><strong>只有几何体</strong></td><td>统一继承资产根，所有变体共享</td><td>同一套材质的砖头 / 螺丝钉 / 瓦片等多种款式</td></tr></tbody></table>
+<p>三者可以同时存在，互不影响。</p>
+<h2 id="h-2">存储结构</h2>
+<pre><code class="language-text">Brick.zasset/
+├── meta.json
+├── variants.json          # variants 段登记每个变体的 id / label / 几何 / LOD / 缩略图
+├── node.ma                # 主版本几何体
+├── textures/              # 全部变体共享的贴图
+├── materials/             # 全部变体共享的材质
+└── variants/              # 平铺，不再分二级目录
+    ├── 标准砖.ma
+    ├── 标准砖.sicon       # 该变体的缩略图
+    ├── 破损砖.ma
+    ├── 破损砖.sicon
+    └── 破损砖_lod1.ma     # 变体的 LOD 档位：&lt;id&gt;_lodN.&lt;ext&gt;</code></pre>
+<ul>
+<li>变体几何体按 <code>&lt;id&gt;.&lt;ext&gt;</code> 平铺在 <code>variants/</code> 下，不再为每个变体建子目录。</li>
+<li>变体<strong>不出现在资产网格</strong>里，只挂在所属资产下，通过右键菜单、变体管理窗口或版本浏览器查看；含变体的资产卡片左上角会有 <code>V</code> 角标。</li>
+<li>变体缩略图独立保存（<code>variants/&lt;id&gt;.sicon</code> 等），不覆盖资产主缩略图。</li>
+</ul>
+<h2 id="h-3">什么时候用变体</h2>
+<table><thead><tr><th>需求</th><th>用哪个维度</th></tr></thead><tbody><tr><td>同样的材质，模型造型换一换（砖头缺角、螺丝钉头型）</td><td>变体</td></tr><tr><td>模型整体改版，需要保留旧结果</td><td>版本</td></tr><tr><td>同一模型要高低模</td><td>LOD</td></tr><tr><td>同一模型不同版本各用各的贴图</td><td>版本（含独立材质）</td></tr></tbody></table>
+<div class="admonition note"><div class="admonition-title">注意</div><p>变体按「共享贴图」设计：变体只保存几何体，不携带自己的贴图或材质。确实需要独立材质时，请改用版本。</p></div>

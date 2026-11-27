@@ -1,0 +1,30 @@
+<p>Appending a LOD exports the currently selected low-poly geometry as a new detail level of an existing asset, written into <code>lod{n}/</code> and registered in <code>lods.json</code>.</p>
+<p><img src="media_en/shared/dialog-export.webp" alt="Create asset / export dialog" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The geometry to use as the new LOD is selected in the Maya viewport.</li>
+<li>The target asset can be located in the library (right-click its thumbnail).</li>
+<li>At least one geometry format is checked in the export configuration: ma, mb, fbx, obj or usd.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select the decimated or simplified geometry in Maya.</li>
+<li>Right-click the asset, expand <code>「更新资产」 (Update asset)</code> and choose <code>「追加为 LOD」 (Append as LOD)</code>.</li>
+<li>In the export dialog that follows, check a geometry format and confirm that the asset name, category and so on stay unchanged.</li>
+<li>Click export.</li>
+<li>The system takes the highest existing non-lod0 level plus one, writes <code>lod{n}/</code> and updates <code>lods.json</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>An <code>L</code> badge appears at the top left of the asset card (when several LODs exist).</li>
+<li>Entering the asset through <code>「导入变体 / 版本」 (Import variant / version)</code> (or <code>「导入版本 / LOD」 (Import version / LOD)</code> when there are no variants) shows the new LOD and its face count.</li>
+<li>The <code>lods</code> array in <code>lods.json</code> in the asset root gains an entry.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>With no geometry format checked it reports <code>「追加 LOD 需要导出几何体」 (appending a LOD requires exporting geometry)</code>; the flow aborts when the export result contains no geometry file.</p></div>
+<ul>
+<li>The target of an appended LOD follows the current entry: operate on the main asset in the grid, or select a version / LOD in the asset versions window first and then append.</li>
+<li><code>lod0</code> is the root geometry, and new levels start at <code>lod1</code> and increase.</li>
+<li>After appending, a thumbnail is captured again to show the new LOD.</li>
+<li>A LOD can target a specific <code>V{n}</code>: select that version in the asset versions window and click <code>「追加 LOD」 (Append LOD)</code> so the LOD is written into that version (selecting the main version adds it to the main asset).</li>
+</ul>

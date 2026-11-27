@@ -1,0 +1,36 @@
+<p>材质网络结构是 <code>zmetal</code> 对 Maya 着色网络的完整描述：哪些节点、每个属性是什么值、谁连到谁。</p>
+<h2 id="h-1">顶层由两部分组成</h2>
+<pre><code class="language-json">{
+  "root_materials": ["Gold_ai"],
+  "nodes": {
+    "Gold_ai": {
+      "node_type": "aiStandardSurface",
+      "attrs": {
+        "base": {"type": "value", "value": 1.0},
+        "baseColor": {
+          "type": "connection",
+          "source_node": "file1",
+          "source_attr": "outColor"
+        }
+      },
+      "displacement_node": "displacementShader1"
+    }
+  }
+}</code></pre>
+<p><code>root_materials</code> 是导入后要建成的材质节点名；<code>nodes</code> 是节点表，键为节点名。</p>
+<h2 id="h-2">单个节点里有什么</h2>
+<ul>
+<li><code>node_type</code>：Maya 节点类型，如 <code>aiStandardSurface</code>、<code>file</code>、<code>place2dTexture</code>。</li>
+<li><code>attrs</code>：属性表。普通值写成 <code>{&quot;type&quot;: &quot;value&quot;, &quot;value&quot;: ...}</code>；连接写成 <code>{&quot;type&quot;: &quot;connection&quot;, &quot;source_node&quot;: ..., &quot;source_attr&quot;: ...}</code>，上游节点会被递归写进 <code>nodes</code>。</li>
+<li><code>displacement_node</code>：材质关联的置换节点，导入时由插件创建着色引擎并链接，而不是直接序列化 SE。</li>
+</ul>
+<h2 id="h-3">为什么这样设计</h2>
+<ul>
+<li>导入不依赖原始 <code>.ma</code>，只要节点类型在当前 Maya 中存在，就能按属性值重建。</li>
+<li>贴图不内嵌，统一收集到 <code>textures/</code>，<code>fileTextureName</code> 改写为相对路径，资产可整体移动。</li>
+<li>数组元素属性（如 <code>ramp</code> 的 <code>colorEntryList[i].color</code>）会单独补采，避免导入后回默认值。</li>
+<li>场景全局节点（<code>time1</code>、<code>defaultColorMgtGlobals</code> 等）不写入，避免导入时重建出重复全局节点。</li>
+</ul>
+<h2 id="h-4">注意</h2>
+<p>连接属性的静态值只作参考，导入以连接为准；同名属性不代表语义相同，跨渲染器时仍需要 <code>.mmap</code> 明确对应关系。</p>
+<p>导入时所有节点按 <code>nodes</code> 里的键名重建，随后按 <code>root_materials</code> 确定要赋给物体的材质。节点重名时 Maya 会自动加编号，插件通过旧名到新名的映射继续重连，所以资产里的原始节点名不需要与场景中完全一致。</p>

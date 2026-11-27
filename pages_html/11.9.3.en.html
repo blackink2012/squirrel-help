@@ -1,0 +1,29 @@
+<p>Default categories are the sub-category folders created automatically when a sub-library is initialized, written as <code>id name</code>.</p>
+<p><img src="media_en/shared/settings-sublibraries.webp" alt="Settings → Sub-libraries and categories" loading="lazy" decoding="async"></p>
+<p><img src="media_en/shared/settings-default-cats.webp" alt="Default categories" loading="lazy" decoding="async"></p>
+<h2 id="h-1">What it does</h2>
+<p>It is the multi-line text box in the middle right of <strong>Settings → Sub-libraries and categories</strong>. Each line is one category: the first part is the folder name (id), the second part is the display name, separated by a space, for example <code>AAAcustom 自定义</code>.</p>
+<h2 id="h-2">Values and defaults</h2>
+<p>The factory value lives in <code>default_sub_categories</code> in <code>config.json</code>:</p>
+<ul>
+<li>Materials, models, lights, scenes, HDR, animation, images, audio, animation data, node tree: <code>AAAcustom 自定义</code></li>
+<li>Textures: <code>AAAcustom 自定义贴图</code></li>
+</ul>
+<h2 id="h-3">Scope of effect</h2>
+<ul>
+<li>It is used to create folders only on <strong>first run</strong>, or when the sub-library root has no sub-category folder at all.</li>
+<li>Existing category folders are neither deleted nor recreated.</li>
+<li>Each sub-library root also gets <code>AAAcustom</code> (custom) added automatically, so there is always a category that can hold assets.</li>
+</ul>
+<h2 id="h-4">Steps</h2>
+<ol>
+<li>Open <strong>Settings → Sub-libraries and categories</strong> and select a sub-library.</li>
+<li>Edit the lines under <strong>Default category list (one per line, format: id name)</strong>.</li>
+<li>Click <strong>Apply</strong> or <strong>OK</strong>.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<p>Open a new library that has not been initialized yet: the category folders listed here should appear under the sub-library with the matching display names.</p>
+<h2 id="h-6">When to change it</h2>
+<p>When you are preparing to create several new libraries from the same configuration and want each of them to start with fixed categories. For libraries that already exist, add and remove categories through category management instead of editing this list.</p>
+<h2 id="h-7">Tips</h2>
+<p>The id becomes a folder name on disk, so avoid special characters. Changing an id does not rename an existing folder.</p>

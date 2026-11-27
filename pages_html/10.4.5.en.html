@@ -1,0 +1,24 @@
+<p>Rendering frames uses the current renderer for a final per-frame render; it is much slower than a viewport screenshot and suits finished images once framing and materials are confirmed.</p>
+<p><img src="media/shared/maya-render.webp" alt="Arnold render output" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The scene&#x27;s render settings are configured and the current renderer is available.</li>
+<li>The frame range, output directory and resolution are decided; rendering cannot be undone.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Call <code>render_frames</code>; <code>frames</code> accepts <code>&quot;1-3&quot;</code>, <code>&quot;1,5,9&quot;</code>, <code>&quot;1-10:5&quot;</code> or a plain array.</li>
+<li>Set the output directory <code>image_dir</code>; without it the scene&#x27;s own output prefix is used.</li>
+<li>To override resolution pass <code>width</code> / <code>height</code> (0 means use the scene settings).</li>
+<li>Choose the <code>camera</code> and the file name <code>prefix</code>; in an Arnold scene <code>samples</code> temporarily changes AASamples.</li>
+<li>Limit this call with <code>max_frames</code>, 100 by default.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>It returns each frame&#x27;s output path and progress; open the images and confirm resolution, frame numbers and content. Images already rendered are kept after cancelling.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>Each frame takes tens of seconds to minutes, so this is a long job: run it as an async job and watch the progress.</li>
+<li>The command temporarily bakes the frame number into the output prefix and turns <code>animation</code> off, restoring both afterwards; otherwise one call would render the whole range or overwrite every frame with the same file.</li>
+<li>Rendering cannot be undone; <code>samples</code> only applies when the scene already has a <code>defaultArnoldRenderOptions</code> node.</li>
+<li>Repeated in-process Redshift renders in the same Maya session risk a crash; see &quot;Renderer crashes&quot;.</li>
+</ul>

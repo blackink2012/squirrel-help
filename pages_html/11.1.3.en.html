@@ -1,0 +1,26 @@
+<p>The plug-in&#x27;s settings are split between the user directory and the <code>preset</code> directory of the plug-in package; know which is which before editing.</p>
+<h2 id="h-1">File overview</h2>
+<table><thead><tr><th>File</th><th>Location</th><th>Main contents</th></tr></thead><tbody><tr><td><code>app_settings.json</code></td><td><code>~/.squirrel_asset_manager/app_settings.json</code></td><td>Font size, scaling, theme, language, view, library list and default library, AI provider and keys, bridge toggle, chat surface location, external tool choice</td></tr><tr><td><code>settings_preset.json</code></td><td><code>~/.squirrel_asset_manager/settings_preset.json</code></td><td>A snapshot of all interface preferences saved by <code>General → Settings preset</code>; used for import / export / restore (absent means no preset has been saved)</td></tr><tr><td><code>config.json</code></td><td><code>&lt;plug-in package&gt;/Assets/preset/config.json</code></td><td>Sub-libraries and default categories, supported formats, texture suffixes, duplicate name policy, texture / dependency import policies, material presets</td></tr><tr><td><code>export_preset.json</code></td><td><code>&lt;plug-in package&gt;/Assets/preset/export_preset.json</code></td><td>Default export formats per asset type, linked files and materials-only</td></tr><tr><td><code>context_menu_preset.json</code></td><td>Same directory</td><td>Context menu item toggles per sub-library</td></tr><tr><td><code>double_click_preset.json</code></td><td>Same directory</td><td>Double-click commands and import sub-options per sub-library</td></tr><tr><td><code>pbr_mapping.json</code></td><td>Same directory</td><td>PBR texture type aliases</td></tr><tr><td><code>library.json</code></td><td>Each asset library root</td><td>Library version, name and sub-library list</td></tr><tr><td><code>FolderMetadata.fdata</code></td><td>Each sub-library directory</td><td>Sub-library or category id, name and type</td></tr></tbody></table>
+<p><code>&lt;plug-in package&gt;</code> means the <code>squirrel_asset_manager</code> directory and <code>~</code> the current Windows user directory.</p>
+<h2 id="h-2">How to find them</h2>
+<ol>
+<li>Decide which kind of setting it is: interface preferences and the library list live in <code>app_settings.json</code>, everything else in <code>Assets/preset/</code>.</li>
+<li>Type <code>%USERPROFILE%\.squirrel_asset_manager</code> in the Explorer address bar to open the personal configuration directory directly.</li>
+<li>Preset files travel with the plug-in package; confirm which package is actually loaded before editing.</li>
+</ol>
+<h2 id="h-3">Editing and backing up</h2>
+<ul>
+<li>Prefer the Settings window over hand-editing JSON.</li>
+<li>Copy to a same-named <code>.bak</code> before manual edits; restart the plug-in afterwards to verify.</li>
+<li>When <code>app_settings.json</code> fails to load or its JSON is corrupt, defaults are used and the original is backed up as <code>.bak</code> or <code>.corrupt_&lt;timestamp&gt;</code>.</li>
+<li><code>bridge_port.log</code> and <code>bridge_recover.log</code> also appear in the same directory, for diagnosing bridge ports and disconnect recovery.</li>
+<li><code>settings_preset.json</code> is the local copy of &quot;settings preset&quot;: to back up all interface preferences, generating a JSON with <code>「导出预设」 (Export preset)</code> in the Settings window is safer.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>After changing any setting and clicking Apply the matching file&#x27;s modification time updates.</li>
+<li>Settings survive a plug-in restart.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<blockquote><p><strong>Warning</strong>: <code>config.json</code> and the preset files live inside the plug-in package, so back them up before reinstalling or overwriting the plug-in.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: API keys in <code>app_settings.json</code> are stored as plain JSON, so never send that file to anyone.</p></blockquote>

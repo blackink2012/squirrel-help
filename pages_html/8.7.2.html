@@ -1,0 +1,17 @@
+<p>文档检索同时跑词法与语义两路，再用加权 RRF 融合：写对名字时词法保证精确，说不准名字时语义负责接住。</p>
+<h2 id="h-1">词法四层</h2>
+<ol>
+<li><strong>整串命中</strong>：原名或描述里直接出现查询，得分最高。</li>
+<li><strong>多词 AND</strong>：查询按空白切词，每个词都要能在名称、描述或 flag / 属性摘要里找到。</li>
+<li><strong>同义词扩展</strong>：读 <code>kb/aliases.json</code>，把「减面」映射到 <code>polyReduce</code>，把「散布」映射到 <code>MASH_Distribute</code>。</li>
+<li><strong>排序</strong>：先按可操作档位，再按得分，再按 IDF 加权；别名且命中名字的再加半档。</li>
+</ol>
+<h2 id="h-2">语义一路</h2>
+<p>查询被编码成向量，与约 1.7 万条条目的向量做余弦比较，再与词法结果融合。融合系数 <code>RRF_K</code> 取 20，名次差一名的权重差较小，避免单路偶然命中压过另一路。</p>
+<p>如果词法一条都没命中，语义结果独占输出；如果查询本身就是某个名字，会锁定该名字，不让融合把它挤掉。</p>
+<h2 id="h-3">降级与排查</h2>
+<ul>
+<li>语义索引不存在、Ollama 没起或模型没拉时，自动只用词法，不报错。</li>
+<li>语义调用失败会触发约 60 秒熔断，期间检索退回词法。</li>
+<li>每条结果的 <code>match</code> 标明 <code>keyword</code>、<code>semantic</code> 或 <code>both</code>，可据此判断问题出在哪一路。</li>
+</ul>

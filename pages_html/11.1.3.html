@@ -1,0 +1,26 @@
+<p>插件的设置分散在个人目录和插件包的 preset 目录里，改配置前先分清这两处。</p>
+<h2 id="h-1">文件一览</h2>
+<table><thead><tr><th>文件</th><th>位置</th><th>主要内容</th></tr></thead><tbody><tr><td><code>app_settings.json</code></td><td><code>~/.squirrel_asset_manager/app_settings.json</code></td><td>字号、缩放、主题、语言、视图、库列表与默认库、AI 服务商与 Key、桥接开关、对话面位置、外部工具选择</td></tr><tr><td><code>settings_preset.json</code></td><td><code>~/.squirrel_asset_manager/settings_preset.json</code></td><td>「常规 → 设置预设」保存的整套界面偏好快照；可用于导入 / 导出 / 还原（不存在 = 还没保存过预设）</td></tr><tr><td><code>config.json</code></td><td><code>&lt;插件包&gt;/Assets/preset/config.json</code></td><td>子库与默认分类、支持格式、贴图后缀、同名冲突策略、贴图 / 依赖导入策略、材质预设</td></tr><tr><td><code>export_preset.json</code></td><td><code>&lt;插件包&gt;/Assets/preset/export_preset.json</code></td><td>各资产类型的默认导出格式、关联文件与仅导出材质</td></tr><tr><td><code>context_menu_preset.json</code></td><td>同目录</td><td>各子库的右键菜单项开关</td></tr><tr><td><code>double_click_preset.json</code></td><td>同目录</td><td>各子库的双击命令与导入子选项</td></tr><tr><td><code>pbr_mapping.json</code></td><td>同目录</td><td>PBR 贴图类型别名</td></tr><tr><td><code>library.json</code></td><td>每个资产库根目录</td><td>库版本、名称与子库列表</td></tr><tr><td><code>FolderMetadata.fdata</code></td><td>各子库目录</td><td>子库或分类的 id、名称与类型</td></tr></tbody></table>
+<p><code>&lt;插件包&gt;</code> 指 <code>squirrel_asset_manager</code> 目录；<code>~</code> 指当前 Windows 用户目录。</p>
+<h2 id="h-2">怎么定位</h2>
+<ol>
+<li>先看设置项属于哪一类：界面偏好与库列表在 <code>app_settings.json</code>，其余在 <code>Assets/preset/</code>。</li>
+<li>在资源管理器地址栏输入 <code>%USERPROFILE%\.squirrel_asset_manager</code>，可直接打开个人配置目录。</li>
+<li>预设文件随插件包走；确认当前实际加载的是哪一份插件包后再改。</li>
+</ol>
+<h2 id="h-3">修改与备份</h2>
+<ul>
+<li>优先用设置窗口修改，避免手写 JSON 出错。</li>
+<li>手工编辑前先复制一份同名 <code>.bak</code>；修改后重启插件再验证。</li>
+<li><code>app_settings.json</code> 加载失败或 JSON 损坏时，会回退默认值，并把原文件备份为 <code>.bak</code> 或 <code>.corrupt_&lt;时间戳&gt;</code>。</li>
+<li>同目录还会出现 <code>bridge_port.log</code> 与 <code>bridge_recover.log</code>，用于排查桥接端口与断连自愈。</li>
+<li><code>settings_preset.json</code> 是「设置预设」的本机副本：想备份整套界面偏好，直接用设置窗里的「导出预设」生成一份 JSON 更稳妥。</li>
+</ul>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>修改任意一项设置并点「应用」后，对应文件的修改时间更新。</li>
+<li>重启插件后设置仍然保留。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<blockquote><p><strong>警告</strong>：<code>config.json</code> 与各预设文件在插件包内，重装或覆盖插件前先备份。</p></blockquote>
+<blockquote><p><strong>提示</strong>：<code>app_settings.json</code> 中的 API Key 以明文 JSON 保存，不要把该文件发给他人。</p></blockquote>

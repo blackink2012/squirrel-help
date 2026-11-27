@@ -1,0 +1,28 @@
+<p>升级只替换程序文件，资产库、设置与登录态保存在程序目录之外，正常情况下不会被清掉。</p>
+<p><img src="media/2.4.1-1.webp" alt="安装向导：安装位置" loading="lazy" decoding="async"></p>
+<h2 id="h-1">独立版 / EXE 升级</h2>
+<ol>
+<li>关闭正在运行的 <code>SquirrelAssetManager.exe</code> 与相关 dsh 前端进程。</li>
+<li>运行新版本安装器；它会读取注册表中的安装目录，默认覆盖到原位置。</li>
+<li>按需重新勾选 Maya 集成与离线 dsh。</li>
+<li>重启 Maya（如果装了 Maya 集成），再启动独立版确认版本号。</li>
+</ol>
+<h2 id="h-2">升级前建议</h2>
+<ul>
+<li>记录旧版本号并保留旧安装包，便于回滚。</li>
+<li>确认资产库与设置已有备份。</li>
+<li>如果当前版本正在使用 AI 助手 dsh，先关闭 Web 前端，避免文件被占用。</li>
+</ul>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>主窗口标题中的版本号为新版本。</li>
+<li>原资产库、收藏夹、标签与设置仍在。</li>
+<li>Maya 工具架/状态行入口正常，dsh 与 Node 目录没有被删除。</li>
+</ul>
+<h2 id="h-4">常见失败</h2>
+<ul>
+<li><strong>拒绝访问</strong>：Maya 未全部关闭；关闭后重装。</li>
+<li><strong>升级后入口消失</strong>：重启 Maya；必要时重新运行安装器（勾选「Maya 集成」）重写启动段。</li>
+<li><strong>旧文件残留</strong>：EXE 覆盖安装不会清理新版已删除的旧文件；可先卸载再安装。</li>
+<li><strong>配置或库结构不兼容</strong>：跨大版本升级前先备份，必要时回滚（具体兼容范围待确认）。</li>
+</ul>

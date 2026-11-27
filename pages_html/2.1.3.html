@@ -1,0 +1,40 @@
+<p>运行安装器、按需勾选 Maya 集成与离线 dsh，即可得到可双击启动的独立版。</p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>Windows 64 位；按当前用户安装，不需要管理员权限。</li>
+<li>安装包已通过 SHA256 校验。</li>
+<li>如需 Maya 集成，先确认 Maya 已安装；没有 Maya 时安装器会自动取消该组件。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>双击 <code>SquirrelAssetManager-Setup-1.0.0.exe</code>（测试版为 <code>...-test.exe</code>）。</li>
+<li>选择安装界面语言：默认跟随系统语言（中文系统默认中文，其他系统默认英文），也可以在这里改成另一门；之后整个向导都用这门语言。 <img src="media/shared/installer-language.webp" alt="安装向导：语言选择（默认跟随系统语言）" loading="lazy" decoding="async"></li>
+<li>欢迎页点「下一步」。 <img src="media/shared/installer-welcome.webp" alt="安装向导：欢迎页" loading="lazy" decoding="async"></li>
+<li>在许可页阅读 EULA 摘要，把「我已阅读上述摘要」和「我已阅读并同意《最终用户许可协议》」两个勾选都打上，「下一步」才可用。 <img src="media/shared/installer-agree.webp" alt="安装向导：许可协议（两个勾选都打上才能继续）" loading="lazy" decoding="async"></li>
+<li>在组件页按需勾选（可用组件见下方表格）。 <img src="media/shared/installer-components.webp" alt="安装向导：组件选择" loading="lazy" decoding="async"></li>
+<li>选择安装目录，默认 <code>%LOCALAPPDATA%\SquirrelAM</code>。 <img src="media/shared/installer-directory.webp" alt="安装向导：安装位置" loading="lazy" decoding="async"></li>
+<li>完成后勾选「启动 Squirrel Asset Manager」，或从开始菜单 / 桌面快捷方式打开。</li>
+</ol>
+<h2 id="h-3">组件说明</h2>
+<table><thead><tr><th>组件</th><th>说明</th></tr></thead><tbody><tr><td><strong>核心程序（必需）</strong></td><td>主程序、内置 Python、PySide6、许可与第三方声明</td></tr><tr><td><strong>Maya 集成（可选）</strong></td><td>写入各版本 <code>userSetup.py</code> 的导入路径、状态行按钮与桥接端口，并创建工具架按钮（只在安装时创建一次）</td></tr><tr><td><strong>AI 助手 dsh（离线）</strong></td><td>解压内置 dsh 与便携 Node</td></tr><tr><td><strong>桌面快捷方式（可选）</strong></td><td>在桌面创建启动快捷方式</td></tr></tbody></table>
+<h2 id="h-4">静默安装</h2>
+<pre><code class="language-powershell">.\SquirrelAssetManager-Setup-1.0.0.exe /S /COMPONENTS=core,maya,aidsh</code></pre>
+<p><code>/COMPONENTS</code> 中未列出的可选组件会被取消；核心组件始终安装。</p>
+<p>静默安装不弹语言框：默认同样跟随系统语言，需要指定时加 <code>/LANG=</code>（<code>2052</code> 简体中文 / <code>1033</code> English）：</p>
+<pre><code class="language-powershell">.\SquirrelAssetManager-Setup-1.0.0.exe /S /LANG=1033 /COMPONENTS=core,maya,aidsh</code></pre>
+<p>安装器把选定的语言写进 <code>HKCU\Software\SquirrelAssetManager\Language</code>，卸载时自动沿用同一门语言，不会二次询问。</p>
+<h2 id="h-5">结果验证</h2>
+<ul>
+<li>勾选 Maya 集成时，Maya 工具架与状态行出现入口；重启 Maya 后生效。工具架按钮只在安装时创建一次，手动删除后不会自动恢复。</li>
+<li>双击主程序能打开资产界面。</li>
+</ul>
+<h2 id="h-6">常见失败</h2>
+<ul>
+<li><strong>SmartScreen 提示未知发布者</strong>：当前版本未签名，确认来源可信后选择「更多信息 → 仍要运行」。</li>
+<li><strong>没有 Maya 却勾了 Maya 集成</strong>：安装后不会出现入口；重新运行安装器并取消该组件。</li>
+<li><strong>启动提示找不到内置 Python</strong>：安装不完整，重新安装并检查杀毒软件是否拦截。</li>
+<li><strong>独立版连不上 Maya</strong>：确认 Maya 已启动且桥接端口已开启，见「多版本 Maya 共存」。</li>
+<li><strong>安装语言选错了</strong>：安装器只在安装时询问一次；装完想换界面语言去「设置 → 通用 → 界面语言」改（卸载器仍沿用安装时选的语言）。</li>
+</ul>
+<h2 id="h-7">从源码运行独立版</h2>
+<p>源码包内可双击 <code>启动独立预览.bat</code>，或执行 <code>python squirrel_asset_manager\standalone_preview.py</code>，前提是系统 Python 已装 PySide6。</p>

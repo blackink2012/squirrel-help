@@ -1,0 +1,28 @@
+<p>「导入命名空间」控制<strong>直接导入资产时，新节点落在哪个命名空间里</strong>。它是防止与场景已有节点重名的那层隔离。</p>
+<h2 id="h-1">在哪、默认怎么设</h2>
+<ul>
+<li>位置：<strong>设置 → 常规 → 导入命名空间</strong>（复选框「直接导入时自动创建命名空间（按资产名，避免与场景节点同名）」）；</li>
+<li>默认：<strong>勾选</strong>（<code>config.json</code> 的 <code>import_namespace</code> 为 <code>true</code>；该键缺失时同样按开启处理）。</li>
+</ul>
+<h2 id="h-2">开着的时候（默认）</h2>
+<ul>
+<li>命名空间名取<strong>资产名</strong>：非字母 / 数字 / 汉字 / 下划线的字符替换成 <code>_</code>，首尾的下划线去掉；</li>
+<li>名字以数字开头时自动加 <code>ns_</code> 前缀（Maya 不允许命名空间以数字开头）；</li>
+<li>场景里已有同名命名空间时追加 <code>_1</code>、<code>_2</code>…；</li>
+<li>效果：整个资产作为一组节点，可以按命名空间整体选中、隐藏或删除，也不会和场景里同名物体打架。</li>
+</ul>
+<h2 id="h-3">关掉的时候</h2>
+<ul>
+<li>新节点<strong>直接进根命名空间 <code>:</code></strong>；</li>
+<li>与场景已有节点同名时，由 Maya 自动改名（<code>pCube1</code>、<code>pCube2</code>…），节点就分不出「哪几个是这次导入的」。</li>
+</ul>
+<h2 id="h-4">影响范围</h2>
+<ul>
+<li>只影响<strong>之后</strong>的导入：改完保存，下一次导入就按新规则；已经导进来的节点不会被移进 / 移出命名空间；</li>
+<li>对「导入几何体 / 场景 / 动画 / 缓存代理」这类直接导入生效；右键<strong>「添加引用」</strong>有自己的命名空间规则（按资产名 + <code>_1</code> / <code>_2</code>），不受这个开关影响；</li>
+<li>只改节点落点，不改资产包内容，也不改贴图 / 依赖路径；</li>
+<li>保存在 <code>config.json</code> 的 <code>import_namespace</code>。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<blockquote><p><strong>提示</strong>：不想要那层前缀，取消勾选并点「应用 / 确定」即可，不需要重启插件。</p></blockquote>
+<blockquote><p><strong>警告</strong>：关掉后同名节点会被 Maya 静默改名，之后要按名字找回「这次导入的东西」会比较麻烦；批量导入同一批资产时建议保留开启。</p></blockquote>

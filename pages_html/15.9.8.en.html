@@ -1,0 +1,42 @@
+<blockquote><p>One-line summary: <strong>this page controls which sub-libraries exist in the left column, what they are called, and which categories each one carries by default.</strong></p></blockquote>
+<p><strong>This page is locked by default</strong>: tick <strong>Unlock all settings</strong> and accept the warning first; only <strong>Show in main UI</strong> in the top right is exempt and can be clicked at any time (see <a href="#/en/15.9.1"><code>8.9.1</code></a>).</p>
+<p><img src="media_en/shared/settings-sublibraries.webp" alt="Settings window (Sub-libraries and categories page)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">How to open it</h2>
+<p>Settings window → tick <strong>Unlock all settings</strong> → the <strong>Sub-libraries and categories</strong> tab.</p>
+<h2 id="h-2">Control details</h2>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Default</th><th>What changing it does</th><th>Needs unlock</th></tr></thead><tbody><tr><td>Sub-library list (left)</td><td>List</td><td>Shows every sub-library as &quot;display name (sub-library ID)&quot;</td><td>Materials / models / lights / textures / scenes / HDR / animation / images / audio / animation data / node tree</td><td>Select one and the right side edits it</td><td>Yes</td></tr><tr><td>Sub-library list context menu</td><td>Context menu</td><td><strong>Add sub-library</strong>; sub-libraries you created also have <strong>Delete sub-library</strong></td><td>—</td><td>New custom sub-libraries get IDs such as <code>custom_1</code>; built-in defaults cannot be deleted</td><td>Yes</td></tr><tr><td>Show in main UI</td><td>Checkbox</td><td>Ticked = this top-level category appears in the main window left column (including the collapsed icon strip)</td><td>All ticked, <strong>with the node tree hidden by default</strong></td><td>It only affects the left column entry, not the content or search of All assets; the column rebuilds after saving</td><td>No</td></tr><tr><td>Read current category folders</td><td>Button</td><td>Rebuilds the <strong>default category list</strong> from the current library&#x27;s real folder structure</td><td>—</td><td>Asks for confirmation first, then overwrites the default category list in settings; <strong>it deletes and modifies no folder on disk</strong></td><td>Yes</td></tr><tr><td>Sub-library ID</td><td>Single-line input</td><td>The key of this sub-library in the configuration (such as <code>materials</code>)</td><td>Matches the factory values (<code>materials</code>, <code>models</code>…)</td><td>Renaming changes the configuration key: the left column and configuration matching follow; a conflict with an existing ID is reported</td><td>Yes</td></tr><tr><td>Display name</td><td>Single-line input</td><td>The name shown in the left column</td><td>Materials / models / lights…</td><td>The left column name changes (after saving and refreshing)</td><td>Yes</td></tr><tr><td>Default category list</td><td>Multi-line text box (one <code>id name</code> per line)</td><td>The categories carried by default when creating a library / sub-library</td><td>One line <code>AAAcustom 自定义</code> per sub-library</td><td>Affects categories generated for new libraries; existing category folders are untouched</td><td>Yes</td></tr></tbody></table>
+<h2 id="h-3">Common operations</h2>
+<h3 id="h-4">Hide a sub-library from the left column</h3>
+<ol>
+<li>Select that sub-library on the left;</li>
+<li>Clear <strong>Show in main UI</strong>;</li>
+<li>Click <strong>Apply / OK</strong> → the left column no longer shows it (its assets still appear under All assets).</li>
+</ol>
+<p>To restore it, tick it again. The node tree is hidden by default; tick it when you need it.</p>
+<h3 id="h-5">Sync categories from the library&#x27;s real folders</h3>
+<ol>
+<li>Select and load the asset library in the main window first;</li>
+<li>Return to settings → this page → click <strong>Read current category folders</strong>;</li>
+<li>Confirm the prompt (it overwrites the default category list in settings and touches nothing on disk);</li>
+<li>The left list and each sub-library&#x27;s category list refresh from the real structure in the library.</li>
+</ol>
+<h3 id="h-6">Add a custom sub-library</h3>
+<ol>
+<li>Right-click the left list → <strong>Add sub-library</strong>;</li>
+<li>An entry such as <code>custom_1</code> appears; change the display name and fill in default categories as needed;</li>
+<li>After saving, the sub-library appears in the left column (provided <strong>Show in main UI</strong> is ticked).</li>
+</ol>
+<p>To delete a custom sub-library: right-click it → <strong>Delete sub-library</strong> → confirm. The 11 built-in defaults (materials / models / lights / textures / scenes / HDR / animation / images / audio / animation data / node tree) cannot be deleted; hide them by clearing <strong>Show in main UI</strong>.</p>
+<h2 id="h-7">Common pitfalls</h2>
+<table><thead><tr><th>Symptom</th><th>Explanation</th></tr></thead><tbody><tr><td>The left column did not change right after renaming</td><td>The column rebuilds after saving; switch a category once or reopen the plug-in</td></tr><tr><td>Some category configuration no longer matches after changing a sub-library ID</td><td>Changing the ID swaps the configuration key, which is an advanced operation; back up <code>config.json</code> and try on a copy library first</td></tr><tr><td>Half the categories disappeared after <strong>Read current category folders</strong></td><td>It follows the real disk folders; empty directories or categories with no folder will not appear</td></tr><tr><td><strong>Show in main UI</strong> cannot be clicked</td><td>This checkbox is not locked; if even it is gray, the window state is abnormal — reopen the settings window</td></tr><tr><td>The project library&#x27;s categories changed too</td><td>This page edits the <strong>default category list in settings</strong> and never changes any library directly; existing library folders are unaffected</td></tr></tbody></table>
+<h2 id="h-8">Undo</h2>
+<table><thead><tr><th>Situation</th><th>How to undo</th></tr></thead><tbody><tr><td>Not saved yet</td><td>Click <strong>Cancel</strong></td></tr><tr><td>Saved and you want the previous state</td><td><strong>Restore defaults</strong> does <strong>not</strong> reset this page (see <a href="#/en/15.9.1"><code>8.9.1</code></a>); overwriting with a backed-up <code>config.json</code> is safest</td></tr><tr><td>Only the left column visibility to restore</td><td>Tick <strong>Show in main UI</strong> again; nothing else needs changing</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>On this page both <strong>Read current category folders</strong> and changing a sub-library ID rewrite configuration. The first only affects configuration; the second can make existing configuration stop matching. When unsure, back up <code>&lt;plugin dir&gt;\Assets\preset\config.json</code> first.</p></div>
+<h2 id="h-9">Related</h2>
+<ul>
+<li>Settings window overview and the global lock → <a href="#/en/15.9.1"><code>8.9.1</code></a></li>
+<li>The <strong>Other configuration</strong> page → <a href="#/en/15.9.9"><code>8.9.9</code></a></li>
+<li>Showing and hiding top-level categories (user guide) → <a href="#/en/4.2.4"><code>4.1.2.4</code></a></li>
+<li>Creating top-level categories and sub-categories → <a href="#/en/4.3.1"><code>4.1.3.1</code></a></li>
+<li>Syncing categories from folders → <a href="#/en/4.3.5"><code>4.1.3.5</code></a></li>
+</ul>

@@ -1,0 +1,19 @@
+<p>By default everything runs locally: Ollama provides embedding and vision capability and the index files live in the asset library or a local directory you choose. Requests only reach a provider when you actively configure a cloud model.</p>
+<h2 id="h-1">The local part</h2>
+<ul>
+<li><strong>Ollama</strong>: a local service, <code>http://127.0.0.1:11434</code> by default, which the plug-in uses for embeddings and image understanding.</li>
+<li><strong>Embedding model</strong>: <code>embeddinggemma-2:740m</code> (768 dimensions) by default, shared by the asset text index, the Maya documentation index and the image index.</li>
+<li><strong>Vision chat model</strong>: AI asset analysis and the &quot;image to description&quot; step of image search need a chat model that can see images; the dependency check recommends <code>qwen3.5:9b</code> (about 5–6 GB), and any other pulled vision model also works.</li>
+<li><strong>Image sidecar</strong>: a separate venv installing only numpy and Pillow (about 30 MB); image vectors are still encoded by the Ollama embedding model.</li>
+<li><strong>dsh</strong>: the AI assistant runtime, which manages its own model credentials.</li>
+</ul>
+<h2 id="h-2">The cloud part</h2>
+<p><code>Settings → AI → 全局大模型（默认） (Global model (default))</code> offers Ollama (local), DeepSeek, Qwen (Alibaba Cloud DashScope), Zhipu (BigModel), OpenAI and Custom (OpenAI compatible). AI analysis uses it by default, and <code>「使用全局大模型」 (Use the global model)</code> at the top of the AI search preview panel reads it as well.</p>
+<p>AI search has its own configuration (the settings at the top right of the preview panel) and by default calls no large model, doing local vector retrieval only.</p>
+<h2 id="h-3">How the work is split</h2>
+<ul>
+<li>Everyday asset search and search by image: local, fast and requiring no key.</li>
+<li>Thumbnail analysis and stronger semantic understanding: a local vision model or a cloud configuration.</li>
+<li>Long conversations and cross-tool orchestration: dsh or an external AI tool.</li>
+</ul>
+<p>Whether a cloud model supports images varies by provider, and the configuration box shows the matching hint.</p>

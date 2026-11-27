@@ -1,0 +1,25 @@
+<p>断连通常不是插件坏了，而是 Maya 已退出、桥接端口没开、端口换到了备用段，或主线程被模态框、长命令占住。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>独立版提示未发现在线的 Maya，或调用返回 <code>maya_offline</code> / <code>port_closed</code>。</li>
+<li><code>--ping</code> 连不上，或连上后长时间没有回包。</li>
+<li>资产明明在线却导不进去，或导进了另一台 Maya。</li>
+</ul>
+<h2 id="h-2">原因与解决</h2>
+<ol>
+<li><strong>先看 Maya 窗口</strong>：若有崩溃恢复、未保存或报错模态框，先点掉它，再重新执行一次只读查询。模态框会按住主线程，表现和卡死一样。</li>
+<li>执行 <code>python maya_bridge.py --doctor</code>，确认谁在线、谁监听但不应答、有无渲染残留。</li>
+<li>若只是端口换了，用 <code>--scan</code> 找到实际端口，再 <code>--maya 版本</code> 或 <code>--port 端口</code> 定向连接；也可设 <code>SQUIRREL_MAYA_PORT</code>。</li>
+<li>若是端口没开，在设置中勾选「允许外部工具连接 Maya（独立版 / 命令行）」，或在 Maya 内手动执行 <code>cmds.commandPort(...)</code>。</li>
+<li>确认是卡死（不是模态框）后，用 <code>python maya_bridge.py --doctor --kill-hung</code> 只清「监听但不应答」的实例。</li>
+<li>没有可用实例时用 <code>python maya_bridge.py --doctor --launch</code>，它会拉起 Maya 并等到真能应答。</li>
+<li>幂等任务可加 <code>--retry-if-crashed</code> 自动清理、拉起并重投一次；任务文件含 <code>SQ_DESTRUCTIVE = True</code> 时会被拒绝重投。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p><code>--ping</code> 重新返回 <code>版本 | 场景</code>，<code>--doctor</code> 中目标端口判定为 healthy；独立版工具栏的目标提示显示预期场景。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>断连自愈只适合幂等 / 只读任务。崩溃会丢掉未保存场景，重投只能保证任务本身再跑一次，不能恢复原会话状态。</li>
+<li>目前没有常驻监督进程，不会在没人跑任务时自动把 Maya 拉起来。</li>
+<li>每次自愈都会追加记录到 <code>~/.squirrel_asset_manager/bridge_recover.log</code>。</li>
+</ul>

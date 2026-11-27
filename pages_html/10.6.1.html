@@ -1,0 +1,24 @@
+<p><code>mayapy.exe</code> 是 Maya 的 Python 解释器，能拉起完整的 Maya 内核但没有界面；插件用它做缩略图与格式转换，<strong>不碰你已打开的 Maya 和场景</strong>。</p>
+<p><img src="media/shared/dialog-headless-thumb.webp" alt="无头缩略图：渲染器、模型与尺寸" loading="lazy" decoding="async"></p>
+<h2 id="h-1">它是怎么跑的</h2>
+<ul>
+<li>父进程先找与当前 Maya 同版本的 <code>mayapy.exe</code>。找不到时可用环境变量 <code>SQUIRREL_MAYAPY</code> 指到 <code>&lt;Maya 安装目录&gt;\bin\mayapy.exe</code>。</li>
+<li>每次作业在系统临时目录建一个工作目录，写入 <code>job.json</code>，再由 <code>mayapy</code> 执行 <code>tools/asset_headless_worker.py</code>。</li>
+<li>worker 不 import 插件包，可以单独用 mayapy 复现。</li>
+<li>作业在库外产出，验证通过后才写进资产包。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在资产库右键点击资产，选「更新缩略图」→「后台渲染」，或选「格式转换」。</li>
+<li>「后台渲染」会先弹出同名选项对话框，确认渲染器、模型、环境光、尺寸与质量后点「开始生成」。</li>
+<li>等待进度窗口跑完；期间可以继续使用界面。</li>
+</ol>
+<blockquote><p>说明：无头出图的菜单项现在叫「后台渲染」（旧文案「生成缩略图」已不用）。它只在<strong>材质 / 模型 / 灯光 / 贴图 / 场景 / 动态 / 节点树</strong>这几个子库的右键里出现；HDR、图片、音频、动画数据没有这一项。</p></blockquote>
+<h2 id="h-3">结果验证</h2>
+<p>作业返回 <code>ok</code> / <code>failed</code> 与逐项结果；缩略图写回资产后，卡片上的图会刷新。失败项会带原因，例如找不到几何、找不到 mayapy 或缺少渲染工具。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>mayapy 开的是<strong>另一个空场景</strong>，读不到你当前打开的场景，也没有视口。</li>
+<li>需要读当前场景或抓视口时，走界面版 / 桥接通道，不要用 mayapy。</li>
+<li>工作目录在结果写回后才清理；中途失败时会留下未被采纳的临时产出，不影响资产库。</li>
+</ul>

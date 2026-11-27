@@ -1,0 +1,25 @@
+<p>灯光分类是资产库的灯光子库，存放 <code>.zlight</code> 或 <code>.ma/.mb</code> 灯光资产，右键可导入、应用参数或转换导入。</p>
+<p><img src="media/shared/menu-sublib-lights.webp" alt="灯光子库里的资产与灯光专属菜单项" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>当前 Maya 已加载目标渲染器插件（Arnold / V-Ray / Redshift 或 Maya 原生）。</li>
+<li>灯光资产已放入灯光分类。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在资产库左侧进入灯光分类。</li>
+<li>右键灯光资产，选择「导入」，再选 <code>.zlight</code> 或 <code>.ma</code> 等格式。</li>
+<li>导入时先按每盏灯自身的源渲染器建出节点；若与当前渲染器不同，会弹出「灯光与渲染器不匹配」询问是否转换。</li>
+<li>想直接得到指定类型，右键「转换导入」，在子菜单选择目标灯光节点类型。</li>
+<li>已有灯光要复用资产参数时，用「应用灯光参数到选中灯光」。</li>
+</ol>
+<h2 id="h-3">灯光类型对应关系</h2>
+<table><thead><tr><th>通用类型</th><th>Arnold</th><th>V-Ray</th><th>Redshift</th><th>Maya 原生</th></tr></thead><tbody><tr><td>area</td><td><code>aiAreaLight</code></td><td><code>VRayLightRectShape</code></td><td><code>RedshiftPhysicalLight</code></td><td><code>areaLight</code></td></tr><tr><td>point</td><td><code>aiPhotometricLight</code></td><td><code>VRayLightSphereShape</code></td><td><code>RedshiftIESLight</code></td><td><code>pointLight</code></td></tr><tr><td>spot</td><td><code>aiPhotometricLight</code>（近似）</td><td><code>VRayLightSpotShape</code></td><td><code>RedshiftPhysicalLight</code></td><td><code>spotLight</code></td></tr><tr><td>directional</td><td><code>aiSkyDomeLight</code>（近似）</td><td><code>VRayLightDistantShape</code></td><td><code>RedshiftSunAndSky</code></td><td><code>directionalLight</code></td></tr><tr><td>dome</td><td><code>aiSkyDomeLight</code></td><td><code>VRayLightDomeShape</code></td><td><code>RedshiftDomeLight</code></td><td><code>directionalLight</code>（近似）</td></tr><tr><td>ies</td><td><code>aiPhotometricLight</code></td><td><code>VRayLightIESShape</code></td><td><code>RedshiftIESLight</code></td><td><code>pointLight</code></td></tr></tbody></table>
+<h2 id="h-4">结果验证</h2>
+<p>导入后灯光出现在 Outliner 并被选中，节点类型与当前渲染器或所选目标类型一致；渲染视口能看到该灯的光照。</p>
+<h2 id="h-5">提示</h2>
+<ul>
+<li>双击 <code>.zlight</code> 导入时直接按当前渲染器转换，不弹询问；右键「导入」是先建后问。</li>
+<li>自动询问转换只针对 Arnold、V-Ray、Redshift 三种渲染器。</li>
+<li>Arnold 没有原生 spot 和并行光，会用 photometric / dome 近似；Maya 原生没有 dome，会用平行光近似。</li>
+</ul>

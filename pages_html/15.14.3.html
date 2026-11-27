@@ -1,0 +1,56 @@
+<blockquote><p>一句话定位：<strong>把一个文件夹里的 PBR 贴图（漫反射 / 粗糙度 / 法线…）按材质分组，每个材质打成一个 <code>.zasset</code> 贴图资产。</strong></p></blockquote>
+<p>和「模型转资产」是同一套思路，但认的东西不一样：它认的是<strong>贴图组</strong>。一个材质通常有 4–6 张贴图（basecolor / roughness / normal / metalness…），这个工具负责把它们归拢成一个资产，而不是散成六张。</p>
+<h2 id="h-1">从哪打开</h2>
+<table><thead><tr><th>入口</th><th>具体怎么做</th></tr></thead><tbody><tr><td>顶部工具栏「快捷工具」菜单</td><td>「快捷工具」→「pbr to zasset」</td></tr><tr><td>命令</td><td>命令面上叫 <code>pbr_to_zasset</code>（参数见 <a href="#/12.1.11"><code>5.1.11</code></a>）</td></tr><tr><td>脚本浏览器</td><td>「脚本浏览器」→ 添加插件目录下的 <code>quicktools</code> 目录 → <code>pbr_to_zasset.py</code> 双击运行</td></tr></tbody></table>
+<p>窗口标题是「PBR贴图转资产」。</p>
+<p><img src="media/shared/quicktool-pbr.webp" alt="PBR 贴图转资产窗口" loading="lazy" decoding="async"></p>
+<h2 id="h-2">界面上每个控件做什么</h2>
+<h3 id="h-3">卡片「识别到的材质」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>按钮「扫描贴图」</td><td>按「贴图文件夹」+ 批量 / 递归设置扫一遍，认出哪些贴图组算材质</td><td>先扫描再转换</td></tr><tr><td>状态「就绪」/ 扫描结果</td><td>扫描状态</td><td>—</td></tr><tr><td>结果列表</td><td>逐条列出「材质和贴图」以及会打包的结构</td><td>核对分组的张数对不对</td></tr><tr><td>标题「.zasset 结构预览」</td><td>预览打包后的目录结构</td><td>确认精度子目录是否如预期</td></tr></tbody></table>
+<h3 id="h-4">卡片「AI 目录解析」（可跳过）</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「解析路径:」+「浏览...」</td><td>让 AI 看一眼目录结构</td><td>命名混乱的素材包有用</td></tr><tr><td>「AI 解析资产结构」</td><td>自动生成文件路由与元数据源配置并追加到下面两张卡</td><td>第一次接陌生素材包时点</td></tr><tr><td>「AI 服务:」/「AI 模型:」/「API Key:」</td><td>选哪个模型来解析；本地服务不用填 Key</td><td>先用 Ollama（本地）</td></tr></tbody></table>
+<h3 id="h-5">卡片「贴图文件夹」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>路径输入框（占位「选择包含PBR贴图的文件夹（勾选批量则选择父文件夹）...」）</td><td>贴图在哪</td><td>勾批量模式时选<strong>父文件夹</strong>而不是某一个材质文件夹</td></tr><tr><td>「浏览...」</td><td>选目录</td><td>—</td></tr></tbody></table>
+<h3 id="h-6">卡片「输出位置」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>路径输入框（占位「选择资产输出文件夹...」）</td><td><code>.zasset</code> 生成到哪</td><td>先输出空目录核对</td></tr><tr><td>「浏览...」</td><td>选目录</td><td>—</td></tr></tbody></table>
+<h3 id="h-7">卡片「转换选项」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>勾选「导出.zasset资产文件」</td><td><strong>真正的开关</strong>：不勾它点转换会提示「当前没有可执行的操作」</td><td><strong>必须勾</strong></td></tr><tr><td>勾选「批量模式（子文件夹作为独立资产）」</td><td>选父文件夹后，每个子文件夹当一套独立贴图资产</td><td>一次入库一堆材质时勾</td></tr><tr><td>勾选「递归扫描子文件夹中的贴图」</td><td>连子目录里的贴图也扫（如 <code>tex/</code> 目录下的）</td><td>贴图放在子目录时勾</td></tr><tr><td>勾选「转换后导入当前分类」</td><td>转完把 <code>.zasset</code> 拷到当前分类目录</td><td>输出在库内分类时可勾</td></tr><tr><td>「多精度贴图:」→ 勾选「打包所有精度（贴图按精度存入子目录）」</td><td>勾 = 所有精度的贴图一起打进资产（<code>textures/2k/</code>、<code>textures/4k/</code> 等），导入时可选</td><td>素材包同一材质有 2K/4K 两套时勾</td></tr></tbody></table>
+<h3 id="h-8">卡片「文件路由配置」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「+ 添加路由」/「保存路由」</td><td>增行 / 存下当前路由</td><td>改完就保存</td></tr><tr><td>每行「文件夹:」/「扩展名:」</td><td>哪些扩展名归到资产包内哪个子目录</td><td>默认已把图片归 <code>textures</code>、ma/mb 归 <code>root</code></td></tr><tr><td>每行「×」</td><td>删掉该行</td><td>—</td></tr></tbody></table>
+<h3 id="h-9">卡片「元数据源配置」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「缩略图搜索路径:」+「+ 添加路径」</td><td>按模板找缩略图，例如 <code>{materialName}_Preview.png</code></td><td>素材包带预览图时保留对应模板</td></tr><tr><td>元数据源「源 N」+「删除」</td><td>一个说明文件来源</td><td>没有说明文件可以删掉</td></tr><tr><td>「文件路径模板:」</td><td>说明文件相对路径模板（如 <code>{materialName}.json</code>）</td><td>按素材包实际名字填</td></tr><tr><td>「文件格式:」（json / txt）</td><td>说明文件的格式</td><td>—</td></tr><tr><td>「字段映射:」<code>源字段 → 目标字段</code> + 处理方式</td><td>把说明里的字段映射到资产字段</td><td>标签常用 <code>split_comma</code></td></tr><tr><td>「+ 添加字段映射」/「+ 添加源」/「保存配置」</td><td>增行 / 增来源 / 存配置</td><td>改完就保存</td></tr></tbody></table>
+<h3 id="h-10">底部按钮</h3>
+<table><thead><tr><th>按钮</th><th>作用</th></tr></thead><tbody><tr><td>图标按钮「使用帮助」</td><td>打开详细帮助</td></tr><tr><td>「取消」</td><td>关窗不转换</td></tr><tr><td>「转换」</td><td>开始转换（转换中可中止，提示「正在中止...」）</td></tr></tbody></table>
+<h2 id="h-11">一次完整的操作流程</h2>
+<ol>
+<li>快捷工具 →「pbr to zasset」；</li>
+<li>「贴图文件夹」选父目录（要批量入库就勾「批量模式」）；</li>
+<li>「输出位置」选空目录；</li>
+<li><strong>勾上「导出.zasset资产文件」</strong>（最容易漏的一步）；</li>
+<li>贴图放在子目录里时勾「递归扫描子文件夹中的贴图」；同一材质有多档分辨率时勾「打包所有精度」；</li>
+<li>点「扫描贴图」，核对「识别到的材质」列表：每个材质的贴图张数、结构预览是否合理；</li>
+<li>需要时用 AI 目录解析补路由 / 元数据源，然后「保存路由」「保存配置」；</li>
+<li>点「转换」，等完成提示；</li>
+<li>去输出目录抽查 1–2 个 <code>.zasset</code>：贴图齐不齐、精度子目录对不对；</li>
+<li>确认后拷进资产库分类，回主界面刷新。</li>
+</ol>
+<h2 id="h-12">输出结果在哪</h2>
+<ul>
+<li>每个材质一个 <code>.zasset</code> <strong>文件夹</strong>，位于「输出位置」下；</li>
+<li>里面是贴图（可能按精度分子目录）+ 缩略图 + <code>meta.json</code>；</li>
+<li>勾了「转换后导入当前分类」时会再拷一份到当前分类；回主界面刷新可见。</li>
+</ul>
+<h2 id="h-13">风险与反悔</h2>
+<ul>
+<li><strong>同名 <code>.zasset</code> 会被整个替换</strong>（先删旧的再建新的）：批量转换前把输出放空目录。</li>
+<li><strong>贴图分组认错了</strong>：最常见的结果是&quot;一个材质被拆成两个资产&quot;或&quot;两个材质被并成一个&quot;。批量模式下务必看扫描列表，不要只看&quot;转换完成&quot;。</li>
+<li><strong>不勾「导出.zasset资产文件」时转换不会产出任何东西</strong>，会直接提示没有可执行的操作 —— 不是坏了。</li>
+<li>反悔：删输出目录里新生成的 <code>.zasset</code>；已入库的在主界面删到回收站（<a href="#/15.5.16"><code>8.5.16</code></a>）。</li>
+</ul>
+<h2 id="h-14">相关</h2>
+<ul>
+<li>它在「快捷工具」菜单里的位置：<a href="#/15.2.6"><code>8.2.6</code></a></li>
+<li>模型转资产（同一套路由 / 元数据思路）：<a href="#/15.14.2"><code>8.14.2</code></a></li>
+<li>纯格式转换（不入库）：<a href="#/15.14.4"><code>8.14.4</code></a></li>
+<li>贴图资产右键菜单：<a href="#/15.5.5"><code>8.5.5</code></a></li>
+</ul>

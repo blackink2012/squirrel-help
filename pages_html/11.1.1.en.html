@@ -1,0 +1,33 @@
+<p>Settings open from the gear button in the plug-in main window toolbar, and changes reach the disk only after clicking <code>「应用」 (Apply)</code> or <code>「确定」 (OK)</code>.</p>
+<p><img src="media_en/shared/settings-bottom-general.webp" alt="Settings footer: restore default settings / cancel / apply / OK (Apply saves, OK saves and closes)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The plug-in main window is open (either the in-Maya version or the standalone edition).</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Click the gear button on the right of the main window toolbar; its tooltip reads <code>「设置（AI / 字号 / 语言 / 资产库…）」 (settings: AI / font size / language / asset library…)</code>.</li>
+<li>Choose a page in the <strong>left navigation</strong> of the Settings window: General, AI settings, Export defaults, Context menu, Supported formats, Texture suffixes, Sub-libraries and categories, Other configuration, License activation, About. The tabs are stacked vertically on the left (long English labels would not fit across the top).</li>
+<li>Change what you need.</li>
+<li>Click <code>「应用」 (Apply)</code> to save without closing, <code>「确定」 (OK)</code> to save and close, or <code>「取消」 (Cancel)</code> to close without saving.</li>
+<li>At any time click <code>「设置帮助」 (Settings help)</code> (the orange question mark icon) at the bottom to open the built-in settings help page.</li>
+<li>Apart from General, AI settings, License activation and About, the other tabs are read-only by default; to change them check <code>「解锁全部配置」 (Unlock all configuration)</code> at the bottom and confirm the warning first.</li>
+</ol>
+<h2 id="h-3">Saving semantics</h2>
+<ul>
+<li><code>「应用」 (Apply)</code> collects per tab: General and AI preferences go to <code>~/.squirrel_asset_manager/app_settings.json</code>; asset library, format and sub-library settings go to <code>Assets/preset/config.json</code> inside the plug-in package; export defaults, context menu, double-click commands and texture aliases each write their own preset file.</li>
+<li>Some settings apply immediately after applying: color theme, language, default library switch, drag-and-drop toggle, bridge port toggle.</li>
+<li>Font size and interface scaling rebuild the main window style after applying; the thumbnail output size takes effect from the next generation or capture.</li>
+<li>The Settings window is a non-modal singleton: clicking the gear while it is open only brings the existing window forward.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>Close and reopen Settings and the values you changed are still there.</li>
+<li>The main window&#x27;s font size, color theme, language or view changes as expected.</li>
+<li>To confirm writing to disk, check the modification time of <code>app_settings.json</code> listed on the configuration file locations page.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<blockquote><p><strong>Tip</strong>: <code>「恢复默认设置」 (Restore default settings)</code> at the bottom only resets some items in the current dialog; see &quot;Restoring defaults&quot;.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: to back up, move to another machine or restore factory settings, use save / import / export / restore in <code>Settings → 常规 → 设置预设 (General → Settings preset)</code>; see <a href="#/en/15.9.2">15.9.2</a>.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: clicking Apply while unlocked opens one more confirmation; choosing No saves nothing.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: installing and mounting inside the <code>「外部 AI 工具」 (External AI tools)</code> panel writes to the other tool&#x27;s directory immediately and is unrelated to this window&#x27;s Cancel.</p></blockquote>

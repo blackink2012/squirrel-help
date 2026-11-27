@@ -1,0 +1,43 @@
+<blockquote><p>One-line summary: <strong>when exporting, if the target category already holds a folder with the same name, the plug-in stops and asks: auto rename, type another name, or overwrite.</strong></p></blockquote>
+<h2 id="h-1">When it appears</h2>
+<ul>
+<li>Clicking <strong>Create asset</strong> (or <strong>Update asset → Replace asset</strong>) when the target category already holds a <code>.zasset</code> with that name.</li>
+<li>In batch export it checks and asks <strong>one by one</strong>; each same-name item gets one question.</li>
+<li>When <strong>Name conflicts</strong> in settings is set to <strong>auto rename / manual input</strong>, this window no longer appears and the configured policy applies directly.</li>
+</ul>
+<p><img src="media_en/shared/dialog-name-conflict.webp" alt="Name conflict" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Window content</h2>
+<p>The first paragraph is a warning: &quot;A folder with the same name as asset &#x27;&lt;name&gt;&#x27; already exists; continuing the export will overwrite the existing files.&quot;</p>
+<h2 id="h-3">Item-by-item details</h2>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Suggested value</th><th>What filling it in wrongly does</th></tr></thead><tbody><tr><td>Auto rename (append _001, _002 …)</td><td>Radio (<strong>selected by default</strong>)</td><td>Keeps the old asset and renames the new one to <code>name_001</code>, <code>name_002</code>…</td><td>When you want to keep the old version without typing names</td><td>Repeated exports pile up <code>_001</code>, <code>_002</code>… and need periodic cleanup</td></tr><tr><td>Manually enter a new name</td><td>Radio plus input</td><td>Exports under a different name; the input is editable only when selected</td><td>When the name must last and you want to choose it</td><td>Confirming with an empty input reports &quot;please enter a new asset name&quot; and stays open</td></tr><tr><td>Remember my choice, do not ask again</td><td>Checkbox</td><td>Stores this policy in the configuration and applies it to future conflicts</td><td>Tick it when exporting many with a fixed policy</td><td>Afterwards no window appears; change the policy in settings</td></tr><tr><td>Cancel</td><td>Secondary button</td><td>Aborts the whole export</td><td>—</td><td>Assets already exported earlier in the batch are not rolled back</td></tr><tr><td>OK</td><td>Main button</td><td>Continues with the current choice</td><td>Click after deciding</td><td>Any choice other than auto rename may touch existing assets, see the risks</td></tr></tbody></table>
+<h2 id="h-4">Results of the three handling options</h2>
+<table><thead><tr><th>Choice</th><th>Old asset</th><th>New asset</th><th>When to choose it</th></tr></thead><tbody><tr><td>Auto rename</td><td>Kept as is</td><td>Named <code>xxx_001</code></td><td>The default recommendation: nothing is lost and no name must be invented</td></tr><tr><td>Manually enter a new name</td><td>Kept as is</td><td>Uses your name</td><td>You have a strict naming convention</td></tr><tr><td>(Delete the old asset, then export)</td><td>Deleted first</td><td>Uses the original name</td><td>When you clearly want a replacement; but the overwrite path needs no deletion, see below</td></tr></tbody></table>
+<blockquote><p>To <strong>overwrite</strong> an old asset: this window offers no direct &quot;overwrite&quot; radio — the overwrite path is <strong>Update asset → Replace asset</strong>, which has its own confirmation (&quot;overwrite it with this export? the original content will be replaced&quot;).</p></blockquote>
+<h2 id="h-5">A complete example</h2>
+<ol>
+<li>Click <strong>Create asset</strong>.</li>
+<li>The <strong>asset name conflict</strong> window appears.</li>
+<li>Keep the default <strong>auto rename (append _001, _002 …)</strong>.</li>
+<li>Click <strong>OK</strong>.</li>
+<li>The export continues and the grid gains an <code>xxx_001</code> asset while the original <code>xxx</code> is untouched.</li>
+</ol>
+<h2 id="h-6">Changing a remembered choice back</h2>
+<ul>
+<li>Open Settings → <strong>Asset library</strong> page → <strong>Name conflicts</strong>:<ul>
+<li>Ask every time (ask how to handle same-name assets during export)</li>
+<li>Auto rename (append _001, _002 …)</li>
+<li>Manual input (open a dialog to type a new name)</li>
+</ul></li>
+<li>Choosing <strong>Ask every time</strong> restores the window. Details are in <a href="#/en/11.3.2"><code>4.8.3.2</code></a>.</li>
+</ul>
+<h2 id="h-7">Risks and how to undo</h2>
+<table><thead><tr><th>Operation</th><th>Risk</th><th>Undo</th></tr></thead><tbody><tr><td>Manually entering a new name</td><td>None (the old asset is untouched)</td><td>—</td></tr><tr><td>Remembering <strong>auto rename</strong></td><td>No more prompts and asset names keep carrying <code>_001</code></td><td>Change it back to <strong>ask every time</strong> in settings</td></tr><tr><td>Overwriting through <strong>Update asset → Replace asset</strong></td><td><strong>The original content is replaced by this result and the plug-in keeps no backup</strong></td><td>Copy the asset or back up the library first (<a href="#/en/4.12.4"><code>4.1.12.4</code></a>)</td></tr><tr><td>Cancel</td><td>Later assets are not exported</td><td>Click <strong>Create asset</strong> again</td></tr></tbody></table>
+<h2 id="h-8">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>No window appeared and an <code>_001</code> asset showed up</td><td>The settings policy is <strong>auto rename</strong> and was remembered</td><td>Change it back to <strong>ask every time</strong> in settings</td></tr><tr><td>After typing a new name it reports that it exists too</td><td>The new name collides as well</td><td>Choose another, or switch to auto rename</td></tr><tr><td>Batch export asked many times</td><td>One question per same-name item (by design)</td><td>Tick <strong>remember my choice</strong> to settle it at once</td></tr><tr><td>Existing assets changed after cancelling</td><td>Cancel only aborts what follows; finished exports are not rolled back</td><td>Delete the overwritten / created assets as needed (recycle bin restores them)</td></tr></tbody></table>
+<h2 id="h-9">Related</h2>
+<ul>
+<li>Export results and failure handling: <a href="#/en/15.10.8"><code>8.10.8</code></a></li>
+<li>The name conflict setting: <a href="#/en/11.3.2"><code>4.8.3.2</code></a></li>
+<li>Batch rename (renaming everything afterwards): <a href="#/en/15.12.1"><code>8.12.1</code></a></li>
+<li>Batch deleting assets (recycle bin restore): <a href="#/en/4.8.2"><code>4.1.8.2</code></a></li>
+</ul>

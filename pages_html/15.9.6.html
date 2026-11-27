@@ -1,0 +1,31 @@
+<blockquote><p>一句话定位：<strong>这一页只有一个大文本框，里面每行一个文件扩展名 —— 它们就是资产库认作「资产文件」的白名单。</strong></p></blockquote>
+<p><strong>这一页默认是锁住的</strong>，必须先勾「解锁全部配置」并确认警告才能改（见 <a href="#/15.9.1"><code>8.9.1</code></a>）。</p>
+<p><img src="media/shared/settings-formats.webp" alt="设置窗口（支持格式页）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">怎么打开</h2>
+<p>设置窗口 → 勾「解锁全部配置」→ 页签「支持格式」。</p>
+<h2 id="h-2">控件与默认值</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值</th><th>改了会怎样</th><th>需要先解锁</th></tr></thead><tbody><tr><td>扩展名清单</td><td>多行等宽文本框（每行一个扩展名）</td><td>资产库把它当作「资产文件」的扩展名白名单</td><td>见下方出厂清单（40 项，含 <code>.zasset</code>、<code>.ma</code>、<code>.png</code>、<code>.wav</code> 等）</td><td>少写 → 这类文件在「整个文件夹收进资产库」时被忽略、拖入时被判为不支持；多写 → 无关文件也会被当成资产文件收进去</td><td>是</td></tr><tr><td>提示行</td><td>只读文字</td><td>「每行一个文件扩展名，修改后请点击「应用」」</td><td>—</td><td>—</td><td>否</td></tr></tbody></table>
+<h2 id="h-3">出厂清单</h2>
+<table><thead><tr><th>类别</th><th>扩展名</th></tr></thead><tbody><tr><td>资产包 / 工程 / 几何</td><td><code>.zasset</code> <code>_zasset</code> <code>.ma</code> <code>.mb</code> <code>.fbx</code> <code>.obj</code> <code>.abc</code> <code>.usd</code> <code>.usda</code> <code>.usdc</code> <code>.glb</code> <code>.gltf</code> <code>.dae</code></td></tr><tr><td>缓存 / 代理 / 映射</td><td><code>.ass</code> <code>.rs</code> <code>.proxy</code> <code>.vrmesh</code> <code>.vdb</code> <code>.mcm</code></td></tr><tr><td>图片 / 贴图 / 缩略图</td><td><code>.png</code> <code>.jpg</code> <code>.jpeg</code> <code>.exr</code> <code>.hdr</code> <code>.tga</code> <code>.tiff</code> <code>.tif</code> <code>.bmp</code> <code>.psd</code> <code>.sicon</code> <code>.aicon</code></td></tr><tr><td>音频 / 动画数据</td><td><code>.wav</code> <code>.mp3</code> <code>.aiff</code> <code>.aif</code> <code>.flac</code> <code>.ogg</code> <code>.m4a</code> <code>.aac</code> <code>.atom</code></td></tr></tbody></table>
+<h2 id="h-4">这份清单实际管什么</h2>
+<table><thead><tr><th>用到的场景</th><th>说明</th></tr></thead><tbody><tr><td>整个文件夹收进资产库</td><td>按这份白名单判断根级哪些文件算资产文件（几何 / 贴图 / 音频…），不认识的直接跳过</td></tr><tr><td>「从外部导入」的文件选择框</td><td>文件过滤器由这份清单拼出来（见 <a href="#/15.4.2"><code>8.4.2</code></a>）</td></tr><tr><td>拖入文件判定</td><td>拖文件进资产区时，按这份清单与当前分类支持的导入方式判断能不能收</td></tr></tbody></table>
+<p>注意：它<strong>不</strong>决定 Maya 能不能导入某种格式（那是 Maya / 渲染器的事），也<strong>不</strong>替换「其它配置」页里的几何体 / 图像扩展名（那两个只管「整个文件夹收进资产库」时的分拣，见 <a href="#/15.9.9"><code>8.9.9</code></a>）。</p>
+<h2 id="h-5">改的时候要注意</h2>
+<ul>
+<li>一行一个，<strong>带点</strong>（<code>.fbx</code> 而不是 <code>fbx</code>）；空行会被忽略；</li>
+<li>改完必须点「应用」或「确定」才写入配置；只点「取消」不保存；</li>
+<li>少写一个常用后缀，会表现成「明明有文件却没被收进库 / 拖入被拒」，这是最常见的坑；</li>
+<li>多写无关后缀（比如 <code>.txt</code>），入库时会把说明文件也当资产收进去。</li>
+</ul>
+<h2 id="h-6">反悔</h2>
+<table><thead><tr><th>情况</th><th>怎么反悔</th></tr></thead><tbody><tr><td>还没保存</td><td>点「取消」</td></tr><tr><td>已保存、想恢复出厂清单</td><td>「恢复默认设置」<strong>不会</strong>重置这一页（见 <a href="#/15.9.1"><code>8.9.1</code></a>）；请按上面「出厂清单」手动贴回，或用备份的 <code>config.json</code> 覆盖回去（<code>&lt;插件目录&gt;\Assets\preset\</code>）</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>这是资产库的识别白名单，改错会直接影响「文件夹入库」和「拖入导入」。改前先把 <code>config.json</code> 复制一份放到别处。</p></div>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>设置窗口总览与全局锁定 → <a href="#/15.9.1"><code>8.9.1</code></a></li>
+<li>「其它配置」页（几何 / 图像扩展名） → <a href="#/15.9.9"><code>8.9.9</code></a></li>
+<li>支持格式与导入路由（用户指南） → <a href="#/5.1.1"><code>4.2.1.1</code></a></li>
+<li>支持格式总表 → <a href="#/12.3"><code>5.3</code></a></li>
+<li>config.json 的结构 → <a href="#/12.4.1"><code>5.4.1</code></a></li>
+<li>「从外部导入」菜单 → <a href="#/15.4.2"><code>8.4.2</code></a></li>
+</ul>

@@ -1,0 +1,25 @@
+<p>Duplicate name handling decides what happens when exporting an asset whose target location already holds a same-named asset.</p>
+<p><img src="media_en/shared/settings-name-conflict.webp" alt="Duplicate name handling" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>When exporting or creating an asset meets a same-named target, the preset policy is applied so nothing is overwritten by accident.</p>
+<h2 id="h-2">Values and defaults</h2>
+<table><thead><tr><th>Policy</th><th>Behavior</th></tr></thead><tbody><tr><td>Ask every time</td><td>Opens a dialog to choose auto rename, type a new name, or cancel</td></tr><tr><td>Auto rename</td><td>Appends <code>_001</code>, <code>_002</code>… automatically</td></tr><tr><td>Manual input</td><td>Opens an input box for a new name</td></tr></tbody></table>
+<ul>
+<li>The current preset file defaults to <code>「自动重命名」 (Auto rename)</code> (<code>name_conflict_policy.mode = auto_rename</code>); when that key is missing the interface also falls back to auto rename (<code>NameConflictDialog.DEFAULT_MODE</code>), so there is a single default across the whole chain.</li>
+<li>A choice made under &quot;ask every time&quot; can be remembered with <code>「记住选择，不再提示」 (remember this choice, do not ask again)</code>, and later exports follow the remembered policy.</li>
+</ul>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>It only affects the target-already-exists case when creating a new asset; existing assets are never auto-renamed or deleted.</li>
+<li>Appending a LOD or creating a new version are explicit actions in the export dialog and do not use this policy.</li>
+<li>It is stored as <code>name_conflict_policy</code> in <code>Assets/preset/config.json</code>.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<ul>
+<li>Use <code>「自动重命名」 (Auto rename)</code> for batch exports that must not be interrupted.</li>
+<li>Use <code>「每次询问」 (Ask every time)</code> when every name should be confirmed.</li>
+<li>Use <code>「手动输入」 (Manual input)</code> with a fixed naming convention that needs human naming.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<blockquote><p><strong>Tip</strong>: auto renaming only changes the new asset&#x27;s name and never touches existing assets.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: the policy is written to the preset file after clicking <code>「应用」 (Apply)</code> and applies from the next export.</p></blockquote>

@@ -1,0 +1,27 @@
+<blockquote><p>One-line summary: <strong>this vertical strip on the left is the master switch for &quot;which library, which type, which folder you browse&quot; — three tabs give three entry sets, with the category tree and the recycle bin below.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<p>It is always on the left of the window and needs no &quot;opening&quot;. If the whole column is gone, first check whether it was <strong>collapsed into a narrow icon strip</strong> (the fold button at the far left of the toolbar, see <a href="#/en/15.2.2"><code>8.2.2</code></a>).</p>
+<p><img src="media_en/15.3.1-1.webp" alt="Left navigation: title bar &quot;Navigation&quot;, the Category / Project / Favorites tabs, the library dropdown and the category tree; the recycle bin entry is at the bottom left" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What this column holds, top to bottom</h2>
+<table><thead><tr><th>Position</th><th>Control</th><th>Effect</th><th>Details</th></tr></thead><tbody><tr><td>Title bar</td><td>&quot;Navigation&quot; plus the fold button</td><td>Shows the name of this block; the fold button collapses / expands the whole column into a narrow icon strip</td><td><a href="#/en/15.2.2"><code>8.2.2</code></a></td></tr><tr><td>Tab row</td><td>Category / Project / Favorites</td><td>Three entry sets: the main asset library, the current project&#x27;s library, favorites</td><td>This page</td></tr><tr><td>Top of the <strong>Category</strong> tab</td><td>Library dropdown</td><td>Switches between several main asset libraries</td><td><a href="#/en/15.3.2"><code>8.3.2</code></a></td></tr><tr><td>Body of the <strong>Category</strong> tab</td><td>Category tree</td><td>All assets / sub-libraries / categories / sub-categories / scripts, deciding which assets the grid shows</td><td><a href="#/en/15.3.3"><code>8.3.3</code></a></td></tr><tr><td>Bottom left of the category tree</td><td>Recycle bin (with count)</td><td>Opens the recycle bin view to restore or permanently delete deleted assets</td><td><a href="#/en/15.8.3"><code>8.8.3</code></a></td></tr><tr><td><strong>Project</strong> tab</td><td>Create / refresh plus the project library category tree</td><td>Manages the project library that follows the current Maya project</td><td><a href="#/en/15.3.5"><code>8.3.5</code></a></td></tr><tr><td><strong>Favorites</strong> tab</td><td>Favorites list plus &quot;+&quot;</td><td>Browses assets you marked, per favorites set</td><td><a href="#/en/15.3.6"><code>8.3.6</code></a></td></tr></tbody></table>
+<h2 id="h-3">What the three tabs are</h2>
+<table><thead><tr><th>Tab</th><th>What the library is</th><th>What the center grid shows after switching</th><th>Good for</th></tr></thead><tbody><tr><td>Category</td><td>The <strong>main asset library</strong> (a globally reused library; several can be configured)</td><td>The selected category in the current main library</td><td>Daily asset lookup, import and export</td></tr><tr><td>Project</td><td>The <strong>project library</strong>: the <code>SquirrelLib</code> folder inside the current Maya project directory</td><td>Categories of the project library</td><td>Assets that belong only to this project and travel with it</td></tr><tr><td>Favorites</td><td>Favorites (<strong>stored per library</strong>; main-library favorites and project-library favorites do not mix)</td><td>Assets inside the selected favorites set</td><td>Keeping a few frequently used assets together</td></tr></tbody></table>
+<p>Right of the tab row is the collapse / expand entry for the whole column (at the far left of the toolbar, see <a href="#/en/15.2.2"><code>8.2.2</code></a>); collapsed it shows a single column of icons (the three tabs plus top-level category icons) with the same features.</p>
+<h2 id="h-4">Which page covers clicks and right-clicks</h2>
+<ul>
+<li><strong>Clicking</strong> any tab / node → the center grid follows; behavior rules in <a href="#/en/15.3.3"><code>8.3.3</code></a>.</li>
+<li><strong>Right-clicking</strong> a category tree node → different nodes show different menus, see <a href="#/en/15.3.4.1"><code>8.3.4.1</code></a> ~ <a href="#/en/15.3.4.4"><code>8.3.4.4</code></a>.</li>
+<li>Right-clicking a <strong>favorites set</strong> → adding, editing and deleting favorites, see <a href="#/en/15.3.6"><code>8.3.6</code></a>.</li>
+</ul>
+<h2 id="h-5">Beginner pitfalls</h2>
+<ul>
+<li><strong>The whole left column vanished</strong>: 99% of the time it was collapsed. Click the fold button at the far left of the toolbar; if that fails use <strong>Panels and layout → Reset layout</strong> (<a href="#/en/15.2.5"><code>8.2.5</code></a>).</li>
+<li><strong>Assets seem fewer after switching tabs</strong>: each tab maps to a different library / favorites set, so the contents differ by design; assets are not lost.</li>
+<li><strong>Changed a category on the Favorites tab and found no change back on the Category tab</strong>: the two tabs operate on different libraries; check which tab you are on.</li>
+<li><strong>The recycle bin is not in the tree</strong>: it is a separate entry button at the bottom left of the category tree, not a category node.</li>
+</ul>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>The complete tutorial for left navigation: <a href="#/en/4.2"><code>4.1.2</code></a>.</li>
+<li>Click behavior of each category tree node: <a href="#/en/15.3.3"><code>8.3.3</code></a>.</li>
+</ul>

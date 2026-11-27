@@ -1,0 +1,23 @@
+<p>卸载会移除程序与 Maya 启动段，但资产库、用户设置和许可证需要你自行判断是否保留。</p>
+<h2 id="h-1">卸载</h2>
+<ol>
+<li>从 Windows「设置 → 应用」或开始菜单的「卸载 Squirrel Asset Manager」运行卸载器。</li>
+<li>卸载器会先移除各版本 <code>userSetup.py</code> 中的启动段，再删除安装目录、快捷方式与注册表项。</li>
+<li>卸载器不会删除资产库、<code>~/.squirrel_asset_manager</code> 与 Ollama 模型。</li>
+<li>重启 Maya；工具架「自定义」分类中的「松鼠资产管家」按钮若仍在，右键删除它（插件只在安装时创建一次按钮，删除后不会在启动时重建）。</li>
+</ol>
+<h2 id="h-2">残留清单</h2>
+<table><thead><tr><th>位置</th><th>是否自动删除</th><th>说明</th></tr></thead><tbody><tr><td><code>%LOCALAPPDATA%\SquirrelAM</code></td><td>EXE 卸载会删</td><td>安装目录（含插件代码、dsh/node/python 等运行时）；装到了别处就以你选的目录为准</td></tr><tr><td><code>%MAYA_APP_DIR%\squirrel_asset_manager</code></td><td>否</td><td><strong>旧版脚本安装</strong>的残留目录；新版不会创建，发现后可手动删除</td></tr><tr><td><code>~/.squirrel_asset_manager</code></td><td>否</td><td>设置与桥接/恢复日志</td></tr><tr><td>资产库（默认 <code>~/SquirrelLib</code>）</td><td>否</td><td>你的资产数据，删除前务必备份</td></tr><tr><td><code>%PROGRAMDATA%\SquirrelAssetManager</code></td><td>否</td><td>可能存放 <code>license.dat</code> / <code>trial.dat</code></td></tr><tr><td><code>%LOCALAPPDATA%\SquirrelAssetManager\license.dat</code></td><td>否</td><td>授权数据目录（与安装目录是两个位置），卸载不删，换机前可备份</td></tr><tr><td>Maya 工具架按钮</td><td>否</td><td>需要手动删除</td></tr><tr><td>Ollama 模型 / 第三方组件</td><td>否</td><td>由你自行管理</td></tr></tbody></table>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>Maya 启动后不再出现松鼠入口，脚本编辑器无插件导入报错。</li>
+<li>安装目录已删除，磁盘空间释放。</li>
+<li>资产库仍在，且可以正常打开。</li>
+</ul>
+<h2 id="h-4">常见失败</h2>
+<ul>
+<li><strong>卸载后 Maya 报导入错误</strong>：<code>userSetup.py</code> 中仍有启动段；手工删除 4 段 sentinel 块（「导入路径」「状态行按钮」「MCP 启动注册」「桥接端口」，各自成对出现）。</li>
+<li><strong>许可证丢失</strong>：EXE 的本地许可证可能就在安装目录内，卸载前先备份 <code>license.dat</code>；需要时重新激活。</li>
+<li><strong>误删资产库</strong>：资产库不会自动删除，但手动清理时不要把它当安装残留。</li>
+<li><strong>工具架按钮残留</strong>：按钮定义在 Maya 首选项中，卸载器不会清理，需手动删除。</li>
+</ul>

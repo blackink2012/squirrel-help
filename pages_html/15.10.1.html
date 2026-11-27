@@ -1,0 +1,44 @@
+<blockquote><p>一句话定位：<strong>这个窗口决定「把 Maya 场景里的什么、按什么格式、叫什么名字」写成一个资产存进库里。</strong></p></blockquote>
+<h2 id="h-1">这个窗口是干什么的</h2>
+<ul>
+<li>界面上的名字是「创建资产」，窗口标题也是它，是全插件控件最多、最容易被吓退的窗口。</li>
+<li>它<strong>不创建几何体</strong>：它把你<strong>当前 Maya 场景里选中的东西</strong>（物体、材质节点）导出成一个 <code>.zasset</code> 资产，连同缩略图、贴图、材质预设一起打包进当前分类。</li>
+<li>窗口是<strong>非模态</strong>的：开着的时候能继续在 Maya 里改选择、调视角，改完再点左边的「创建资产」。</li>
+<li>点一次「创建资产」不一定只出一个资产——取决于「导出模式」（见 <a href="#/15.10.2"><code>8.10.2</code></a>）。</li>
+</ul>
+<h2 id="h-2">从哪打开</h2>
+<table><thead><tr><th>入口</th><th>在哪</th><th>前提</th><th>点了会怎样</th></tr></thead><tbody><tr><td>工具条按钮</td><td>资产区上方工具条，「创建资产」（磁盘图标）</td><td>左侧分类树选中<strong>具体分类</strong></td><td>打开空白配置的窗口；Maya 里选了什么就导出什么</td></tr><tr><td>资产区空白处右键</td><td>右键 →「创建资产」</td><td>同上</td><td>同上</td></tr><tr><td>更新已有资产</td><td>资产卡片右键 →「更新资产」→ 选一种更新方式</td><td>已存在的资产上</td><td>打开<strong>预填好名称/标签</strong>的同一窗口，已有格式后面标注「（已存在）」</td></tr></tbody></table>
+<h3 id="h-3">点了没反应 / 直接弹提示</h3>
+<table><thead><tr><th>提示原文</th><th>原因</th><th>怎么办</th></tr></thead><tbody><tr><td>请先选择一个具体分类再创建资产。</td><td>分类树停在「全部资产」或某个子库的顶级节点上</td><td>点开子库，选下面的具体分类</td></tr><tr><td>请先在左侧分类树中选择目标分类。</td><td>窗口开着，但点按钮时分类被切走了</td><td>选好分类再点一次「创建资产」</td></tr><tr><td>请先在 Maya 视口中选中要导出的对象（材质节点或物体）。</td><td>Maya 里没有选中任何东西</td><td>在场景/大纲视图里选中物体或材质节点</td></tr><tr><td>图片 / 音乐分类的资产是文件本身，不支持从场景创建。</td><td>当前在图片、音乐子库</td><td>这两个子库用「导入」，不是「创建资产」</td></tr><tr><td>（压根没有这个窗口）</td><td>当前在「动画数据」分类</td><td>同一个按钮走「导出动画数据」，不是本页内容</td></tr></tbody></table>
+<p><img src="media/shared/dialog-export.webp" alt="创建资产对话框" loading="lazy" decoding="async"></p>
+<h2 id="h-4">整体分几块</h2>
+<p>左栏负责「这一次怎么导」（按钮、模式、命名、缩略图来源、标签），右栏负责「导出什么内容、什么格式」。</p>
+<table><thead><tr><th>区域</th><th>里面有什么</th><th>详见</th></tr></thead><tbody><tr><td>左栏顶部</td><td>「创建资产」主按钮 + 橙色帮助图标</td><td><a href="#/15.10.8"><code>8.10.8</code></a></td></tr><tr><td>左栏 · 导出模式</td><td>全自动 / 半自动 / 单资产（三选一）、截图延迟、信息行</td><td><a href="#/15.10.2"><code>8.10.2</code></a></td></tr><tr><td>左栏 · 命名信息</td><td>名称（英文，Maya 节点用）、易读名（中文显示，可空）</td><td><a href="#/15.10.2"><code>8.10.2</code></a></td></tr><tr><td>左栏 · 缩略图来源</td><td>截屏工具 / Maya 拍屏 / 渲染图，以及「创建模型」「创建灯光」下拉</td><td><a href="#/15.10.4"><code>8.10.4</code></a></td></tr><tr><td>左栏 · 标签</td><td>已选标签、常用标签、自定义标签输入框 +「+ 添加」</td><td><a href="#/15.10.2"><code>8.10.2</code></a></td></tr><tr><td>右栏 · 收集关联文件</td><td>收集场景中已挂载的缓存/代理/引用文件、贴图 textures/</td><td><a href="#/15.10.5"><code>8.10.5</code></a></td></tr><tr><td>右栏 · 导出选项</td><td>仅导出材质（跳过几何体/代理）</td><td><a href="#/15.10.6"><code>8.10.6</code></a></td></tr><tr><td>右栏 · 材质 / 灯光 / 节点格式</td><td>材质预设 .zmetal（灯光为 .zlight）、全部写入一个、材质映射 .mcm</td><td><a href="#/15.10.6"><code>8.10.6</code></a></td></tr><tr><td>右栏 · 几何体格式</td><td>.ma / .mb / .fbx / .obj / .usd，每项后面带插件状态</td><td><a href="#/15.10.6"><code>8.10.6</code></a></td></tr><tr><td>右栏 · 动画导出</td><td>当前帧 / 时间轴 / 关键帧</td><td><a href="#/15.10.7"><code>8.10.7</code></a></td></tr><tr><td>右栏 · 缓存格式</td><td>Alembic .abc</td><td><a href="#/15.10.7"><code>8.10.7</code></a></td></tr><tr><td>右栏 · 代理格式</td><td>Arnold .ass / Redshift .rs / V-Ray .vrscene / .vrmesh</td><td><a href="#/15.10.7"><code>8.10.7</code></a></td></tr></tbody></table>
+<blockquote><p>分区标题会随当前分类变：材质分类显示「材质格式」，灯光分类显示「灯光格式」，模型、场景等显示「节点格式」。灯光资产不显示 .mcm（灯光没有材质映射）。</p></blockquote>
+<h2 id="h-5">从零导出第一个资产（分步）</h2>
+<ol>
+<li><strong>选分类</strong>：左侧分类树点一个具体分类（例如 材质 → 自定义）。</li>
+<li><strong>选物体</strong>：回 Maya 选中要导出的物体；想导材质就直接选材质节点。</li>
+<li><strong>开窗口</strong>：点工具条「创建资产」。先看第一行信息行「目标分类: … 资产类型: …」，确认这两项对不对——不对就关窗回去重选。</li>
+<li><strong>选模式</strong>：只有一个物体就保持默认「单资产（合并为一个资产，手动截图）」。</li>
+<li><strong>填名字</strong>：「名称（英文，Maya 节点用）」填英文名（它会成为 <code>.zasset</code> 文件名，别用中文和空格）；「易读名」可留空，留空就用英文名。</li>
+<li><strong>选缩略图来源</strong>：先保持「截屏工具」（最快，出图由你框选）。</li>
+<li><strong>勾格式</strong>：材质资产勾「材质预设 .zmetal」；模型资产勾「Maya ASCII .ma」；想把贴图一起带走，确认「贴图 textures/」是勾着的（默认勾选）。其余格式先不上。</li>
+<li><strong>点按钮</strong>：点左栏顶部「创建资产」。</li>
+<li><strong>截图</strong>：弹出截图取景框，在视口里<strong>拖拽框选</strong>要做缩略图的区域（按住 Ctrl 锁正方形），<strong>松手即截取</strong>；想放弃按 Esc 或右键。</li>
+<li><strong>看结果</strong>：网格里多出一张新卡片并自动选中，右侧预览图能看到刚导出的资产，卡片右键「资产详情」能核对格式和路径。</li>
+</ol>
+<h2 id="h-6">这个窗口的几条规矩</h2>
+<ul>
+<li><strong>窗口不关也能反复点</strong>：改名字或改格式再点一次，会创建<strong>另一个</strong>资产，不是覆盖。要覆盖已有资产必须走右键「更新资产」。</li>
+<li><strong>分类决定哪些格式能勾</strong>：不适用于当前分类的格式会变灰，悬停提示「该格式不适用于当前分类，已锁定（可在 设置 → 导出默认值 中调整）」。</li>
+<li><strong>格式后面的「已就绪 / 未加载 / 不可用」是插件状态</strong>，不是格式名，详见 <a href="#/15.10.3"><code>8.10.3</code></a>。</li>
+<li><strong>同名先问</strong>：目标分类里已有同名资产时，会先弹「资产名冲突」窗口，见 <a href="#/15.12.5"><code>8.12.5</code></a>。</li>
+</ul>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>三种导出模式怎么选：<a href="#/6.1.1"><code>4.3.1.1</code></a></li>
+<li>完整导出流程与导出产物结构：<a href="#/6.1.2"><code>4.3.1.2</code></a>、<a href="#/6.1.3"><code>4.3.1.3</code></a></li>
+<li>左栏控件逐项：<a href="#/15.10.2"><code>8.10.2</code></a>；右栏控件逐项：<a href="#/15.10.3"><code>8.10.3</code></a></li>
+<li>点完按钮之后的流程与结果：<a href="#/15.10.8"><code>8.10.8</code></a></li>
+</ul>

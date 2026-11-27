@@ -1,0 +1,30 @@
+<h2 id="h-1">把外部模型变成资产</h2>
+<p>从外部导入一个模型文件，插件会把它包装成 <code>.zasset</code> 放进当前分类，这是整个工作流的第一步。 <img src="media/3.4.1-1.webp" alt="说明" loading="lazy" decoding="async"></p>
+<p>##选择maya模型创建资产 <img src="media/3.4.1-2.webp" alt="说明" loading="lazy" decoding="async"> <img src="media/3.4.1-3.webp" alt="说明" loading="lazy" decoding="async"></p>
+<h2 id="h-2">前置条件</h2>
+<ul>
+<li>资产库已初始化并能正常显示分类。</li>
+<li>已在左侧选中<strong>具体子库与分类</strong>（停在「全部资产」或收藏夹时，导入入口是禁用的）。</li>
+<li>准备一个模型文件，例如 <code>.ma</code>、<code>.mb</code>、<code>.fbx</code>、<code>.obj</code>、<code>.usd</code>、<code>.abc</code> 或 <code>.glb</code>。</li>
+</ul>
+<h2 id="h-3">操作步骤</h2>
+<ol>
+<li>在左侧「分类」页签选择「模型」子库，再点选一个具体分类。</li>
+<li>在中间视控行点「从外部导入」，选择「从文件导入」。</li>
+<li>在文件对话框中选中一个或多个模型文件，确认。</li>
+<li>每个文件会独立生成一个 <code>.zasset</code>，资产名默认取文件名；重名时自动生成不冲突的名称。</li>
+<li>导入完成后网格刷新，并跳到目标分类显示新资产。</li>
+<li>在右侧属性面板核对名称、格式与大小；需要时补缩略图。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>目标分类下出现新卡片，名称与源文件一致。</li>
+<li>右侧属性显示资产类型、格式与文件大小。</li>
+<li>源文件没有被移动或删除，只是被复制进资产库。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<ul>
+<li><strong>必须先选具体子库 / 分类</strong>：停在「全部资产」或收藏夹时，「从外部导入」按钮是禁用的（灰掉）；从网格空白处右键的「从外部导入」子菜单里会显示一条灰字「当前分类不支持从外部导入」。</li>
+<li>导入 <code>.zasset</code> 资产请用「从外部导入 → 导入 .zasset 资产」，不要手工复制文件夹。</li>
+<li>导入后没有缩略图是正常现象，可在预览区截取，或用「更新缩略图 → 后台渲染」补一张（见 4.1.7）。</li>
+</ul>

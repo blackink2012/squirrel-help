@@ -1,0 +1,21 @@
+<p>A version is one complete iteration of an asset, and a LOD is a geometry detail level inside one version; both hang off the main asset, and the grid usually shows only the main asset.</p>
+<h2 id="h-1">Versions</h2>
+<ul>
+<li>The main <code>.zasset</code> can hold version directories such as <code>V1</code> and <code>V2</code>, each self-contained with geometry, materials, textures and thumbnails; the main asset&#x27;s <code>meta.json</code> registers them under <code>version_assets</code>.</li>
+<li>Versions preserve revisitable results. In <code>「更新资产」 (Update asset)</code> you can choose <code>「创建新版本」 (Create new version)</code>.</li>
+<li>When a card shows a multi-version badge, double-clicking the preview image opens the <code>「版本浏览器」 (Version browser)</code>, where a version can be viewed, imported or deleted.</li>
+</ul>
+<h2 id="h-2">LODs</h2>
+<ul>
+<li>A LOD is a chain of geometry detail levels inside one version, indexed in <code>lods.json</code> in the version directory; <code>LOD0</code> always points at the geometry in the version root, and further levels live in <code>lod1</code>, <code>lod2</code> and so on.</li>
+<li>LODs switch detail by purpose or distance, for example a high-poly display model and a low-poly proxy for placement.</li>
+<li>A card showing an <code>L</code> badge means the asset has several LODs; the context menu item <code>「导入变体 / 版本」 (Import variant / version)</code> (also labelled <code>「导入版本 / LOD」 (Import version / LOD)</code>) lets you choose the version, level and variant to import.</li>
+</ul>
+<h2 id="h-3">Variants</h2>
+<ul>
+<li>A variant is one of several geometry forms of the same asset that <strong>share one set of textures and materials</strong>; the geometry sits flat under <code>variants/</code> and thumbnails are stored separately.</li>
+<li>Variants versus versions: a version is a complete self-contained asset with its own materials and textures, while a variant stores only geometry and inherits materials and textures from the asset root.</li>
+<li>This fits cases such as &quot;one material, many kinds of bricks and screws&quot;; <code>「更新资产」 (Update asset)</code> offers adding a new variant, batch-adding variants, updating variants and opening variant management.</li>
+</ul>
+<h2 id="h-4">When to use which</h2>
+<p>Use versions when something needs repeated edits without losing earlier results; use LODs when one asset must switch between detail levels; use variants when one set of textures needs several shapes. All three can coexist; see &quot;Append a LOD&quot;, &quot;Create a new version&quot;, &quot;Switch version and LOD&quot; and the &quot;Variants&quot; section.</p>

@@ -1,0 +1,24 @@
+<p><code>mayapy.exe</code> is Maya&#x27;s Python interpreter; it starts the complete Maya core without an interface, and the plug-in uses it for thumbnails and format conversion, <strong>without touching your open Maya or scene</strong>.</p>
+<p><img src="media_en/shared/dialog-headless-thumb.webp" alt="Headless thumbnail: renderer, model and size" loading="lazy" decoding="async"></p>
+<h2 id="h-1">How it runs</h2>
+<ul>
+<li>The parent process first looks for a <code>mayapy.exe</code> of the same version as the current Maya. When it cannot find one, set <code>SQUIRREL_MAYAPY</code> to <code>&lt;Maya install directory&gt;\bin\mayapy.exe</code>.</li>
+<li>Every job creates a working directory in the system temp folder, writes <code>job.json</code> and has <code>mayapy</code> run <code>tools/asset_headless_worker.py</code>.</li>
+<li>The worker never imports the plug-in package, so it can be reproduced with mayapy alone.</li>
+<li>Jobs produce output outside the library and only write into the asset package after verification.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click an asset in the library and choose <code>「更新缩略图」 (Update thumbnail)</code> → <code>「后台渲染」 (Background render)</code>, or choose <code>「格式转换」 (Format conversion)</code>.</li>
+<li><code>「后台渲染」 (Background render)</code> first shows its options dialog; confirm renderer, model, environment light, size and quality and click <code>「开始生成」 (Start)</code>.</li>
+<li>Wait for the progress window to finish; the interface stays usable meanwhile.</li>
+</ol>
+<blockquote><p>Note: the headless render menu item is now called <code>「后台渲染」 (Background render)</code> (the old &quot;generate thumbnail&quot; wording is gone). It appears only in the context menu of the <strong>materials / models / lights / textures / scenes / dynamics / node trees</strong> sub-libraries; HDR, images, audio and animation data do not have it.</p></blockquote>
+<h2 id="h-3">Verify the result</h2>
+<p>The job returns <code>ok</code> / <code>failed</code> with per-item results; once thumbnails are written back the card images refresh. Failures carry a reason, such as no geometry, no mayapy or missing render tools.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>mayapy opens <strong>a separate empty scene</strong>; it cannot read the scene you have open and has no viewport.</li>
+<li>To read the current scene or grab a viewport, use the interface version or the bridge channel, never mayapy.</li>
+<li>The working directory is cleaned up only after results are written back; a mid-way failure leaves unadopted temporary output behind, which does not affect the library.</li>
+</ul>

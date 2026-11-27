@@ -1,0 +1,34 @@
+<blockquote><p>One-line summary: <strong>Create asset exports what is currently selected in Maya into a new asset in the library, so it needs a specific category and something in Maya worth exporting.</strong></p></blockquote>
+<h2 id="h-1">How to use it</h2>
+<ol>
+<li>Select a <strong>specific category</strong> in the left category tree (materials / models / lights / textures / scenes / animation / node tree and so on);</li>
+<li><strong>Select the objects to export</strong> in the Maya viewport (the dialog opens without a selection, but export then has nothing to take);</li>
+<li>Click <strong>Create asset</strong> on the asset area toolbar;</li>
+<li>Confirm the configuration in the &quot;Create asset&quot; dialog and run the export.</li>
+</ol>
+<p><img src="media_en/15.4.3-1.webp" alt="Create asset button: create an asset in the current category from objects selected in Maya" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What this button does</h2>
+<table><thead><tr><th>Item</th><th>Description</th></tr></thead><tbody><tr><td>Effect</td><td>Opens the &quot;Create asset / export&quot; dialog and exports from the current Maya scene into the current category</td></tr><tr><td>Source of content</td><td><strong>The objects selected in the current Maya scene</strong> (in the standalone edition, the selection of the Maya chosen as <strong>Maya target</strong>)</td></tr><tr><td>Prerequisites</td><td>① A specific category is selected (not All assets, not a favorite set, not the recycle bin); ② the category is not Images or Audio; ③ Maya is connected (always true in-edition; the standalone edition must pick a Maya target); ④ the scene holds exportable data</td></tr><tr><td>What happens on click</td><td>Opens a <strong>non-modal</strong> creation dialog (fill it in while watching the scene); on confirm the export starts and a new card appears in the grid</td></tr><tr><td>Notes</td><td>It <strong>writes to the library</strong> (new folder + metadata + thumbnail); same-name cases follow the <strong>name conflict</strong> setting: prompt / auto rename / manual overwrite, see <a href="#/en/15.12.5"><code>8.12.5</code></a></td></tr></tbody></table>
+<h2 id="h-3">How it varies per category</h2>
+<table><thead><tr><th>Current category</th><th>Button behavior</th></tr></thead><tbody><tr><td>Materials / models / lights / textures / scenes / animation / node tree</td><td>Shows <strong>Create asset</strong> normally</td></tr><tr><td>Animation data</td><td>The text becomes <strong>Export animation</strong> and exports the selected hierarchy frame by frame as an animation asset (<code>.zasset</code>), with matching hints</td></tr><tr><td>Images / audio</td><td>The button is <strong>hidden</strong> (those assets are files themselves, so &quot;create from scene&quot; does not apply)</td></tr><tr><td>All assets</td><td>The button is <strong>gray</strong> (no target category, so nowhere to save)</td></tr><tr><td>Recycle bin</td><td>The button is gray</td></tr></tbody></table>
+<h2 id="h-4">Submenus</h2>
+<p>This button has <strong>no dropdown</strong> (no ▾); clicking opens the dialog directly. Details of every tab / field in the dialog are in <a href="#/en/15.10.1"><code>8.10.1</code></a> ~ <a href="#/en/15.10.8"><code>8.10.8</code></a>.</p>
+<h2 id="h-5">Risks and how to undo</h2>
+<ul>
+<li><strong>Create vs overwrite</strong>: the default is &quot;create a new asset&quot;; only when you choose an update / replace mode in the dialog does it overwrite an existing asset — read the confirmation before overwriting.</li>
+<li>An interrupted export can leave a <strong>half-finished asset</strong> (hollow shell / missing textures): confirm in the library that the card has a thumbnail and can be imported, and delete and re-export if not, see <a href="#/en/6.5.1"><code>4.3.5.1</code></a>.</li>
+<li>Undo: delete a new asset with right-click <strong>Move to recycle bin</strong> (restorable); overwrite operations rely on the backup / version mechanism offered in the dialog, see <a href="#/en/15.5.16"><code>8.5.16</code></a>.</li>
+</ul>
+<h2 id="h-6">Beginner pitfalls</h2>
+<ul>
+<li><strong>The button is unclickable</strong>: check whether you are on All assets or in the recycle bin, and whether the category is Images / Audio (where the button is hidden).</li>
+<li><strong>The exported asset is empty</strong>: nothing was selected in Maya before exporting, or the selection holds nothing exportable (an empty group, for example). Select in the viewport first.</li>
+<li><strong>The standalone edition reports that it cannot connect to Maya</strong>: first choose an online Maya in <strong>Maya target</strong>, see <a href="#/en/15.2.4"><code>8.2.4</code></a>.</li>
+<li><strong>The export does nothing / spins forever</strong>: large assets or thumbnail rendering are slow; watch the dialog and status bar and do not click repeatedly (it exports again).</li>
+</ul>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>Export flow overview: <a href="#/en/6.1"><code>4.3.1</code></a>.</li>
+<li>Item-by-item details of the create / export dialog: <a href="#/en/15.10.1"><code>8.10.1</code></a>; bottom buttons and results: <a href="#/en/15.10.8"><code>8.10.8</code></a>.</li>
+<li>The other way into the library is <strong>Import from outside</strong>, see <a href="#/en/15.4.2"><code>8.4.2</code></a>.</li>
+</ul>

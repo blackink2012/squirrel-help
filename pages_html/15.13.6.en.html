@@ -1,0 +1,52 @@
+<blockquote><p>One-line summary: <strong>when you click AI assistant and no usable dsh runtime is detected on the machine, this window opens to say what is missing and how to install it.</strong></p></blockquote>
+<p>dsh (DeepSeek Harness) is the runtime behind the plug-in&#x27;s built-in AI chat panel; it is not a Python package but a Node program. So &quot;installing the AI assistant&quot; really means <strong>installing Node plus dsh</strong>, and this window guides both steps.</p>
+<h2 id="h-1">When it appears</h2>
+<ul>
+<li>Top toolbar <strong>AI tools</strong> → <strong>AI assistant</strong>;</li>
+<li>No usable dsh runtime is found → this window opens automatically and the AI assistant cannot start.</li>
+</ul>
+<h2 id="h-2">What the window holds</h2>
+<p><img src="media_en/shared/dialog-dsh-install.webp" alt="dsh install guide window" loading="lazy" decoding="async"></p>
+<table><thead><tr><th>Area / control</th><th>Content or effect</th><th>How to use it</th></tr></thead><tbody><tr><td>Warning icon plus summary</td><td>&quot;No usable dsh runtime detected on this machine, so the AI assistant cannot start.&quot;</td><td>Explains the problem; it is not an error dialog</td></tr><tr><td>&quot;Install (requires Node ^22.19 or &gt;=24 (24 LTS recommended)):&quot;</td><td>The Node version requirement (written as `^22.19 \</td><td>\</td><td>&gt;=24`)</td><td>Follow it if you install Node yourself</td></tr><tr><td>Install command (a selectable read-only block)</td><td>An <code>npm i -g --prefix ...</code> command pointing at the plug-in&#x27;s runtime directory</td><td>Use <strong>Copy install command</strong> below and run it in a terminal</td></tr><tr><td>&quot;After installing, return to Maya and click AI assistant again.&quot;</td><td>The finishing action after a manual install</td><td>Come back and click the AI assistant again</td></tr><tr><td>&quot;For detailed steps… click Open install help below&quot;</td><td>Points to the full documentation</td><td>Read it when the command does not work</td></tr><tr><td><strong>Copy install command</strong></td><td>Copies the command to the clipboard (and shows an in-Maya notice &quot;install command copied&quot;)</td><td>The first step of the manual route</td></tr><tr><td><strong>Open install help</strong></td><td>Opens the bundled install help page (per-platform commands, verification, FAQ, official links)</td><td>The first stop for troubleshooting</td></tr><tr><td><strong>Open website</strong></td><td>Opens the dsh website in a browser</td><td>—</td></tr><tr><td><strong>Open GitHub</strong></td><td>Opens the dsh repository in a browser</td><td>For source or version notes</td></tr><tr><td><strong>Close</strong></td><td>Closes the window without doing anything</td><td>When you do not want to install now</td></tr><tr><td><strong>One-click install (recommended)</strong></td><td>The plug-in installs it: prepares <strong>portable Node</strong> and pulls dsh dependencies with npm</td><td>The right choice for most people</td></tr></tbody></table>
+<h2 id="h-3">A complete install flow (recommended: one-click install)</h2>
+<ol>
+<li>AI tools → <strong>AI assistant</strong> and this window appears;</li>
+<li>Click <strong>One-click install (recommended)</strong>;</li>
+<li>A <strong>progress window</strong> appears (it does not block Maya, so you can keep working):<ul>
+<li>titled &quot;Installing the dsh runtime&quot;;</li>
+<li>the description holds the full log path (<code>&lt;dsh_home&gt;/dsh_install.log</code>);</li>
+<li>a live scrolling log shows where it is stuck;</li>
+<li>a <strong>Cancel</strong> button;</li>
+</ul></li>
+<li>Wait for it to finish (network required, usually 1–5 minutes, longer on slow networks);</li>
+<li>Success: the progress window reads &quot;dsh runtime ready, opening the AI assistant…&quot; and the panel opens;</li>
+<li>Failure: the window shows the reason and suggests <strong>Copy install command</strong> for a manual install or <strong>Open install help</strong> for step-by-step instructions.</li>
+</ol>
+<h2 id="h-4">The manual install route</h2>
+<p>Use it when one-click install fails, when a corporate network blocks npm, or when you want to manage the Node version yourself.</p>
+<ol>
+<li>Click <strong>Copy install command</strong> in this window;</li>
+<li>Open a terminal (cmd or PowerShell) and paste and run it;</li>
+<li>The command&#x27;s <code>--prefix</code> already points at the runtime directory the plug-in expects, so <strong>do not change the path</strong>, otherwise the plug-in still cannot find it;</li>
+<li>Return to Maya and click <strong>AI assistant</strong> again;</li>
+<li>If it still fails, click <strong>Open install help</strong> and follow the per-platform steps and verification.</li>
+</ol>
+<h2 id="h-5">What you see afterwards</h2>
+<ul>
+<li>The AI assistant panel opens normally (the panel itself is in <a href="#/en/15.8.2"><code>8.8.2</code></a>);</li>
+<li>The <strong>AI tools</strong> menu&#x27;s <strong>AI assistant</strong> item text follows the state (open / close / starting);</li>
+<li>The install log lands in <code>&lt;dsh_home&gt;/dsh_install.log</code>; include it when reporting a problem.</li>
+</ul>
+<h2 id="h-6">Risks and how to undo</h2>
+<ul>
+<li>One-click install <strong>downloads from the network</strong> (portable Node plus dependency packages, hundreds of MB), so judge the traffic and time yourself.</li>
+<li><strong>You can cancel during installation</strong>: cancelling only stops later steps and keeps what already installed; the next one-click install continues from what is missing.</li>
+<li>Installation <strong>never touches your asset library or the Maya scene</strong> and changes no plug-in settings; to undo, delete the <code>&lt;dsh_home&gt;</code> directory to return to the &quot;not installed&quot; state (the AI assistant then asks to install again).</li>
+<li>Do not click <strong>One-click install</strong> repeatedly while it is running — it reports &quot;an installation is already in progress, wait for it to finish or cancel it&quot;.</li>
+</ul>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>The AI assistant item in the <strong>AI tools</strong> menu: <a href="#/en/15.2.7"><code>8.2.7</code></a></li>
+<li>The AI assistant panel itself: <a href="#/en/15.8.2"><code>8.8.2</code></a></li>
+<li>Where other AI dependencies (Ollama / embedding models) are installed: <a href="#/en/15.9.3"><code>8.9.3</code></a></li>
+</ul>

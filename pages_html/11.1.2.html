@@ -1,0 +1,39 @@
+<p>「恢复默认设置」把设置窗口里的大部分可编辑项退回出厂值，但不会立即写盘，也不会删除资产库文件。</p>
+<p><img src="media/shared/settings-restore-default.webp" alt="恢复默认设置" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已打开「设置」窗口，并确认没有尚未保存、需要保留的改动。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>点击窗口左下角的「恢复默认设置」。</li>
+<li>在确认框「确定要恢复所有设置到默认值吗？（config.json 将被重置）」中点「是」。</li>
+<li>检查被重置的项；需要保留的重新设置。</li>
+<li>点「应用」或「确定」写入磁盘。</li>
+</ol>
+<h2 id="h-3">会被重置的项</h2>
+<table><thead><tr><th>项目</th><th>恢复为</th></tr></thead><tbody><tr><td>字体大小</td><td>13</td></tr><tr><td>界面缩放</td><td>自动</td></tr><tr><td>缩放锚</td><td>跟随系统缩放</td></tr><tr><td>默认视图</td><td>图标网格</td></tr><tr><td>同名冲突处理</td><td>自动重命名</td></tr><tr><td>贴图后缀</td><td>重新读取 <code>pbr_mapping.json</code></td></tr><tr><td>其它配置</td><td>出厂几何体 / 图像扩展名与材质节点类型列表</td></tr><tr><td>导出默认值</td><td>重新读取 <code>export_preset.json</code></td></tr><tr><td>右键菜单</td><td>重新读取 <code>context_menu_preset.json</code></td></tr></tbody></table>
+<h2 id="h-4">不会被重置的项</h2>
+<ul>
+<li>资产库列表、默认库与库路径。</li>
+<li>贴图导入策略、依赖文件导入策略。</li>
+<li>支持格式列表 <code>asset_file_extensions</code>。</li>
+<li>全局大模型、API Key、AI 对话面、外部连接、外部 AI 工具。</li>
+<li>界面语言、外观主题、拖放吸附、缩略图输出尺寸。</li>
+<li>授权状态。</li>
+</ul>
+<h2 id="h-5">想要「恢复出厂」：用「还原预设」</h2>
+<p>上面这个按钮只重置一部分控件、点了「应用 / 确定」才落盘。如果想把<strong>整套界面偏好</strong>一次恢复成刚装好时的样子，用：</p>
+<p><strong>设置 → 常规 → 设置预设 → 还原预设</strong></p>
+<p><img src="media/shared/settings-preset.webp" alt="设置预设" loading="lazy" decoding="async"></p>
+<table><thead><tr><th>项目</th><th>行为</th></tr></thead><tbody><tr><td>范围</td><td><code>app_settings.json</code> 里的全部界面偏好：字号、缩放、语言、配色、默认视图、缩略图尺寸、AI 模型配置、各类开关等</td></tr><tr><td>何时生效</td><td>确认后<strong>立即写盘并生效</strong>；执行完设置窗口会自动关闭</td></tr><tr><td>保留</td><td>API Key、资产库列表 / 默认库、授权状态</td></tr><tr><td>不重置</td><td><code>Assets\preset\*.json</code>（导出默认值 / 右键菜单 / 双击命令 / 贴图后缀 / 子库与分类）——这些要单独到对应页签恢复</td></tr><tr><td>预设文件</td><td>本机 <code>settings_preset.json</code> 不会被删除，之后仍可用「导入预设」恢复</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>导入预设和还原预设都会<strong>直接改写磁盘设置并关闭设置窗口</strong>。这是为了防止窗口里残留的旧控件值在你点「确定」时把结果盖回去——重新打开设置即可看到新值。</p></div>
+<h2 id="h-6">结果验证</h2>
+<ul>
+<li>点「应用」后重新打开设置，上表中的值均为出厂值。</li>
+<li>资产库仍在原处，主窗口能正常浏览。</li>
+<li>用「还原预设」后，语言 / 配色 / 字号立即变化；语言等少数项需重启插件才完全生效。</li>
+</ul>
+<h2 id="h-7">提示</h2>
+<blockquote><p><strong>警告</strong>：确认框写着「config.json 将被重置」，实际只会把当前对话框收集到的项写回，不会把 <code>export_preset.json</code> 等预设文件改写出厂值。</p></blockquote>
+<blockquote><p><strong>提示</strong>：需要连 <code>Assets\preset\*.json</code> 一起回到干净状态时，先备份再删除配置文件的对应项，参见「重置」；界面偏好本身用「还原预设」即可。</p></blockquote>

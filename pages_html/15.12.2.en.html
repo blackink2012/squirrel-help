@@ -1,0 +1,43 @@
+<blockquote><p>One-line summary: <strong>add tags to several assets at once, or strip one tag from a whole batch.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li><strong>Multi-select</strong> assets in the grid (2 or more).</li>
+<li>Below the grid, in the <strong>batch bar</strong>, click <strong>Batch tags</strong>.</li>
+<li>The window opens titled &quot;Batch tag management (N assets)&quot;.</li>
+</ol>
+<blockquote><p>Tagging a single asset is done in the properties panel and does not need this window.</p></blockquote>
+<p><img src="media_en/shared/dialog-batch-tag.webp" alt="Batch tags" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Suggested value</th><th>What filling it in wrongly does</th></tr></thead><tbody><tr><td>Add tags</td><td>Radio (default)</td><td><strong>Appends</strong> tags to the selected assets</td><td>When applying a common classification tag</td><td>Assets that already carry the tag are not duplicated</td></tr><tr><td>Remove tags</td><td>Radio</td><td><strong>Removes</strong> tags from the selected assets</td><td>When cleaning wrong / stale tags</td><td>Removed tags are not restored automatically; you must add them back</td></tr><tr><td>Manual tag input</td><td>Single-line input</td><td>Type new tags separated by <strong>English commas</strong></td><td>Short words without spaces</td><td>Separating with Chinese commas or spaces makes one long tag</td></tr><tr><td>Common tags (click to select / deselect)</td><td>Tag chip area</td><td>The current category&#x27;s common tags; click to select (highlight) and click again to deselect</td><td>Prefer clicking common tags</td><td>With no common tags it shows &quot;(no common tags in this category)&quot;</td></tr><tr><td>Select all / clear all</td><td>Secondary buttons</td><td>Selects or clears every common tag at once</td><td>Handy when there are many</td><td>Selections apply only after clicking <strong>Apply</strong></td></tr><tr><td>Operation preview</td><td>Read-only text</td><td>Tells you &quot;will affect N assets: add X tags / remove X tags&quot;</td><td>Read the count before running</td><td>With a count of 0 the button makes no sense, so do not force it</td></tr><tr><td>Cancel</td><td>Secondary button</td><td>Closes without changes</td><td>—</td><td>—</td></tr><tr><td>Apply</td><td>Main button</td><td>Runs the tag changes</td><td>Click after checking the preview</td><td>Writes to the library immediately, no undo</td></tr></tbody></table>
+<p>Remove mode adds:</p>
+<table><thead><tr><th>Control</th><th>Description</th></tr></thead><tbody><tr><td>Hint &quot;click a tag to toggle red = to be deleted (applied on run)&quot;</td><td>Explains that red means pending removal</td></tr><tr><td>The tags those assets currently carry</td><td>Click one to turn it red (pending removal) and click again to cancel; with none it says &quot;(assets have no removable tags)&quot;</td></tr></tbody></table>
+<h2 id="h-3">How the two modes differ</h2>
+<table><thead><tr><th>Aspect</th><th>Add tags</th><th>Remove tags</th></tr></thead><tbody><tr><td>Which tags can be chosen</td><td>Common tags plus manual input (including tags that do not exist yet)</td><td>Only tags those assets <strong>currently</strong> carry</td></tr><tr><td>Meaning of highlight</td><td>Selected = pending addition</td><td>Red = pending removal</td></tr><tr><td>Result</td><td>Every selected asset gains these tags</td><td>Every selected asset loses these tags</td></tr></tbody></table>
+<h2 id="h-4">A complete example</h2>
+<h3 id="h-5">Adding tags to a batch</h3>
+<ol>
+<li>Multi-select assets → batch bar → <strong>Batch tags</strong>.</li>
+<li>Keep <strong>Add tags</strong>.</li>
+<li>Click the common tags to add (they highlight), or type <code>industrial,metal</code> (English comma).</li>
+<li>Read the preview: &quot;will affect N assets: add X tags&quot;.</li>
+<li>Click <strong>Apply</strong>; when done it reports &quot;Batch tag operation finished: N succeeded&quot;.</li>
+</ol>
+<h3 id="h-6">Removing a tag from a batch</h3>
+<ol>
+<li>Multi-select assets → <strong>Batch tags</strong> → switch to <strong>Remove tags</strong>.</li>
+<li>In the existing tag chips click the one to remove (it turns red = pending removal).</li>
+<li>The preview should read &quot;will affect N assets: remove X tags (red marked)&quot;.</li>
+<li>Click <strong>Apply</strong>.</li>
+</ol>
+<h2 id="h-7">Risks and how to undo</h2>
+<table><thead><tr><th>Operation</th><th>Risk</th><th>Undo</th></tr></thead><tbody><tr><td>Batch adding tags</td><td>A wrong tag pollutes search / filtering (tags take part in retrieval)</td><td>Select the same assets and strip it with <strong>Remove tags</strong></td></tr><tr><td>Batch removing tags</td><td>One pass removes from a whole batch and there is no undo</td><td>You must add them back from memory or common tags; check the preview count before running</td></tr><tr><td>Chinese comma separation</td><td>It becomes part of one long tag name</td><td>Watch for English commas when re-adding</td></tr></tbody></table>
+<blockquote><p>Tags affect search and filter results (see <a href="#/en/4.5.2"><code>4.1.5.2</code></a>), so try a small batch first.</p></blockquote>
+<h2 id="h-8">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td><strong>Common tags</strong> is empty</td><td>The category has no common tags configured</td><td>Maintain them in settings / the category (<a href="#/en/4.6.2"><code>4.1.6.2</code></a>), or type tags manually</td></tr><tr><td>Tags added but filtering does not find them</td><td>The index / tag cache has not refreshed</td><td>Refresh the grid; rebuild the index if needed</td></tr><tr><td>Nothing to remove in remove mode</td><td>Those assets carry no tags</td><td>Normal; it reports &quot;(assets have no removable tags)&quot;</td></tr><tr><td>Fewer successes than selected</td><td>Some assets failed to write</td><td>Check the <code>[BatchTag]</code> log and retry those individually</td></tr></tbody></table>
+<h2 id="h-9">Related</h2>
+<ul>
+<li>Batch rename: <a href="#/en/15.12.1"><code>8.12.1</code></a></li>
+<li>The user-guide version of batch tags: <a href="#/en/4.6.3"><code>4.1.6.3</code></a></li>
+<li>Common tags and the tag system: <a href="#/en/4.6.2"><code>4.1.6.2</code></a></li>
+<li>The multi-select batch bar: <a href="#/en/15.5.21"><code>8.5.21</code></a></li>
+</ul>

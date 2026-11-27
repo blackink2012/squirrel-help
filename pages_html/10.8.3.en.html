@@ -1,0 +1,25 @@
+<p>Maya exiting during rendering is usually not Maya&#x27;s own fault: the renderer core crashed and took Maya with it.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The Maya process disappears once rendering starts, with no chance for the interface to report an error.</li>
+<li>The Windows event log names the renderer&#x27;s own dll as the faulty module, for example <code>redshift-core-vc140.dll</code> or <code>vray_*.dll</code>.</li>
+<li>The same error offset repeats and a matching <code>MayaCrashLog*.dmp</code> exists in <code>%TEMP%</code>.</li>
+<li>After the crash the port is often still held by the crash reporter, appearing as &quot;online but not answering&quot;.</li>
+</ul>
+<h2 id="h-2">Causes</h2>
+<ul>
+<li>The known Redshift path: <code>cmds.render</code> ends up in <code>rsRender -render</code>, which is asynchronous without <code>-blk</code>; a second render in the same Maya process collides with the cleanup of the previous one and crashes in <code>redshift-core-vc140.dll</code> (<code>0xc0000005</code>, offset <code>0xf77c1f</code>).</li>
+<li>Version defects in the renderer itself or GPU driver problems can also crash inside the renderer dll.</li>
+</ul>
+<h2 id="h-3">Fixes</h2>
+<ol>
+<li>Use the plug-in&#x27;s blocking channel <code>rsRender -render -blk</code> for Redshift thumbnails and grab the Render View, never falling back to <code>cmds.render</code>.</li>
+<li>For complete isolation use out-of-process <code>Render.exe</code>: Redshift and V-Ray must use it in mayapy standalone too, because standalone <code>cmds.render</code> ignores the current renderer.</li>
+<li>Never run several in-process Redshift renders in a row in one session; use headless batch rendering for bulk work.</li>
+<li>Do not hot-reload plug-in modules before rendering; doing so has reproduced the same-signature crash.</li>
+<li>After a crash, clean up leftover processes and ports as described in &quot;Recovering after a crash&quot;, then reload the scene.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>Repeated renders no longer crash, no new same-signature dumps appear in <code>%TEMP%</code>, and the event log stops showing the same module and offset.</p>
+<h2 id="h-5">If it still fails</h2>
+<p>Record the faulty module, exception code and offset from the event log plus the newest dump path, and report them with the renderer version; switch to out-of-process <code>Render.exe</code> to keep producing images meanwhile.</p>

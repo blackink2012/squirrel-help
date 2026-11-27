@@ -1,0 +1,34 @@
+<p>把一个文件夹里的模型文件按资产分组，逐个打包成 <code>.zasset</code>；同名不同格式会合并为同一个资产。</p>
+<p><img src="media/shared/quicktool-model.webp" alt="模型转资产" loading="lazy" decoding="async"></p>
+<h2 id="h-1">用途</h2>
+<p>把 <code>.ma</code>、<code>.mb</code>、<code>.fbx</code>、<code>.obj</code>、USD、Alembic 等模型及其贴图、代理缓存整理成统一资产，便于入库和后续导入。</p>
+<blockquote><p><strong>菜单里显示的是脚本名</strong>：快捷工具菜单直接扫描 <code>quicktools/</code> 下的脚本，条目名 = 文件名去掉 <code>.py</code> 后把下划线换成空格，所以菜单里看到的是 <code>model to zasset</code>，不是中文标题。三个转资产工具的对应关系：<code>hdr to zasset</code> = HDR 转资产、<code>model to zasset</code> = 模型转资产、<code>pbr to zasset</code> = PBR 贴图转资产。</p></blockquote>
+<h2 id="h-2">支持的格式</h2>
+<p><code>.ma</code>、<code>.mb</code>、<code>.usd</code>、<code>.usda</code>、<code>.usdc</code>、<code>.abc</code>、<code>.fbx</code>、<code>.obj</code>、<code>.ass</code>。</p>
+<p>默认优先级：<code>ma &gt; mb &gt; usd &gt; usda &gt; usdc &gt; abc &gt; fbx &gt; obj &gt; ass</code>。资产名取文件名（不含扩展名），源文件名不改动。</p>
+<h2 id="h-3">输入与输出</h2>
+<ul>
+<li>输入：模型文件夹。同名多格式视为同一资产，所有格式打包进同一个 <code>.zasset</code>。</li>
+<li>输出：每个资产一个 <code>&lt;资产名&gt;.zasset</code>。「输出位置」留空时优先使用当前资产库分类目录，取不到会弹出目录选择。</li>
+<li>资产内部：模型文件、<code>meta.json</code>、可选的 <code>thumb.sicon</code>、<code>textures/</code>、<code>ass/</code> 等子目录；有贴图引用时会写入 <code>texture_map</code>。</li>
+</ul>
+<h2 id="h-4">操作步骤</h2>
+<ol>
+<li>打开「快捷工具 → model to zasset」。</li>
+<li>点击「浏览...」选择「模型文件夹」。</li>
+<li>按需设置「目标格式」（逗号分隔，留空打包全部已发现格式）。</li>
+<li>调整转换选项，点击「扫描模型」核对资产数量与格式。</li>
+<li>设置输出位置（可留空），点击「转换」。</li>
+</ol>
+<h2 id="h-5">结果验证</h2>
+<ul>
+<li>扫描后右侧显示「发现 N 个模型资产」及每个资产的格式、大小。</li>
+<li>转换完成后状态栏显示「转换完成！成功: x, 失败: y」。</li>
+<li><code>.zasset</code> 内能看到模型文件、<code>meta.json</code>，有缩略图时含 <code>thumb.sicon</code>。</li>
+</ul>
+<h2 id="h-6">参数与注意事项</h2>
+<table><thead><tr><th>选项</th><th>默认</th><th>说明</th></tr></thead><tbody><tr><td>包含子文件夹</td><td>开</td><td>打包 <code>ass/</code>、<code>textures/</code>、<code>sourceimages/</code> 等子目录内容</td></tr><tr><td>递归搜索子文件夹</td><td>关</td><td>扫描深层目录中的模型文件</td></tr><tr><td>包含依赖文件（贴图、材质等）</td><td>开</td><td>从 <code>.ma</code> 解析贴图引用，并收集同名 <code>.mtl</code> / <code>.mcm</code> / <code>.zmetal</code></td></tr><tr><td>使用现有元数据和缩略图</td><td>开</td><td>读取配置中的缩略图路径与 JSON/TXT 元数据源</td></tr><tr><td>转换后导入当前分类</td><td>关</td><td>转换后把资产拷到当前资产库分类</td></tr></tbody></table>
+<ul>
+<li>配置来自 <code>Assets/preset/model_mapping.json</code>，可覆盖表达式配置在 <code>Assets/preset/model_expression.json</code>；界面中可编辑文件路由、元数据源与缩略图搜索路径。</li>
+<li>元数据字段映射按配置执行；<code>none</code> 原样保留、<code>split_comma</code> 按逗号切数组、<code>first_line</code> 取首行，用错处理器会读不到元数据。</li>
+</ul>

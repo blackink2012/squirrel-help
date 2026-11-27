@@ -1,0 +1,23 @@
+<p>Maya 主线程被一条不返回的命令占住时，界面会显示无响应，桥接也会一直等不到结果；这通常不是连接问题。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>Maya 窗口 Not Responding，进程 CPU 占用接近 0%，说明它在等而不是在算。</li>
+<li><code>--ping</code> 能连上端口但迟迟不回，或命令超时。</li>
+<li>底座健康检查显示 <code>in_flight.wedged = true</code>、当前命令未返回，且没有模态框。</li>
+</ul>
+<h2 id="h-2">原因</h2>
+<ul>
+<li>在主线程同步执行了慢操作：启动前端、清理会话、长时间渲染或多轮 <code>sleep</code>。</li>
+<li>在 Maya 主线程里嵌套调用 <code>QApplication.processEvents()</code>，造成事件处理重入与互相等待。</li>
+<li>命令本身不返回，桥接会一直等它返回才回传结果。</li>
+</ul>
+<h2 id="h-3">解决</h2>
+<ol>
+<li>先看 Maya 窗口有没有模态框；有就先点掉，再跑一次只读查询。</li>
+<li>不要因为一次超时就重跑破坏性命令；先查迟到结果，确认它是否已经执行完。</li>
+<li>用 <code>python maya_bridge.py --doctor</code> 区分「真卡死」与「模态框挡住」。</li>
+<li>确认是卡死且没有其他办法时，再决定是否强制结束 Maya；未保存的场景会丢失。</li>
+<li>预防：长任务走异步作业，循环里上报 <code>progress(...)</code> 并检查 <code>if cancelled(): break</code>；主线程里不要自己写 <code>processEvents()</code> 循环。</li>
+</ol>
+<h2 id="h-4">仍不行</h2>
+<p>强制结束 Maya 后按「崩溃后恢复」重新拉起。自动保存只保护已经存过盘的场景，且有程序驱动下未观测到落盘的记录，不能把它当作唯一保险。</p>

@@ -1,0 +1,30 @@
+<p>批量出图在 mayapy 里为资产生成缩略图，界面先弹出选项，确认后由独立进程渲染，不占用当前视口。</p>
+<p><img src="media/shared/dialog-headless-watch.webp" alt="无头批处理进度" loading="lazy" decoding="async"></p>
+<h2 id="h-1">选项</h2>
+<ul>
+<li><strong>渲染器</strong>：Arnold、Maya 软件、Maya 硬件 2.0、V-Ray、Redshift。不可用的渲染器会灰显并给出原因。</li>
+<li><strong>预设模型</strong>：材质、贴图、灯光资产自身没有几何，需要从 <code>Assets/Meshes</code> 选一个预设模型来承载。</li>
+<li><strong>环境光（HDRI）</strong>：可勾选「使用 HDRI 环境光」并选择预设；灯光资产不显示这一块，因为灯自己就是光源。</li>
+<li><strong>尺寸</strong>：256、384、512、768、1024，默认取设置里的缩略图大小。</li>
+<li><strong>质量</strong>：快速 / 标准 / 高，映射到当前渲染器自己的采样设置。</li>
+</ul>
+<h2 id="h-2">工具要求</h2>
+<ul>
+<li>Arnold 需要 <code>kick</code> 与 <code>oiiotool</code>，随 Arnold 安装。</li>
+<li>Maya 硬件 2.0、V-Ray、Redshift 需要 Maya 的 <code>Render.exe</code> 走批渲会话。</li>
+<li>V-Ray 与 Redshift 还需要本机装好对应插件；Redshift 另外需要可用 GPU。</li>
+</ul>
+<h2 id="h-3">操作步骤</h2>
+<ol>
+<li>选中一个或多个资产，右键 →「更新缩略图」→「后台渲染」。</li>
+<li>在对话框（标题也是「后台渲染」）里选渲染器、模型（如需要）、环境光、尺寸与质量。</li>
+<li>点「开始生成」，等待进度窗口完成。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p>成功项的缩略图会写回资产并在卡片上刷新；失败与跳过项会逐条给出原因（缺几何、缺预设模型、缺渲染工具等）。图像在写入前会做验证，纯色或空图不会覆盖原缩略图。</p>
+<h2 id="h-5">提示与警告</h2>
+<ul>
+<li>渲染器不可用是环境问题，换一个可用渲染器即可先出图。</li>
+<li>质量越高越慢；Arnold 默认使用标准档。</li>
+<li>环境光只作照明，不进入背景，缩略图是透明背景。</li>
+</ul>

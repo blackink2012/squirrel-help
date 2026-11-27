@@ -1,0 +1,33 @@
+<blockquote><p>One-line summary: <strong>a row of four buttons below the preview area decides which image becomes this asset&#x27;s thumbnail and whether extra images are stored.</strong></p></blockquote>
+<p>Remember one dividing line and you cannot go wrong: <strong>Capture and Import replace the cover (main image); Add and Capture and add append new images and leave the cover alone.</strong></p>
+<h2 id="h-1">When they are usable</h2>
+<p>All four share one condition and are all gray when it fails:</p>
+<table><thead><tr><th>Condition</th><th>Description</th></tr></thead><tbody><tr><td>A normal asset is selected</td><td>All four are gray with no asset selected</td></tr><tr><td>It is not a recycle bin entry</td><td>The recycle bin is read-only and all four are gray</td></tr><tr><td>It is not a version / variant virtual entry</td><td>Virtual entries have no thumbnail of their own and all four are gray</td></tr></tbody></table>
+<p><img src="media_en/15.7.3-1.webp" alt="The four buttons at the bottom of the preview panel" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<table><thead><tr><th>Button</th><th>Effect</th><th>Overwrites the main image</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Capture</td><td><strong>Select a screen area</strong>; the capture is taken immediately as the cover</td><td>Yes (overwrite)</td><td>The screen dims for selection; drag a box, release, and it is written to <code>thumb.sicon</code> (<code>&lt;asset name&gt;.sicon</code> for folder assets)</td><td>No toolbar and no recording; the capture is scaled proportionally so the long side matches <strong>Settings → General → Default thumbnail size</strong> (factory 512)</td></tr><tr><td>Import</td><td>Choose a local image as the cover</td><td>Yes (overwrite)</td><td>Opens a file chooser and replaces the main image immediately; the card cover refreshes</td><td>Filter <code>*.sicon *.jpg *.jpeg *.aicon *.bmp</code> (switch to all files to pick png and others); the old cover is gone</td></tr><tr><td>Add</td><td>Stores local images into <strong>new thumbnail slots</strong></td><td>No (append)</td><td>Opens a file chooser (multi-select) and copies each into <code>thumb_2.sicon</code>, <code>thumb_3.sicon</code>…; the preview jumps to the new image</td><td>The main image is untouched; several images fill empty slots in order</td></tr><tr><td>Capture and add</td><td>Opens the <strong>full screenshot tool</strong> and stores captures in new slots</td><td>No (append)</td><td>A screenshot overlay appears (with a toolbar); each capture advances to the next empty slot so you can capture several in a row</td><td>Same behavior as <strong>Capture and add</strong> in the context menu (<a href="#/en/15.7.2"><code>8.7.2</code></a>)</td></tr></tbody></table>
+<h2 id="h-3">Quick comparison</h2>
+<table><thead><tr><th></th><th>Capture</th><th>Import</th><th>Add</th><th>Capture and add</th></tr></thead><tbody><tr><td>Result</td><td>Overwrites the main image</td><td>Overwrites the main image</td><td>New slot</td><td>New slot</td></tr><tr><td>How the image is taken</td><td>Drag with the mouse (immediate)</td><td>Pick a local image</td><td>Pick local images (multi-select)</td><td>Full screenshot tool (repeat captures)</td></tr><tr><td>Shows a toolbar</td><td>No</td><td>No</td><td>No</td><td>Yes</td></tr><tr><td>Good for</td><td>Quickly grabbing a cover</td><td>Using an existing image as cover</td><td>Collecting a few alternatives</td><td>Precise selection / several captures</td></tr></tbody></table>
+<h2 id="h-4">A typical operation</h2>
+<p><strong>Change the cover (most common)</strong></p>
+<ol>
+<li>Select the asset so the preview shows an image;</li>
+<li>Click <strong>Capture</strong>, drag a box around the area you want as the cover, release;</li>
+<li>The preview and card cover immediately show the new image (scaled to the default thumbnail size).</li>
+</ol>
+<p><strong>Add an alternative image</strong></p>
+<ol>
+<li>Click <strong>Add</strong> and pick local images (multi-select);</li>
+<li>A counter appears below the preview (such as <code>2/3</code>); click ▶ or use the wheel to view;</li>
+<li>If you do not want it, switch to that image and click <strong>Delete</strong>.</li>
+</ol>
+<h2 id="h-5">Undo and risks</h2>
+<table><thead><tr><th>Operation</th><th>Undoable</th><th>How to undo</th></tr></thead><tbody><tr><td>Capture / import (overwrite the main image)</td><td>No</td><td>Capture another or import another image; the old cover has no backup</td></tr><tr><td>Add / capture and add (new slots)</td><td>Yes (delete the new image)</td><td>Switch to the new image and click <strong>Delete</strong>; deleting itself is irreversible</td></tr><tr><td>Deleting an extra image</td><td>No</td><td>No confirmation and no recycle bin (see <a href="#/en/4.7.5"><code>4.1.7.5</code></a>)</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p><strong>Capture</strong> and <strong>Import</strong> overwrite the main image directly and the plug-in offers no &quot;undo the last thumbnail&quot;; if the old cover matters, copy the asset directory&#x27;s <code>thumb.sicon</code> in Explorer before operating.</p></div>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>Complete rules for the preview area and thumbnail slots → <a href="#/en/15.7.1"><code>8.7.1</code></a></li>
+<li>The <strong>Update thumbnail</strong> menu on preview right-click → <a href="#/en/15.7.2"><code>8.7.2</code></a></li>
+<li>Where the output size is configured (default thumbnail size) → <a href="#/en/15.9.2"><code>8.9.2</code></a></li>
+<li>General notes on multiple thumbnail slots and deletion → <a href="#/en/4.7.5"><code>4.1.7.5</code></a></li>
+</ul>

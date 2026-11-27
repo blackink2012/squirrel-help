@@ -1,0 +1,28 @@
+<p>「创建环境光」用插件内置的 <code>.ma</code> 模板新建一盏穹顶灯，并把 HDR 资产设为其环境贴图。</p>
+<p><img src="media/shared/menu-context-dome-light.webp" alt="HDR 资产右键：创建环境光" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>HDR 资产的 <code>textures/</code> 中有 <code>.hdr</code> 或 <code>.exr</code> 文件。</li>
+<li>插件 <code>Assets/HDR_ligt/</code> 下存在对应渲染器的 <code>.ma</code> 模板。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>右键 HDR 资产，展开「创建环境光」。</li>
+<li>选择模板，模板名对应不同渲染器的穹顶灯。</li>
+<li>插件导入模板 <code>.ma</code>，并在本次新建的节点中查找贴图属性。</li>
+<li>按贴图导入策略准备 HDR 路径，写入 file 节点或灯光上的贴图属性。</li>
+<li>对通用名节点做命名规范化，最后清空选择。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>Outliner 中出现一盏穹顶灯，名称为对应渲染器的标准名（如 <code>aiSkyDomeLight1</code>）。</li>
+<li>灯光的环境贴图指向 HDR 文件，file 节点色彩空间为 Raw。</li>
+<li>渲染预览中环境光生效。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>只选「创建环境光」不会修改已有灯光；给已有穹顶灯换 HDR 请用「指定贴图」。</li>
+<li>模板列表来自 <code>Assets/HDR_ligt/</code> 目录；目录为空时没有可选项。</li>
+<li>拖 HDR 进视口会按当前渲染器或双击预设静默选模板，与双击行为一致。</li>
+<li>HDR 落盘位置由「设置 → 常规」的贴图导入策略决定。</li>
+</ul>

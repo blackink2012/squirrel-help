@@ -1,0 +1,29 @@
+<p>默认分类是新建子库时自动生成的子分类文件夹清单，格式为「id 名称」。</p>
+<p><img src="media/shared/settings-sublibraries.webp" alt="设置 → 子库与分类" loading="lazy" decoding="async"></p>
+<p><img src="media/shared/settings-default-cats.webp" alt="默认分类" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>「设置 → 子库与分类」右侧中部的多行文本框。每行写一个分类，前半段是文件夹名（id），后半段是界面显示名，用空格分隔，例如 <code>AAAcustom 自定义</code>。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<p>出厂值写在 <code>config.json</code> 的 <code>default_sub_categories</code>：</p>
+<ul>
+<li>材质、模型、灯光、场景、HDR、动态、图片、音频、动画数据、节点树：<code>AAAcustom 自定义</code></li>
+<li>贴图：<code>AAAcustom 自定义贴图</code></li>
+</ul>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>只在「首次运行」或「子库根下没有任何子分类文件夹」时按它创建目录。</li>
+<li>已存在的分类文件夹不会被删除或重建。</li>
+<li>每个子库根下还会自动补齐 <code>AAAcustom</code>（自定义），保证始终有可存放资产的分类。</li>
+</ul>
+<h2 id="h-4">操作步骤</h2>
+<ol>
+<li>打开「设置 → 子库与分类」，选中子库。</li>
+<li>在「默认分类列表（每行一个，格式: id 名称）」里按行编辑。</li>
+<li>点「应用」或「确定」。</li>
+</ol>
+<h2 id="h-5">结果验证</h2>
+<p>对尚未初始化的新库打开一次，子库下应出现这里列出的分类文件夹及对应显示名。</p>
+<h2 id="h-6">何时修改</h2>
+<p>准备用同一套配置批量建新库，希望每个库一开始就带固定分类时。已经建好的库请用分类管理增删，不要靠改这里补分类。</p>
+<h2 id="h-7">提示</h2>
+<p>id 会成为磁盘文件夹名，避免使用特殊字符；改 id 不会重命名已有目录。</p>

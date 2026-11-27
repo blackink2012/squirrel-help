@@ -1,0 +1,29 @@
+<p>Batch delete moves the selected assets into the <strong>recycle bin</strong>, from where they can be restored through <code>「回收站」 (Recycle bin)</code> on the left; still confirm the selection first, because one action affects the whole batch.</p>
+<p><img src="media_en/shared/batch-bar.webp" alt="Batch delete is the rightmost item of the batch operation bar" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>At least two assets are selected; use the context menu for a single asset.</li>
+<li>The recycle bin has room (100 GB limit; when full, permanently delete old entries in the recycle bin first).</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Multi-select the assets to delete in the grid.</li>
+<li>Click <code>「批量删除」 (Batch delete)</code> in the batch operation bar.</li>
+<li>The confirmation lists the first 20 asset names and shows the total; the rest are summarized as &quot;N in total&quot;.</li>
+<li>Click <code>「是」 (Yes)</code> after checking, or <code>「否」 (No)</code> to cancel.</li>
+<li>The plug-in moves the assets into the recycle bin one by one, clearing their favorite state and refreshing the grid and category counts.</li>
+</ol>
+<h2 id="h-3">Difference from deleting one asset</h2>
+<ul>
+<li>For a single asset use <code>「删除」 (Delete)</code> in the context menu; the confirmation shows one name and lets you choose between &quot;move to recycle bin&quot; and &quot;delete permanently&quot;.</li>
+<li><strong>Batch delete has one path only: into the recycle bin</strong>, with no &quot;delete permanently&quot; entry; to remove something for good use <code>「删除 → 彻底删除」 (Delete → Delete permanently)</code> in the context menu.</li>
+<li>Batch delete runs item by item; a failure in the middle does not roll back the part already deleted, and failure reasons go to the log.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The assets disappear from the current grid and the category&#x27;s asset count drops.</li>
+<li>The count on the <code>「回收站」 (Recycle bin)</code> entry on the left grows, and the entries are visible inside.</li>
+<li>Right-clicking an entry in the recycle bin and choosing <code>「还原」 (Restore)</code> returns the asset to its original category, where it reappears in the grid.</li>
+</ul>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Batch delete <strong>goes to the recycle bin and can be restored</strong>, so unlike &quot;delete permanently&quot; it is reversible; but the recycle bin is limited to 100 GB and never cleans itself, so when full you must permanently delete entries one by one. &quot;Delete permanently&quot; is not available from this entry and cannot be undone. Still read the names and counts in the confirmation dialog carefully.</p></div>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>Restore from the recycle bin immediately after a mistake (the whole record comes back). When unsure whether an asset is still needed, moving it to a category such as &quot;to be sorted&quot; is easier than deleting and restoring.</p></div>

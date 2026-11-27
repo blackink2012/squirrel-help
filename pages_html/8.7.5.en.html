@@ -1,0 +1,21 @@
+<p>The status page answers four questions: what the library holds, how large it is, how long since it was rebuilt and whether semantic retrieval works right now; it also says which source to trust for which query.</p>
+<p><img src="media_en/shared/menu-ai-tools.webp" alt="The AI tools menu: the knowledge base status is queried in the AI assistant with maya_docs(action=&quot;status&quot;)" loading="lazy" decoding="async"></p>
+<blockquote><p>The image is only a signpost: the status comes from having the assistant run <code>maya_docs(action=&quot;status&quot;)</code>; the menu has no separate knowledge base status item.</p></blockquote>
+<h2 id="h-1">Prerequisites</h2>
+<p><code>maya_docs</code> can be called in the AI assistant, or the same command can be run on the command surface.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Have the assistant run <code>maya_docs(action=&quot;status&quot;)</code>.</li>
+<li>Read the entry count and its distribution by type (command / node / api / devguide / doc), each file&#x27;s size and the alias count.</li>
+<li>Read the rebuild time and sources under <code>rebuilt</code> to judge whether the knowledge base is stale.</li>
+<li>Read <code>semantic</code>: model, dimensions, count, availability and reason; for an end-to-end check add <code>probe=true</code>, which sends one real embedding request.</li>
+<li>To see which plug-ins are installed, run <code>maya_docs(action=&quot;plugins&quot;)</code>, optionally filtered by plug-in name.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>It returns <code>status=ok</code> with <code>entries</code>, <code>by_type</code>, <code>semantic</code> and <code>authority</code>; with <code>probe=true</code> it adds the result of one real embedding call.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>When the local library is missing it clearly states the current mode is online; do not assume local data exists.</li>
+<li><code>authority</code> states the authoritative source: live help for command parameters, details for node attributes and retrieval for body text.</li>
+<li>When the knowledge base is stale or incomplete rebuild it with <code>tools\rebuild_maya_doc_kb.py</code>; avoid heavy Maya work while it builds.</li>
+</ul>

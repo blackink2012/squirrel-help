@@ -1,0 +1,28 @@
+<p>An upgrade replaces only the program files; the asset library, settings and sign-in state live outside the program directory and are normally left untouched.</p>
+<p><img src="media_en/shared/installer-directory.webp" alt="Installer wizard: install location" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Upgrading the standalone edition / EXE</h2>
+<ol>
+<li>Close the running <code>SquirrelAssetManager.exe</code> and the related dsh front-end processes.</li>
+<li>Run the new installer; it reads the install directory from the registry and overwrites the original location by default.</li>
+<li>Re-check the Maya integration and the offline dsh as needed.</li>
+<li>Restart Maya (if the Maya integration is installed), then start the standalone edition and confirm the version number.</li>
+</ol>
+<h2 id="h-2">Before upgrading</h2>
+<ul>
+<li>Note the old version number and keep the old installer so you can roll back.</li>
+<li>Confirm the asset library and settings have backups.</li>
+<li>If the current version is using the AI assistant dsh, close the web front end first so the files are not locked.</li>
+</ul>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The version number in the main window title is the new one.</li>
+<li>The existing library, favorites, tags and settings are still there.</li>
+<li>The Maya shelf / status-line entry points work and the dsh and Node directories have not been deleted.</li>
+</ul>
+<h2 id="h-4">Common failures</h2>
+<ul>
+<li><strong>Access denied</strong>: not all Maya instances are closed; close them and reinstall.</li>
+<li><strong>The entry point disappears after upgrading</strong>: restart Maya; if needed, run the installer again with <code>「Maya 集成」 (Maya integration)</code> checked to rewrite the startup block.</li>
+<li><strong>Old files left behind</strong>: an EXE overwrite install does not remove files deleted in the new version; uninstall first and then install.</li>
+<li><strong>Settings or library layout incompatible</strong>: back up before a major-version upgrade and roll back if needed (the exact compatibility range is to be confirmed).</li>
+</ul>

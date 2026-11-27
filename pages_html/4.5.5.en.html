@@ -1,0 +1,26 @@
+<p>A search only replaces what the grid currently shows; it never moves or modifies assets, and clearing it returns to the complete list of the current category.</p>
+<p><img src="media_en/shared/search-keyword-bar.webp" alt="The built-in ✕ on the right of the search box: click it to clear the keyword / tag and restore all assets of the current category" loading="lazy" decoding="async"></p>
+<h2 id="h-1">What isolation means</h2>
+<ul>
+<li>Keyword search, AI semantic search and search by image all replace the grid with their result set.</li>
+<li>The existing selection is cleared, and the properties and preview panels on the right clear with it.</li>
+<li>Asset files, categories, tags and favorites never change because of a search.</li>
+</ul>
+<h2 id="h-2">How to clear</h2>
+<table><thead><tr><th>Search type</th><th>Where to clear</th><th>Result</th></tr></thead><tbody><tr><td>Keyword search</td><td>Click the built-in ✕ in the search box, or delete the input</td><td>Restores all assets of the current category</td></tr><tr><td>AI semantic search</td><td>Delete the input or click ✕</td><td>Restores the current category list immediately</td></tr><tr><td>Search by image</td><td>Click the query thumbnail, click ✕, or press Backspace with the caret at the front</td><td>Restores the current category list; Backspace removes only the query image and keeps the text</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Confirm the grid is in a search state: there is text or a query image in the search box, or the status bar shows a hit count.</li>
+<li>Click the ✕ on the right of the search box.</li>
+<li>Watch the grid return to all assets of the current category and the status bar show the new visible count.</li>
+<li>To remove only the query image and keep the keyword, put the caret at the very front of the search box and press Backspace.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p><img src="media_en/shared/search-count.webp" alt="Status bar: visible / total (the visible count shrinks during a search), with the current selection on the right" loading="lazy" decoding="async"></p>
+<ul>
+<li>The grid shows all assets of the current category again.</li>
+<li>The search box is empty, the query image is gone and the built-in ✕ is hidden.</li>
+<li>The status bar reports <code>「已取消以图搜图，恢复当前分类的全部资产」 (image search cancelled; restoring all assets of the current category)</code> or the restored asset count.</li>
+</ul>
+<div class="admonition note"><div class="admonition-title">注意</div><p>Switching category, switching tag filters or reloading data also ends image-search isolation automatically; no extra ✕ click is needed.</p></div>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Search results are only what is currently displayed. Before batch moving or batch deleting, clear the search and confirm which assets are actually selected.</p></div>

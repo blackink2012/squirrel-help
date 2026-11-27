@@ -1,0 +1,25 @@
+<p>Export materials only presets, per asset type, whether geometry and proxies are skipped so only materials are packaged.</p>
+<p><img src="media_en/shared/settings-export-options.webp" alt="Export options" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>When a new export dialog or asset creation starts, <code>「仅导出材质（跳过几何体/代理）」 (export materials only, skipping geometry / proxies)</code> is pre-checked.</p>
+<h2 id="h-2">Values and defaults</h2>
+<ul>
+<li>The checkbox <code>「仅导出材质（跳过几何体/代理）」 (export materials only, skipping geometry / proxies)</code>, mapped to <code>material_only</code>.</li>
+<li>Default: checked for <code>materials</code>; unchecked for <code>models</code>, <code>lights</code>, <code>textures</code>, <code>scenes</code>, <code>hdr</code> and <code>ani</code>.</li>
+</ul>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>When checked, the geometry and proxy export stages are skipped and only material nodes are exported.</li>
+<li><code>.ma</code> / <code>.mb</code> can still write material nodes in this mode without exporting the associated DAG objects.</li>
+<li>The animation frame mode uses the current frame and the thumbnail captures the current viewport.</li>
+<li>It never changes existing assets; it is stored under the matching asset type key in <code>Assets/preset/export_preset.json</code>.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<ul>
+<li>Material library assets only need materials and textures: keep the <code>materials</code> default checked.</li>
+<li>Model, scene or animation assets need full geometry: confirm the matching type is unchecked.</li>
+<li>Only delivering materials for one occasion: check it in that export dialog rather than changing the default.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<blockquote><p><strong>Warning</strong>: with <code>「仅导出材质」 (Export materials only)</code> checked and no material nodes selected, an empty shell asset is exported; confirm that materials or material-carrying objects are selected first.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: whether textures are packaged in this mode is still decided by <code>「收集关联文件」 (Collect linked files)</code>.</p></blockquote>

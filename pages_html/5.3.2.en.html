@@ -1,0 +1,30 @@
+<p>Assets with variants, versions or LODs use the <code>「导入变体 / 版本」 (Import variant / version)</code> submenu to import only the chosen piece of geometry.</p>
+<p><img src="media_en/shared/dialog-version-browser-variant.webp" alt="Version browser: review and import a specific version / variant" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The asset has variants (the <code>variants</code> section of <code>variants.json</code> is not empty), embedded versions (such as <code>V1</code>, <code>V2</code>) or several LODs on its main version.</li>
+<li>The asset has been right-clicked in the grid.</li>
+</ul>
+<h2 id="h-2">Menu titles</h2>
+<table><thead><tr><th>Asset contents</th><th>Menu title</th></tr></thead><tbody><tr><td>Variants plus separate versions</td><td><code>「导入变体 / 版本」 (Import variant / version)</code></td></tr><tr><td>Variants only</td><td><code>「导入变体」 (Import variant)</code></td></tr><tr><td>Only versions / LODs</td><td><code>「导入版本 / LOD」 (Import version / LOD)</code></td></tr></tbody></table>
+<p>The main version is always first, followed by the versions and variants; each entry has a small thumbnail on the left, and hovering shows a large preview beside the menu.</p>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Right-click the asset and expand the matching <code>「导入…」 (Import…)</code> submenu.</li>
+<li>Choose the target: the main version, an embedded version or a variant entry.</li>
+<li>Choose the LOD: <code>「本体几何体」 (own geometry)</code> is that variant&#x27;s / version&#x27;s <code>LOD0</code>, and further levels are listed as <code>LOD1</code>, <code>LOD2</code>…; with no LODs the root geometry files are listed directly.</li>
+<li>When one level has several formats, expand the format submenu; entries are the format name or &quot;format · file name&quot;.</li>
+<li>If that entry also carries <code>.zmetal</code> or <code>.mcm</code>, they are listed alongside the geometry formats and choosing them runs a material import instead.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>Only the geometry of the chosen variant / version / LOD is added to the scene.</li>
+<li>The Script Editor shows <code>[VariantImport] 导入变体几何体: &lt;file&gt; (&lt;format&gt;)</code> and the import success log.</li>
+<li>Texture and material for a variant come from the asset root and need no extra selection.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>Variant geometry is stored flat under <code>variants/</code> (<code>&lt;id&gt;.&lt;ext&gt;</code>, <code>&lt;id&gt;_lodN.&lt;ext&gt;</code>), and the older sub-directory layout <code>variants/&lt;id&gt;/</code> is still read for compatibility.</li>
+<li>The default LOD is set by <code>default_lod</code> in <code>lods.json</code>; LOD0 always points at the geometry in the root and is not placed in a <code>lod0/</code> sub-directory.</li>
+<li>To use a version&#x27;s own materials as well, see &quot;Per-version materials&quot;; variants never carry their own materials.</li>
+</ul>

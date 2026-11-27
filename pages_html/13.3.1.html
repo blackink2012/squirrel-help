@@ -1,0 +1,28 @@
+<p>分类树打不开，通常是库根路径不可访问、索引缓存与当前代码不兼容，或分类元数据损坏。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>左栏一直停在加载占位，或只有空白，没有子库与分类。</li>
+<li>子库节点在，但子分类为空，或「自定义」分类消失。</li>
+<li>切换资产库后分类树不刷新，重启插件才恢复。</li>
+<li>脚本编辑器出现 <code>[MaterialManager] 库路径无效</code> 或索引缓存不兼容的提示。</li>
+</ul>
+<h2 id="h-2">可能原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>库根路径无效</td><td>路径被移动、删除，或网络盘未连接</td><td>在库列表里重新选择存在的目录</td></tr><tr><td>没有读取权限</td><td>打开库目录被拒绝，或杀毒软件拦截</td><td>恢复读取权限后再刷新</td></tr><tr><td>索引缓存与当前版本不兼容</td><td>日志出现「索引缓存不兼容，改为全量扫描」</td><td>清缓存后重新加载</td></tr><tr><td>分类元数据损坏</td><td>某个子库或分类目录反复加载失败</td><td>先备份库，再单独重扫或从备份恢复</td></tr><tr><td>配置里的子库/分类已变更</td><td>改了 <code>config.json</code> 但界面没变</td><td>重新读取配置</td></tr><tr><td>手工新增/改名的文件夹未同步</td><td>磁盘上有目录，树里没有</td><td>使用「从文件夹同步分类」</td></tr></tbody></table>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>在库列表或设置里确认当前库根存在、可打开，并且不是断开的网络盘。</li>
+<li>在 AI 助手或命令面执行 <code>library_health</code>，<code>op=status</code> 查看 <code>library_root</code>、<code>is_loaded</code>、<code>asset_count</code>、<code>category_count</code>。</li>
+<li>怀疑缓存问题时，先执行 <code>op=clear_cache</code>，再执行 <code>op=reload</code>，让插件重扫磁盘。</li>
+<li>改过子库或分类配置时，执行 <code>op=reload_config</code>，再刷新界面。</li>
+<li>磁盘上手工新增了分类文件夹时，用「从文件夹同步分类」把它们纳入分类树。</li>
+<li>权限或路径问题处理后，关闭并重新打开插件窗口。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p>左栏能显示全部子库与子分类，资产计数与磁盘上的 <code>.zasset</code> 数量一致，切换分类时网格正常刷新。</p>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>查看脚本编辑器中的 <code>[MaterialManager]</code> 日志，确认是路径、权限还是某个资产加载失败。</li>
+<li>先备份整个资产库，再尝试 <code>library_health</code> 的 <code>op=reload</code>；不要直接手工修改或删除分类元数据文件。</li>
+<li>如果是单个子库异常，先切到其他库确认插件本身正常，再单独处理这个子库。</li>
+<li>按 6.3.3「库体检异常」读取加载失败清单，或按 6.8.2「诊断流程」收集信息后反馈。</li>
+</ul>

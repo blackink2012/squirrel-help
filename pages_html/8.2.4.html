@@ -1,0 +1,16 @@
+<p>安装失败通常是网络、权限或 Node 版本问题；先读报告与日志，再按失败的那一步单独补，不要整轮重装。</p>
+<h2 id="h-1">症状与处理</h2>
+<p><strong>Ollama 没装上</strong>：确认 <code>ollama</code> 命令存在，或从 ollama.com 手动安装后重跑一键安装。Windows 上自动安装依赖 winget，被策略拦截时会失败。</p>
+<p><strong>服务没启动</strong>：确认 11434 端口未被占用，手动运行 <code>ollama serve</code>，再访问 <code>http://127.0.0.1:11434/api/tags</code>。若系统或环境变量设了代理（<code>HTTP_PROXY</code> / <code>HTTPS_PROXY</code>）且没把 <code>127.0.0.1</code> 放进 <code>NO_PROXY</code>，本地回环请求也会被代理拦掉。</p>
+<p><strong>模型拉取中断</strong>：直接重跑一键安装，已完成的步骤会跳过。网络慢时先换镜像或稍后再试。</p>
+<p><strong>图像 sidecar 装了一半</strong>：venv 在但缺 numpy / Pillow 时会被判为未装完。重跑安装，或执行 <code>python tools\asset_vision_env.py --install --self-check</code>。</p>
+<p><strong>索引构建失败</strong>：多数是 Ollama 没起或模型没拉。先体检，再确认库路径存在；命令行可用 <code>python tools\asset_index.py --status</code> 与 <code>--doctor</code> 查看原因。</p>
+<p><strong>dsh 安装失败</strong>：先关闭已打开的 AI 面板，再重试，避免文件被占用；Node 必须是 <code>^22.19 || &gt;=24</code>。</p>
+<h2 id="h-2">看日志</h2>
+<ul>
+<li>AI 依赖安装：<code>%TEMP%\squirrel_asset_manager\ai_install.log</code></li>
+<li>dsh 安装：<code>&lt;插件目录&gt;\dsh_home\dsh_install.log</code></li>
+<li>dsh 启动：<code>&lt;插件目录&gt;\dsh_home\squirrel_web_&lt;实例&gt;.log</code></li>
+</ul>
+<h2 id="h-3">仍不行</h2>
+<p>把报告、日志末尾 40 行与系统版本一起反馈；不要手工删除半个 venv 或索引目录，重跑安装即可覆盖修好。</p>

@@ -1,0 +1,38 @@
+<p>快捷工具有三条运行路径：工具栏菜单、AI 命令 <code>quicktool_run</code>、以及脚本浏览器或脚本编辑器；三者最终都执行同一份 <code>quicktools/</code> 脚本。</p>
+<p><img src="media/shared/quicktool-script-browser.webp" alt="脚本浏览器" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>需要读写 Maya 场景的工具必须在 Maya 内运行；独立运行版会自动把它们投送到在线 Maya。</li>
+<li><code>图像格式转换工具.py</code> 与 <code>批量镜像复制.py</code> 是纯文件工具，可在本地执行。</li>
+</ul>
+<h2 id="h-2">方式一：界面菜单</h2>
+<ol>
+<li>点击主窗口工具栏的「快捷工具」。</li>
+<li>选择工具条目，窗口打开后按页面说明操作。</li>
+</ol>
+<h2 id="h-3">方式二：命令通道</h2>
+<ol>
+<li>调用 <code>quicktool_run</code>；不传 <code>name</code> 时只返回脚本清单（含入口与是否已被一等公民命令覆盖）。</li>
+<li>传入 <code>name</code>（可带或不带 <code>.py</code>）执行；可同时传 <code>params</code> 作为参数。</li>
+<li>先加 <code>dry_run=true</code> 可只看将要调用的脚本与入口，不实际执行。</li>
+<li><code>name</code> 只接受 <code>quicktools/</code> 下的纯文件名，路径分隔符与 <code>..</code> 会被拒绝。</li>
+</ol>
+<p>已有专门命令时优先用后者：<code>hdr_to_zasset</code>、<code>model_to_zasset</code>、<code>pbr_to_zasset</code>、<code>convert_image_format</code>、<code>mirror_copy</code>、<code>convert_material</code>、<code>convert_import</code>、<code>material_conversion_info</code>。</p>
+<h2 id="h-4">方式三：脚本浏览器 / 脚本编辑器</h2>
+<ul>
+<li>脚本浏览器默认扫描 <code>script_assets/</code> 与额外脚本根；可把 <code>quicktools/</code> 目录添加为额外脚本根后运行（通用能力，未针对快捷工具做专门登记）。</li>
+<li>也可以在 Maya 脚本编辑器中直接执行某个 <code>.py</code>，效果等同 <code>__main__</code> 方式。</li>
+</ul>
+<h2 id="h-5">入口解析顺序</h2>
+<p>菜单与命令通道一致：<code>main()</code> → <code>run()</code> → 源码含 <code>if __name__ == &quot;__main__&quot;</code> 时以 <code>__main__</code> 身份执行一次。只找到 <code>main</code> / <code>run</code> 时不会再执行模块体，避免顶层副作用跑两遍。</p>
+<h2 id="h-6">结果验证</h2>
+<ul>
+<li>菜单方式：工具窗口出现。</li>
+<li>命令方式：返回 <code>status: ok</code>、<code>entry</code> 与 <code>opened: true</code>；GUI 工具只代表窗口已打开，不代表操作完成。</li>
+<li>脚本浏览器：状态栏显示成功 / 失败与用时。</li>
+</ul>
+<h2 id="h-7">注意事项</h2>
+<ul>
+<li>菜单调用 <code>main()</code> / <code>run()</code> 时不传参数；需要参数的脚本请走命令通道或「带参数运行」。</li>
+<li>命令通道返回后 GUI 工具仍在等待用户操作，不要据此判断任务已完成。</li>
+</ul>

@@ -1,0 +1,24 @@
+<p>zmetal is the node network data of a material asset, stored inside the <code>.zasset</code>; import rebuilds the whole shading network from it.</p>
+<p><img src="media_en/shared/area-icon-view.webp" alt="Cards in the materials sub-library: each one is a zmetal material asset" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>A material asset (a <code>.zasset</code> folder) exists.</li>
+<li>The asset directory can be opened in a file manager.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the material asset in the library and choose <code>「打开文件夹」 (Open folder)</code>.</li>
+<li>Open <code>meta.json</code> and check <code>name</code>, <code>name_cn</code>, <code>node_type</code>, <code>renderer</code>, <code>color_space</code> and <code>formats</code>.</li>
+<li>Find <code>node.zmetal</code>. It is JSON, not a Maya scene file; some external assets name the <code>.zmetal</code> after the asset, and import looks for <code>node.zmetal</code> first and only then takes any <code>.zmetal</code>.</li>
+<li>Open <code>node.zmetal</code> and confirm it has <code>root_materials</code> and <code>nodes</code> at the top level; material and texture nodes all live in <code>nodes</code>.</li>
+<li>When the asset carries textures, look at <code>textures/</code>; <code>fileTextureName</code> inside <code>node.zmetal</code> has been rewritten to a relative <code>textures/...</code> path.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>Open the same <code>.zmetal</code> with the context menu&#x27;s <code>「预览节点」 (Preview nodes)</code> and the canvas shows the material nodes matching <code>root_materials</code> plus their upstream connections; importing it into the scene creates the same-named material in the Hypershade.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li><code>.zmetal</code> records only material nodes and connections; it contains no geometry, cameras or lights.</li>
+<li><code>node.mcm</code> records the topological correspondence between materials and objects, which is separate data from zmetal.</li>
+<li>Prefer <code>.zmetal</code> when importing materials, because it stores node attributes and connections; only when it is missing does import fall back to the material network in <code>.ma/.mb</code>.</li>
+<li>The file exists only if the zmetal format was enabled at export time.</li>
+</ul>

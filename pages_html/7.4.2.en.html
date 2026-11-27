@@ -1,0 +1,25 @@
+<p>The light category is the lights sub-library of the asset library, holding <code>.zlight</code> or <code>.ma/.mb</code> light assets; the context menu can import them, apply parameters or convert on import.</p>
+<p><img src="media/shared/menu-sublib-lights.webp" alt="Assets in the lights sub-library and its light-specific menu items" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The current Maya has the target renderer plug-in loaded (Arnold / V-Ray / Redshift or native Maya).</li>
+<li>The light asset is already in the light category.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>In the library go to the light category on the left.</li>
+<li>Right-click the light asset, choose <code>「导入」 (Import)</code> and then a format such as <code>.zlight</code> or <code>.ma</code>.</li>
+<li>Import first builds each light for its own source renderer; when that differs from the current renderer a <code>「灯光与渲染器不匹配」 (light and renderer do not match)</code> prompt asks whether to convert.</li>
+<li>To land directly on a specific type, right-click <code>「转换导入」 (Convert import)</code> and choose the target light node type in the submenu.</li>
+<li>To reuse an asset&#x27;s parameters on an existing light, use <code>「应用灯光参数到选中灯光」 (Apply light parameters to the selected light)</code>.</li>
+</ol>
+<h2 id="h-3">Light type mapping</h2>
+<table><thead><tr><th>Generic type</th><th>Arnold</th><th>V-Ray</th><th>Redshift</th><th>Native Maya</th></tr></thead><tbody><tr><td>area</td><td><code>aiAreaLight</code></td><td><code>VRayLightRectShape</code></td><td><code>RedshiftPhysicalLight</code></td><td><code>areaLight</code></td></tr><tr><td>point</td><td><code>aiPhotometricLight</code></td><td><code>VRayLightSphereShape</code></td><td><code>RedshiftIESLight</code></td><td><code>pointLight</code></td></tr><tr><td>spot</td><td><code>aiPhotometricLight</code> (approximate)</td><td><code>VRayLightSpotShape</code></td><td><code>RedshiftPhysicalLight</code></td><td><code>spotLight</code></td></tr><tr><td>directional</td><td><code>aiSkyDomeLight</code> (approximate)</td><td><code>VRayLightDistantShape</code></td><td><code>RedshiftSunAndSky</code></td><td><code>directionalLight</code></td></tr><tr><td>dome</td><td><code>aiSkyDomeLight</code></td><td><code>VRayLightDomeShape</code></td><td><code>RedshiftDomeLight</code></td><td><code>directionalLight</code> (approximate)</td></tr><tr><td>ies</td><td><code>aiPhotometricLight</code></td><td><code>VRayLightIESShape</code></td><td><code>RedshiftIESLight</code></td><td><code>pointLight</code></td></tr></tbody></table>
+<h2 id="h-4">Verify the result</h2>
+<p>After import the light appears in the Outliner and is selected, its node type matches the current renderer or the chosen target type, and the light&#x27;s illumination is visible in the render viewport.</p>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>Double-clicking a <code>.zlight</code> converts directly to the current renderer without asking; right-click <code>「导入」 (Import)</code> builds first and asks afterwards.</li>
+<li>The automatic conversion prompt only covers Arnold, V-Ray and Redshift.</li>
+<li>Arnold has no native spot or distant light, so photometric / dome lights are used as approximations; native Maya has no dome light and uses a directional light instead.</li>
+</ul>

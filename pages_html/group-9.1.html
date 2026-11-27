@@ -1,0 +1,15 @@
+<p>下表由 <code>quicktools/</code> 目录自动生成，共 <strong>10</strong> 个工具。入口列表示脚本公开的入口函数；「对应命令」是优先使用的 AI 命令。</p>
+<div class="table-scroll"><table>
+<thead><tr><th>工具</th><th>说明</th><th>入口</th><th>对应命令</th><th>帮助</th></tr></thead>
+<tbody>
+<tr><td><strong>HDR 转资产</strong><br><code>hdr_to_zasset.py</code></td><td>每个 HDR/EXR 生成一个 .zasset，可生成缩略图。</td><td>main</td><td>hdr_to_zasset</td><td><a href="#/9.2.1">查看</a>（含独立帮助）</td></tr>
+<tr><td><strong>模型转资产</strong><br><code>model_to_zasset.py</code></td><td>模型文件夹批量转 .zasset，可复用源目录元数据。</td><td>main</td><td>model_to_zasset</td><td><a href="#/9.2.2">查看</a>（含独立帮助）</td></tr>
+<tr><td><strong>PBR 贴图转资产</strong><br><code>pbr_to_zasset.py</code></td><td>PBR 贴图按材质分组转 .zasset，支持多精度。</td><td>main</td><td>pbr_to_zasset</td><td><a href="#/9.2.3">查看</a>（含独立帮助）</td></tr>
+<tr><td><strong>图像格式转换</strong><br><code>图像格式转换工具.py</code></td><td>HDR/EXR/TIFF/PNG/JPEG 批量转格式。</td><td>main</td><td>convert_image_format</td><td><a href="#/9.3.1">查看</a>（含独立帮助）</td></tr>
+<tr><td><strong>批量处理 Maya 文件</strong><br><code>批量处理maya文件.py</code></td><td>对多个 .ma/.mb 执行同一段 MEL/Python。</td><td>run</td><td>batch_run_maya_scripts</td><td><a href="#/9.4.1">查看</a></td></tr>
+<tr><td><strong>批量镜像复制</strong><br><code>批量镜像复制.py</code></td><td>批量镜像复制场景对象。</td><td>main</td><td>mirror_copy</td><td><a href="#/9.4.2">查看</a>（含独立帮助）</td></tr>
+<tr><td><strong>材质导入导出工具</strong><br><code>材质导入导出工具(材质管理).py</code></td><td>材质导入/导出与材质管理。</td><td>main</td><td>create_asset / import / apply_material</td><td><a href="#/9.5.1">查看</a></td></tr>
+<tr><td><strong>材质转换工具</strong><br><code>材质转换工具.py</code></td><td>按映射把材质从一种类型转换为另一种。</td><td>main</td><td>convert_material / convert_import</td><td><a href="#/9.5.2">查看</a>（含独立帮助）</td></tr>
+<tr><td><strong>材质节点属性映射工具</strong><br><code>材质节点属性映射工具.py</code></td><td>两列材质属性映射，支持 .mmap 预设。</td><td>main</td><td>material_conversion_info（只覆盖「看映射」，不含逐属性套用）</td><td><a href="#/9.5.3">查看</a>（含独立帮助）</td></tr>
+<tr><td><strong>脚本浏览器</strong><br><code>脚本浏览器.py</code></td><td>浏览、搜索、运行、导入与收藏脚本。</td><td>main</td><td>（无：它是「跑任意脚本」的工具，命令通道已有 maya_run_python）</td><td><a href="#/9.6.1">查看</a></td></tr>
+</tbody></table></div>

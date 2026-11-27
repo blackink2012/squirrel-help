@@ -1,0 +1,43 @@
+<blockquote><p>一句话定位：<strong>设置窗口左侧导航最后两个页签。</strong>「授权激活」管这台电脑能不能用；「关于」只放软件信息、反馈与合规信息。</p></blockquote>
+<p><strong>这两页都不参与全局锁定</strong>：不用勾「解锁全部配置」也能点（激活入口必须始终可用）。</p>
+<p><img src="media/shared/settings-license.webp" alt="设置窗口（授权激活页）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">怎么打开</h2>
+<p>设置窗口 → 点左侧导航的「授权激活」或「关于」（页签竖排在窗口左边）。</p>
+<h2 id="h-2">1. 授权激活</h2>
+<h3 id="h-3">当前授权</h3>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>说明</th></tr></thead><tbody><tr><td>状态徽标</td><td>只读</td><td>显示「已授权 / 试用中 / 宽限期 / 已到期 / 未激活」</td><td>颜色随状态变化</td></tr><tr><td>当前状态</td><td>只读文字</td><td>一句话说明授权对象、剩余天数或到期状态</td><td>随本机授权情况刷新</td></tr><tr><td>机器码</td><td>只读输入框</td><td>本机唯一标识，找客服或买授权时要用</td><td>不可编辑</td></tr><tr><td>复制（机器码旁）</td><td>按钮</td><td>把机器码放进剪贴板</td><td>—</td></tr><tr><td>同步授权</td><td>按钮</td><td>立即向服务器同步一次授权（续费 / 换机后不必等次日心跳）</td><td>在线 / 离线授权都可用；离线授权只做只读登记与心跳，不会吊销或降级本机授权</td></tr></tbody></table>
+<h3 id="h-4">激活码与状态入口</h3>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>说明</th></tr></thead><tbody><tr><td>激活码输入框</td><td>输入框</td><td>常驻在机器码下方</td><td>有激活码时直接填这里</td></tr><tr><td>激活</td><td>绿色按钮</td><td>用输入框里的激活码联网激活；<strong>还没试用过时不填激活码，点它即开始免费试用</strong></td><td>已有授权记录 / 试用过时，输入为空会提示「请先输入激活码」</td></tr><tr><td>主按钮</td><td>按钮</td><td>随状态变化：未激活「授权管理」、试用中「购买授权」、已授权「授权管理」、已到期「续费授权」</td><td>同一状态只保留一个主操作</td></tr><tr><td>次按钮</td><td>按钮</td><td>随状态变化：购买授权 / 授权管理（<strong>始终显示</strong>，不适用时置灰并在悬停提示原因）</td><td>—</td></tr></tbody></table>
+<p>授权到期后的行为：<strong>浏览资产库不受影响，导入 / 导出 / 转换需要有效授权</strong>。激活与续期步骤见 <a href="#/2.5.2"><code>2.5.2</code></a>。</p>
+<blockquote><p>未授权 / 授权已到期时，启动插件仍会自动弹出「授权管理」窗口，保留一次激活机会。离线导入、解绑 / 恢复本机授权在本页「授权详情与高级操作」里也能完成（见 <a href="#/15.15.2"><code>8.15.2</code></a>）。</p></blockquote>
+<h3 id="h-5">账号与我的授权</h3>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>说明</th></tr></thead><tbody><tr><td>未登录 / 已登录</td><td>只读徽标</td><td>显示当前账号状态</td><td>—</td></tr><tr><td>登录 / 注册</td><td>按钮</td><td>打开账号窗口，用邮箱验证码登录</td><td>仅未登录时显示</td></tr><tr><td>设备管理</td><td>按钮</td><td>打开账号窗口，查看设备、换机、领取试用</td><td>仅已登录时显示（原「我的授权」入口并入这里）</td></tr><tr><td>退出登录</td><td>按钮</td><td>清除本机会话</td><td>仅已登录时显示</td></tr></tbody></table>
+<p>登录是可选的：<strong>用激活码激活、或空码点「激活」领取试用都不需要登录</strong>。需要跨设备管理、换机解绑时才登录。</p>
+<h3 id="h-6">授权详情与高级操作</h3>
+<p>默认折叠，点标题展开；低频与危险操作都收在这里。</p>
+<table><thead><tr><th>控件</th><th>作用</th><th>说明</th></tr></thead><tbody><tr><td>导入离线许可证…</td><td>选择 <code>.lic</code> / <code>.dat</code> / <code>.json</code> 离线授权文件</td><td>仅支持客服手动签发的离线授权；在线激活的文件不能离线导入</td></tr><tr><td>从剪贴板导入</td><td>读取剪贴板里的许可证全文并直接激活</td><td><strong>不显示许可证内容</strong>，只回结果</td></tr><tr><td>解除本机授权</td><td>解绑这台电脑</td><td>离线签发授权禁用；服务器确认后释放席位，受每日解绑上限约束</td></tr><tr><td>恢复本机授权</td><td>恢复之前解绑的本机副本</td><td><strong>始终显示</strong>；本机无解绑副本时置灰，悬停提示「本机没有可恢复的解绑副本」</td></tr></tbody></table>
+<h2 id="h-7">2. 关于</h2>
+<p>「关于」页分四组：软件信息、服务器通知、反馈与建议、协议与声明。</p>
+<p><img src="media/shared/settings-about.webp" alt="设置窗口（关于页）" loading="lazy" decoding="async"></p>
+<h3 id="h-8">软件信息</h3>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认 / 当前值</th><th>改了会怎样</th></tr></thead><tbody><tr><td>版本</td><td>只读徽标</td><td>当前插件版本号</td><td>随安装包（如 <code>1.0.0</code>）</td><td>—</td></tr><tr><td>检查更新</td><td>按钮</td><td>联网拉取授权服务器登记的版本信息</td><td>—</td><td>有新版本会弹「发现新版本…」并提供「去下载」；已是最新会提示；网络失败会说明原因</td></tr><tr><td>更新日志</td><td>按钮</td><td>拉取并显示历史版本更新说明（后台「版本管理」维护）</td><td>—</td><td>弹窗展示版本号 / 日期 / 说明；没有日志时提示「暂无更新日志」</td></tr><tr><td>官网</td><td>只读输入框</td><td>插件官网地址</td><td><code>https://miqi-x.com</code></td><td>不可编辑</td></tr><tr><td>打开网站</td><td>按钮</td><td>用系统默认浏览器打开官网</td><td>—</td><td>—</td></tr><tr><td>联系邮箱</td><td>只读输入框</td><td>官方联系邮箱</td><td><code>blackink@foxmail.com</code></td><td>不可编辑</td></tr><tr><td>复制（邮箱旁）</td><td>按钮</td><td>复制邮箱到剪贴板</td><td>—</td><td>—</td></tr></tbody></table>
+<p>检查更新与更新日志都在后台拉取，不会卡住窗口；拉取期间按钮会临时禁用。</p>
+<h3 id="h-9">服务器通知</h3>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>说明</th></tr></thead><tbody><tr><td>获取通知</td><td>按钮</td><td>主动向服务器拉取一次公告 / 通知</td><td><strong>只在点按钮时联网</strong>，插件不会主动推送、不会弹窗</td></tr><tr><td>通知状态</td><td>只读文字</td><td>未获取 / 拉取中 / 已获取 N 条 / 为空 / 失败原因</td><td>拉取完成后按条目列出标题与正文（过期时间也会显示）</td></tr></tbody></table>
+<h3 id="h-10">反馈与建议</h3>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>说明</th></tr></thead><tbody><tr><td>发送反馈</td><td>按钮</td><td>打开反馈窗口（插件内直接提交；也可发邮件到 <code>blackink@foxmail.com</code>）</td><td>之前没发出去的反馈会在后台重试上传</td></tr><tr><td>复制诊断信息</td><td>按钮</td><td>一键复制版本 / Python / 系统 / Maya / 渲染器 / 机器码 / 授权 / 插件目录</td><td>复制到剪贴板并弹提示，报障时直接粘贴（见 <a href="#/13.8.2"><code>6.8.2</code></a>）</td></tr></tbody></table>
+<p>反馈窗口本身的用法见 <a href="#/15.15.3"><code>8.15.3</code></a>。</p>
+<h3 id="h-11">协议与声明</h3>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>说明</th></tr></thead><tbody><tr><td>许可协议</td><td>按钮</td><td>用系统默认程序打开安装目录里的 EULA</td><td>文件缺失时提示「安装目录里未找到该文档」</td></tr><tr><td>第三方组件声明</td><td>按钮</td><td>打开第三方组件声明（<code>THIRD_PARTY_NOTICES</code>）</td><td>同上</td></tr></tbody></table>
+<h2 id="h-12">常见疑问</h2>
+<table><thead><tr><th>现象</th><th>说明</th></tr></thead><tbody><tr><td>找不到「授权」页签</td><td>原来的「授权/关于」已拆成「授权激活」和「关于」两个页签，都在左侧导航最后</td></tr><tr><td>机器码是灰的</td><td>正常，机器码只读，用旁边的「复制」</td></tr><tr><td>激活码输入框一直显示</td><td>正常，它常驻在机器码下方，有码直接填、点「激活」</td></tr><tr><td>找不到「我的授权」</td><td>已并入「授权激活 → 账号与我的授权」；登录后点「设备管理」</td></tr><tr><td>找不到「同步授权」</td><td>在「授权激活 → 当前授权」右上角；有授权记录时显示，离线授权也能点（只读登记，不会吊销 / 降级）</td></tr><tr><td>检查更新失败</td><td>需要联网；失败提示里会写原因，也可以直接访问官网看最新版</td></tr><tr><td>授权到期后还能打开库吗</td><td>能浏览；导入 / 导出 / 转换会被拦，需要先激活 / 续期</td></tr></tbody></table>
+<h2 id="h-13">相关</h2>
+<ul>
+<li>设置窗口总览与全局锁定 → <a href="#/15.9.1"><code>8.9.1</code></a></li>
+<li>授权窗口（离线导入 / 解绑 / 恢复） → <a href="#/15.15.2"><code>8.15.2</code></a></li>
+<li>授权方式与机器码 → <a href="#/2.5.1"><code>2.5.1</code></a></li>
+<li>激活、续期与转移 → <a href="#/2.5.2"><code>2.5.2</code></a></li>
+<li>授权状态（用户指南） → <a href="#/11.10.1"><code>4.8.10.1</code></a></li>
+<li>反馈与其它提示弹窗 → <a href="#/15.15.3"><code>8.15.3</code></a></li>
+<li>诊断流程 → <a href="#/13.8.2"><code>6.8.2</code></a></li>
+</ul>

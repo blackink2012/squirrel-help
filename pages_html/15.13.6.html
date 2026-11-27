@@ -1,0 +1,52 @@
+<blockquote><p>一句话定位：<strong>点「AI 助手」时，如果本机没有检测到可用的 dsh 运行时，就会弹这个窗口告诉你缺什么、怎么装。</strong></p></blockquote>
+<p>dsh（DeepSeek Harness）是插件内置 AI 对话面所依赖的运行时，它不是一个 Python 包，而是一个 Node 程序。所以&quot;装 AI 助手&quot;这件事本质上是<strong>装 Node + 装 dsh</strong>，这个窗口就是这两步的引导页。</p>
+<h2 id="h-1">什么时候会弹</h2>
+<ul>
+<li>顶部工具栏「AI 工具」→「AI 助手」；</li>
+<li>本机找不到可用的 dsh 运行时 → 自动弹出本窗口，AI 助手起不来。</li>
+</ul>
+<h2 id="h-2">窗口上有什么</h2>
+<p><img src="media/shared/dialog-dsh-install.webp" alt="dsh 安装引导窗口" loading="lazy" decoding="async"></p>
+<table><thead><tr><th>区域 / 控件</th><th>内容或作用</th><th>怎么用</th></tr></thead><tbody><tr><td>警告图标 + 摘要</td><td>「本机没有检测到可用的 dsh 运行时，AI 助手无法启动。」</td><td>说明问题，不是错误弹窗</td></tr><tr><td>「安装（需要 Node ^22.19 或 &gt;=24（推荐 24 LTS））：」</td><td>依赖的 Node 版本要求（界面写作 `^22.19</td><td></td><td>&gt;=24`）</td><td>自己装的话按这个版本装</td></tr><tr><td>安装命令（一块可选中复制的只读文本）</td><td>一条 <code>npm i -g --prefix ...</code> 命令，路径指向本插件的运行时目录</td><td>点下面的「复制安装命令」拷走，粘到终端里跑</td></tr><tr><td>「装完后回到 Maya，再点一次 AI 助手即可。」</td><td>手动安装后的收尾动作</td><td>装完回来重点一次 AI 助手</td></tr><tr><td>「想看详细步骤…点下面的「打开安装帮助」」</td><td>引导到完整文档</td><td>命令跑不通时看它</td></tr><tr><td>按钮「复制安装命令」</td><td>把上面那条命令复制到剪贴板（会弹 Maya 内提示「安装命令已复制到剪贴板」）</td><td>手动安装路线第一步</td></tr><tr><td>按钮「打开安装帮助」</td><td>打开本机随包的安装帮助页（分平台命令、验证方法、常见问题、官方链接）</td><td>排错首选</td></tr><tr><td>按钮「打开官网」</td><td>浏览器打开 dsh 官网</td><td>—</td></tr><tr><td>按钮「打开 GitHub」</td><td>浏览器打开 dsh 仓库</td><td>想看源码 / 版本说明时</td></tr><tr><td>按钮「关闭」</td><td>什么都不做直接关掉窗口</td><td>现在不想装</td></tr><tr><td>按钮「一键安装（推荐）」</td><td>由插件自动装：准备<strong>便携 Node</strong> + npm 拉 dsh 依赖</td><td>大多数人的正确选择</td></tr></tbody></table>
+<h2 id="h-3">一次完整的安装流程（推荐路线：一键安装）</h2>
+<ol>
+<li>AI 工具 →「AI 助手」，弹出本窗口；</li>
+<li>点「一键安装（推荐）」；</li>
+<li>会出现一个<strong>进度窗口</strong>（不挡 Maya，安装期间可以继续干活）：<ul>
+<li>标题「正在安装 dsh 运行时」；</li>
+<li>说明文字里有完整日志的路径（<code>&lt;dsh_home&gt;/dsh_install.log</code>）；</li>
+<li>有实时滚动的日志区，卡在哪一步能看见；</li>
+<li>有「取消」按钮；</li>
+</ul></li>
+<li>等它跑完（要联网，通常 1–5 分钟，网络慢会更久）；</li>
+<li>成功：进度窗口显示「dsh 运行时已就绪，正在打开 AI 助手…」，AI 助手面板自动打开；</li>
+<li>失败：窗口会显示失败原因，并提示&quot;可改用「复制安装命令」手动装，或点「打开安装帮助」看分步说明&quot;。</li>
+</ol>
+<h2 id="h-4">手动安装路线</h2>
+<p>适合以下情况：一键安装失败、公司网络限制 npm、想自己管 Node 版本。</p>
+<ol>
+<li>在本窗口点「复制安装命令」；</li>
+<li>打开终端（cmd / PowerShell 都行），粘贴并执行；</li>
+<li>命令里的 <code>--prefix</code> 已经指向本插件期望的运行时目录，<strong>不要自己改路径</strong>，否则插件还是找不到；</li>
+<li>装完回 Maya，再点一次「AI 助手」；</li>
+<li>还不行就点「打开安装帮助」，对照分平台步骤和验证方法排查。</li>
+</ol>
+<h2 id="h-5">做完能看见什么</h2>
+<ul>
+<li>AI 助手面板能正常打开（面板本身见 <a href="#/15.8.2"><code>8.8.2</code></a>）；</li>
+<li>再点「AI 工具」菜单时，「AI 助手」那一项的文字会随状态变化（开启 / 关闭 / 启动中）；</li>
+<li>安装日志落在 <code>&lt;dsh_home&gt;/dsh_install.log</code>，出问题拿它去反馈。</li>
+</ul>
+<h2 id="h-6">风险与反悔</h2>
+<ul>
+<li>一键安装会<strong>联网下载</strong>（便携 Node + 依赖包，几百 MB 量级），流量/时长请自己评估。</li>
+<li>安装期间<strong>可以取消</strong>：取消只停止后续步骤，已经装好的部分会保留；下次再点「一键安装」会从缺的地方继续补。</li>
+<li>安装<strong>不碰你的资产库、不碰 Maya 场景</strong>，也不会改插件设置；反悔的话把 <code>&lt;dsh_home&gt;</code> 目录删掉即可回到&quot;没装&quot;的状态（AI 助手会重新提示安装）。</li>
+<li>别在安装进行中重复点「一键安装」—— 会提示「已有一个安装在进行中，请等它结束或取消」。</li>
+</ul>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>「AI 工具」菜单里 AI 助手那一项：<a href="#/15.2.7"><code>8.2.7</code></a></li>
+<li>AI 助手面板本身：<a href="#/15.8.2"><code>8.8.2</code></a></li>
+<li>其它 AI 依赖（Ollama / 嵌入模型）在哪装：<a href="#/15.9.3"><code>8.9.3</code></a></li>
+</ul>

@@ -1,0 +1,42 @@
+<blockquote><p>One-line summary: <strong>these two are the only entry for &quot;changing an asset&#x27;s category&quot;</strong>, structured identically, differing in one sentence: move to = take it away, copy to = make another one.</p></blockquote>
+<h2 id="h-1">What they look like</h2>
+<p>Opened, they are a <strong>cascading submenu</strong>: the first level is the 11 top-level categories (materials / models / lights / textures / scenes / HDR / animation / images / audio / animation data / node tree), and each level below expands that category&#x27;s sub-categories.</p>
+<pre><code>Move to ▶
+├─ Materials ▶
+│   ├─ Materials        ← with back arrow: selects this top-level category itself
+│   ├─ ─────
+│   ├─ Custom
+│   ├─ Fabric
+│   ├─ Metal
+│   └─ …
+├─ Models ▶
+│   ├─ Models
+│   ├─ ─────
+│   ├─ Architecture
+│   └─ …
+└─ …</code></pre>
+<p>Two ways to read it:</p>
+<ul>
+<li><strong>The item with the back arrow</strong> (an arrow pointing left) = selects &quot;this category itself&quot; without going deeper;</li>
+<li>The <strong>All assets</strong> node <strong>does not appear</strong> in the cascade — it is not a real storage location.</li>
+</ul>
+<p><img src="media_en/shared/menu-move-to.webp" alt="Move to ▶ submenu: expands step by step from sub-library to category" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Move to ▶</td><td>Takes the asset to the target category</td><td>The asset library is loaded</td><td>The asset <strong>disappears</strong> from the current category and appears in the target; the tree refreshes and jumps to the target</td><td>Moving bypasses the recycle bin, but you can move it back</td></tr><tr><td>Copy to ▶</td><td>Copies the asset into the target category</td><td>The asset library is loaded</td><td>The target category <strong>gains</strong> the same asset while the original remains</td><td>It copies the whole package and doubles disk usage</td></tr></tbody></table>
+<h2 id="h-3">Move vs copy</h2>
+<table><thead><tr><th>Scenario</th><th>Which one</th></tr></thead><tbody><tr><td>The asset really belongs in another category</td><td>Move to</td></tr><tr><td>The same asset should be findable in two categories</td><td>Copy to</td></tr><tr><td>Keep the original and try a modified version</td><td>Copy to (then edit the copy)</td></tr><tr><td>Save disk space</td><td>Move to</td></tr></tbody></table>
+<h2 id="h-4">With a multi-selection</h2>
+<p>Right-clicking <strong>Move to / Copy to</strong> with several assets selected applies to <strong>all selected assets</strong> — a whole batch moves at once. The tree refreshes and stops on the target category so you can keep organizing.</p>
+<h2 id="h-5">Notes specific to these items</h2>
+<ul>
+<li><strong>Cross-sub-library moves are allowed</strong>: a material can move into models, a texture into HDR; the menu does not block it. But an asset of the wrong type sitting in another sub-library may not open / preview as expected there, so use this carefully.</li>
+<li><strong>Think about the target first</strong>: choosing wrongly costs one more move, not a re-import.</li>
+<li><strong>Extra copies are yours to delete</strong>: there is no &quot;undo the duplicate&quot; button, so remove unwanted copies with <strong>Delete → Move to recycle bin</strong>.</li>
+<li><strong>Tree counts may lag</strong>: if counts do not change after a move / copy, click refresh on the toolbar or switch to another category and back.</li>
+</ul>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>Favorites / select all / duplicate / open folder: <a href="#/en/15.5.14"><code>8.5.14</code></a>; right-clicking blank space: <a href="#/en/15.5.19"><code>8.5.19</code></a>; the multi-select batch bar: <a href="#/en/15.5.21"><code>8.5.21</code></a></li>
+<li>Batch moving and copying: <a href="#/en/4.8.1"><code>4.1.8.1</code></a>; moving and sorting categories: <a href="#/en/4.3.3"><code>4.1.3.3</code></a></li>
+<li>Sub-library comparison table: <a href="#/en/15.5.1"><code>8.5.1</code></a></li>
+</ul>

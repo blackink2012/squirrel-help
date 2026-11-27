@@ -1,0 +1,26 @@
+<p>无头作业通过工作目录里的进度文件汇报状态；取消时会连子进程树一起结束，避免留下渲染残留。</p>
+<p><img src="media/shared/dialog-headless-watch.webp" alt="无头作业进度" loading="lazy" decoding="async"></p>
+<h2 id="h-1">无头作业的进度</h2>
+<p>父进程轮询 <code>progress.json</code>，返回字段包括：</p>
+<ul>
+<li><code>running</code>、<code>index</code> / <code>total</code>、<code>label</code>：是否在跑、当前第几项、当前资产名。</li>
+<li><code>phase</code>：当前阶段，取消时显示「正在取消」。</li>
+<li><code>ok</code> / <code>failed</code> / <code>error</code>：已完成、失败数量与错误。</li>
+<li><code>seconds</code>：已运行时间。</li>
+</ul>
+<p>轮询是非阻塞的，界面用定时器刷新，不会卡住窗口。</p>
+<h2 id="h-2">取消</h2>
+<ol>
+<li>在进度窗口点取消。</li>
+<li>父进程把 <code>_cancelled</code> 置位，并对子进程执行 <code>taskkill /F /T</code>，连同整棵进程树一起结束。</li>
+<li>收集结果时 <code>cancelled=true</code>，日志里给出原因。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>取消后作业进程应退出；用 <code>python maya_bridge.py --doctor</code> 检查有无 <code>mayabatch</code> / <code>Render</code> / <code>kick</code> / <code>oiiotool</code> 残留进程。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>Arnold 的 <code>kick</code> 渲完不会自己退出，所以取消必须杀整棵树；只杀父进程会漏掉几百 MB 的僵尸进程。</li>
+<li>在 <code>maya_run_python</code> 里跑长循环时，要主动调用 <code>progress(...)</code> 上报进度，并检查 <code>if cancelled(): break</code>；不查检查点的代码停不下来。</li>
+<li>作业超时或断连时先查迟到结果，不要因为一次超时就重跑破坏性任务。</li>
+<li>worker 异常退出、没有 <code>result.json</code> 时，结果里会写「worker 没有产出结果文件」，此时看日志尾部定位。</li>
+</ul>

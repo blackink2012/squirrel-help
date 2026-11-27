@@ -1,0 +1,26 @@
+<p>Right-click a texture asset and use the <code>「导入贴图」 (Import texture)</code> submenu to turn a single texture or a whole set into file nodes in the scene.</p>
+<p><img src="media_en/shared/menu-context-texture-import.webp" alt="Texture asset context menu: import texture" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>A Maya scene is open.</li>
+<li>The texture asset has readable image files under <code>textures/</code>.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the texture asset and expand <code>「导入贴图」 (Import texture)</code>.</li>
+<li>When the asset has several resolution directories, choose one first (such as <code>2K</code> or <code>4K</code>); with a single level the file names are listed directly.</li>
+<li>Import one file: click the file name and the plug-in creates a file node and a place2dTexture, then selects that file node.</li>
+<li>Import the whole set: click <code>「导入全部」 (Import all)</code> or <code>「导入全部 (&lt;resolution&gt;)」 (Import all (&lt;resolution&gt;))</code> and the plug-in creates the file nodes in bulk and makes them <strong>share one</strong> place2dTexture.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The matching number of file nodes appears in the Hypershade.</li>
+<li>After a single import that file node is selected.</li>
+<li>After a batch import every file node&#x27;s UV connection points at the same place2dTexture, so adjusting that node changes all UVs together.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Color space follows the extension: png, jpg, jpeg, tga, tif, tiff, bmp and psd are sRGB; exr and hdr are Raw.</li>
+<li>Where textures are stored follows the texture import policy; <code>「拷贝贴图到项目」 (Copy textures into the project)</code> copies them to <code>sourceimages/squirrel_asset/</code> in the project.</li>
+<li>To connect a texture to an existing material use <code>「指定贴图」 (Assign texture)</code>; to build a new material set use <code>「创建材质」 (Create material)</code>.</li>
+</ul>

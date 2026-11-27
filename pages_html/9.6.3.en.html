@@ -1,0 +1,30 @@
+<p>Scripts can be run directly, run with parameters, imported as a module, or loaded into the Maya Script Editor.</p>
+<p><img src="media_en/shared/quicktool-script-browser.webp" alt="Script browser" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Purpose</h2>
+<p>Use the same script for different purposes: run it directly to see the effect, run it with parameters to pass values, or load it into the editor for further editing.</p>
+<h2 id="h-2">Running</h2>
+<ol>
+<li>Select the script and double-click, press Enter or click <code>「▶ 运行」 (Run)</code>.</li>
+<li>Scripts registered as <code>high</code> risk ask for confirmation first, with <code>「否」 (No)</code> as the default; you can suppress the prompt for this session.</li>
+<li>Python scripts are syntax-compiled first, so syntax errors are never executed; MEL runs through <code>mel.eval</code>.</li>
+<li>For parameters, right-click and choose <code>「带参数运行…」 (Run with parameters…)</code> and fill a JSON object that is preset as <code>PARAMS</code> for the script (Python only).</li>
+<li>A script may put its result into <code>RESULT</code>, whose summary the window prints in the Script Editor.</li>
+</ol>
+<h2 id="h-3">Importing and loading</h2>
+<ul>
+<li><code>「导入（加载为模块）」 (Import, load as a module)</code> only supports Python: it adds the script&#x27;s directory to <code>sys.path</code>, registers the module under the file&#x27;s base name in <code>sys.modules</code> and lists the available names. MEL is not a module and is refused.</li>
+<li><code>「加载到脚本编辑器」 (Load into the Script Editor)</code> writes into the Python or MEL tab by extension; when the target tab already has content it asks before overwriting.</li>
+<li><code>「生成执行命令（放工具架）…」 (Generate an execution command for the shelf…)</code> generates a Python / MEL shelf button command.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The status bar shows <code>「已运行 &lt;name&gt;（用时 x.xxs）」 (ran &lt;name&gt;, x.xx s)</code>; failures open a copyable error dialog.</li>
+<li>The script&#x27;s <code>print</code> output and traceback appear in the Maya Script Editor history.</li>
+<li>After importing you can use <code>import &lt;module name&gt;</code> in the Script Editor; after loading, the editor tab shows the script source.</li>
+</ul>
+<h2 id="h-5">Notes</h2>
+<ul>
+<li>Running with parameters does not apply to MEL; MEL has no <code>PARAMS</code> / <code>RESULT</code> convention, so <code>print</code> the important results.</li>
+<li>The standalone edition dispatches the script to an online Maya; when Maya is offline it reports <code>「投送 Maya 失败」 (dispatch to Maya failed)</code>.</li>
+<li>Suppressing the prompt for high-risk scripts only lasts for the current session.</li>
+</ul>

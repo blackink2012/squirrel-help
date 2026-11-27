@@ -1,0 +1,28 @@
+<p>Right-click a light asset and choose <code>zlight</code>; the plug-in creates light nodes for the current renderer and copies dependencies such as HDR, IES and textures.</p>
+<p><img src="media/shared/menu-context-light-import.webp" alt="Light asset context menu: import light" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>A Maya scene is open and the current renderer is decided.</li>
+<li>The light asset contains <code>node.zlight</code>.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the light asset.</li>
+<li>With zlight as the only format click <code>「导入 zlight」 (Import zlight)</code>; with several formats expand <code>「导入」 (Import)</code> and choose <code>zlight</code>.</li>
+<li>When the light inside belongs to another renderer, confirm the conversion as prompted; a whole batch asks only once.</li>
+<li>Wait for the light creation and dependency copying to finish.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>A new light transform and shape appear in the Outliner and the new light is selected after import.</li>
+<li>The light type matches the current renderer; color, intensity, exposure, color temperature and so on have been written.</li>
+<li>The Script Editor reports <code>「已创建 N 个灯光」 (created N lights)</code> and dependencies are written per the import policy.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Cross-renderer conversion only supports Arnold, V-Ray and Redshift; native Maya lights are not converted.</li>
+<li>zlight converts directly into the current renderer&#x27;s matching light by default; the standalone edition first creates it for the source renderer and then asks whether to convert.</li>
+<li>When importing formats such as ma/mb that contain lights of another renderer, the whole batch asks once whether to convert.</li>
+<li>Lights without a mapping path stay as they are, with only the log <code>「无 … 映射路径，保留原灯光」 (no mapping path for …, keeping the original light)</code>.</li>
+<li>To apply only the parameters onto an existing light in the scene, use <code>「应用灯光参数到选中灯光」 (Apply light parameters to the selected light)</code>.</li>
+</ul>

@@ -1,0 +1,41 @@
+<blockquote><p>One-line summary: <strong>all variants of one asset in a single table, where you can import them one by one, bulk-add from disk, or delete them.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Find an asset that has variants in the grid (its card carries a variant badge); <strong>this only works for <code>.zasset</code> assets</strong>.</li>
+<li>Right-click → <strong>Update asset ▶</strong> → <strong>Variant management…</strong>.</li>
+<li>The <strong>Variant management</strong> window opens with &quot;Asset: &lt;asset name&gt;&quot; on the line below the title.</li>
+</ol>
+<blockquote><p>Creating variants is not done here: use right-click <strong>Update asset → Add as new variant / Batch add variants</strong> (see <a href="#/en/15.11.4"><code>8.11.4</code></a>).</p></blockquote>
+<p><img src="media_en/shared/dialog-variant-manager.webp" alt="Variant management window" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Window structure</h2>
+<table><thead><tr><th>Area</th><th>Content</th><th>Description</th></tr></thead><tbody><tr><td>Top</td><td>&quot;Asset: &lt;name&gt;&quot;</td><td>Confirms the target</td></tr><tr><td>List</td><td>One row per variant with a thumbnail icon</td><td>Row text: <code>display name (variant id) — N faces · LOD ×n [formats]</code></td></tr><tr><td>Bottom hint</td><td>A sharing note or an empty-state hint</td><td>With variants it reads &quot;all variants share the textures and materials in the asset root; variant directories store only geometry&quot;; with none it points you to right-click <strong>Add new variant…</strong></td></tr><tr><td>Button row</td><td>Import selected variant / add from files… / delete selected variants</td><td>Import and delete are only enabled with a selection</td></tr><tr><td>Bottom button</td><td>Close</td><td>Closes the window</td></tr></tbody></table>
+<h2 id="h-3">Item-by-item details</h2>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Suggested value</th><th>What filling it in wrongly does</th></tr></thead><tbody><tr><td>Variant list</td><td>Multi-select list</td><td>Lists every variant of the asset</td><td>—</td><td>Ctrl/Shift multi-select is supported; import and delete act on <strong>every selected</strong> entry</td></tr><tr><td>Import selected variant</td><td>Secondary button</td><td>Imports the selected variant geometry into the current Maya scene</td><td>Select one when importing one at a time</td><td>A multi-selection imports several into the same scene in a row</td></tr><tr><td>Add from files…</td><td>Secondary button</td><td>Choose model files from disk; one file = one variant with an auto-generated variant id</td><td>When you already have a batch of model files</td><td>Allowed formats are ma/mb/fbx/obj/usd/glb/gltf/atom; other formats cannot be selected</td></tr><tr><td>Delete selected variants</td><td>Danger button (red)</td><td>Deletes the selected variants&#x27; geometry and thumbnails</td><td>Delete only once you are sure</td><td>Deletion asks for confirmation; with a multi-selection one confirmation deletes several</td></tr><tr><td>Close</td><td>Secondary button</td><td>Closes the window</td><td>—</td><td>Does not undo additions or deletions already made</td></tr></tbody></table>
+<blockquote><p>Double-clicking a row imports only that one (regardless of other selections).</p></blockquote>
+<h2 id="h-4">A complete example</h2>
+<h3 id="h-5">Bulk-add variants from files</h3>
+<ol>
+<li>Right-click the asset → <strong>Update asset ▶</strong> → <strong>Variant management…</strong>.</li>
+<li>Click <strong>Add from files…</strong> and multi-select model files in the chooser (its title reads &quot;one file = one variant&quot;).</li>
+<li>After confirming, a <strong>Add variants from files</strong> progress bar runs, importing one by one with unique variant ids.</li>
+<li>When done it reports &quot;Added N variants from files, M failed.&quot;</li>
+<li>The list refreshes; after closing the window the variant badge count in the grid follows.</li>
+</ol>
+<h3 id="h-6">Import / delete</h3>
+<ol>
+<li>Select a row (or Ctrl/Shift multi-select).</li>
+<li>Click <strong>Import selected variant</strong> → the variant geometry enters the current scene; animation-type assets go through animation mapping import rather than geometry import.</li>
+<li>Or click <strong>Delete selected variants</strong> → the confirmation states &quot;only that variant&#x27;s geometry directory is deleted; the asset&#x27;s shared textures and materials are unaffected&quot; → confirm.</li>
+<li>The list refreshes and the grid follows.</li>
+</ol>
+<h2 id="h-7">Risks and how to undo</h2>
+<table><thead><tr><th>Operation</th><th>Risk</th><th>Undo</th></tr></thead><tbody><tr><td>Delete variants</td><td>That variant&#x27;s geometry and thumbnail are deleted; <strong>shared textures and materials are unaffected</strong></td><td>No undo. To recover, add it again with <strong>Add as new variant</strong> or <strong>Add from files</strong></td></tr><tr><td>Add from files</td><td>One file per variant; duplicate names get a new id and never overwrite an existing variant</td><td>Delete the row you added by mistake</td></tr><tr><td>Import variant</td><td>No namespace merge with existing scene objects, so names may clash</td><td>This is a scene operation; clean up with Maya&#x27;s Ctrl+Z / undo</td></tr></tbody></table>
+<h2 id="h-8">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>No <strong>Variant management…</strong> in the context menu</td><td>The asset is not a <code>.zasset</code>, or <strong>Update asset</strong> is switched off in the current category&#x27;s context menu</td><td>Confirm the asset type; check Settings → <strong>Context menu</strong></td></tr><tr><td>The list is empty</td><td>The asset has no variants yet</td><td>Use right-click <strong>Add as new variant…</strong> to export from the current selection</td></tr><tr><td>Nothing appears in the scene after import</td><td>The variant geometry file is missing, or the variant is animation data</td><td>Check the Script Editor (<code>[VariantImport]</code> prefix); animated variants go through animation import</td></tr><tr><td>Add from files fails</td><td>The format is not in the allowed list, or a file is corrupt</td><td>Use ma/mb/fbx/obj/usd/glb/gltf and confirm the file opens in Maya first</td></tr></tbody></table>
+<h2 id="h-9">Related</h2>
+<ul>
+<li>The variant management user guide: <a href="#/en/4.13.5"><code>4.1.13.5</code></a></li>
+<li>Adding new variants / batch adding variants: <a href="#/en/4.13.2"><code>4.1.13.2</code></a>, <a href="#/en/4.13.3"><code>4.1.13.3</code></a></li>
+<li>The version browser (the same variants with a 3D-style preview): <a href="#/en/15.11.2"><code>8.11.2</code></a></li>
+<li>Append LOD / create version dialogs: <a href="#/en/15.11.4"><code>8.11.4</code></a></li>
+</ul>

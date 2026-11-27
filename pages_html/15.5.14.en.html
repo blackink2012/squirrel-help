@@ -1,0 +1,43 @@
+<blockquote><p>One-line summary: <strong>all 11 sub-libraries have these four, positioned right below the sub-library specific block.</strong> They only touch lightweight state such as selection and favorites, never asset content.</p></blockquote>
+<h2 id="h-1">Item-by-item details</h2>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Add to favorite set ▶</td><td>Adds the asset to a favorite set</td><td>The asset library is loaded</td><td>The submenu lists every set (including the default set and your own); click to add, click again to remove</td><td>Already in the set → filled gold star; not in it → outlined gray star</td></tr><tr><td>Select all</td><td>Selects every <strong>currently visible</strong> card in the grid</td><td>Cards exist in the asset area</td><td>All cards highlight and the properties panel shows the last one</td><td>Only the filtered / searched results, not the whole library</td></tr><tr><td>Duplicate</td><td>Puts the asset on the clipboard</td><td>None</td><td>The internal clipboard remembers the asset and the asset folder path is written to the system clipboard</td><td>This is not &quot;copy into the current category&quot;; you must <strong>paste</strong> to materialize it</td></tr><tr><td>Open folder</td><td>Opens the asset&#x27;s disk location</td><td>The asset is a .zasset directory, or an already-imported loose file</td><td>The system file manager opens at that asset folder</td><td>Opens only; changes nothing</td></tr></tbody></table>
+<p><img src="media_en/shared/menu-fav-sub.webp" alt="Add to favorite set ▶ submenu" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Submenu: Add to favorite set ▶</h2>
+<table><thead><tr><th>Sub-item</th><th>Description</th></tr></thead><tbody><tr><td>Default favorites</td><td>The built-in set, which always exists</td></tr><tr><td>Your own sets</td><td>Sets you created, listed here by name; each new one adds an item</td></tr><tr><td>When no sets exist</td><td>Only <strong>Default favorites</strong> remains</td></tr></tbody></table>
+<p>Two details:</p>
+<ul>
+<li><strong>State is visible</strong>: a set already containing the asset shows a filled gold star and others show an outlined gray star — no need to open it to check.</li>
+<li><strong>Multi-selection applies to all selected assets</strong>: after multi-selecting, clicking a set adds or removes all of them together.</li>
+</ul>
+<h2 id="h-3">What &quot;Select all&quot; really selects</h2>
+<ul>
+<li>It selects the cards <strong>visible in the current view</strong>: after filtering tags, searching keywords or filtering by category, <strong>Select all</strong> only covers the result set.</li>
+<li>On the <strong>All assets</strong> tab, select all means every visible asset of the whole library (potentially a large number, so be careful with subsequent batch operations).</li>
+<li>After selecting all you can right-click for batch operations, see <a href="#/en/15.5.21"><code>8.5.21</code></a>.</li>
+</ul>
+<h2 id="h-4">What &quot;Duplicate&quot; actually copies</h2>
+<table><thead><tr><th>Layer</th><th>Content</th></tr></thead><tbody><tr><td>Plug-in internal clipboard</td><td>The asset id and the asset package path</td></tr><tr><td>System clipboard</td><td>The path of the asset folder (the .zasset directory)</td></tr></tbody></table>
+<p>Therefore:</p>
+<ul>
+<li><strong>Right-click blank space → Paste</strong> in the asset area copies the clipboard asset <strong>as a duplicate</strong> into the current category (see <a href="#/en/15.5.19"><code>8.5.19</code></a>);</li>
+<li>Pasting in <strong>Windows Explorer</strong> copies the whole asset folder out (useful for backups or sending to a colleague).</li>
+</ul>
+<p>Internal virtual entries such as versions / variants are <strong>not</strong> duplicated — they are not independent assets.</p>
+<h2 id="h-5">Which folder &quot;Open folder&quot; opens</h2>
+<ul>
+<li>A <code>.zasset</code> asset: the asset package directory itself (holding meta, geometry, textures, thumbnails).</li>
+<li>A loose-file asset (images / audio): the folder containing the file.</li>
+</ul>
+<p>Once inside, <strong>do not casually rename or delete files</strong>: the library index points at these paths, and deleting them corrupts the asset. To free space, use <strong>Delete → Move to recycle bin</strong>.</p>
+<h2 id="h-6">Notes</h2>
+<ul>
+<li><strong>Favoriting is not copying</strong>: favoriting only adds a reference in a favorite set and the asset stays in its category.</li>
+<li><strong>A mistake after select all is a batch mistake</strong>: before batch deleting or moving, check that the status bar&#x27;s &quot;N assets selected&quot; is right.</li>
+<li><strong>Duplicating does not rename</strong>: pasting into the same category goes through the name conflict handling (ask / auto rename), see <a href="#/en/15.12.5"><code>8.12.5</code></a>.</li>
+</ul>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>Move to / copy to: <a href="#/en/15.5.15"><code>8.5.15</code></a>; right-clicking blank space and pasting: <a href="#/en/15.5.19"><code>8.5.19</code></a>; the multi-select batch bar: <a href="#/en/15.5.21"><code>8.5.21</code></a></li>
+<li>Favoriting and unfavoriting: <a href="#/en/4.9.1"><code>4.1.9.1</code></a>; adding, editing and deleting favorite sets: <a href="#/en/4.9.2"><code>4.1.9.2</code></a>; the asset grid and selection: <a href="#/en/4.4.1"><code>4.1.4.1</code></a></li>
+<li>Sub-library comparison table: <a href="#/en/15.5.1"><code>8.5.1</code></a></li>
+</ul>

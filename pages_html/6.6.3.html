@@ -1,0 +1,29 @@
+<p>「导入HDR」把 <code>.hdr</code>、<code>.exr</code> 文件分别打包成 HDR 资产放进当前分类，不会自动创建穹顶灯。</p>
+<p><img src="media/shared/menu-import-hdr.webp" alt="从外部导入 → 导入 HDR" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已在左侧<strong>切到 HDR 子库</strong>并选中目标分类。「导入HDR」只出现在 HDR 子库的「从外部导入」菜单里；HDR 子库下该菜单只有「导入 .zasset 资产」和「导入HDR」两项。</li>
+<li>「全部资产」下「从外部导入」整条菜单被禁用，只显示灰字「当前分类不支持从外部导入」。</li>
+<li>HDR 文件在磁盘上可读。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在左侧分类树切到 HDR 子库，选中目标分类。</li>
+<li>点击资产区上方工具条的「从外部导入」按钮。</li>
+<li>选择「导入HDR」。</li>
+<li>在文件对话框中选择一个或多个 <code>.hdr</code>、<code>.exr</code> 文件。</li>
+<li>确认后，每个文件建立一个独立 <code>.zasset</code>，HDR 存入其 <code>textures/</code>。</li>
+<li>插件用 HDR 内容生成缩略图。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>网格中出现对应数量的 HDR 资产，缩略图可见；缩略图生成失败时资产仍会入库。</li>
+<li>资产目录下 <code>textures/</code> 中包含原 HDR 文件。</li>
+<li>提示「成功导入 N 个HDR资产」，数量与所选文件数一致。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>此操作只入库。要在场景中建立环境光，请右键 HDR 资产选择「创建环境光」，或把 HDR 直接拖入视口。</li>
+<li>给已有穹顶灯换贴图，请选中穹顶灯后右键 HDR 资产选择「指定贴图」。</li>
+<li>在其它子库下找不到「导入HDR」是正常的：该项只属于 HDR 子库，这样能避免把环境图误收进材质/模型分类。</li>
+</ul>

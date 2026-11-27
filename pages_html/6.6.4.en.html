@@ -1,0 +1,29 @@
+<p><code>「导入 .zasset 资产」 (Import a .zasset asset)</code> copies <code>.zasset</code> assets from an external folder into the current category in bulk and gives them new asset IDs.</p>
+<p><img src="media_en/shared/menu-import-zasset.webp" alt="Import from Files → Import a .zasset asset" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>A <strong>specific category</strong> is selected on the left. On <code>「全部资产」 (All assets)</code> the whole <code>「从外部导入」 (Import from Files)</code> menu is disabled and only the grey line <code>「当前分类不支持从外部导入」 (this category does not support importing from files)</code> is shown.</li>
+<li>The current sub-library is not images or audio: those two only have loose-file entries and no <code>「导入 .zasset 资产」 (Import a .zasset asset)</code>.</li>
+<li>The external folder directly contains one or more <code>.zasset</code> sub-folders.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Click <code>「从外部导入」 (Import from Files)</code> in the toolbar above the asset area.</li>
+<li>Choose <code>「导入 .zasset 资产」 (Import a .zasset asset)</code>.</li>
+<li>Select the folder containing the <code>.zasset</code> folders in the directory dialog.</li>
+<li>The plug-in scans only the <code>.zasset</code> sub-directories <strong>one level down</strong> in that folder and copies them one by one into the current category.</li>
+<li>After copying it rewrites the asset IDs and redirects paths in <code>meta.json</code> that pointed at the source directory to the new directory.</li>
+<li>When the target category already has a same-named asset, the new name gets <code>_001</code>, <code>_002</code> suffixes.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li><code>「导入完成」 (import finished)</code> appears with <code>「成功导入 N 个 .zasset 资产」 (imported N .zasset assets)</code>.</li>
+<li>When some copies fail the same message appends <code>「跳过 N 个（复制失败）」 (skipped N, copy failed)</code>.</li>
+<li>New assets appear in the grid and the category tree locates the import target category automatically.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>When no <code>.zasset</code> is found it reports <code>「在选定文件夹中未找到 .zasset 资产」 (no .zasset asset found in the selected folder)</code>; check which directory level you picked.</li>
+<li>Prefer this entry for migrating assets instead of copying <code>.zasset</code> folders by hand, which leaves assets outside the library index.</li>
+<li>Metadata such as <code>texture_map</code> and <code>formats</code> in the source asset is preserved; only identity and ownership fields are replaced.</li>
+</ul>

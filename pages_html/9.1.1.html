@@ -1,0 +1,26 @@
+<p>快捷工具全部收在主窗口工具栏的「快捷工具」按钮里，菜单中列出的就是插件 <code>quicktools/</code> 目录下的脚本。</p>
+<p><img src="media/shared/menu-quicktools.webp" alt="快捷工具菜单" loading="lazy" decoding="async"></p>
+<h2 id="h-1">用途</h2>
+<p>菜单把 HDR、模型、PBR 贴图转资产，以及图像转换、批量处理、材质工具、脚本浏览器等独立工具集中到一个入口，不必逐个记脚本路径。</p>
+<h2 id="h-2">工具清单</h2>
+<table><thead><tr><th>脚本文件</th><th>用途</th><th>详细说明</th></tr></thead><tbody><tr><td><code>hdr_to_zasset.py</code></td><td>HDR/EXR 环境贴图 → <code>.zasset</code></td><td>4.6.2.1</td></tr><tr><td><code>model_to_zasset.py</code></td><td>模型文件 → <code>.zasset</code></td><td>4.6.2.2</td></tr><tr><td><code>pbr_to_zasset.py</code></td><td>PBR 贴图 → <code>.zasset</code></td><td>4.6.2.3</td></tr><tr><td><code>图像格式转换工具.py</code></td><td>批量图像格式转换</td><td>4.6.3.1</td></tr><tr><td><code>批量处理maya文件.py</code></td><td>对多个 <code>.ma</code> / <code>.mb</code> 执行同一段脚本</td><td>4.6.4.1</td></tr><tr><td><code>批量镜像复制.py</code></td><td>按扩展名镜像复制目录</td><td>4.6.4.2</td></tr><tr><td><code>材质导入导出工具(材质管理).py</code></td><td>材质导入导出（<code>.zmetal</code>、MA+JSON）</td><td>4.6.5.1</td></tr><tr><td><code>材质转换工具.py</code></td><td>材质类型批量转换</td><td>4.6.5.2</td></tr><tr><td><code>材质节点属性映射工具.py</code></td><td>编辑 <code>.mmap</code> 属性映射</td><td>4.6.5.3</td></tr><tr><td><code>脚本浏览器.py</code></td><td>浏览、搜索、运行脚本</td><td>4.6.6.1</td></tr></tbody></table>
+<h2 id="h-3">操作步骤</h2>
+<ol>
+<li>在主窗口顶部工具栏点击「快捷工具」按钮（提示文字为「快捷工具：运行 quicktools 目录里的脚本」）。</li>
+<li>菜单每次展开都会重新扫描 <code>quicktools/</code>，列出其中的 <code>.py</code> 文件。</li>
+<li>点击条目打开对应工具窗口，在窗口内选择输入、设置参数并执行。</li>
+<li>转换类工具完成后，到所设置的输出目录查看 <code>.zasset</code> 或转换后的文件。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>菜单能列出工具条目，而不是显示「暂无快捷工具」。</li>
+<li>点击后工具窗口正常打开。</li>
+<li>转换类工具的状态栏或弹窗给出成功 / 失败数量，输出目录出现产物。</li>
+</ul>
+<h2 id="h-5">注意事项</h2>
+<ul>
+<li>菜单只加载 <code>quicktools/</code> 根目录的 <code>.py</code>，不递归扫描子目录；条目名是去掉 <code>.py</code> 后把下划线替换为空格。</li>
+<li>新增脚本不需要注册，下次展开菜单即可看到（详见 4.6.7.1）。</li>
+<li>工具需要 <code>main()</code>、<code>run()</code> 或 <code>if __name__ == &quot;__main__&quot;</code> 入口，否则点击后不会执行（详见 4.6.7.2）。</li>
+<li>独立运行版中，需要 Maya 的工具会投送到在线 Maya 执行；<code>图像格式转换工具.py</code> 与 <code>批量镜像复制.py</code> 作为纯文件工具在本地执行。</li>
+</ul>

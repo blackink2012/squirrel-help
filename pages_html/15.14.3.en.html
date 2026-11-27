@@ -1,0 +1,56 @@
+<blockquote><p>One-line summary: <strong>group the PBR textures in a folder (albedo / roughness / normal…) by material and pack each material into one <code>.zasset</code> texture asset.</strong></p></blockquote>
+<p>It follows the same idea as <strong>model to asset</strong> but recognizes a different thing: <strong>texture sets</strong>. A material usually has 4–6 textures (basecolor / roughness / normal / metalness…), and this tool gathers them into one asset instead of scattering six.</p>
+<h2 id="h-1">Where to open it</h2>
+<table><thead><tr><th>Entry</th><th>How</th></tr></thead><tbody><tr><td>Top toolbar <strong>Quick tools</strong> menu</td><td><strong>Quick tools</strong> → <strong>pbr to zasset</strong></td></tr><tr><td>Command</td><td>Called <code>pbr_to_zasset</code> on the command surface (parameters in <a href="#/en/12.1.11"><code>5.1.11</code></a>)</td></tr><tr><td>Script browser</td><td><strong>Script browser</strong> → add the plug-in&#x27;s <code>quicktools</code> directory → double-click <code>pbr_to_zasset.py</code></td></tr></tbody></table>
+<p>The window is titled &quot;PBR textures to asset&quot;.</p>
+<p><img src="media_en/shared/quicktool-pbr.webp" alt="PBR textures to asset window" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What every control does</h2>
+<h3 id="h-3">Card &quot;Detected materials&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td><strong>Scan textures</strong> button</td><td>Scans using &quot;texture folder&quot; plus batch / recursion settings and detects which texture sets count as materials</td><td>Scan before converting</td></tr><tr><td>Status &quot;Ready&quot; / scan result</td><td>Scan state</td><td>—</td></tr><tr><td>Result list</td><td>Lists &quot;material and textures&quot; plus the structure that will be packed</td><td>Check that each group&#x27;s file count is right</td></tr><tr><td>Header &quot;.zasset structure preview&quot;</td><td>Previews the packed directory structure</td><td>Confirm the resolution subfolders look as expected</td></tr></tbody></table>
+<h3 id="h-4">Card &quot;AI directory parsing&quot; (optional)</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td><strong>Parse path:</strong> plus <strong>Browse...</strong></td><td>Lets AI look at the directory structure</td><td>Useful for messily named packs</td></tr><tr><td><strong>AI parse asset structure</strong></td><td>Auto-generates the file routing and metadata source configuration and appends it to the two cards below</td><td>Click it the first time you adopt an unfamiliar pack</td></tr><tr><td><strong>AI service:</strong> / <strong>AI model:</strong> / <strong>API key:</strong></td><td>Which model parses; local services need no key</td><td>Use Ollama (local) first</td></tr></tbody></table>
+<h3 id="h-5">Card &quot;Texture folder&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Path input (placeholder &quot;choose the folder containing PBR textures (choose the parent folder when batch mode is on)...&quot;)</td><td>Where the textures are</td><td>With batch mode, choose the <strong>parent folder</strong> rather than one material folder</td></tr><tr><td><strong>Browse...</strong></td><td>Chooses the directory</td><td>—</td></tr></tbody></table>
+<h3 id="h-6">Card &quot;Output location&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Path input (placeholder &quot;choose the asset output folder...&quot;)</td><td>Where <code>.zasset</code> packages are generated</td><td>Output into an empty directory first for verification</td></tr><tr><td><strong>Browse...</strong></td><td>Chooses the directory</td><td>—</td></tr></tbody></table>
+<h3 id="h-7">Card &quot;Conversion options&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Checkbox <strong>Export .zasset asset file</strong></td><td><strong>The real switch</strong>: without it, converting reports &quot;no executable operation&quot;</td><td><strong>Must be ticked</strong></td></tr><tr><td>Checkbox <strong>Batch mode (subfolders are independent assets)</strong></td><td>With a parent folder chosen, each subfolder becomes its own texture asset</td><td>Tick it to import a pile of materials at once</td></tr><tr><td>Checkbox <strong>Recursively scan textures in subfolders</strong></td><td>Also scans textures in subdirectories (such as under <code>tex/</code>)</td><td>Tick it when textures live in subdirectories</td></tr><tr><td>Checkbox <strong>Import into the current category after conversion</strong></td><td>Copies the <code>.zasset</code> into the current category after conversion</td><td>Tick it when the output is already inside a library category</td></tr><tr><td><strong>Multi-resolution textures:</strong> → checkbox <strong>Pack all resolutions (textures stored in resolution subfolders)</strong></td><td>Ticked = all resolutions go into the asset (<code>textures/2k/</code>, <code>textures/4k/</code> and so on) and are selectable on import</td><td>Tick it when the pack has both 2K and 4K sets for a material</td></tr></tbody></table>
+<h3 id="h-8">Card &quot;File routing configuration&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td><strong>+ Add route</strong> / <strong>Save routes</strong></td><td>Adds a row / saves the current routing</td><td>Save after editing</td></tr><tr><td>Each row&#x27;s <strong>Folder:</strong> / <strong>Extensions:</strong></td><td>Which extensions go into which subdirectory of the package</td><td>Defaults already send images to <code>textures</code> and ma/mb to <code>root</code></td></tr><tr><td>Each row&#x27;s <strong>×</strong></td><td>Deletes the row</td><td>—</td></tr></tbody></table>
+<h3 id="h-9">Card &quot;Metadata source configuration&quot;</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td><strong>Thumbnail search paths:</strong> plus <strong>+ Add path</strong></td><td>Finds thumbnails by template, such as <code>{materialName}_Preview.png</code></td><td>Keep templates that match packs shipping previews</td></tr><tr><td>Metadata source &quot;Source N&quot; plus <strong>Delete</strong></td><td>One description file source</td><td>Delete them when there are no description files</td></tr><tr><td><strong>File path template:</strong></td><td>The relative path template of the description file (such as <code>{materialName}.json</code>)</td><td>Fill it according to the pack&#x27;s real names</td></tr><tr><td><strong>File format:</strong> (json / txt)</td><td>The description file format</td><td>—</td></tr><tr><td><strong>Field mapping:</strong> <code>source field → target field</code> plus handling</td><td>Maps description fields onto asset fields</td><td>Tags usually use <code>split_comma</code></td></tr><tr><td><strong>+ Add field mapping</strong> / <strong>+ Add source</strong> / <strong>Save configuration</strong></td><td>Adds a row / a source / saves the configuration</td><td>Save after editing</td></tr></tbody></table>
+<h3 id="h-10">Bottom buttons</h3>
+<table><thead><tr><th>Button</th><th>Effect</th></tr></thead><tbody><tr><td><strong>Help</strong> icon button</td><td>Opens the detailed help</td></tr><tr><td><strong>Cancel</strong></td><td>Closes without converting</td></tr><tr><td><strong>Convert</strong></td><td>Starts converting (it can be aborted; it reports &quot;Aborting...&quot;)</td></tr></tbody></table>
+<h2 id="h-11">A complete flow</h2>
+<ol>
+<li>Quick tools → <strong>pbr to zasset</strong>;</li>
+<li>Choose the parent directory under <strong>Texture folder</strong> (tick <strong>batch mode</strong> for batch import);</li>
+<li>Choose an empty directory under <strong>Output location</strong>;</li>
+<li><strong>Tick Export .zasset asset file</strong> (the step most often missed);</li>
+<li>Tick <strong>Recursively scan textures in subfolders</strong> when textures live in subdirectories, and <strong>Pack all resolutions</strong> when a material has several resolutions;</li>
+<li>Click <strong>Scan textures</strong> and check the <strong>Detected materials</strong> list: file counts per material and whether the structure preview makes sense;</li>
+<li>If needed use AI directory parsing to fill routing / metadata sources, then <strong>Save routes</strong> and <strong>Save configuration</strong>;</li>
+<li>Click <strong>Convert</strong> and wait for the completion message;</li>
+<li>Spot-check 1–2 <code>.zasset</code> folders in the output directory: are the textures complete, are the resolution subfolders right;</li>
+<li>Once confirmed, copy into the library category and refresh the main window.</li>
+</ol>
+<h2 id="h-12">Where the output lands</h2>
+<ul>
+<li>One <code>.zasset</code> <strong>folder</strong> per material under the <strong>output location</strong>;</li>
+<li>Inside are the textures (possibly split by resolution), a thumbnail and <code>meta.json</code>;</li>
+<li>With <strong>Import into the current category after conversion</strong> ticked another copy goes to the current category and appears after refreshing the main window.</li>
+</ul>
+<h2 id="h-13">Risks and how to undo</h2>
+<ul>
+<li><strong>A same-named <code>.zasset</code> is replaced entirely</strong> (delete the old one, then build the new one): output into an empty directory before a batch conversion.</li>
+<li><strong>Wrong texture grouping</strong>: the most common result is &quot;one material split into two assets&quot; or &quot;two materials merged into one&quot;. In batch mode always read the scan list instead of trusting &quot;conversion finished&quot;.</li>
+<li><strong>Without Export .zasset asset file ticked, nothing is produced</strong> and it reports no executable operation — not a bug.</li>
+<li>To undo, delete the newly generated <code>.zasset</code> folders; ones already imported go to the recycle bin from the main window (<a href="#/en/15.5.16"><code>8.5.16</code></a>).</li>
+</ul>
+<h2 id="h-14">Related</h2>
+<ul>
+<li>Its position in the <strong>Quick tools</strong> menu: <a href="#/en/15.2.6"><code>8.2.6</code></a></li>
+<li>Model to asset (the same routing / metadata approach): <a href="#/en/15.14.2"><code>8.14.2</code></a></li>
+<li>Pure format conversion (no library import): <a href="#/en/15.14.4"><code>8.14.4</code></a></li>
+<li>The texture asset context menu: <a href="#/en/15.5.5"><code>8.5.5</code></a></li>
+</ul>

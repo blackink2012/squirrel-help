@@ -1,0 +1,18 @@
+<p>The assistant in the chat surface does more than talk: it calls the tools the plug-in registers to search assets, read the scene and run scripts, and those tools are routed to the current Maya through the local backend.</p>
+<h2 id="h-1">What the assistant can use</h2>
+<ul>
+<li><strong>Command surface tools</strong>: <code>squirrel_list_instances</code>, <code>squirrel_list_commands</code>, <code>squirrel_execute_command</code>, <code>squirrel_execute_batch</code>.</li>
+<li><strong>Long jobs</strong>: <code>squirrel_execute_async</code> returns a job ID that <code>squirrel_jobs</code> can query or cancel; results that miss the timeout are fetched with <code>squirrel_late_results</code>.</li>
+<li><strong>Fallback channel</strong>: <code>squirrel_maya_bridge</code>, which goes straight to Maya&#x27;s commandPort when the backend or instance is unavailable.</li>
+<li><strong>Documentation and dependencies</strong>: <code>maya_docs</code> looks up commands, nodes and the API; <code>squirrel_ai_deps</code> checks or installs AI dependencies.</li>
+<li><strong>Knowledge</strong>: the bundled skill set provides operating discipline and scene recipes, landing in <code>&lt;dshHome&gt;/skills</code>.</li>
+</ul>
+<h2 id="h-2">Instance binding</h2>
+<p>By default it binds to the Maya instance this conversation belongs to, so commands may omit the instance ID. With several Maya sessions open, operating another one requires explicitly allowing cross-instance work; the assistant will not switch for you.</p>
+<h2 id="h-3">Models and credentials</h2>
+<p>Which model the conversation uses is managed by dsh itself; on the first chat follow its prompt to sign in or enter an API key. The plug-in does not manage those credentials.</p>
+<h2 id="h-4">Boundaries</h2>
+<ul>
+<li>Tool calls respect command risk levels; high-risk commands should be previewed before running.</li>
+<li>When <code>squirrel_*</code> tools are missing from the panel, first confirm the skills landed, the backend is running and the current Maya is registered; <code>dsh_status</code> lists all of these states at once.</li>
+</ul>

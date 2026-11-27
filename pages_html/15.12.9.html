@@ -1,0 +1,30 @@
+<blockquote><p>一句话定位：<strong>从「维护 → 清理无效资产」打开的扫描窗口 —— 它列出缺 <code>meta.json</code> 或只有空目录的资产，让你核对后修复、移出列表或移入回收站。</strong></p></blockquote>
+<p><img src="media/shared/dialog-invalid-assets.webp" alt="清理无效资产窗口" loading="lazy" decoding="async"></p>
+<h2 id="h-1">怎么打开</h2>
+<p>顶部工具栏 →「维护 ▾」→「清理无效资产」。打开即扫描当前库，扫描期间光标变成等待状态。</p>
+<p>前置条件：已经加载一个资产库；没加载库时会提示先打开库。</p>
+<h2 id="h-2">什么算「无效资产」</h2>
+<table><thead><tr><th>状态</th><th>判定</th><th>能否自动修复</th></tr></thead><tbody><tr><td>缺 <code>meta.json</code>（可修复）</td><td>目录里<strong>有有效格式文件</strong>，但缺少资产元数据</td><td>能：按文件推断并补回 <code>meta.json</code></td></tr><tr><td>空壳：无 meta、无有效文件</td><td>目录里既没有 <code>meta.json</code>，也没有可识别的资产文件</td><td>不能：只能移入回收站或人工处理</td></tr></tbody></table>
+<h2 id="h-3">窗口里有什么</h2>
+<table><thead><tr><th>区块</th><th>内容</th></tr></thead><tbody><tr><td>摘要行</td><td>「扫描到 N 个无效资产（缺少 meta.json 或只有空目录）。」；没有时为「没有发现无效资产。」</td></tr><tr><td>提示行</td><td>说明可多选，以及右键 / 底部按钮能做什么</td></tr><tr><td>资产列表</td><td>每条显示「名称 / 相对路径 · 状态」</td></tr><tr><td>底部按钮</td><td>左起「重新扫描」、「修复全部」、「清理全部（移入回收站）」，最右「关闭」</td></tr></tbody></table>
+<p>「修复全部」只在列表里存在<strong>可修复</strong>条目时可用；「清理全部」只要有条目就可点。</p>
+<h2 id="h-4">右键菜单</h2>
+<table><thead><tr><th>右键项</th><th>作用</th><th>说明</th></tr></thead><tbody><tr><td>打开资产路径</td><td>在资源管理器打开目录</td><td>人工确认里面到底有什么</td></tr><tr><td>从列表移除</td><td>把条目移出<strong>本次列表</strong></td><td>只影响界面，不动磁盘；「重新扫描」会恢复</td></tr><tr><td>修复：补回 meta.json</td><td>给选中条目补回元数据</td><td>只对「缺 meta.json 且有有效格式文件」的条目可用；空壳会被跳过并提示原因</td></tr></tbody></table>
+<p>多选时，右键项按「选中的多个条目」执行（文案会带条目数）。</p>
+<h2 id="h-5">清理：唯一会动磁盘的动作</h2>
+<ul>
+<li>点「清理全部（移入回收站）」会先弹确认，写明条目数；</li>
+<li>确认后这些目录<strong>移入回收站</strong>，不是永久删除；</li>
+<li>清理完主窗口自动重扫刷新；需要找回时去左栏「回收站」还原（<a href="#/15.8.3"><code>8.8.3</code></a>）。</li>
+</ul>
+<h2 id="h-6">风险与反悔</h2>
+<table><thead><tr><th>操作</th><th>风险</th><th>反悔</th></tr></thead><tbody><tr><td>修复 meta.json</td><td>按文件推断元数据，可能与原意不完全一致</td><td>人工在属性面板改回；补出的 meta 会随资产保存</td></tr><tr><td>清理全部</td><td>目录移入回收站，列表里暂时消失</td><td>回收站还原（整条资产回来）</td></tr><tr><td>从列表移除</td><td>只是本次不处理</td><td>「重新扫描」即恢复</td></tr></tbody></table>
+<h2 id="h-7">出问题怎么办</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>处理</th></tr></thead><tbody><tr><td>修复按钮是灰的</td><td>选中条目都是空壳，没有有效格式文件</td><td>打开路径人工确认；确实是垃圾就清理</td></tr><tr><td>修复后资产仍不显示</td><td>目录结构或分类不在库内</td><td>先「重建资产索引」（<a href="#/4.12.2"><code>4.1.12.2</code></a>），再看 <a href="#/13.5.1"><code>6.5.1</code></a></td></tr><tr><td>清理后想找回</td><td>已移入回收站</td><td>左栏「回收站」→ 右键「还原」</td></tr></tbody></table>
+<h2 id="h-8">相关</h2>
+<ul>
+<li>维护菜单其它项：<a href="#/15.2.8"><code>8.2.8</code></a></li>
+<li>回收站与还原：<a href="#/15.8.3"><code>8.8.3</code></a></li>
+<li>索引重建：<a href="#/4.12.2"><code>4.1.12.2</code></a></li>
+<li>资产列表异常排查：<a href="#/13.5.1"><code>6.5.1</code></a></li>
+</ul>

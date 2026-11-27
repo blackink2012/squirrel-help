@@ -1,0 +1,13 @@
+<p>When local vector search finds nothing, AI search breaks your sentence into 3–6 summary keywords, infers which sub-library the asset belongs to and hands the result to lexical search.</p>
+<h2 id="h-1">What the model receives</h2>
+<p>The prompt requires strict JSON only: keywords in Chinese-English pairs, a sub-library limited to <code>materials</code>, <code>models</code>, <code>textures</code>, <code>lights</code>, <code>scenes</code> or <code>hdr</code>, and one explanatory sentence. The plug-in cleans the result, removes duplicates, caps the count and fills in missing Chinese or English forms.</p>
+<h2 id="h-2">Multi-turn refinement</h2>
+<p>The dialog carries the previous turn&#x27;s text, keywords and sub-library. When you say &quot;a bit darker&quot; or &quot;make it wood&quot;, the model adds or removes keywords based on the previous turn instead of guessing again. Keywords in the result bubble appear as chips that can be deleted or edited individually, and changes trigger a new search.</p>
+<h2 id="h-3">Fallback paths</h2>
+<ul>
+<li>AI service unavailable: local tokenization removes lead-ins such as &quot;help me&quot; or &quot;I want&quot; and generic words such as &quot;material&quot; or &quot;asset&quot;, splits on whitespace and punctuation, and keeps at most 6 tokens.</li>
+<li>Model does not exist: it reports that the model name is unavailable and lists the available models where possible.</li>
+<li>Keywords return nothing: it tokenizes the original text and searches once more, so &quot;using AI&quot; never makes results worse.</li>
+</ul>
+<h2 id="h-4">Limits</h2>
+<p>Intent parsing does not understand assets themselves; it only turns words into search terms. Whether an asset is found still depends on the quality of its name, tags, notes and index text.</p>

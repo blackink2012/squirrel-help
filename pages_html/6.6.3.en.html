@@ -1,0 +1,29 @@
+<p><code>「导入HDR」 (Import HDR)</code> packages <code>.hdr</code> and <code>.exr</code> files into separate HDR assets inside the current category; it never creates a dome light automatically.</p>
+<p><img src="media_en/shared/menu-import-hdr.webp" alt="Import from Files → Import HDR" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The left column is <strong>switched to the HDR sub-library</strong> and a target category is selected. <code>「导入HDR」 (Import HDR)</code> only appears in <code>「从外部导入」 (Import from Files)</code> of the HDR sub-library, where the menu has just <code>「导入 .zasset 资产」 (Import a .zasset asset)</code> and <code>「导入HDR」 (Import HDR)</code>.</li>
+<li>On <code>「全部资产」 (All assets)</code> the whole <code>「从外部导入」 (Import from Files)</code> menu is disabled and only the grey line <code>「当前分类不支持从外部导入」 (this category does not support importing from files)</code> is shown.</li>
+<li>The HDR files are readable on disk.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Switch the category tree on the left to the HDR sub-library and select the target category.</li>
+<li>Click <code>「从外部导入」 (Import from Files)</code> in the toolbar above the asset area.</li>
+<li>Choose <code>「导入HDR」 (Import HDR)</code>.</li>
+<li>Select one or more <code>.hdr</code> and <code>.exr</code> files in the file dialog.</li>
+<li>On confirm each file becomes its own <code>.zasset</code> with the HDR stored in its <code>textures/</code>.</li>
+<li>The plug-in generates a thumbnail from the HDR content.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The matching number of HDR assets appears in the grid with visible thumbnails; when thumbnail generation fails the asset is still added.</li>
+<li><code>textures/</code> in the asset directory contains the original HDR file.</li>
+<li>It reports <code>「成功导入 N 个HDR资产」 (imported N HDR assets)</code>, matching the number of files chosen.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>This only adds to the library. To build an environment light in the scene, right-click the HDR asset and choose <code>「创建环境光」 (Create environment light)</code>, or drag the HDR straight into the viewport.</li>
+<li>To change the texture of an existing dome light, select the dome light and then right-click the HDR asset and choose <code>「指定贴图」 (Assign texture)</code>.</li>
+<li>Not finding <code>「导入HDR」 (Import HDR)</code> in other sub-libraries is normal: the entry belongs only to the HDR sub-library, which keeps environment images from being filed into material or model categories by mistake.</li>
+</ul>

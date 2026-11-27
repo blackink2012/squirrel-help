@@ -1,0 +1,26 @@
+<p>Right-click a material asset and choose <code>.zmetal</code>; the plug-in rebuilds the complete shading network in the scene and writes the textures to disk per the import policy.</p>
+<p><img src="media_en/shared/menu-context-material.webp" alt="Material asset context menu: import ▶ (this sample asset has several formats; with zmetal only it shows &quot;import zmetal&quot; directly)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>A Maya scene is open.</li>
+<li>The material asset contains <code>node.zmetal</code>; assets exported by the quick tools do not contain node network data.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the material asset.</li>
+<li>With zmetal as the only format click <code>「导入 zmetal」 (Import zmetal)</code>; with several formats expand <code>「导入」 (Import)</code> and choose <code>zmetal</code>.</li>
+<li>When the asset has textures at several resolutions, choose one in the <code>「选择贴图精度」 (Choose texture resolution)</code> dialog; <code>「取消」 (Cancel)</code> abandons the import.</li>
+<li>Wait for the node network to be built.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>A complete material network appears in the Hypershade: shader, shadingGroup, file, place2dTexture and so on.</li>
+<li>The new material is selected after import; the Script Editor reports <code>「已创建 N 个节点」 (created N nodes)</code> and <code>「已选中新建材质」 (new material selected)</code>.</li>
+<li>The file node&#x27;s <code>fileTextureName</code> points at the disk path for the chosen resolution.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Textures follow the texture import policy in <code>Settings → 常规 (General)</code>: copy into the project, read the asset directory directly, or keep the source path.</li>
+<li>After importing zmetal, if the current renderer differs from the material&#x27;s original type, the plug-in converts to the current renderer&#x27;s default material <strong>without asking</strong>; to choose a target type, use <code>「转换导入」 (Convert import)</code> in the context menu.</li>
+<li>When the log says <code>「不含 .zmetal 文件（不含节点网络数据）」 (no .zmetal file, no node network data)</code>, use <code>「应用材质到选中」 (Apply material to selection)</code> instead, or use the ma/mb material network inside the asset.</li>
+</ul>

@@ -1,0 +1,33 @@
+<p>资产库是「文件夹即数据」，复制整个库目录就是最完整的备份；插件删除操作另有临时备份可用于救急。</p>
+<p><img src="media/shared/settings-general.webp" alt="恢复库：设置 → 常规 →「资产库管理」→ 添加资产库" loading="lazy" decoding="async"></p>
+<h2 id="h-1">备份整个库</h2>
+<ol>
+<li>停止写入：关闭导入/导出任务，最好关闭插件窗口或退出 Maya。</li>
+<li>复制整个库根目录，包含 <code>library.json</code>、<code>favorites.json</code>、各子库和自定义顶级分类。</li>
+<li>把副本放到另一块磁盘或备份位置。</li>
+</ol>
+<h2 id="h-2">恢复整个库</h2>
+<ol>
+<li>关闭插件，把备份目录放回目标位置。</li>
+<li>打开设置 →「常规」→「资产库管理」→「添加资产库」，登记恢复后的目录。</li>
+<li>回到「分类」页，在库下拉框中选择该库。</li>
+<li>用库体检确认资产数与加载失败清单。</li>
+</ol>
+<h2 id="h-3">单个资产与误删恢复</h2>
+<ul>
+<li>单资产备份用命令 <code>export_assets</code>（指定 <code>material_ids</code> 与 <code>target_dir</code>），把资产复制成 <code>.zasset</code>；不要手动重命名或移动库内单个 <code>.zasset</code>。</li>
+<li>通过命令删除的资产，删除前会整体备份到系统临时目录下的 <code>squirrel_ai_undo</code>，可用 <code>undo_last</code> 回滚。</li>
+<li><code>version_manage op=remove_version</code> 会把被删版本备份到 <code>squirrel_ai_undo</code> 并返回 <code>backup</code> 路径；把它拷回主资产根目录即可还原。</li>
+</ul>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>恢复后资产数量与备份前一致，收藏夹名称与计数正常。</li>
+<li>库体检显示 <code>load_failure_count</code> 为 0，重复 UUID 为 false。</li>
+<li>缩略图缺失时重新生成即可，不影响资产本体。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<ul>
+<li>目录索引缓存与语义索引是派生数据，不必备份；恢复后会自动重建或按 4.1.12.2 手动重建。</li>
+<li>库列表、默认库、心愿单保存在用户设置 <code>~/.squirrel_asset_manager/app_settings.json</code>，换机时要单独备份。</li>
+<li>多人共用库时，避免多人同时写入；插件内的锁只在单个进程内生效。</li>
+</ul>

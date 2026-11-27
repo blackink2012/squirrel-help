@@ -1,0 +1,34 @@
+<p>Group the model files in a folder by asset and package each one into a <code>.zasset</code>; files with the same name but different formats merge into one asset.</p>
+<p><img src="media_en/shared/quicktool-model.webp" alt="Model to asset" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Purpose</h2>
+<p>Turn <code>.ma</code>, <code>.mb</code>, <code>.fbx</code>, <code>.obj</code>, USD, Alembic and similar models, together with their textures and proxy caches, into uniform assets that are easy to add to the library and import later.</p>
+<blockquote><p><strong>The menu shows the script name</strong>: the quick tools menu scans the scripts in <code>quicktools/</code> directly, and an entry name is the file name without <code>.py</code> with underscores replaced by spaces, so the menu shows <code>model to zasset</code> rather than a Chinese title. The three conversion tools map as follows: <code>hdr to zasset</code> = HDR to asset, <code>model to zasset</code> = model to asset, <code>pbr to zasset</code> = PBR texture to asset.</p></blockquote>
+<h2 id="h-2">Supported formats</h2>
+<p><code>.ma</code>, <code>.mb</code>, <code>.usd</code>, <code>.usda</code>, <code>.usdc</code>, <code>.abc</code>, <code>.fbx</code>, <code>.obj</code>, <code>.ass</code>.</p>
+<p>Default priority: <code>ma &gt; mb &gt; usd &gt; usda &gt; usdc &gt; abc &gt; fbx &gt; obj &gt; ass</code>. The asset name comes from the file name without extension, and source file names are left untouched.</p>
+<h2 id="h-3">Input and output</h2>
+<ul>
+<li>Input: a model folder. Files with the same name in several formats count as one asset, with all formats packaged into the same <code>.zasset</code>.</li>
+<li>Output: one <code>&lt;asset name&gt;.zasset</code> per asset. When <code>「输出位置」 (Output location)</code> is empty the current library category directory is preferred, and a directory picker appears if it cannot be resolved.</li>
+<li>Inside the asset: the model files, <code>meta.json</code>, an optional <code>thumb.sicon</code>, and sub-directories such as <code>textures/</code> and <code>ass/</code>; texture references are written into <code>texture_map</code>.</li>
+</ul>
+<h2 id="h-4">Steps</h2>
+<ol>
+<li>Open <code>快捷工具 (Quick tools) → model to zasset</code>.</li>
+<li>Click <code>「浏览...」 (Browse...)</code> and choose the <code>「模型文件夹」 (Model folder)</code>.</li>
+<li>Set <code>「目标格式」 (Target formats)</code> as needed (comma separated; empty packages every format found).</li>
+<li>Adjust the conversion options and click <code>「扫描模型」 (Scan models)</code> to check asset counts and formats.</li>
+<li>Set the output location (may be empty) and click <code>「转换」 (Convert)</code>.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>After scanning, the right side shows <code>「发现 N 个模型资产」 (found N model assets)</code> with each asset&#x27;s formats and size.</li>
+<li>When conversion finishes the status bar shows <code>「转换完成！成功: x, 失败: y」 (conversion finished! succeeded: x, failed: y)</code>.</li>
+<li>Inside the <code>.zasset</code> you can see the model files, <code>meta.json</code> and, when a thumbnail exists, <code>thumb.sicon</code>.</li>
+</ul>
+<h2 id="h-6">Options and notes</h2>
+<table><thead><tr><th>Option</th><th>Default</th><th>Notes</th></tr></thead><tbody><tr><td>Include sub-folders</td><td>On</td><td>Packages the contents of <code>ass/</code>, <code>textures/</code>, <code>sourceimages/</code> and similar</td></tr><tr><td>Search sub-folders recursively</td><td>Off</td><td>Scans deeper directories for model files</td></tr><tr><td>Include dependencies (textures, materials and so on)</td><td>On</td><td>Parses texture references from <code>.ma</code> and collects same-named <code>.mtl</code> / <code>.mcm</code> / <code>.zmetal</code></td></tr><tr><td>Use existing metadata and thumbnails</td><td>On</td><td>Reads thumbnail paths and JSON/TXT metadata sources from the configuration</td></tr><tr><td>Import into the current category after conversion</td><td>Off</td><td>Copies the asset into the current library category afterwards</td></tr></tbody></table>
+<ul>
+<li>Configuration comes from <code>Assets/preset/model_mapping.json</code>, with expression overrides in <code>Assets/preset/model_expression.json</code>; file routing, metadata sources and thumbnail search paths are editable in the interface.</li>
+<li>Metadata field mapping follows the configuration: <code>none</code> keeps the value, <code>split_comma</code> splits on commas into an array and <code>first_line</code> takes the first line; a wrong handler means no metadata is read.</li>
+</ul>

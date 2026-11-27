@@ -1,0 +1,27 @@
+<p>The AI assistant is a toggle: clicking while it is off starts dsh and shows the chat surface, clicking again while it is on closes the panel and ends the dsh process.</p>
+<p><img src="media_en/shared/ui-ai-assistant.webp" alt="This button opens or closes the AI assistant; its label follows the state" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<p>The plug-in main window is open and dsh is installed; without a local dsh an install guide appears first (see 8.3.5).</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Click <code>「AI 工具」 (AI tools)</code> in the toolbar and choose <code>「AI 助手」 (AI assistant)</code>.</li>
+<li>Wait for the state to change from <code>「正在启动 AI 助手…」 (Starting the AI assistant…)</code> to <code>「关闭 AI 助手」 (Close the AI assistant)</code>. The first start takes a few seconds; when the main window opens the plug-in warms up in the background, so it is usually faster.</li>
+<li>Once the panel appears you can chat. If the panel is collapsed while the service still runs, open <code>AI 工具 (AI tools) → 召回AI面板 (Recall the AI panel)</code> to bring it back.</li>
+<li>To end the conversation click <code>AI 工具 (AI tools) → 关闭 AI 助手 (Close the AI assistant)</code>, which closes the panel and ends the dsh process.</li>
+</ol>
+<h2 id="h-3">When the menu items appear</h2>
+<p>The <code>「AI 工具」 (AI tools)</code> menu is rebuilt per state each time it opens, so the wording in the same position changes:</p>
+<table><thead><tr><th>Assistant state</th><th>That menu item</th><th>Related items</th></tr></thead><tbody><tr><td>Off (or closed)</td><td><code>「AI 助手」 (AI assistant)</code></td><td>Neither recall nor close appears</td></tr><tr><td>Starting</td><td><code>「正在启动 AI 助手…」 (Starting the AI assistant…)</code></td><td>Same as above; no chat surface to recall yet</td></tr><tr><td>On</td><td><code>「关闭 AI 助手」 (Close the AI assistant)</code></td><td><code>「召回AI面板」 (Recall the AI panel)</code> appears as well</td></tr></tbody></table>
+<p>So &quot;close is missing from the menu&quot; usually means the assistant is not running — that is by design, not a missing item.</p>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>After opening: the menu item becomes <code>「关闭 AI 助手」 (Close the AI assistant)</code> and a chat panel appears on the right of Maya, or the system browser opens the page.</li>
+<li>After recalling: the panel reappears with the previous session intact.</li>
+<li>After stopping: the menu returns to <code>「AI 助手」 (AI assistant)</code> and Task Manager no longer shows the dsh process started this time.</li>
+</ul>
+<h2 id="h-5">Tips and warnings</h2>
+<ul>
+<li>Clicking again while it is starting cancels that start and never leaves a half-open panel.</li>
+<li>Closing Maya also ends dsh, so no orphan process is left behind.</li>
+<li><code>AI 工具 (AI tools) → 停止 AI 底座服务 (Stop the AI backend service)</code> only stops the local backend and never closes Maya; the backend starts again the next time the assistant opens.</li>
+</ul>

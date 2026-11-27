@@ -1,0 +1,20 @@
+<p>First work out which layer is broken: semantic search, visual analysis and the AI assistant are three independent paths, so one being unavailable does not mean the other two are broken.</p>
+<h2 id="h-1">Symptoms and causes</h2>
+<table><thead><tr><th>Symptom</th><th>Common cause</th></tr></thead><tbody><tr><td><code>「AI 服务不可用，已用关键词直接搜索」 (AI service unavailable; searched by keyword instead)</code></td><td>Ollama is not running, the embedding model is not pulled, or the index is unavailable</td></tr><tr><td>AI analysis says the model does not support images, or fails outright</td><td>The current model is text-only, or no vision model exists</td></tr><tr><td>The AI assistant will not open or prompts to install</td><td>dsh is missing locally, or the Node version does not qualify</td></tr><tr><td>Cloud model errors</td><td>Missing API key, wrong endpoint or a network problem</td></tr></tbody></table>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>First run <code>Settings → AI 设置 (AI settings) → AI 功能与依赖 (AI features and dependencies) → AI 依赖检查 (AI dependency check)</code> and use the report to locate the exact layer.</li>
+<li>Ollama: confirm <code>ollama list</code> works and run <code>ollama serve</code> when needed.</li>
+<li>Missing model: use <code>「一键安装」 (One-click install)</code> to add the embedding or vision model.</li>
+<li>Index problems: follow the rebuild command in the report, or see the &quot;Missing model or index&quot; page.</li>
+<li>dsh problems: reinstall as described in &quot;Install guide when dsh is missing&quot;.</li>
+<li>Cloud problems: check the provider, API key, API endpoint and model name.</li>
+</ol>
+<h2 id="h-3">What still works after a fallback</h2>
+<ul>
+<li>Search falls back to keywords and tags, and asset browsing, import and export are unaffected.</li>
+<li>Without AI analysis you can fill in the name, category and tags by hand.</li>
+<li>Without the AI assistant you can still use the main interface&#x27;s AI search and the documentation command surface.</li>
+</ul>
+<h2 id="h-4">If it still fails</h2>
+<p>Report the dependency report, the end of the relevant logs and reproduction steps together; do not reinstall the whole dependency set repeatedly.</p>

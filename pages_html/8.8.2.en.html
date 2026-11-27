@@ -1,0 +1,13 @@
+<p>A skill bundle is a manual written for the AI: one directory and one <code>SKILL.md</code> per skill, stating when to use it, how to do the work and which pitfalls exist.</p>
+<h2 id="h-1">Source and destination</h2>
+<p>The source directory is <code>&lt;plug-in directory&gt;\dsh_plugins\skills</code>, currently 13 bundled skills covering the asset library, asset conversion, Maya help, headless modeling, Bifrost, plug-in internals, script assets and more.</p>
+<ul>
+<li><strong>Bundled dsh</strong>: before launching the web client each time, the plug-in idempotently lands the skills in <code>&lt;dshHome&gt;\skills</code> and writes user-level rules to <code>&lt;dshHome&gt;\AGENTS.md</code>; the user does nothing.</li>
+<li><strong>External tools</strong>: the same source lands in the other tool&#x27;s skill root; outside dsh both the directory name and the frontmatter <code>name</code> carry a <code>squirrel-</code> prefix so they cannot clash with the user&#x27;s existing skills.</li>
+</ul>
+<h2 id="h-2">Why standing rules are also needed</h2>
+<p>Skills load on demand and a model may act without reading them; the managed section of <code>AGENTS.md</code> is injected every session and enforces baselines such as &quot;consult the help first, change the scene afterwards&quot;. Landing only touches its own section and keeps whatever the user wrote.</p>
+<h2 id="h-3">Self-checks while landing</h2>
+<p>Hosts usually ignore problems in skill files silently, so landing fixes fence lines, checks that <code>name</code> matches the directory name, verifies there is no UTF-8 BOM and that another tool&#x27;s same-named directory is not overwritten.</p>
+<h2 id="h-4">Updating and uninstalling</h2>
+<p>Reinstalling first confirms the overwrite list; uninstalling uses the ledger to delete only our skills and leaves other skills in the same directory alone.</p>

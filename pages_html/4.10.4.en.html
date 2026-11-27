@@ -1,0 +1,29 @@
+<p>In <code>「导入版本 / LOD」 (Import version / LOD)</code> in the asset context menu, choose version, LOD and format step by step to pick what to import into the scene.</p>
+<p><img src="media_en/shared/dialog-version-browser.webp" alt="Version browser" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The asset has several versions, or the main version itself has several LODs; otherwise the submenu is not shown.</li>
+<li>A Maya scene is open and the asset library is loaded.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the asset thumbnail and choose <code>「导入版本 / LOD」 (Import version / LOD)</code>.</li>
+<li>Choose the version: <code>「主版本」 (Main version)</code>, <code>V1</code>, <code>V2</code> and so on.</li>
+<li>Choose the LOD. Entries show the display name, the LOD ID and the face count.</li>
+<li>When one LOD has several geometry formats, choose the format.</li>
+<li>Click to import through the normal import pipeline.</li>
+<li>You can also double-click the preview on the right to open the version browser, select a version and click <code>「导入此版本」 (Import this version)</code> to import it using one of its available formats.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The imported geometry appears in the Outliner.</li>
+<li>When the version directory contains <code>.zmetal</code> or <code>.mcm</code> the version submenu additionally lists a material entry; choosing it runs a material import.</li>
+<li>The import log shows the version directory and format.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>With only one version there is nothing to switch, and the menu still lists &quot;main version → LOD&quot;; with only one LOD it lists geometry formats directly.</li>
+<li>Importing does not replace existing models in the scene; delete the old model by hand when a replacement is needed.</li>
+<li>Material files inside a version directory belong to that version; versions without their own materials use the main version&#x27;s materials.</li>
+<li>Version information can be reviewed together in the version browser, see 4.10.7.</li>
+</ul>

@@ -1,0 +1,28 @@
+<p>子库 ID 是唯一标识，显示名只影响界面文字；两者都在「子库与分类」页右侧编辑。</p>
+<p><img src="media/shared/settings-sublibraries.webp" alt="设置 → 子库与分类" loading="lazy" decoding="async"></p>
+<p><img src="media/shared/settings-sublib-id.webp" alt="子库 ID" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>左侧列表显示为「显示名 (ID)」。ID 同时对应资产库里的子库文件夹名，并被右键菜单、双击预设、导出预设等按子库分段的配置引用；显示名只用于界面展示。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<ul>
+<li>内置子库共 11 个，ID 与显示名对应：<code>materials</code> 材质、<code>models</code> 模型、<code>lights</code> 灯光、<code>textures</code> 贴图、<code>scenes</code> 场景、<code>hdr</code> HDR、<code>ani</code> 动态、<code>images</code> 图片、<code>audio</code> 音频、<code>animation</code> 动画数据、<code>nodetree</code> 节点树。</li>
+<li>其中 <code>materials</code>、<code>models</code>、<code>lights</code>、<code>textures</code>、<code>scenes</code>、<code>hdr</code>、<code>ani</code> 这 7 个受删除保护；<code>images</code>、<code>audio</code>、<code>animation</code>、<code>nodetree</code> 虽然也是内置 ID，但目前允许删除（风险见「添加与删除子库」）。</li>
+<li>自定义子库 ID 形如 <code>custom_1</code>、<code>custom_2</code>，显示名形如「自定义1」。</li>
+<li>ID 不可与已有子库重复，重复时提示「子库ID「xxx」已存在」。</li>
+</ul>
+<h2 id="h-3">操作步骤</h2>
+<ol>
+<li>打开「设置 → 子库与分类」，选中左侧子库。</li>
+<li>修改「子库ID:」或「显示名:」。</li>
+<li>点「应用」或「确定」。</li>
+</ol>
+<h2 id="h-4">影响范围</h2>
+<ul>
+<li>修改显示名是安全的，只改界面文字。</li>
+<li>修改 ID 只改配置文件中的键，不会自动重命名磁盘上的子库文件夹；已有资产可能因此找不到对应子库。</li>
+<li>核心子库的 ID 被其它预设按段引用，改动后旧配置段可能失效。</li>
+</ul>
+<h2 id="h-5">结果验证</h2>
+<p>应用后左侧列表应显示新的「显示名 (ID)」，重开设置仍保持。</p>
+<h2 id="h-6">何时修改</h2>
+<p>一般只改显示名。确实要改 ID 时先备份资产库与 <code>config.json</code>，并同步检查右键菜单、双击预设中的同名段。</p>

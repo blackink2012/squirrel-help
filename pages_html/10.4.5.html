@@ -1,0 +1,24 @@
+<p>渲染出图用当前渲染器逐帧正式出图，速度比视口截图慢得多，适合已经确认构图与材质后的成品图。</p>
+<p><img src="media/shared/maya-render.webp" alt="Arnold 渲染出图" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>场景渲染设置已配置好，当前渲染器可用。</li>
+<li>明确帧范围、输出目录与分辨率；渲染不可撤销。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>调用 <code>render_frames</code>，<code>frames</code> 支持 <code>&quot;1-3&quot;</code>、<code>&quot;1,5,9&quot;</code>、<code>&quot;1-10:5&quot;</code>，也可传数组。</li>
+<li>指定输出目录 <code>image_dir</code>；省略时沿用场景自己的输出 prefix。</li>
+<li>需要覆盖分辨率时传 <code>width</code> / <code>height</code>（传 0 表示用场景设置）。</li>
+<li>指定相机 <code>camera</code>、文件名前缀 <code>prefix</code>；Arnold 场景可传 <code>samples</code> 临时改 AASamples。</li>
+<li>用 <code>max_frames</code> 限制本次帧数，默认上限 100。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>返回每帧的输出路径与进度；打开图片确认分辨率、帧号与内容正确。取消后已渲染出的图会保留。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>每帧耗时从几十秒到几分钟，属于长任务，请走异步作业并观察进度。</li>
+<li>命令会临时把帧号烘进输出前缀并临时关掉 <code>animation</code>，跑完还原；否则一次调用会渲染整段帧范围或把每帧覆盖成同一个文件。</li>
+<li>渲染不可撤销；<code>samples</code> 只在场景已有 <code>defaultArnoldRenderOptions</code> 节点时生效。</li>
+<li>Redshift 在同一个 Maya 会话里反复进程内渲染有崩溃风险，详见「渲染器崩溃」。</li>
+</ul>

@@ -1,0 +1,24 @@
+<p>Spending two minutes on the items below avoids the three usual problems: failed overwrite, lost settings, and an installation that will not start.</p>
+<h2 id="h-1">Steps</h2>
+<ol>
+<li><strong>Confirm the package type</strong>: release builds do not have <code>test</code> in the file name.</li>
+<li><strong>Verify the installer</strong>: compare the hash as described in &quot;Installer and SHA256 verification&quot; to confirm the download is complete.</li>
+<li><strong>Close Maya</strong>.</li>
+<li><strong>Note the current version</strong>: write down the old version number so you can find the matching installer when rolling back.</li>
+<li><strong>Back up settings and the asset library</strong>: copy <code>~/.squirrel_asset_manager/app_settings.json</code> and the library directory; uninstalling does not back them up for you.</li>
+<li><strong>Check for old copies</strong>: look for a <code>squirrel_asset_manager</code> copy left by a historical install in each version&#x27;s <code>scripts</code> directory (older script installs put it under <code>%MAYA_APP_DIR%\squirrel_asset_manager</code>) and clean it up when the installer prompts.</li>
+<li><strong>Confirm the ports are free</strong>: driving Maya from the standalone edition needs ports starting at <code>127.0.0.1:7001</code>; a second instance of the same Maya version uses the backup range <code>7110–7129</code>.</li>
+<li><strong>Prepare license information</strong>: online activation needs an activation code; offline activation needs the machine code and a license file.</li>
+</ol>
+<h2 id="h-2">Verify the result</h2>
+<ul>
+<li>All Maya instances are closed and the plug-in directory is writable.</li>
+<li>Settings and the asset library have usable backup copies.</li>
+<li>The activation method is decided (online or offline).</li>
+</ul>
+<h2 id="h-3">Common failures</h2>
+<ul>
+<li><strong>Uninstalling without a backup</strong>: the asset library is usually kept, but custom settings may be reset.</li>
+<li><strong>Maya still running</strong>: overwriting <code>.pyd</code> files fails with &quot;access denied&quot;.</li>
+<li><strong>Wrong build</strong>: a test build distributed as a release build, containing documents that must not be published.</li>
+</ul>

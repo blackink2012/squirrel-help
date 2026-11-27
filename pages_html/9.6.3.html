@@ -1,0 +1,30 @@
+<p>脚本支持直接运行、带参数运行、作为模块导入，以及加载到 Maya 脚本编辑器。</p>
+<p><img src="media/shared/quicktool-script-browser.webp" alt="脚本浏览器" loading="lazy" decoding="async"></p>
+<h2 id="h-1">用途</h2>
+<p>同一份脚本按不同目的使用：验证效果直接运行，需要传值时带参数运行，要在编辑器里继续修改则加载过去。</p>
+<h2 id="h-2">运行</h2>
+<ol>
+<li>选中脚本，双击、按 Enter 或点「▶ 运行」。</li>
+<li>登记为 <code>high</code> 风险的脚本会先弹出确认框，默认按钮为「否」；可勾选本次会话不再提醒。</li>
+<li>Python 脚本先做语法编译检查，语法错误不会执行；MEL 通过 <code>mel.eval</code> 执行。</li>
+<li>需要参数时右键选择「带参数运行…」，填写 JSON 对象，会作为 <code>PARAMS</code> 预置给脚本（仅 Python）。</li>
+<li>脚本可把结果放入 <code>RESULT</code>，窗口会在脚本编辑器中打印其摘要。</li>
+</ol>
+<h2 id="h-3">导入与加载</h2>
+<ul>
+<li>「导入（加载为模块）」只支持 Python：把脚本所在目录加入 <code>sys.path</code>，以文件主名注册进 <code>sys.modules</code>，并列出可用名称。MEL 不是模块，会被拒绝。</li>
+<li>「加载到脚本编辑器」按扩展名写入 Python 或 MEL 页签；目标页签已有内容时不会直接覆盖，会先询问。</li>
+<li>「生成执行命令（放工具架）…」可生成 Python / MEL 工具架按钮命令。</li>
+</ul>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>状态栏显示「已运行 &lt;名称&gt;（用时 x.xxs）」；失败时弹出可复制的报错框。</li>
+<li>脚本的 <code>print</code> 与 traceback 出现在 Maya 脚本编辑器历史。</li>
+<li>导入后可在脚本编辑器用 <code>import &lt;模块名&gt;</code> 使用；加载后编辑器页签出现脚本源码。</li>
+</ul>
+<h2 id="h-5">注意事项</h2>
+<ul>
+<li>带参数运行不适用于 MEL；MEL 没有 <code>PARAMS</code> / <code>RESULT</code> 约定，关键结果请 <code>print</code>。</li>
+<li>独立运行版会把脚本投送到在线 Maya 执行；Maya 离线时返回「投送 Maya 失败」。</li>
+<li>高风险脚本的免提醒只在本次会话内有效。</li>
+</ul>

@@ -1,0 +1,20 @@
+<p>Installs the AI dependencies in a fixed sequence, skipping whatever already exists; after a failure, clicking again only fills in the failed or missing parts.</p>
+<p><img src="media_en/shared/settings-ai-deps.webp" alt="AI dependencies" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<p>Network access; enough free disk space (about 1.3 GB for the embedding model and 5.6 GB for the vision model); installing Ollama may need system permissions.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open <code>Settings → AI 设置 (AI settings) → AI 功能与依赖 (AI features and dependencies)</code> and click <code>「一键安装 AI 功能与依赖」 (One-click install of AI features and dependencies)</code>.</li>
+<li>In the confirmation dialog check the steps and sizes. When AI asset analysis is needed, check <code>「同时安装图像检索」 (Also install image retrieval)</code> and confirm the vision model name.</li>
+<li>Start it. The progress window shows the current step, live logs and a cancel button; Maya stays usable during the install.</li>
+<li>Afterwards read the success or failure list. On failure click the same button again, which only fills the failed or missing steps; check <code>「强制重装」 (Force reinstall)</code> to reinstall over existing parts.</li>
+</ol>
+<p>The install order is: Ollama → start the service → embedding model → documentation vector index → asset library semantic index → (optional) image sidecar → vision chat model.</p>
+<h2 id="h-3">Verify the result</h2>
+<p>After installing, run <code>「AI 依赖检查」 (AI dependency check)</code> again and the related items should show as available; you can also try a natural-language Chinese semantic search or an AI thumbnail analysis.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>After cancelling, the parts already installed are kept and only the missing ones are installed next time.</li>
+<li>The full log is <code>%TEMP%\squirrel_asset_manager\ai_install.log</code>.</li>
+<li>This step does not install dsh; use the one-click install offered by <code>「AI 助手」 (AI assistant)</code> for the assistant runtime.</li>
+</ul>

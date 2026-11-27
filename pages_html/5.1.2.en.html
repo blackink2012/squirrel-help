@@ -1,0 +1,29 @@
+<p>When an asset has several formats, the double-click preset decides which one imports by default, while the context menu lets you pick a format for one occasion.</p>
+<h2 id="h-1">How the default format is decided</h2>
+<p>Double-click import and drag-into-viewport share one rule:</p>
+<ol>
+<li>Read that sub-library&#x27;s entry in <code>Assets/preset/double_click_preset.json</code>, falling back to the <code>default</code> section when it is not registered.</li>
+<li>Only when that sub-library&#x27;s double-click command is <code>import</code> is the entry&#x27;s <code>option</code> treated as an import format; textures double-click to &quot;create material&quot; and HDR to &quot;create environment light&quot;, so their <code>option</code> never decides an import format.</li>
+<li>If that format is among the asset&#x27;s available formats it is used; otherwise (including an empty <code>option</code>) it falls back to the <strong>first available format</strong>.</li>
+</ol>
+<p>The double-click presets can be changed per sub-library in <code>Settings → 右键菜单 (Context menu) → 双击命令 (Double-click command)</code>.</p>
+<h2 id="h-2">Choosing a format manually</h2>
+<ul>
+<li>With only one available format the context menu shows <code>「导入 &lt;format&gt;」 (Import &lt;format&gt;)</code> directly.</li>
+<li>With several formats the context menu shows an <code>「导入」 (Import)</code> submenu listing each format.</li>
+<li>Versioned assets go through <code>「导入版本 / LOD」 (Import version / LOD)</code>, choosing the version and LOD first and the format afterwards.</li>
+<li>Textures, lights and HDR use their own menus (import texture, create environment light, assign texture and so on).</li>
+<li>Images, audio, animation data and node trees also have their own entries (see the next section) and are not in the import format list.</li>
+</ul>
+<h2 id="h-3">The four asset types with dedicated import entries</h2>
+<p>These four are not geometry or materials, and their entries are <strong>the top items of the context menu</strong>, not the format list:</p>
+<table><thead><tr><th>Sub-library</th><th>Dedicated entry after right-clicking the asset</th><th>Result</th><th>Details</th></tr></thead><tbody><tr><td>Images</td><td>Import as file node / create imagePlane / assign to selected material slot / open image</td><td>A file texture node, a viewport reference image, a texture on a material color slot, or just viewing the image</td><td><a href="#/en/15.5.9">15.5.9</a></td></tr><tr><td>Audio</td><td>Import to timeline / import to Time Editor / import to Trax Editor / import to camera sequencer; also <code>「转换为 WAV」 (Convert to WAV)</code></td><td>The sound on a timeline sound node, a Time Editor audio clip, a Trax sound track or a sequencer shot</td><td><a href="#/en/15.5.10">15.5.10</a></td></tr><tr><td>Animation data</td><td>Import animation ▶ / import animation (hierarchy mapping)… / import to selected attributes ▶</td><td>Writes ATOM keyframes onto hierarchy and attributes that <strong>already exist</strong> in the scene</td><td><a href="#/en/15.5.11">15.5.11</a></td></tr><tr><td>Node trees</td><td>Import ma / add reference / preview nodes</td><td>The node network enters the scene (new nodes are selected afterwards), or a read-only preview of the connections</td><td><a href="#/en/15.5.12">15.5.12</a></td></tr></tbody></table>
+<p>A few preconditions:</p>
+<ul>
+<li>All four require a specific category selected in the left column; under <code>「全部资产」 (All assets)</code>, favorites or the recycle bin the <code>「从外部导入」 (Import from Files)</code> button is disabled (greyed out), and the empty-space context menu shows a grey line: <code>「当前分类不支持从外部导入」 (this category does not support importing from files)</code>.</li>
+<li><code>「指定到选中材质槽」 (Assign to selected material slot)</code> needs a material node selected in the scene (only the color slot is recognized); without a selection it reports a failure.</li>
+<li>Animation data only writes keyframes and never creates skeletons or objects — when the scene lacks the matching hierarchy, use <code>「导入动画（层级映射）…」 (Import animation (hierarchy mapping)…)</code> to point at it manually.</li>
+<li>Seeing nothing in the viewport after importing a node tree is normal: it contains only a node network, so look in the Hypershade or Node Editor; the newly created nodes are already selected.</li>
+</ul>
+<h2 id="h-4">Where available formats come from</h2>
+<p>Available formats come from the <code>.zasset</code>&#x27;s <code>meta.json</code>; when the fields are missing the files inside the package are scanned. Ordinary textures, sicon and aicon never enter the import format list, with HDR as the exception.</p>

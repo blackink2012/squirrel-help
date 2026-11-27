@@ -1,0 +1,24 @@
+<p>序列帧按帧抓一组视口图（逐帧 playblast），用来观察动作与变化；单帧看细节请用「视口截图」。</p>
+<p><img src="media/shared/menu-thumbnail.webp" alt="拍屏/渲染的时间轴模式输出序列并合成 MP4" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>Maya 处于 GUI 会话，有可用的 <code>modelPanel</code>。</li>
+<li>明确要抓的帧范围与输出位置。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>调用 <code>capture_sequence</code>，<code>frames</code> 支持 <code>&quot;1-10&quot;</code>、<code>&quot;1,3,5&quot;</code>、<code>&quot;1-10:2&quot;</code>，也可直接传数组。</li>
+<li>指定输出：<code>image_path</code> 可给占位符模板（如 <code>.../shot_{frame:04d}.png</code>）、前缀或目录；省略时落到系统临时目录。</li>
+<li>设置尺寸、相机、显示方式：<code>width</code> / <code>height</code>、<code>camera</code>、<code>mode</code>、<code>wireframe</code>、<code>panel</code>。</li>
+<li>设置帧号补零位数 <code>padding</code>（默认 4）与本次上限 <code>max_frames</code>（默认 200）。</li>
+<li>需要顺手编码视频时传 <code>video</code> 与 <code>fps</code>，抓完会接着编码。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>返回实际产出的帧列表与文件路径；帧数应与请求范围一致，打开其中几帧确认画面正常。每帧都会做空图检测，异常帧会列在 <code>blank_frames</code> 里。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>一次最多 200 帧，这是防止把 Maya 主线程占死的硬闸门。</li>
+<li>每帧一个取消检查点，取消后立即停止并保留已经抓到的帧，<code>status=cancelled</code>、<code>stopped_early=true</code>。</li>
+<li>抓图会临时改当前帧，结束后还原；大范围序列有让场景被标记为已修改的情况，需要时用 <code>cmds.file(modified=False)</code> 复原。</li>
+<li>给 <code>{frame:04d}</code> 这类占位符时按格式串展开；给前缀或目录时按 <code>padding</code> 补零，方便直接交给编码命令使用。</li>
+</ul>

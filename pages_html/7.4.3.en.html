@@ -1,0 +1,25 @@
+<p>Apply the parameters from a light asset onto lights already in the scene, without creating a new light or moving the existing ones.</p>
+<p><img src="media/shared/menu-context-light-params.webp" alt="Light asset context menu → apply light parameters to the selected light" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The target lights exist in the scene (transform or shape both work).</li>
+<li>The light asset contains <code>.zlight</code>, or at least a <code>.ma/.mb</code> light network to fall back on.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select one or more lights in Maya that should receive the parameters.</li>
+<li>Right-click the light asset in the library and choose <code>「应用灯光参数到选中灯光」 (Apply light parameters to the selected light)</code>.</li>
+<li>Same-type lights: the tool writes back the serialized source attributes exactly.</li>
+<li>Cross-type lights: it maps source attributes to target attributes through <code>.mmap</code> and migrates texture and IES connections as well.</li>
+<li>When the asset has no <code>.zlight</code>, the tool imports its <code>.ma/.mb</code>, uses the lights inside as the parameter source, and cleans up the temporary imported nodes afterwards.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The Script Editor reports <code>「已应用 N 处灯光参数」 (applied N light parameter groups)</code> and the modified lights stay selected at the end. The target lights&#x27; color, intensity, exposure, HDR / IES and so on match the asset.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>When the source light has no texture slot, leftover texture connections on the target are disconnected so old textures do not occupy the attribute and block the color value.</li>
+<li>Some plug-in attributes are read-only; an ineffective write prints <code>「属性写入未生效（可能只读）」 (attribute write had no effect; it may be read-only)</code>.</li>
+<li>Texture nodes are kept and the temporary source light is deleted.</li>
+</ul>
+<h2 id="h-5">Warnings</h2>
+<p>With no light selected the tool reports an error straight away; cross-type application needs the matching light <code>.mmap</code>, otherwise nothing is written.</p>

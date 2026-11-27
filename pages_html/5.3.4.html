@@ -1,0 +1,26 @@
+<p>右键贴图资产，通过「导入贴图」子菜单把单张贴图或整套贴图变成场景中的 file 节点。</p>
+<p><img src="media/shared/menu-context-texture-import.webp" alt="贴图资产右键：导入贴图" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>Maya 场景已打开。</li>
+<li>贴图资产的 <code>textures/</code> 下有可读取的图片文件。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>右键贴图资产，展开「导入贴图」。</li>
+<li>资产有多个精度目录时，先选精度（如 <code>2K</code>、<code>4K</code>）；只有一层时直接列出文件名。</li>
+<li>导入单张：点击文件名，插件创建 file 节点与 place2dTexture，并选中该 file 节点。</li>
+<li>导入整套：点击「导入全部」或「导入全部 (&lt;精度&gt;)」，插件批量创建 file 节点，并让它们<strong>共享一个</strong> place2dTexture。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>Hypershade 中出现对应数量的 file 节点。</li>
+<li>单张导入后该 file 节点处于选中状态。</li>
+<li>批量导入后所有 file 节点的 UV 连接指向同一个 place2dTexture，调整该节点即可统一改 UV。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>色彩空间按扩展名给出：png、jpg、jpeg、tga、tif、tiff、bmp、psd 为 sRGB；exr、hdr 为 Raw。</li>
+<li>贴图存放位置遵循贴图导入策略；选择「拷贝贴图到项目」时会复制到工程 <code>sourceimages/squirrel_asset/</code>。</li>
+<li>要把贴图接到已有材质，请用「指定贴图」；要新建成套材质，请用「创建材质」。</li>
+</ul>

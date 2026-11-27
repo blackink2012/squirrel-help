@@ -1,0 +1,23 @@
+<p>For a failed import, read the Script Editor log first, then check item by item whether the format exists, the license is valid and the file is readable.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>Right-clicking <code>「导入」 (Import)</code> adds nothing to the scene.</li>
+<li>The log says &quot;import failed&quot;, &quot;unknown format&quot;, &quot;extraction failed&quot; or &quot;no .zmetal / .zlight / .mcm&quot;.</li>
+<li>A license prompt appears during the import.</li>
+<li>The <code>「从外部导入」 (Import from Files)</code> button is greyed out (you are on <code>「全部资产」 (All assets)</code>, favorites or the recycle bin with no target category).</li>
+<li>Dropping images or audio into the viewport does nothing; importing a node tree shows nothing in the scene; importing animation data leaves the model unmoved.</li>
+</ul>
+<h2 id="h-2">Common causes and fixes</h2>
+<table><thead><tr><th>Log or symptom</th><th>Cause</th><th>Fix</th></tr></thead><tbody><tr><td><code>[ImportExecutor] 未知格式</code> (unknown format)</td><td>No file of that format inside the asset, or the format name is not in the routing table</td><td>Choose another format in the context menu; confirm a file with that extension really exists in the <code>.zasset</code></td></tr><tr><td><code>[FileImporter] 提取失败</code> (extraction failed)</td><td>Files inside the package are missing or cannot be extracted</td><td>Re-export from the source files, or re-import the asset from a backup</td></tr><tr><td><code>[ImportExecutor] .zasset 不含 .zmetal 文件</code> (the .zasset contains no .zmetal file)</td><td>The asset was exported by a quick tool and has no node network</td><td>Use <code>「应用材质到选中」 (Apply material to selection)</code> or the ma/mb materials inside the asset</td></tr><tr><td><code>[Licensing] 功能 &#x27;import&#x27; 被拒绝</code> (feature &#x27;import&#x27; denied)</td><td>The license expired or is invalid, so import is gated</td><td>Activate or renew, then retry</td></tr><tr><td>fbx does nothing</td><td>The <code>fbxmaya</code> plug-in is not loaded</td><td>Load it in Maya&#x27;s plug-in manager and retry</td></tr><tr><td>Proxy or volume formats do not display</td><td>The matching renderer plug-in is not installed</td><td>Install Arnold, V-Ray or Redshift and retry</td></tr><tr><td>The import-from-files button is greyed out / the menu only says &quot;this category does not support importing from files&quot;</td><td>You are on All assets, favorites or the recycle bin with no concrete target category</td><td>Select a specific sub-library and category in the left column first</td></tr><tr><td>Dropping images or audio into the viewport does nothing</td><td>These are loose files and not part of the geometry drag pipeline</td><td>Use the context menu: images → import as file node / create imagePlane; audio → import to timeline and so on (see <a href="#/en/15.5.9">15.5.9</a>, <a href="#/en/15.5.10">15.5.10</a>)</td></tr><tr><td>Animation data imports but the animation does not change</td><td>The scene has no hierarchy matching the asset, so automatic mapping fails</td><td>Use <code>「导入动画（层级映射）…」 (Import animation (hierarchy mapping)…)</code> to point at the nodes, or select the target hierarchy and use <code>「导入到选择属性」 (Import to selected attributes)</code></td></tr><tr><td>Nothing &quot;visible&quot; after importing a node tree</td><td>A node tree has only a node network and no geometry; this is not a failure</td><td>Look in the Hypershade / Node Editor; the new nodes are already selected</td></tr><tr><td><code>「指定到选中材质槽」 (Assign to selected material slot)</code> reports a failure</td><td>No material node is selected in the scene, or the selection is not a material</td><td>Select the material node in the Hypershade / viewport first, or use import as file node and wire it yourself</td></tr></tbody></table>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>After changing the format the log says <code>「导入成功」 (import succeeded)</code> and the Outliner shows new nodes.</li>
+<li>Once the license is restored the same action no longer reports a denial.</li>
+</ul>
+<h2 id="h-4">If it still fails</h2>
+<ol>
+<li>Confirm the <code>.zasset</code> directory really contains a file of that format and that its size is not 0.</li>
+<li>For images and audio, first confirm the asset file exists (loose files sit in the category directory), then check that you used the matching import entry.</li>
+<li>Import using another format to tell whether the problem is one file or the whole import path.</li>
+<li>Report the full log together with the asset name; the traceback in the log points at the specific importer.</li>
+</ol>

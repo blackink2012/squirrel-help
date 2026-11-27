@@ -1,0 +1,19 @@
+<p>Index status can be checked without any network access: whether it is usable, which model it uses, how many entries it has, where it lives and whether it lags behind the library.</p>
+<p><img src="media_en/shared/settings-ai-deps.webp" alt="AI dependencies" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<p>An asset library is open; to check the documentation index the machine needs the knowledge base or the online fallback enabled.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Ask the AI assistant for the index status, or call the read-only command <code>asset_semantic_status</code>.</li>
+<li>Focus on four groups of fields: <code>available</code> and <code>reason</code> (whether and why), <code>model</code> / <code>dim</code> / <code>count</code> (model and scale), <code>index_dir</code> / <code>library_id</code> (location and owning library) and <code>index_lag</code> (whether it lags).</li>
+<li>For finer environment diagnostics run <code>python tools\asset_index.py --status</code> or <code>--doctor</code>; for the image index use <code>python tools\asset_vision_encode.py status --library &quot;&lt;library root&gt;&quot;</code>.</li>
+<li>For the documentation index use <code>maya_docs(action=&quot;status&quot;)</code>, where <code>semantic.diagnose</code> lists which link is missing and the matching command.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p><code>available=true</code> with <code>index_lag.stale=false</code> means the index is usable and keeps up with the library; <code>reason</code> is empty or only mentions optional features not installed.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>The status query reads local files only and never uses the network; only <code>--doctor</code> probes Ollama and the models.</li>
+<li><code>index_lag.stale=true</code> is not fatal, since the next search syncs incrementally; it is common on shared libraries.</li>
+<li>When the index in that directory belongs to another library it reports an error explicitly; never copy an index directory by hand to &quot;fix&quot; it.</li>
+</ul>

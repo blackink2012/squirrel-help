@@ -1,0 +1,21 @@
+<blockquote><p>One-line summary: <strong>the thin strip at the very bottom of the window reports counts on the left and which asset is selected on the right.</strong></p></blockquote>
+<p>It spans the right work area (excluding the leftmost navigation column), has a fixed height, cannot be dragged and takes no working space.</p>
+<h2 id="h-1">What the two text segments are</h2>
+<table><thead><tr><th>Position</th><th>Content</th><th>Meaning</th></tr></thead><tbody><tr><td>Left</td><td><code>Materials: 84/84</code></td><td>The left of the slash is <strong>the number of assets visible in the current view</strong>, the right is <strong>the total number of assets loaded in the library</strong></td></tr><tr><td>Left (appended when selecting)</td><td>`\</td><td>Selected: 3`</td><td>How many assets are selected (meaningful when multi-selecting)</td></tr><tr><td>Right</td><td><code>Selected: CARTOON12</code></td><td>The readable name (name field) of the selected asset; with multiple selected it shows the first</td></tr></tbody></table>
+<p>&quot;Materials&quot; is historical wording and here simply means &quot;assets&quot;; it has nothing to do with how many material assets the library holds.</p>
+<p><img src="media_en/15.8.1-1.webp" alt="Bottom status bar" loading="lazy" decoding="async"></p>
+<h2 id="h-2">When the numbers change</h2>
+<table><thead><tr><th>Operation</th><th>Effect</th></tr></thead><tbody><tr><td>Switching category / sub-library / favorite set</td><td>The visible count changes (the total does not; the total is for the whole library)</td></tr><tr><td>Keyword search / tag filter / AI search / search by image</td><td>The visible count changes — this is &quot;how many matched right now&quot;</td></tr><tr><td>Multi-select / rubber band / deselect</td><td>&quot;Selected&quot; appears or disappears</td></tr><tr><td>Creating, importing or deleting assets and refreshing</td><td>The total changes</td></tr><tr><td>While the library is loading</td><td>Placeholder text first; real numbers once loading finishes</td></tr></tbody></table>
+<h2 id="h-3">The right segment also shows other things temporarily</h2>
+<p>The right-hand information slot does not only show asset names; many operation results temporarily occupy it (until the next asset selection):</p>
+<table><thead><tr><th>Scenario</th><th>What the right side may show</th></tr></thead><tbody><tr><td>An asset is selected</td><td><code>Selected: asset name</code></td></tr><tr><td>AI search / search by image</td><td>Result notes such as &quot;AI search &#x27;keyword&#x27;: found n assets&quot;, &quot;Image search: …&quot;</td></tr><tr><td>Text search for video / music</td><td>Notes such as &quot;Text search for video: matched n animations&quot;</td></tr><tr><td>Background rendering / UUID repair</td><td>Progress such as &quot;Generating n thumbnails with …&quot;, &quot;Repairing UUIDs: 3/20&quot;</td></tr><tr><td>A layout operation failed</td><td>Hints such as &quot;At least one area must remain&quot;</td></tr></tbody></table>
+<p>So changed text on the right is not necessarily an error; just read what it is talking about.</p>
+<h2 id="h-4">Common questions</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th></tr></thead><tbody><tr><td>The two numbers differ (such as <code>12/84</code>)</td><td>Normal: the left is the visible count in the current category / search and the right is the whole library</td></tr><tr><td>The number stays 0</td><td>The library did not load, or the current category really has no assets</td></tr><tr><td>&quot;Selected&quot; never disappears</td><td>The selection is still active; single-click blank space in the asset grid to clear it and it empties</td></tr><tr><td>No asset path anywhere</td><td>The status bar does not show paths; see them in the asset details window (<a href="#/en/15.11.1"><code>8.11.1</code></a>)</td></tr></tbody></table>
+<h2 id="h-5">Related</h2>
+<ul>
+<li>The AI assistant area on the right → <a href="#/en/15.8.2"><code>8.8.2</code></a></li>
+<li>In the recycle bin the status bar switches to entry count and usage → <a href="#/en/15.8.3"><code>8.8.3</code></a></li>
+<li>Selecting / multi-selecting in the asset grid → <a href="#/en/4.4.1"><code>4.1.4.1</code></a></li>
+<li>Overall notes on the status bar, floating bubble and quick open → <a href="#/en/3.1.7"><code>3.1.7</code></a></li>
+</ul>

@@ -1,0 +1,33 @@
+<p>没有任何库配置时，插件会自动创建 <code>SquirrelLib</code>；也可以添加已有目录或新建一个空库。</p>
+<p><img src="media/shared/settings-sublibraries.webp" alt="设置 → 子库与分类：勾选要显示在主 UI 的顶级分类" loading="lazy" decoding="async"></p>
+<h2 id="h-1">自动初始化</h2>
+<p>首次打开主窗口且配置里没有库时，会在用户目录创建 <code>SquirrelLib</code>。加载这个库时插件按内置 11 个子库补齐目录，并创建默认子分类与「自定义」分类。库根会写入 <code>library.json</code> 与 <code>favorites.json</code>。</p>
+<h2 id="h-2">添加或新建库</h2>
+<ol>
+<li>打开「设置 → 常规」。</li>
+<li>在「资产库管理」分组中点「添加资产库」，选择已有目录。</li>
+<li>或点「创建资产库」，指定一个新目录。</li>
+<li>选中库后可「设为默认」，下次启动优先加载它。</li>
+<li>点「确定」保存；主窗口会刷新分类树。</li>
+</ol>
+<h2 id="h-3">目录会被补成什么样</h2>
+<ul>
+<li><strong>「创建资产库」按钮只建 6 个基础目录</strong>：<code>materials</code>、<code>models</code>、<code>lights</code>、<code>textures</code>、<code>scenes</code>、<code>hdr</code>。</li>
+<li><strong>加载 / 切换到该库时，按内置 11 个子库补齐</strong>：<code>materials</code>、<code>models</code>、<code>lights</code>、<code>textures</code>、<code>scenes</code>、<code>hdr</code>、<code>ani</code>、<code>images</code>、<code>audio</code>、<code>animation</code>、<code>nodetree</code> —— 也就是说另外 5 个（动态、图片、音频、动画数据、节点树）会在第一次加载该库时出现。</li>
+<li>首次运行（库根还没有 <code>library.json</code>），或某个子库下没有任何子分类时，按默认配置创建子分类文件夹。</li>
+<li>每个子库根下都会补齐 <code>AAAcustom</code>（自定义）子分类，保证资产有落点。</li>
+<li>顶级分类本身不能直接放资产，资产要放在其子分类中。</li>
+</ul>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>左侧分类树显示 11 个内置子库，展开后能看到默认分类与「自定义」。</li>
+<li>库根出现 <code>library.json</code>、<code>favorites.json</code> 与各子库目录。</li>
+<li><code>~/.squirrel_asset_manager/app_settings.json</code> 的 <code>library_paths</code> 中出现该库。</li>
+</ul>
+<h2 id="h-5">常见失败</h2>
+<ul>
+<li><strong>路径无效 / 无权限</strong>：换一个有写权限的本地目录，或让管理员授予共享盘写权限。</li>
+<li><strong>库加载为空</strong>：目录里没有 <code>.zasset</code>，或分类层级不符合预期；检查子库与分类目录。</li>
+<li><strong>设置损坏后库丢失</strong>：设置文件会备份为 <code>.bak</code>，可从其中恢复 <code>library_paths</code>。</li>
+<li><strong>共享库多人同时改名</strong>：库没有跨机文件锁，避免同时移动同一资产（待确认具体锁策略）。</li>
+</ul>

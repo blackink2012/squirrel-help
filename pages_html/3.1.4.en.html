@@ -1,0 +1,37 @@
+<p>The asset area in the middle is where you work day to day: a view-control row on top and the assets of the current category below, as icon cards or as a list.</p>
+<p><img src="media_en/shared/ui-assets-viewbar.webp" alt="Left part of the view-control row: Import from Files / Create asset / breadcrumb (Edit tags is in the right part, see the full window screenshot)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">The view-control row</h2>
+<p>From left to right:</p>
+<ul>
+<li>The <code>「从外部导入」 (Import from Files)</code> dropdown: its contents <strong>change with the current category</strong> (see the table below); on <code>「全部资产」 (All assets)</code>, favorites or the recycle bin the whole button is disabled.</li>
+<li><code>「创建资产」 (Create asset)</code>: export the object selected in Maya as an asset.</li>
+<li>The <code>「音乐播放」 (Music playback)</code> dropdown (only when the <code>「音乐」 (Music)</code> category has audio): play / pause, previous / next and playback mode.</li>
+<li><strong>Breadcrumb</strong>: shows the current location (All assets › sub-library › category …); click an earlier segment to jump back.</li>
+<li><code>「编辑标签」 (Edit tags)</code>: opens the tag editor to filter by tag.</li>
+<li>The <code>「视图」 (View)</code> button: its label shows the current mode (<code>「图标」 (Icons)</code> or <code>「列表」 (List)</code>); click to switch.</li>
+<li>The <code>「名称」 (Name)</code> button (sorting): its label is the current sort key; click to choose the sort field and ascending / descending.</li>
+<li>The <code>「缩略图:」 (Thumbnail:)</code> slider: adjusts card size; in icon view you can also zoom with <code>Ctrl + wheel</code>.</li>
+</ul>
+<p>The asset count is <strong>not</strong> on this row; it is in the status bar at the bottom (<code>材料: 可见数/总数</code>, materials: visible / total).</p>
+<p><img src="media_en/shared/ui-assets-viewbar-right.webp" alt="Right part of the view-control row: view (icons/list), sort (name), thumbnail size slider" loading="lazy" decoding="async"></p>
+<h3 id="h-2">Import from Files changes with the current category</h3>
+<table><thead><tr><th>Current category</th><th>What the menu offers</th></tr></thead><tbody><tr><td>Materials</td><td>Import from files, import a .zasset asset, import textures</td></tr><tr><td>Textures</td><td>Import a .zasset asset, import textures</td></tr><tr><td>Models / Lights / Scenes / Dynamics / Node trees</td><td>Import from files, import a .zasset asset</td></tr><tr><td>HDR</td><td>Import a .zasset asset, import HDR</td></tr><tr><td>Images</td><td>Import images</td></tr><tr><td>Audio</td><td>Import music</td></tr><tr><td>Animation data</td><td>Import animation data, import a .zasset asset</td></tr><tr><td>All assets / Favorites / Recycle bin</td><td>Button disabled; the <code>「从外部导入」 (Import from Files)</code> submenu of the empty-area context menu shows a grey line: <code>「当前分类不支持从外部导入」 (this category does not support importing from files)</code></td></tr></tbody></table>
+<p>The menu is trimmed by <strong>top-level sub-library</strong>: to import something, first select the specific sub-library or category in the left column so the plug-in knows where the asset should land.</p>
+<h2 id="h-3">Cards and list</h2>
+<p><img src="media_en/3.1.4-1.webp" alt="Asset card: thumbnail + display name + favorite star, highlighted with an outline when selected" loading="lazy" decoding="async"></p>
+<ul>
+<li>Icon view: each card shows the thumbnail, the display name and a favorite star; selected cards are highlighted and hovered cards get an outline.</li>
+<li>List view: columns are the favorite star, name, asset type, category and tags, which makes metadata easy to check.</li>
+<li>Single-click selects, double-click runs the current sub-library&#x27;s double-click preset, and the context menu opens the asset menu; drag a card into the Maya viewport or onto the category tree.</li>
+<li>Right-click empty space to create an asset, paste or import; drag on empty space to marquee-select.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>After switching category the grid shows only that category&#x27;s assets and the count in the status bar changes accordingly.</li>
+<li>Switching <code>「视图」 (View)</code> toggles the same assets between cards and a table, keeping the selection.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>Double-click behavior differs by sub-library: models / scenes / dynamics / node trees import <code>ma</code>, materials import <code>zmetal</code>, textures create a PBR material, HDR creates a dome light; images create a file node, audio imports to the timeline, and animation data goes through hierarchy mapping. You can change it per sub-library in <code>Settings → 右键菜单 (Context menu) → 双击命令 (Double-click command)</code>.</li>
+<li>A card with no thumbnail shows a placeholder; capture one in the preview panel, or use <code>「更新缩略图 → 后台渲染」 (Update thumbnail → Background render)</code>.</li>
+</ul>

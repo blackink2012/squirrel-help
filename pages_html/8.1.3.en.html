@@ -1,0 +1,18 @@
+<p>By default assets and thumbnails never leave this machine. Requests only leave it when a cloud model is enabled, when the Maya online help fallback is used, or when dsh connects to a cloud model.</p>
+<h2 id="h-1">Data that stays local</h2>
+<ul>
+<li><strong>Indexes</strong>: the text semantic index defaults to <code>&lt;asset library&gt;\.squirrel_ai_index\&lt;official|ollama&gt;\</code> (split by backend), the image index to <code>img\</code> and the media index to <code>media\</code> in the same directory; with <code>ai_asset_index_dir</code> set they live under that root in sub-directories split by &quot;library + backend&quot;.</li>
+<li><strong>Image sidecar</strong>: <code>&lt;plug-in directory&gt;\.venvs\asset-vision</code> and its cache.</li>
+<li><strong>Run records</strong>: <code>&lt;plug-in directory&gt;\dsh_home\</code> (dsh sessions, install logs, reuse records); AI dependency reports and install logs are in <code>%TEMP%\squirrel_asset_manager\</code>.</li>
+<li><strong>Online help cache</strong>: <code>~\.squirrel_asset_manager\help_cache</code> (directory tree for 7 days, pages for 30 days).</li>
+</ul>
+<h2 id="h-2">Data that leaves this machine</h2>
+<ul>
+<li>With a cloud model selected, prompts and the thumbnails being analyzed are sent to that provider.</li>
+<li>When the local knowledge base is missing or has no hit, the &quot;online fallback&quot; sends the query to <code>help.autodesk.com</code> and only reads public help pages.</li>
+<li>Which model dsh uses is decided by dsh&#x27;s own settings, and it may connect to the cloud.</li>
+</ul>
+<h2 id="h-3">Credentials</h2>
+<p>API keys are stored in the plug-in settings file <code>~\.squirrel_asset_manager\app_settings.json</code>, which is not an encrypted vault, so protect it like any configuration file. AI search keys and global model keys are stored separately.</p>
+<h2 id="h-4">Recommendations</h2>
+<p>On confidential projects turn off cloud models and keep only local Ollama; to work fully offline set <code>MAYA_KB_ONLINE=0</code> before starting to disable the online help fallback.</p>

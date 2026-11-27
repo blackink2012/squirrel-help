@@ -1,0 +1,11 @@
+<p>Ordinary search does substring matching on names, tags and categories; AI search encodes your words into vectors and compares them, which catches synonyms but depends on indexes and needs more preparation.</p>
+<h2 id="h-1">Comparison</h2>
+<table><thead><tr><th>Dimension</th><th>Ordinary search</th><th>AI semantic search</th><th>AI search preview panel</th></tr></thead><tbody><tr><td>Input</td><td>Keywords</td><td>One natural-language sentence</td><td>Natural language, images, multi-turn chat</td></tr><tr><td>Matching</td><td>Substring on name / tags / notes</td><td>Vector similarity fused with lexical results</td><td>Local vectors first, a large model when needed</td></tr><tr><td>Dependencies</td><td>None</td><td>Embedding model and asset index</td><td>Same, plus optional large and vision models</td></tr><tr><td>Speed</td><td>Fastest</td><td>First search syncs, then usually tens of milliseconds</td><td>One extra chat round compared with the main search</td></tr><tr><td>When unavailable</td><td>Always works</td><td>Falls back to keyword search</td><td>Falls back to keywords or reports no results</td></tr></tbody></table>
+<h2 id="h-2">Shared limits</h2>
+<ul>
+<li>Both only search the active library and never cross libraries; with a category selected they search only that category.</li>
+<li>Assets may be missing while the index lags, and the next search syncs incrementally.</li>
+<li>Results are shown isolated and never change asset data; clearing restores the original list.</li>
+</ul>
+<h2 id="h-3">Choosing</h2>
+<p>Use ordinary search when you know the name or tag; use AI search when you only remember the look, need a material description or want to speak colloquially; use the preview panel when you want to chat while looking, add reference images or build a wishlist.</p>

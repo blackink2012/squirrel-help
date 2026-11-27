@@ -1,0 +1,20 @@
+<p>The color space decides whether texture values are converted to linear: color textures use <code>sRGB</code>, while data textures such as normal, roughness and metalness use <code>Raw</code>.</p>
+<p><img src="media_en/shared/dialog-format-convert.webp" alt="Image format conversion" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Texture types and color spaces</h2>
+<table><thead><tr><th>Texture type</th><th>Color space</th></tr></thead><tbody><tr><td>baseColor / albedo / diffuse / color</td><td><code>sRGB</code></td></tr><tr><td>emissive / subsurface color</td><td><code>sRGB</code></td></tr><tr><td>normal</td><td><code>Raw</code></td></tr><tr><td>roughness / metallic / ao / arm / orm</td><td><code>Raw</code></td></tr><tr><td>height / opacity / clearcoat / specular / anisotropy / ior</td><td><code>Raw</code></td></tr></tbody></table>
+<p>When creating a material from PBR textures the plug-in reads these rules from <code>Assets/preset/pbr_mapping.json</code> and sets each <code>file</code> node&#x27;s <code>colorSpace</code> automatically.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Create the material with a texture asset or the PBR texture workflow; the tool sets the color space of every <code>file</code> node per the rules.</li>
+<li>Select the <code>file</code> node in the attribute editor and check that <code>colorSpace</code> matches the table above.</li>
+<li>Do not change an HDR connected to a dome light to <code>sRGB</code> by hand; the plug-in treats it as <code>Raw</code> when connecting and also enables <code>ignoreColorSpaceFileRules</code> on import.</li>
+<li>If textures look off after importing an asset, check <code>file.colorSpace</code> first and then whether Maya&#x27;s file rules re-derived it.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>Color textures show <code>sRGB</code> and normal and data textures show <code>Raw</code>; normal maps no longer look grey or off-color, roughness values match the source file and the HDR environment has a normal brightness.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>When importing <code>.zmetal</code> / <code>.ma</code> the plug-in protects existing <code>colorSpace</code> values while rewriting texture paths, so the png/jpg defaults do not override them.</li>
+<li>The image format conversion tool only converts pixels and bit depth and never writes color space metadata; HDR/EXR to 8-bit also applies tone mapping.</li>
+<li>Setting a color texture to <code>Raw</code> makes it darker and oversaturated; setting a data texture to <code>sRGB</code> distorts normals and roughness.</li>
+</ul>

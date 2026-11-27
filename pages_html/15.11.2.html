@@ -1,0 +1,54 @@
+<blockquote><p>一句话定位：<strong>一个资产下面如果挂了多个版本、多条 LOD 或多个变体，双击预览图打开的就是这个三栏窗口。</strong></p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<table><thead><tr><th>入口</th><th>操作</th><th>前提</th></tr></thead><tbody><tr><td>双击右侧预览图</td><td>双击右侧「预览」面板里的图片</td><td>该资产有版本或变体</td></tr><tr><td>资产右键菜单</td><td>右键资产 →「资产详情」</td><td>同上（有版本/变体时走这个窗口）</td></tr></tbody></table>
+<blockquote><p>只是想「进入版本/变体文件夹」在网格里翻：用右键 →「查看版本 / 查看变体 / 查看 LOD 管理」，那是在网格里展开，不会打开本窗口。</p></blockquote>
+<p><img src="media/shared/dialog-version-browser.webp" alt="版本浏览器" loading="lazy" decoding="async"></p>
+<h2 id="h-2">三栏结构</h2>
+<table><thead><tr><th>栏</th><th>内容</th><th>怎么用</th></tr></thead><tbody><tr><td>左栏 · 列表</td><td>主版本、各版本、各变体，以及它们各自的 LOD 行</td><td>单击切换；带 LOD 的条目会展开成多行</td></tr><tr><td>中栏 · 预览</td><td>大预览图 + 下方多缩略图条</td><td>滚轮换图、点缩略图切换；图可直接拖出窗口导入 Maya</td></tr><tr><td>右栏 · 信息</td><td>标题卡（名称/面包屑/角标）、详情卡、LOD 管理卡、包含格式卡、标签卡、注释卡、路径卡</td><td>只读；LOD 管理卡里有「设为默认 LOD」「删除此 LOD」「追加 LOD…」</td></tr><tr><td>右栏 · 按钮</td><td>导入此版本 / 删除此版本 / 关闭（选中 LOD 或变体时按钮文字会变）</td><td>见下</td></tr></tbody></table>
+<p>按钮文字会随当前条目变：</p>
+<table><thead><tr><th>当前选中的是</th><th>按钮文字</th></tr></thead><tbody><tr><td>主版本 / 普通版本</td><td>导入此版本、删除此版本</td></tr><tr><td>LOD 行</td><td>导入此 LOD、删除此 LOD</td></tr><tr><td>变体行</td><td>导入此变体、删除此变体</td></tr></tbody></table>
+<h2 id="h-3">版本 vs LOD vs 变体：到底差在哪</h2>
+<table><thead><tr><th>项目</th><th>版本（Version）</th><th>LOD（同资产不同精度）</th><th>变体（Variant）</th></tr></thead><tbody><tr><td>一句话</td><td>同一个资产的<strong>不同迭代</strong></td><td>同一个资产的<strong>不同精细度</strong></td><td>同一个资产的<strong>不同形态/换装</strong></td></tr><tr><td>典型场景</td><td>「椅子 v1 造型 → v2 改款」</td><td>「远景用 LOD2 低模、近景用 LOD0 高模」</td><td>「同一把椅子：红色布面 / 皮面 / 破损版」</td></tr><tr><td>存什么</td><td>独立完整的一套内容（几何/材质/贴图/缩略图）</td><td>只存不同精度的几何；父版本其余内容共用</td><td><strong>只存几何体</strong>，贴图与材质共享资产根目录的</td></tr><tr><td>在库里怎么显示</td><td>各自是独立资产条目</td><td>挂在版本或主资产下面的行</td><td>挂在资产下面的一行</td></tr><tr><td>导入时选哪个</td><td>选你要的那一版</td><td>按需要选精度</td><td>选形态</td></tr><tr><td>数量关系</td><td>可以叠加：一个版本下也能有 LOD</td><td>一个 owner 下多条</td><td>与版本可并存</td></tr></tbody></table>
+<p><strong>一句话结论</strong>：版本 = 换一版；LOD = 换精度；变体 = 换形态（只换几何，贴图材质共用）。</p>
+<h2 id="h-4">常用操作</h2>
+<h3 id="h-5">看某个版本的内容</h3>
+<ol>
+<li>打开版本浏览器。</li>
+<li>左栏点条目；右栏详情卡与「包含格式」随之切换。</li>
+<li>中栏滚轮可看该条目的多张缩略图。</li>
+</ol>
+<h3 id="h-6">导入某个版本 / LOD / 变体</h3>
+<ol>
+<li>左栏选中目标条目（要特定精度就选到 LOD 行）。</li>
+<li>点右栏「导入此版本 / 导入此 LOD / 导入此变体」。</li>
+<li>内容导入当前 Maya 场景。也可以直接把中栏预览图拖进视口。</li>
+</ol>
+<h3 id="h-7">设为默认 LOD</h3>
+<ol>
+<li>左栏选中带多条 LOD 的条目，让右栏出现「LOD 管理」卡。</li>
+<li>在非默认的那条后面点「设为默认 LOD」。</li>
+<li>该行文字后出现「默认」标记；下次按默认精度导入时就用它。</li>
+</ol>
+<h3 id="h-8">追加 LOD</h3>
+<ol>
+<li>右栏 LOD 管理卡点「追加 LOD…」。</li>
+<li>走「追加 LOD」档位窗，见 <a href="#/15.11.4"><code>8.11.4</code></a>。</li>
+</ol>
+<h3 id="h-9">删除</h3>
+<ul>
+<li>删除<strong>版本</strong>：连同该版本全部内容（几何/材质/贴图/缩略图）一起删，<strong>不可撤销</strong>。</li>
+<li>删除 <strong>LOD</strong>：只删这一档精度，其它 LOD 与版本不受影响；每个版本至少要留一条 LOD，最后一条删不掉。</li>
+<li>删除<strong>变体</strong>：只删该变体的几何与缩略图，共享的贴图/材质不受影响。</li>
+</ul>
+<h2 id="h-10">风险与反悔</h2>
+<table><thead><tr><th>操作</th><th>风险</th><th>反悔</th></tr></thead><tbody><tr><td>删除此版本</td><td>该版本内容全部删除，不可撤销</td><td>没有撤销；删前先「导入此版本」确认不是唯一一份，或整库备份</td></tr><tr><td>删除此 LOD</td><td>该精度丢失</td><td>重新导出/追加该档 LOD</td></tr><tr><td>删除此变体</td><td>该形态几何丢失</td><td>重新添加变体</td></tr><tr><td>主版本</td><td>主版本就是资产本身，<strong>不能在这里删</strong></td><td>要删请删整个资产（走回收站，可还原）</td></tr></tbody></table>
+<h2 id="h-11">出问题怎么办</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>处理</th></tr></thead><tbody><tr><td>双击预览图只打开资产详情</td><td>该资产确实没有版本/变体</td><td>用右键「更新资产 → 创建新版本 / 添加为新变体」先建一个</td></tr><tr><td>「导入此版本」没反应</td><td>该版本无可导入格式，或独立运行模式未连 Maya</td><td>看脚本编辑器；确认 Maya 在线</td></tr><tr><td>追加 LOD 按钮不可用</td><td>当前条目不属于可写 LOD 的 owner，或条目没有 LOD 列表</td><td>选主版本/版本行再试；变体请用变体自己的「追加 LOD」入口</td></tr><tr><td>删除按钮灰着</td><td>只剩一条 LOD，或当前是主版本</td><td>先加一条新 LOD，或删整个资产</td></tr></tbody></table>
+<h2 id="h-12">相关</h2>
+<ul>
+<li>版本与 LOD 概念：<a href="#/4.10.1"><code>4.1.10.1</code></a>；版本浏览器用户指南版：<a href="#/4.10.7"><code>4.1.10.7</code></a></li>
+<li>变体是什么：<a href="#/4.13.1"><code>4.1.13.1</code></a></li>
+<li>变体管理窗口（增删变体）：<a href="#/15.11.3"><code>8.11.3</code></a></li>
+<li>追加 LOD / 新建版本对话框：<a href="#/15.11.4"><code>8.11.4</code></a></li>
+<li>删除版本与 LOD 的完整说明：<a href="#/4.10.6"><code>4.1.10.6</code></a></li>
+</ul>

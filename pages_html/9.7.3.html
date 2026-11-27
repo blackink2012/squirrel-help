@@ -1,0 +1,26 @@
+<p>快捷工具没有登记表：把 <code>.py</code> 放进 <code>quicktools/</code> 即完成界面注册；只有需要命令通道或特殊运行位置时才要额外改一处。</p>
+<p><img src="media/shared/quicktool-script-browser.webp" alt="脚本浏览器" loading="lazy" decoding="async"></p>
+<h2 id="h-1">最快路径</h2>
+<ol>
+<li>在 <code>&lt;插件根&gt;/quicktools/</code> 新建 <code>.py</code> 文件。</li>
+<li>提供 <code>main()</code>、<code>run()</code> 或 <code>if __name__ == &quot;__main__&quot;:</code> 入口。</li>
+<li>打开「快捷工具」菜单，确认文件名出现并点击运行。</li>
+</ol>
+<p>菜单每次展开都会重扫目录，<strong>不需要重启 Maya</strong>。命令通道不传 <code>name</code> 调 <code>quicktool_run</code> 时，也能在返回清单里看到新文件及其 <code>entry</code>。</p>
+<h2 id="h-2">需要额外注册的情况</h2>
+<table><thead><tr><th>需求</th><th>要改哪里</th></tr></thead><tbody><tr><td>希望命令通道提示「优先用某条一等公民命令」</td><td><code>squirrel_asset_manager/ai/runtime_commands.py</code> 的 <code>_QUICKTOOL_COVERAGE</code> 映射</td></tr><tr><td>希望有专门命令（带参数 schema、dry_run、结构化结果）</td><td><code>squirrel_asset_manager/ai/quicktools_commands.py</code>，按现有三条命令的写法注册 <code>CommandDescriptor</code></td></tr><tr><td>纯文件工具，希望独立运行版在本地执行而不是投送 Maya</td><td><code>squirrel_asset_manager/ui/main_window.py</code> 中 <code>_run_quick_tool</code> 的 <code>local_only</code> 集合</td></tr><tr><td>希望工具内部有独立帮助页</td><td>在 <code>Assets/help/&lt;工具名&gt;/</code> 放 <code>help.html</code></td></tr></tbody></table>
+<p>命令注册后，如果插件已在运行，可调用 <code>refresh_commands</code> 重建执行器并重连；重连瞬间在飞的命令会失败，长任务执行中不要调用。</p>
+<h2 id="h-3">结果验证</h2>
+<ol>
+<li>菜单中出现新条目，且不是「暂无快捷工具」。</li>
+<li>点击后窗口打开或脚本执行，脚本编辑器无 <code>ImportError</code> / <code>SyntaxError</code>。</li>
+<li>命令通道不传 <code>name</code> 时，清单里能看到该文件与 <code>entry</code>；传 <code>name</code> 后返回 <code>status: ok</code>。</li>
+<li>需要本地执行的纯文件工具，在独立运行版中确认没有走 Maya 投送。</li>
+</ol>
+<h2 id="h-4">注意事项</h2>
+<ul>
+<li>如果菜单里没有出现，先确认文件在 <code>quicktools/</code> 根目录、后缀是 <code>.py</code>，且没有放进子目录。</li>
+<li>点击后无反应，多为没有可识别入口；菜单会打印「没有可执行的入口」。</li>
+<li>新增命令或修改参数 schema 后，记得刷新命令清单，避免外部 AI 仍看到旧 schema。</li>
+<li>注册改动属于插件源码修改，建议在测试环境验证后再分发。</li>
+</ul>

@@ -1,0 +1,23 @@
+<p>Categories are folders on disk: a new top-level category creates an independent container in the library root, and a new sub-category creates a folder under the selected category.</p>
+<p><img src="media_en/shared/menu-category-add.webp" alt="Category context menu: add sub-category" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<p>An asset library is loaded; the main library and the project library both work.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>To create a top-level category: right-click empty space in the category tree or <code>「全部资产」 (All assets)</code> and choose <code>「添加顶级分类」 (Add top-level category)</code>.</li>
+</ol>
+<p>To create a sub-category: right-click any category (including a sub-library root node) and choose <code>「添加子分类」 (Add sub-category)</code>.</p>
+<ol>
+<li>Fill in <code>「文件夹名」 (Folder name)</code>: required, used as the category&#x27;s internal ID, for example <code>metal_copper</code>.</li>
+<li>Fill in <code>「易读名」 (Display name)</code>: optional; when left empty the folder name is used.</li>
+<li>A top-level category also offers <code>「类型」 (Type)</code>, whose dropdown comes from the configured sub-library list; sub-categories inherit the parent type and do not show this field.</li>
+<li>Click <code>「确定」 (OK)</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The new category appears in the tree and is selected automatically; a top-level category also gets a <code>「自定义」 (Custom)</code> sub-category.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>The folder name cannot be empty and cannot match an ancestor category or a built-in sub-library; on a conflict the plug-in refuses to create it and asks for another name.</li>
+<li>The folder name cannot be changed through the interface after creation, so decide it carefully.</li>
+<li>Top-level categories cannot hold assets directly; assets imported into a top-level category automatically land in its <code>「自定义」 (Custom)</code> sub-category.</li>
+</ul>

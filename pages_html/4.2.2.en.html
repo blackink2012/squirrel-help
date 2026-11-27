@@ -1,0 +1,21 @@
+<p>The <code>「项目」 (Projects)</code> tab manages the asset library dedicated to the current Maya project, always at <code>SquirrelLib</code> under the project root.</p>
+<p><img src="media_en/shared/nav-project.webp" alt="Projects tab: Create / Refresh buttons and the project library state (saying &quot;project library not created&quot; when absent)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">What the panel contains</h2>
+<ul>
+<li><code>「创建」 (Create)</code> in the toolbar: creates <code>SquirrelLib</code>, its sub-library folders and metadata in the project root; only needed when the project library does not exist.</li>
+<li><code>「刷新」 (Refresh)</code> in the toolbar: rescans the project library. After switching Maya projects the new path is not discovered automatically, so refresh manually.</li>
+<li>Status area: shows the full project library path, or <code>「项目库未创建」 (project library not created)</code>.</li>
+</ul>
+<h2 id="h-2">Using it</h2>
+<ol>
+<li>Switch to the <code>「项目」 (Projects)</code> tab and the plug-in tries to load <code>SquirrelLib</code>; if it is missing the grid is emptied with a hint.</li>
+<li>Click <code>「创建」 (Create)</code> to generate the project library, then create categories and import assets exactly as in the main library.</li>
+<li>Click <code>「刷新」 (Refresh)</code> to reload the current project&#x27;s library and restore the previously selected category.</li>
+</ol>
+<h2 id="h-3">Relationship with the main library</h2>
+<p>The two libraries are fully isolated: categories, assets and favorites are stored separately. To reuse an asset across libraries, <code>「复制」 (Copy)</code> in the main library, switch to the <code>「项目」 (Projects)</code> tab and <code>「粘贴」 (Paste)</code>; assets in the project library never appear under <code>「全部资产」 (All assets)</code> of the main library.</p>
+<p>The project tree also supports creating, editing, moving and deleting categories and dragging assets, exactly like the main library.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>When the project library does not exist, do not create an empty directory by hand; <code>「创建」 (Create)</code> writes <code>library.json</code> and the sub-library metadata as well, so the category tree can recognize the types correctly.</li>
+</ul>

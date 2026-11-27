@@ -1,0 +1,15 @@
+<p>Ollama is the local model service, the embedding model turns text and images into vectors, and the vision chat model looks at images and gives suggestions; the three serve different purposes and cannot replace each other.</p>
+<h2 id="h-1">The three roles</h2>
+<table><thead><tr><th>Component</th><th>Default</th><th>Purpose</th><th>Size reference</th></tr></thead><tbody><tr><td>Ollama</td><td><code>http://127.0.0.1:11434</code></td><td>Provides the local model service</td><td>About 1 GB</td></tr><tr><td>Embedding model</td><td><code>embeddinggemma-2:740m</code> (768 dimensions)</td><td>Asset text index, Maya documentation index, image vectors</td><td>About 1.3 GB</td></tr><tr><td>Vision chat model</td><td><code>qwen3.5:9b</code> recommended by the check</td><td>AI thumbnail analysis and the image-to-description step of image search</td><td>About 5–6 GB</td></tr><tr><td>Image sidecar</td><td>Separate venv (numpy + Pillow)</td><td>Schedules image encoding and retrieval</td><td>About 30 MB</td></tr><tr><td>dsh</td><td><code>0.2.2-rc.3</code></td><td>The AI assistant chat surface</td><td>About 220 MB</td></tr></tbody></table>
+<h2 id="h-2">How the model is chosen</h2>
+<p>AI analysis does not hard-code a model name: it uses your choice first, then picks a model from the provider&#x27;s live list that can chat and see images, and only then reports an error. When the configured model is not installed or is text-only, the plug-in substitutes an available model and records why.</p>
+<h2 id="h-3">Switching models</h2>
+<p>Changing the embedding model changes the vector space, so the old indexes must be rebuilt:</p>
+<ul>
+<li>Asset text index: <code>python tools\asset_index.py --rebuild --model &lt;model name&gt;</code></li>
+<li>Maya documentation index: <code>python tools\build_semantic_index.py --model &lt;model name&gt;</code></li>
+<li>Image index: <code>python tools\asset_vision_encode.py sync --library &quot;&lt;library root&gt;&quot; --rebuild --model gemma2</code></li>
+</ul>
+<p>Each index records the model it used, and a mismatch marks it unavailable with the rebuild command.</p>
+<h2 id="h-4">Verify the result</h2>
+<p><code>ollama list</code> shows the model; running <code>「AI 依赖检查」 (AI dependency check)</code> again shows both the embedding and vision model items as available.</p>

@@ -1,0 +1,33 @@
+<blockquote><p>一句话定位：<strong>分类树最后一行那个「脚本」不是磁盘分类，而是脚本浏览器的入口；左下角的「回收站」也不是树节点，而是一个独立的按钮。两者的菜单都很短。</strong></p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<ul>
+<li><strong>脚本节点</strong>：左侧导航 →「分类」页签 → 分类树最后一行「脚本」→ <strong>右键</strong>它。</li>
+<li><strong>回收站</strong>：左侧导航 →「分类」页签 → 分类树<strong>左下角</strong>的「回收站 N」按钮 → 左键单击进入回收站视图。</li>
+<li><strong>树的空白处</strong>：右键分类树里没有节点的空白区域。</li>
+</ul>
+<h2 id="h-2">菜单逐项详解</h2>
+<h3 id="h-3">脚本节点（共 1 项）</h3>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>打开脚本目录</td><td>在资源管理器打开脚本资产的存放目录</td><td>当前在「分类」页签</td><td>弹出系统文件管理器，定位到脚本目录</td><td>脚本节点没有「添加子分类 / 移动到 / 编辑 / 删除」——它不是磁盘分类，这些操作没有意义</td></tr></tbody></table>
+<blockquote><p>单击（不是右键）「脚本」节点会切换主区视图：中间从资产网格切到<strong>脚本浏览器</strong>，见 <a href="#/15.14.10"><code>8.14.10</code></a>。</p></blockquote>
+<p><img src="media/shared/menu-cat-scripts.webp" alt="「脚本」节点右键：只有「打开脚本目录」一项" loading="lazy" decoding="async"></p>
+<h3 id="h-4">回收站入口（右键无菜单）</h3>
+<table><thead><tr><th>操作</th><th>效果</th><th>说明</th></tr></thead><tbody><tr><td>左键单击「回收站 N」</td><td>主区切到回收站视图</td><td>按钮上的 N 是当前回收站条目数；按钮会保持蓝底表示「你正在回收站里」</td></tr><tr><td>右键「回收站 N」</td><td><strong>不弹菜单</strong>（清单实测 0 项）</td><td>还原 / 彻底删除不在这里做，要在回收站视图里<strong>右键具体条目</strong></td></tr><tr><td>在回收站视图里右键条目</td><td>弹出「还原 / 彻底删除」等</td><td>详见 <a href="#/15.8.3"><code>8.8.3</code></a></td></tr></tbody></table>
+<h3 id="h-5">分类树空白处</h3>
+<table><thead><tr><th>操作</th><th>效果</th><th>说明</th></tr></thead><tbody><tr><td>右键空白处</td><td>弹「添加顶级分类」一项</td><td>与右键「全部资产」节点完全同一个菜单，见 <a href="#/15.3.4.1"><code>8.3.4.1</code></a></td></tr></tbody></table>
+<h2 id="h-6">子菜单</h2>
+<p>以上三个入口的菜单都<strong>没有二级子菜单</strong>（没有 ▶）。</p>
+<h2 id="h-7">回收站里有什么、没有什么</h2>
+<table><thead><tr><th>会进回收站</th><th>不会进回收站</th></tr></thead><tbody><tr><td>用「移到回收站」删除的资产</td><td>「彻底删除」的东西（直接删文件）</td></tr><tr><td>删除的分类及其子分类、资产</td><td>主库与项目库各自的回收站<strong>互相独立</strong></td></tr><tr><td>被替换 / 删除的版本、LOD（按具体操作的提示为准）</td><td>手工在资源管理器删掉的文件</td></tr></tbody></table>
+<h2 id="h-8">小白易错点</h2>
+<ul>
+<li><strong>右键「脚本」想建子分类</strong>：不行，它不是磁盘分类；脚本本身在设置 / 脚本浏览器里管理。</li>
+<li><strong>右键回收站没反应，以为坏了</strong>：设计如此，那里本来就没有菜单。进去以后右键<strong>条目</strong>才有操作。</li>
+<li><strong>在回收站里看不到主库删的东西</strong>：先确认当前页签是「分类」还是「项目」——两个库的回收站分开。</li>
+<li><strong>以为能一键清空回收站</strong>：没有这个按钮。条目只能一条条右键「彻底删除」，删了不可恢复；动手前看清确认框文字。</li>
+</ul>
+<h2 id="h-9">相关</h2>
+<ul>
+<li>分类树节点类型与单击行为见 <a href="#/15.3.3"><code>8.3.3</code></a>。</li>
+<li>回收站视图与右键菜单见 <a href="#/15.8.3"><code>8.8.3</code></a>。</li>
+<li>脚本浏览器见 <a href="#/15.14.10"><code>8.14.10</code></a>。</li>
+</ul>

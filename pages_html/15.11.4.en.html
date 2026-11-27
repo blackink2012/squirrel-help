@@ -1,0 +1,51 @@
+<blockquote><p>One-line summary: <strong>two windows appear in sequence when you add another detail level or another version to an existing asset: pick the update mode first, then bind the LOD slot.</strong></p></blockquote>
+<p>This page covers two windows:</p>
+<ol>
+<li>The <strong>Update asset</strong> chooser, which opens from right-click → <strong>Update asset</strong> and asks how you want to update.</li>
+<li>The <strong>Append LOD</strong> slot window, which opens when you choose <strong>Append as LOD</strong> in the first window and binds the current Maya selection to a LOD slot.</li>
+</ol>
+<h2 id="h-1">Window one: update asset (choose the update mode)</h2>
+<p>The text reads &quot;Asset &quot;&lt;name&gt;&quot; already exists. Choose an update mode:&quot;, with a row of buttons:</p>
+<table><thead><tr><th>Button</th><th>Effect</th><th>Result</th></tr></thead><tbody><tr><td>Append as LOD</td><td>Exports the current Maya selection as another LOD of the same asset</td><td>Then opens the append LOD slot window</td></tr><tr><td>Append format</td><td><strong>Merges</strong> this export into the existing asset, adding or replacing formats</td><td>Opens the pre-filled create asset window in append-format mode (see 8.10.1)</td></tr><tr><td>Create new version</td><td>Clones the current content into a new sub-version</td><td>Opens the pre-filled create asset window; when the export finishes it reports &quot;Created new version &lt;tag&gt;&quot;</td></tr><tr><td>Add as new variant</td><td>Exports the current selection as one variant (geometry only)</td><td>First asks for a variant name (also the directory name, Chinese allowed), then opens the export configuration</td></tr><tr><td>Batch add variants</td><td>One variant per selected object</td><td>Exports object by object and generates thumbnails</td></tr><tr><td>Replace asset</td><td>Overwrites the original asset content with this import</td><td>Opens the export configuration window and overwrites the original asset</td></tr><tr><td>Cancel</td><td>Does nothing</td><td>Closes the window</td></tr></tbody></table>
+<p>Additional rules:</p>
+<ul>
+<li>The <strong>default main button</strong> is <strong>Replace asset</strong>; if the asset has older version records the default becomes <strong>Append as LOD</strong>.</li>
+<li>When the current entry is <strong>inside</strong> a sub-version / variant / LOD, <strong>Create new version</strong> is not shown (versions cannot nest versions).</li>
+<li><strong>Create new version does not ask for a version name</strong>: for geometry / material assets the plug-in generates the version tag (V1, V2). Only <strong>Add as new variant</strong> and &quot;append LOD for a variant&quot; open a small input.</li>
+</ul>
+<h2 id="h-2">Window two: append LOD (slot window)</h2>
+<p>The title is <strong>Append LOD</strong> with the subtitle &quot;Target: &lt;current asset / version name&gt;&quot;, and a line below shows &quot;Current selection: &lt;model name&gt;&quot; live.</p>
+<p><img src="media_en/shared/dialog-add-lod.webp" alt="Append LOD slot window" loading="lazy" decoding="async"></p>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Suggested value</th><th>What filling it in wrongly does</th></tr></thead><tbody><tr><td>LOD0 – LOD4 slot cards</td><td>Five clickable cards</td><td>Clicking binds <strong>the last selected object in Maya</strong> to that slot; clicking again unbinds</td><td>High detail close up (LOD0 is finest), low for distance</td><td>A wrong slot: default-detail imports then give you a different model</td></tr><tr><td>☐ / ☑ at the top-right of a card</td><td>State marker</td><td>☐ not bound, ☑ bound</td><td>—</td><td>—</td></tr><tr><td>Current selection line</td><td>Read-only text</td><td>Shows the current Maya selection (with multiple selected it says &quot;the last one will be bound&quot;)</td><td>Select the model before clicking a card</td><td>Clicking a card with nothing selected prompts &quot;select a model in Maya first, then click a slot&quot;</td></tr><tr><td>Clear bindings</td><td>Secondary button</td><td>Clears every binding from this session to start over</td><td>When the bindings are a mess</td><td>It only clears this window&#x27;s bindings and never touches existing LODs</td></tr><tr><td>Cancel</td><td>Secondary button</td><td>Closes without writing</td><td>—</td><td>—</td></tr><tr><td>Export and append (N slots)</td><td>Main button</td><td>Exports and writes the LODs by the current bindings; N follows the binding count</td><td>Click once the slots are right</td><td>Writing overwrites the geometry in a same-named slot (see the risks)</td></tr></tbody></table>
+<p>State badges on the slot cards:</p>
+<ul>
+<li><strong>Empty</strong>: no LOD exists at that slot yet;</li>
+<li><strong>Exists · N faces</strong>: a LOD already exists there (N is the triangle count), and binding again overwrites it;</li>
+<li><strong>Not bound / → object name</strong>: whether and to what this session has bound it.</li>
+</ul>
+<h2 id="h-3">A complete example (adding LOD1 and LOD2 to a model)</h2>
+<ol>
+<li>In Maya select the model intended as LOD1 first.</li>
+<li>Right-click the asset → <strong>Update asset</strong> → <strong>Append as LOD</strong>.</li>
+<li>When the <strong>Append LOD</strong> window opens, click the <strong>LOD1</strong> card; it turns ☑ and shows &quot;→ model name&quot;.</li>
+<li>Back in Maya select the model intended as LOD2, then click the <strong>LOD2</strong> card.</li>
+<li>Read the warning lines at the bottom of the window:<ul>
+<li>&quot;&#x27;LOD1&#x27; already exists: its geometry will be overwritten and other LODs are unaffected.&quot; → confirm that overwriting is acceptable;</li>
+<li>&quot;LOD0 is the version&#x27;s default geometry; after overwriting, double-clicking the card imports the new model.&quot; → take special note;</li>
+<li>&quot;N LODs will be written at once.&quot; → confirm the count.</li>
+</ul></li>
+<li>Click <strong>Export and append (N slots)</strong> and wait; it reports &quot;Appended N LOD(s)&quot;.</li>
+<li>Verify: double-click the preview to open the version browser; the new slots appear in the <strong>LOD management</strong> card on the right, where you can also set one as the default LOD.</li>
+</ol>
+<blockquote><p>This window is also reachable from the version browser: LOD management card → <strong>Append LOD…</strong>. Appending a LOD to a <strong>variant</strong> uses a different small input (&quot;Append LOD level to variant &quot;X&quot; (1-9)&quot;), not this slot window.</p></blockquote>
+<h2 id="h-4">Risks and how to undo</h2>
+<table><thead><tr><th>Operation</th><th>Risk</th><th>Undo</th></tr></thead><tbody><tr><td>Overwriting an existing slot</td><td>That slot&#x27;s geometry is replaced by the new export; other LODs and versions are unaffected</td><td>Bind the correct model again and append once more</td></tr><tr><td>Overwriting LOD0</td><td>LOD0 is the <strong>version&#x27;s default geometry</strong>, so double-clicking the asset card imports the new model</td><td>Bind the original model back to LOD0 and append again</td></tr><tr><td>Writing several slots at once</td><td>Only the current bindings are written; extra slots create useless LODs</td><td>Delete the surplus slots in the version browser&#x27;s LOD management card (keeping at least one)</td></tr><tr><td>Create new version</td><td>It adds a complete extra copy and takes space</td><td>Delete that version in the version browser (irreversible)</td></tr></tbody></table>
+<h2 id="h-5">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>No <strong>Create new version</strong> in the context menu</td><td>You are inside a sub-version / variant / LOD</td><td>Go back to the master asset and update from there</td></tr><tr><td>Clicking a slot card prompts &quot;select a model in Maya first&quot;</td><td>Nothing is selected, or a material node is selected</td><td>Select the model in the viewport</td></tr><tr><td><strong>Export and append</strong> reports &quot;no version directory to write the LOD into&quot;</td><td>The target version directory is missing or renamed</td><td>Refresh the index, or try the main version again</td></tr><tr><td>The LOD list did not change after appending</td><td>The grid did not refresh</td><td>Refresh manually (F5 / refresh button) or reopen the version browser</td></tr><tr><td>No name input when creating a version</td><td>Geometry / material assets auto-generate version tags by design</td><td>Use <strong>Add as new variant</strong> if you need a custom name</td></tr></tbody></table>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>The version browser (view / set default / delete LODs): <a href="#/en/15.11.2"><code>8.11.2</code></a></li>
+<li>The variant management window: <a href="#/en/15.11.3"><code>8.11.3</code></a></li>
+<li>User guide: appending LODs <a href="#/en/4.10.2"><code>4.1.10.2</code></a>, creating versions <a href="#/en/4.10.3"><code>4.1.10.3</code></a>, appending LODs during export <a href="#/en/6.3.1"><code>4.3.3.1</code></a></li>
+<li>Appending LODs to variants / overwriting variants: <a href="#/en/4.13.4"><code>4.1.13.4</code></a></li>
+</ul>

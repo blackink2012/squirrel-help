@@ -1,0 +1,14 @@
+<p><code>「AI 助手」 (AI assistant)</code> is not a separate model: it docks the chat surface of the locally installed dsh (DeepSeek Harness) into Maya and lets it drive the asset library and scene through the plug-in&#x27;s command surface.</p>
+<h2 id="h-1">What it is</h2>
+<ul>
+<li><strong>dsh</strong> is both a chat front end and a runtime; releases no longer bundle it, and the plug-in uses the copy installed on your machine (verified version <code>0.2.2-rc.3</code>).</li>
+<li>The panel opens dsh&#x27;s web client; inside Maya it docks to the right by default with a tab such as <code>dsh — &lt;scene name&gt;</code>, so it is easy to tell apart from a dsh you opened in a browser yourself.</li>
+<li>When embedding is unavailable (for example a missing WebView component) it falls back to the system browser, and no functionality is lost.</li>
+</ul>
+<h2 id="h-2">How it connects to the plug-in</h2>
+<p>Before opening the panel the plug-in starts the local backend (broker) and registers the current Maya as an instance. The <code>squirrel_*</code> tools inside dsh find that instance through the broker and act on this Maya process only by default.</p>
+<p>In addition, the bundled skill set lands in <code>&lt;dshHome&gt;/skills</code> and user-level instructions in <code>&lt;dshHome&gt;/AGENTS.md</code>, so the assistant knows to consult the help first and touch the scene afterwards.</p>
+<h2 id="h-3">State</h2>
+<p>The toggle recognizes exactly three states: off, starting and on. &quot;On&quot; means the panel is visible, the dsh service started by this process still runs, or the front end recorded in the reuse log is still alive.</p>
+<h2 id="h-4">Notes</h2>
+<p>The AI assistant, <code>「AI 搜索预览资产」 (AI search preview)</code> and <code>「AI 分析缩略图」 (AI thumbnail analysis)</code> are three independent paths: the first is a chat surface, the other two are asset retrieval and metadata suggestions, and each can be used alone.</p>

@@ -1,0 +1,28 @@
+<p>Maya&#x27;s autosave is off by default; you must enable it and write it into the preferences. It only protects scenes that have been saved to disk at least once.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>After a crash there is no autosave file and the <code>autosave</code> directory is empty.</li>
+<li>Restarting Maya shows no crash recovery prompt.</li>
+<li>A crashed new scene cannot be recovered at all.</li>
+<li>Autosave was enabled, but the setting is off again after a crash.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>Autosave is not enabled</td><td><code>autoSaveEnable</code> is 0</td><td>Enable it and save preferences</td></tr><tr><td>It was only enabled for the session</td><td>The setting is lost after a crash</td><td>Write it into <code>prefs\userPrefs.mel</code></td></tr><tr><td>The new scene was never saved</td><td>The scene has no file name, so no autosave name can be derived</td><td>Press <code>Ctrl+S</code> first to give it a location</td></tr><tr><td>The interval is too long</td><td>About 10 minutes by default</td><td>Shorten the interval and save manually before important operations</td></tr><tr><td>The backup count hit its limit</td><td><code>autoSaveMaxBackups</code> is about 10 and old files rotate out</td><td>Save important versions explicitly in time</td></tr><tr><td>Program-driven with no human interaction</td><td>No autosave files were observed on disk (unverified)</td><td>Verify the directory when the scene is used interactively</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Enable autosave in the Maya preferences, set the interval to 10 minutes or less, and save the preferences.</li>
+<li>Confirm the setting is written to <code>prefs\userPrefs.mel</code> rather than only the current session; back up the file before editing it.</li>
+<li>After creating a new scene, press <code>Ctrl+S</code> once so autosave has a file name to work with.</li>
+<li>After a crash, look in <code>Documents\maya\projects\default\autosave</code> for autosave files.</li>
+<li>Once found, copy the file to another directory first and open the copy, so recovery does not overwrite the original.</li>
+<li>Backups taken before thumbnail rendering live in <code>%TEMP%\squirrel_pre_render\</code> and keep 3 copies by default; set <code>SQUIRREL_PRE_RENDER_BACKUP=0</code> to turn them off.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>The <code>autosave</code> directory gains a timestamped file whose content matches the pre-crash scene, and the autosave settings are visible in <code>userPrefs.mel</code>.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Temporarily set the autosave interval to 1 minute, work normally for a while, then check whether files land in the directory.</li>
+<li>Confirm the scene really was saved to disk; an untitled new scene never produces an autosave.</li>
+<li>Autosave files can also be overwritten or rotated out, so save versions manually before important steps.</li>
+<li>Investigate the crash itself per 6.7.2 &quot;Three steps to recover after a crash&quot; or 6.7.3 &quot;Renderer crash&quot;.</li>
+</ul>

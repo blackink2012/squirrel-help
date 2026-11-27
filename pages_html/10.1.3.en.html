@@ -1,0 +1,20 @@
+<p>When several sessions of the same version run, or Maya restarts quickly after a crash, Maya falls back from the default port to the backup range <code>7110~7129</code>, and clients probe that range as well.</p>
+<p><img src="media_en/shared/menu-maya-target.webp" alt="Instances on the backup range (7110–7129) appear in this menu too" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Why the port changes</h2>
+<p>The startup block tries this version&#x27;s default port first. When that port is already taken by another instance of the same version (Maya reports 10048), it tries <code>7110~7129</code> in turn and writes the result into <code>~/.squirrel_asset_manager/bridge_port.log</code>.</p>
+<p>The client&#x27;s candidate order is: the preferred year (2026) → older years → newer years → the backup range. So instances on the backup range are discovered automatically too.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Run <code>python maya_bridge.py --scan</code> to see which candidate ports are online.</li>
+<li>To connect by version use <code>python maya_bridge.py --maya 2025</code>, which probes the default port and the backup range one by one and confirms identity from the year in the <code>ping</code> reply.</li>
+<li>When the exact port is known use <code>python maya_bridge.py --port 7110 --ping</code>.</li>
+<li>To pin the client to one port set <code>SQUIRREL_MAYA_PORT=7110</code>.</li>
+<li>To investigate past port changes read <code>~/.squirrel_asset_manager/bridge_port.log</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p><code>--ping</code> returns <code>version | scene</code>; <code>--doctor</code> lists listening, answering, PID and verdict per port.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>A <code>netstat</code> LISTENING state does not prove Maya is alive: a hung instance or a crash reporter process can hold the port. The verdict must come from actually sending a command and seeing whether it answers.</li>
+<li>The probe must be a normal expression (such as <code>ping</code>), never <code>print</code>; <code>commandPort</code> returns the value of the expression, so <code>print</code> gives the caller <code>None</code> and misjudges a healthy instance as hung.</li>
+</ul>

@@ -1,0 +1,26 @@
+<p>Turn an existing image into an asset thumbnail: <code>「导入」 (Import)</code> replaces the main image, <code>「添加」 (Add)</code> puts the image into a new extra slot.</p>
+<p><img src="media_en/shared/menu-thumbnail.webp" alt="Thumbnail operation menu" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Two ways to import</h2>
+<table><thead><tr><th>Mode</th><th>Where</th><th>Result</th></tr></thead><tbody><tr><td>Import (replace)</td><td>Context menu → update thumbnail → import; or <code>「导入」 (Import)</code> in the preview panel</td><td>Overwrites the main thumbnail</td></tr><tr><td>Add (new slot)</td><td>Context menu → update thumbnail → add; or <code>「添加」 (Add)</code> in the preview panel</td><td>Every file becomes a new extra slot</td></tr></tbody></table>
+<h2 id="h-2">Steps (replace the main image)</h2>
+<ol>
+<li>Select the asset and choose <code>「更新缩略图 → 导入」 (Update thumbnail → Import)</code> from the context menu, or click <code>「导入」 (Import)</code> in the preview panel.</li>
+<li>Pick an image file. Supported extensions include <code>.sicon</code>, <code>.jpg</code>, <code>.jpeg</code>, <code>.aicon</code>, <code>.bmp</code>.</li>
+<li>After confirming, the plug-in writes the image into the main thumbnail location.</li>
+<li>Grid cards and the preview panel refresh automatically.</li>
+</ol>
+<h2 id="h-3">Steps (add a new slot)</h2>
+<ol>
+<li>Choose <code>「更新缩略图 → 添加」 (Update thumbnail → Add)</code> from the context menu, or click <code>「添加」 (Add)</code> in the preview panel.</li>
+<li>Several files can be chosen at once. In addition to the extensions above, <code>.png</code> is supported.</li>
+<li>After confirming, every file becomes a new slot and the preview panel jumps to the last one.</li>
+<li>Switch between them with the arrows, the mouse wheel or the counter at the bottom.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The preview panel shows the newly imported image.</li>
+<li>After replacing the main image the card cover changes too.</li>
+<li>After adding several images the counter changes from <code>1/1</code> to <code>n/n</code> and the delete button becomes available.</li>
+</ul>
+<div class="admonition note"><div class="admonition-title">注意</div><p>Importing only copies the image content into the asset directory; it never moves or modifies the original file you picked.</p></div>
+<div class="admonition warning"><div class="admonition-title">警告</div><p><code>「导入」 (Import)</code> overwrites the existing main thumbnail and does not keep the old image. Use <code>「添加」 (Add)</code> when several images must be kept.</p></div>

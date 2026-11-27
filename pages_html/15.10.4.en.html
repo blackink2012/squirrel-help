@@ -1,0 +1,36 @@
+<blockquote><p>One-line summary: <strong>the third block of the left column decides where the asset card image comes from — your own rectangle capture, a Maya playblast, or a render.</strong></p></blockquote>
+<h2 id="h-1">Item-by-item details</h2>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Suggested value</th><th>What filling it in wrongly does</th></tr></thead><tbody><tr><td>Screenshot tool</td><td>Radio</td><td>Clicking <strong>Create asset</strong> shows a capture overlay; you drag a rectangle over the viewport and release to capture</td><td>Use this (default) for the first export or when you want an image quickly</td><td>A crooked frame or an unrelated object ends up on the card; you can redo it later with right-click <strong>Update thumbnail → Capture</strong></td></tr><tr><td>Maya playblast</td><td>Radio</td><td>Captures through Maya playblast (the current viewport image)</td><td>When you want a cleaner viewport image without waiting for a render</td><td>It briefly occupies the viewport; in batches it captures one by one, which is slow</td></tr><tr><td>Render image</td><td>Radio</td><td>Renders with the current renderer</td><td>When you want a proper beauty render (Arnold / Redshift / V-Ray)</td><td>Every image waits for a render, so many assets take a long time; a misconfigured renderer gives black images or failures</td></tr><tr><td>Create model</td><td>Dropdown button</td><td>Lists the models under the plug-in&#x27;s <code>Assets/Meshes</code>; selecting one imports it into the current scene; hovering an entry shows a same-named PNG preview</td><td>For materials / textures / lights, which <strong>have no geometry of their own</strong>, add a demo model before capturing</td><td>When the directory is empty the item is gray and reads &quot;(no model files in the Meshes directory)&quot;</td></tr><tr><td>Create light</td><td>Dropdown button</td><td>Lists the HDRIs under the plug-in&#x27;s <code>Assets/IBL</code>; selecting one builds a dome light for the current renderer; hovering shows a same-named PNG</td><td>When the scene has no lights and captures come out black</td><td>It cannot build when the current renderer is not Arnold / V-Ray / Redshift, and the Script Editor asks you to switch renderers</td></tr></tbody></table>
+<blockquote><p><strong>Create model</strong> and <strong>Create light</strong> are <strong>import / build-light</strong> actions: they write nothing into the asset and do not capture for you — they only give material / texture assets something visible to shoot.</p></blockquote>
+<p><img src="media_en/shared/dialog-export-thumb.webp" alt="Thumbnail source and capture area in the left column" loading="lazy" decoding="async"></p>
+<h2 id="h-2">How the three sources differ</h2>
+<table><thead><tr><th>Aspect</th><th>Screenshot tool</th><th>Maya playblast</th><th>Render image</th></tr></thead><tbody><tr><td>How the image is made</td><td>You frame the viewport</td><td>Maya playblast output</td><td>The current renderer</td></tr><tr><td>Speed</td><td>Seconds</td><td>Seconds per image</td><td>Tens of seconds to minutes per image</td></tr><tr><td>Image quality</td><td>Viewport display</td><td>Viewport display (can include wireframe)</td><td>Full render</td></tr><tr><td>Needs a person</td><td>Yes (frame each time)</td><td>No</td><td>No</td></tr><tr><td>In fully automatic batches</td><td>Frame the first, reuse the framing afterwards (delay adjustable)</td><td>Automatic per image</td><td>Automatic per image</td></tr><tr><td>Output size</td><td>From the captured size and the <strong>thumbnail size</strong> in settings</td><td>Same</td><td>Same</td></tr></tbody></table>
+<h2 id="h-3">Screenshot delay</h2>
+<p>It only appears in <strong>fully automatic</strong> mode, ranges from 0 to 60 seconds and defaults to 2 seconds (the factory value comes from the export preset&#x27;s <code>delay_ms</code>). It waits before the automatic capture so the viewport can refresh and the render can settle. Heavy scenes are safer at 3–5 seconds; 0 tends to capture an unfinished frame.</p>
+<h2 id="h-4">Gestures when capturing with the screenshot tool</h2>
+<ol>
+<li>After clicking <strong>Create asset</strong> a capture overlay appears.</li>
+<li><strong>Drag a rectangle</strong> over the area you want as the thumbnail.</li>
+<li>Hold <strong>Ctrl</strong> to lock a square selection (thumbnails should be square, so holding it is recommended).</li>
+<li><strong>Release to capture.</strong></li>
+<li>To cancel: press <strong>Esc</strong> or right-click.</li>
+</ol>
+<blockquote><p>This uses the same screenshot tool as <strong>Update thumbnail → Capture</strong>, see <a href="#/en/4.7.2"><code>4.1.7.2</code></a>.</p></blockquote>
+<h2 id="h-5">A complete example (a material asset needing a demo render)</h2>
+<ol>
+<li>The scene is empty or holds only a material sphere: confirm the current renderer (Arnold / Redshift / V-Ray) first, otherwise <strong>Create light</strong> cannot build.</li>
+<li>In the left column of the export dialog click <strong>Create model</strong>, pick a sphere or box and place it.</li>
+<li>Click <strong>Create light</strong> and choose an HDRI to build a dome light (or use existing lights).</li>
+<li>Keep the thumbnail source on <strong>Screenshot tool</strong> and frame a good angle in the viewport.</li>
+<li>Click <strong>Create asset</strong> → drag a rectangle (hold Ctrl) → release.</li>
+<li>Check the new card&#x27;s image; if you dislike it, right-click the card → <strong>Update thumbnail</strong> → <strong>Capture</strong> and frame again.</li>
+</ol>
+<h2 id="h-6">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Possible cause</th><th>What to do</th></tr></thead><tbody><tr><td>The thumbnail is a gray placeholder</td><td>No real image was produced this time (render / playblast failed, or the capture was skipped)</td><td>Right-click → <strong>Update thumbnail → Background render</strong> (headless, see 8.12.6) or <strong>Capture</strong> again</td></tr><tr><td>The capture shows another object / a messy viewport</td><td>The frame was misplaced, or fully automatic mode reused the previous asset&#x27;s frame</td><td>Re-export with semi-automatic / single asset, or use <strong>Update thumbnail → Capture</strong> afterwards</td></tr><tr><td>Everything comes out black</td><td>The scene has no lights, or the renderer is not ready</td><td>Use <strong>Create light</strong> to build a dome light; for render images first confirm the renderer works</td></tr><tr><td>The thumbnail is tiny / blurry</td><td><strong>Settings → General → Thumbnail size</strong> is too small</td><td>Increase it and regenerate (see <a href="#/en/4.7.6"><code>4.1.7.6</code></a>)</td></tr></tbody></table>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>Other left column controls (mode, naming, tags): <a href="#/en/15.10.2"><code>8.10.2</code></a></li>
+<li>The complete description of the three sources: <a href="#/en/6.2.3"><code>4.3.2.3</code></a></li>
+<li>The headless render options window (a different path, from the context menu): <a href="#/en/15.12.6"><code>8.12.6</code></a></li>
+<li>Playblast versus render image: <a href="#/en/4.7.3"><code>4.1.7.3</code></a></li>
+</ul>

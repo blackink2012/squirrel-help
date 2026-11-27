@@ -1,0 +1,52 @@
+<p>Day-to-day activation happens on <strong>Settings → License activation</strong>: the activation key field sits <strong>directly under the machine code</strong>, and clicking the green <strong>Activate</strong> button verifies it online. If you have not started a trial yet, <strong>leave the key empty and click Activate to start the free trial</strong>. Offline import, deactivate and restore remain in the <strong>License management</strong> window.</p>
+<p><img src="media_en/shared/settings-license.webp" alt="设置 → 授权激活" loading="lazy" decoding="async"></p>
+<p><img src="media_en/shared/dialog-license.webp" alt="License manager: current status, machine code, activation code / Activate button, and the collapsed Offline license activation card below" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>Open <strong>Settings → License activation</strong>; that tab is not locked, so it works without unlocking.</li>
+<li>Online activation requires a configured activation server. Without one, <strong>Activate</strong> and the activation key field are unavailable.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<h3 id="h-3">Online activation</h3>
+<ol>
+<li>Open <strong>Settings → License activation</strong>.</li>
+<li>Enter a <code>SQAM-XXXX-XXXX-XXXX-XXXX</code> key in the <strong>Activation key</strong> field under the machine code and click <strong>Activate</strong>.</li>
+<li>On success the status badge and status line refresh immediately, and the key field is cleared.</li>
+</ol>
+<h3 id="h-4">Free trial</h3>
+<ol>
+<li>Before any trial has been started, <strong>leave the key empty and click the green Activate button</strong> to start the trial (the server issues it per machine; <strong>no sign-in needed</strong>).</li>
+<li>The page&#x27;s primary button reads <strong>License management</strong> while unlicensed and opens the license window; the green <strong>Activate</strong> there also starts the trial with an empty key.</li>
+<li>The trial includes all features; once a full license is active, the trial entry is no longer offered so it cannot overwrite a real license.</li>
+</ol>
+<h3 id="h-5">Offline license</h3>
+<p>Offline import has two entries: <strong>Settings → License activation → License details &amp; advanced</strong>, or the <strong>License management</strong> window. The steps below use the settings page:</p>
+<ol>
+<li>Click the <strong>License details &amp; advanced</strong> title to expand the card.</li>
+<li>From a file: click <strong>Import license file…</strong> and choose a <code>.lic</code>, <code>.dat</code> or <code>.json</code> file; you can also drag the file into the window.</li>
+<li>From the clipboard: copy the full license text first, then click <strong>Import from clipboard</strong>. It reads and activates directly and <strong>never shows the license content in the UI</strong>.</li>
+</ol>
+<blockquote><p>Offline import <strong>only accepts offline licenses issued manually by support</strong> (marked with the offline channel). A license file issued by online activation cannot be used for offline activation; to move or reinstall, click <strong>Activate</strong> on the License activation page.</p></blockquote>
+<h3 id="h-6">Deactivate / restore</h3>
+<ul>
+<li>To move to another machine or re-activate, click <strong>Deactivate this machine</strong> under <strong>License details &amp; advanced</strong> (or the same button in the <strong>License management</strong> window) and confirm. After server confirmation the seat is released; it is limited only by the server&#x27;s daily release cap (3 per 24 hours), with no machine-switch counter.</li>
+<li><strong>Restore this machine</strong> re-enables a license you deactivated earlier while its local copy is still present; the button is greyed out when there is nothing to restore.</li>
+<li>Offline-issued licenses do not support unbinding to another machine, so the button is disabled. Contact the licensor for a new license when you need to move.</li>
+</ul>
+<h3 id="h-7">Sync license</h3>
+<p><strong>Sync license</strong> at the top right of the <strong>Current license</strong> card syncs with the server immediately (no need to wait for the daily heartbeat after a renewal or machine change). It also works for offline licenses: it only performs a read-only registration and heartbeat, and never revokes, deletes or downgrades the local license.</p>
+<h2 id="h-8">Scope of effect</h2>
+<ul>
+<li>Activation writes to local license storage; it does not modify the asset library or plug-in configuration.</li>
+<li>Online and offline licensing are separate paths: a file from online activation cannot be used for offline activation (it reports <code>E_LIC_ONLINE_FILE</code>); offline import only accepts offline license files issued manually by support.</li>
+<li>After deactivating this machine you must activate again to use restricted features.</li>
+<li>When online activation fails, the error is shown and nothing falls back to offline automatically; import a license file manually.</li>
+</ul>
+<h2 id="h-9">Verify the result</h2>
+<p>The badge on <strong>License activation</strong> becomes <strong>Licensed</strong> or <strong>Trial</strong>, and the status line updates; the settings page refreshes after the license window closes.</p>
+<h2 id="h-10">Tips</h2>
+<ul>
+<li>A failed activation shows <code>[error code] explanation</code>; check the code, the license file and the network as suggested.</li>
+<li>The license manager window title includes the product name; click <strong>Close</strong> to return to settings.</li>
+<li>Dragging a license file into the window works without expanding the card first.</li>
+</ul>

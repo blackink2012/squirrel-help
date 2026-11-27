@@ -1,0 +1,41 @@
+<p>Group a set of channel-named PBR textures by material, package each material into a <code>.zasset</code> and detect channel types and resolutions automatically.</p>
+<p><img src="media_en/shared/quicktool-pbr.webp" alt="PBR textures to asset" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Purpose</h2>
+<p>Skip the manual sorting of BaseColor, Normal, Roughness and other textures, and turn Megascans, Zoo Tools or your own texture folders straight into assets.</p>
+<blockquote><p><strong>The menu shows the script name</strong>: the quick tools menu scans the scripts in <code>quicktools/</code> directly, and an entry name is the file name without <code>.py</code> with underscores replaced by spaces, so the menu shows <code>pbr to zasset</code> rather than a Chinese title. The three conversion tools map as follows: <code>hdr to zasset</code> = HDR to asset, <code>model to zasset</code> = model to asset, <code>pbr to zasset</code> = PBR texture to asset.</p></blockquote>
+<h2 id="h-2">Input and output</h2>
+<ul>
+<li>Input: a folder containing PBR textures; with <code>「批量模式」 (Batch mode)</code> checked pick a parent folder so each sub-folder becomes a separate asset.</li>
+<li>Output: one <code>&lt;material name&gt;.zasset</code> per material, written to the input folder by default (or a separate <code>「输出位置」 (Output location)</code>).</li>
+<li>Inside the asset: textures stored by channel under <code>textures/</code>, and for several resolutions in tiers such as <code>textures/2k/</code> and <code>textures/4k/</code>. <code>meta.json</code> records the <code>properties</code> channel mapping plus optional <code>resolutions</code> and <code>default_resolution</code>, and <code>thumb.sicon</code> when a thumbnail exists.</li>
+</ul>
+<h2 id="h-3">Texture naming rules</h2>
+<p>The tool recognizes textures by &quot;underscore + channel alias&quot;, case-insensitively:</p>
+<table><thead><tr><th>Channel</th><th>Accepted aliases</th></tr></thead><tbody><tr><td>baseColor</td><td><code>basecolor</code>, <code>base_color</code>, <code>albedo</code>, <code>diffuse</code>, <code>col</code>, <code>color</code>, <code>base</code>, <code>diff</code></td></tr><tr><td>normal</td><td><code>normal</code>, <code>norm</code>, <code>nor</code>, <code>nrm</code>, <code>n</code>, <code>normalmap</code>, <code>nor_dx</code>, <code>nor_gl</code></td></tr><tr><td>roughness</td><td><code>roughness</code>, <code>rough</code>, <code>rgh</code>, <code>roughnessmap</code>, <code>rough_map</code></td></tr><tr><td>metallic</td><td><code>metal</code>, <code>mtl</code>, <code>metalness</code>, <code>metal_map</code>, <code>metallic_map</code></td></tr><tr><td>ao</td><td><code>ao</code>, <code>ambient</code>, <code>occlusion</code>, <code>ambient_occlusion</code>, <code>ao_map</code>, <code>occ</code></td></tr><tr><td>emissive</td><td><code>emissive</code>, <code>emit</code>, <code>emission</code>, <code>illumination</code>, <code>emissive_map</code>, <code>glow</code></td></tr><tr><td>height</td><td><code>height</code>, <code>heightmap</code>, <code>height_map</code>, <code>bump</code>, <code>bump_map</code>, <code>disp</code>, <code>displacement</code>, <code>disp_map</code></td></tr></tbody></table>
+<ul>
+<li>An alias must be separated from the preceding name by <code>_</code>, for example <code>wood_albedo.png</code>; <code>woodcolor.png</code> is not recognized.</li>
+<li>The packed maps <code>arm</code> / <code>orm</code> are treated as R=AO, G=Roughness, B=Metallic.</li>
+<li>Resolution markers (<code>_2K_</code>, <code>_4K_</code>, <code>_8K_</code> and so on) are stripped from the file name, and can also be expressed with sub-directories such as <code>2k/</code> or <code>4k/</code>.</li>
+<li>The material name is the text before the channel alias, for example <code>brick_2K_Albedo</code> → <code>brick</code>.</li>
+</ul>
+<h2 id="h-4">Steps</h2>
+<ol>
+<li>Open <code>快捷工具 (Quick tools) → pbr to zasset</code>.</li>
+<li>Click <code>「浏览」 (Browse)</code> and choose the texture folder, or the parent folder in batch mode.</li>
+<li>Click <code>「扫描贴图」 (Scan textures)</code> and check the material count, channels and resolutions on the right.</li>
+<li>Set the output location and adjust options as needed.</li>
+<li>Click <code>「转换」 (Convert)</code>.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>After scanning the status bar shows the number of materials and textures found.</li>
+<li>Conversion shows a summary and each material&#x27;s <code>.zasset</code> appears in the output directory.</li>
+<li>Opening an asset shows the channel paths in <code>meta.json</code> and the contents of <code>textures/</code>; the library can display the thumbnail.</li>
+</ul>
+<h2 id="h-6">Options and notes</h2>
+<table><thead><tr><th>Option</th><th>Default</th><th>Notes</th></tr></thead><tbody><tr><td>Export <code>.zasset</code> asset files</td><td>On</td><td>When off only scanning / preview happens</td></tr><tr><td>Batch mode (sub-folders as separate assets)</td><td>Off</td><td>Suits a parent directory holding several asset folders</td></tr><tr><td>Import into the current category after conversion</td><td>Off</td><td>Copies the <code>.zasset</code> into the current library category afterwards</td></tr><tr><td>Package all resolutions</td><td>On</td><td>When on each resolution goes into <code>textures/&lt;resolution&gt;/</code>; when off only the default resolution is packaged</td></tr><tr><td>Scan sub-folders recursively</td><td>Off</td><td>Turn on when textures live in sub-directories such as <code>tex/</code>; choose automatic recursion or specify folder names manually</td></tr><tr><td>Exclude</td><td>Empty</td><td>Folder names skipped during recursion, comma separated, for example <code>Thumbs, previews</code></td></tr></tbody></table>
+<ul>
+<li>When no valid textures are found the status bar reports no PBR textures and suggests checking the underscores and aliases in the names.</li>
+<li>Thumbnail and metadata sources are configured in <code>Assets/preset/pbr_mapping.json</code>, which supports <code>{materialName}</code> / <code>{folderName}</code> placeholders and JSON/TXT metadata sources.</li>
+<li>Conversion needs a valid <code>convert</code> license.</li>
+</ul>

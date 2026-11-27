@@ -1,0 +1,46 @@
+<p>The global model is the provider and model configuration used by default by every feature that needs a large model.</p>
+<p><img src="media_en/shared/settings-global-llm.webp" alt="Global model" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>Configure the provider, API key, API endpoint and model name in one place for reuse by AI thumbnail analysis and similar features.</p>
+<h2 id="h-2">Values and defaults</h2>
+<ul>
+<li>Provider: Ollama (local, default), LM Studio (local), DeepSeek, Qwen (Alibaba Cloud DashScope), Zhipu (BigModel), Kimi (Moonshot), OpenAI, Anthropic Claude, Custom (OpenAI compatible).</li>
+<li>API key: required for cloud providers; local services such as Ollama need none and the input is greyed out.</li>
+<li>API endpoint: empty means the provider&#x27;s default; a custom provider needs a compatible endpoint.</li>
+<li>Model: the dropdown fetches the provider&#x27;s live model list, and a name can also be typed; empty by default.</li>
+<li>Thinking mode: <strong>off</strong> by default. When on, the model prints its reasoning before answering, which is only recommended for hard reasoning tasks.</li>
+<li>Keys are stored per provider, so switching providers never mixes them up.</li>
+</ul>
+<h2 id="h-3">Using another vendor or a self-hosted endpoint</h2>
+<p>The plug-in only speaks the <strong>OpenAI-compatible protocol</strong> (<code>POST {endpoint}/chat/completions</code>, with the model list from <code>GET {endpoint}/models</code>). For any provider not in the dropdown that offers an OpenAI-compatible endpoint, choose <strong>Custom (OpenAI compatible)</strong> and fill in the endpoint, key and model name:</p>
+<table><thead><tr><th>Service</th><th>What to put in the API endpoint</th></tr></thead><tbody><tr><td>Google Gemini</td><td><code>https://generativelanguage.googleapis.com/v1beta/openai/</code></td></tr><tr><td>Anthropic Claude</td><td>Choose <strong>Anthropic Claude</strong> in the dropdown (endpoint <code>https://api.anthropic.com/v1/</code>, the official OpenAI SDK compatibility layer)</td></tr><tr><td>OpenRouter</td><td><code>https://openrouter.ai/api/v1</code></td></tr><tr><td>SiliconFlow / Volcano Ark / Moonshot / Baichuan and others</td><td>The &quot;OpenAI compatible&quot; endpoint from each console</td></tr><tr><td>Aggregate gateways (OneAPI / NewAPI)</td><td><code>http://&lt;your gateway&gt;/v1</code></td></tr><tr><td>Local LM Studio / vLLM / Xinference</td><td>LM Studio can be chosen as <strong>LM Studio (local)</strong> (default <code>http://127.0.0.1:1234/v1</code>); other local services use <code>http://127.0.0.1:&lt;port&gt;/v1</code></td></tr></tbody></table>
+<p>Notes:</p>
+<ul>
+<li>Do <strong>not</strong> repeat <code>/chat/completions</code> at the end of the endpoint; stop at the <code>/v1</code> level;</li>
+<li>When no model list is available, <strong>type the model name</strong> directly;</li>
+<li>For a local service that wants no key, any placeholder value works (the custom provider&#x27;s key input is enabled);</li>
+<li><strong>Azure OpenAI</strong> (<code>api-key</code> auth header, <code>deployments/&lt;deployment name&gt;</code> path and <code>api-version</code> parameter) and the <strong>native Anthropic / Gemini protocols</strong> (<code>/v1/messages</code>, <code>generateContent</code>) do not use the OpenAI-compatible format, so the current version does not support them directly — prefer the vendor&#x27;s compatible endpoint or a gateway such as OneAPI that converts to OpenAI compatibility.</li>
+</ul>
+<h2 id="h-4">Thinking mode</h2>
+<p><img src="media_en/shared/settings-ai-thinking.webp" alt="The &quot;enable thinking mode (off by default)&quot; option in the global model" loading="lazy" decoding="async"></p>
+<p>It is <strong>off</strong> by default. Thinking (the reasoning process) and the answer share output tokens, so for tagging, classification and one-line descriptions it only makes things slower, and with a tight budget the answer itself can come back empty — which is why everything that can be off defaults to off.</p>
+<p>Only scenarios needing multi-step reasoning (complex descriptions, difficult judgments) are worth enabling <code>「开启思考模式」 (Enable thinking mode)</code>.</p>
+<p>How each provider behaves:</p>
+<table><thead><tr><th>Provider</th><th>What happens when it is off</th></tr></thead><tbody><tr><td>Ollama</td><td>The OpenAI-compatible endpoint gets <code>reasoning_effort: none</code> (verified); the native endpoint gets <code>think: false</code></td></tr><tr><td>DeepSeek / Zhipu (regular models)</td><td>Sends <code>thinking: disabled</code></td></tr><tr><td>Zhipu glm-5.2 / glm-5.3</td><td>Always thinks and cannot be turned off → drops to the lowest level when off</td></tr><tr><td>OpenAI o series / GPT-5</td><td>Cannot really be turned off → uses <code>reasoning_effort: low</code> when off</td></tr><tr><td>Kimi / Claude compatibility layer / custom / LM Studio</td><td>No universal switch, keeps the server default</td></tr></tbody></table>
+<blockquote><p><strong>Tip</strong>: an empty answer with thinking on usually means <code>max_tokens</code> was consumed by the reasoning, which is unrelated to the switch itself.</p></blockquote>
+<h2 id="h-5">Scope</h2>
+<ul>
+<li>Features that need a large model, such as AI thumbnail analysis, read this configuration by default.</li>
+<li>AI search only calls it when <code>「使用全局大模型」 (Use the global model)</code> is checked in the search configuration; otherwise it does local vector retrieval only.</li>
+<li>Semantic search and search by image use the local Ollama embedding model and are unaffected by this chat model.</li>
+<li>The configuration is stored in <code>app_settings.json</code> under <code>ai_provider</code>, <code>ai_api_keys</code>, <code>ai_base_url</code> and <code>ai_model</code>.</li>
+</ul>
+<h2 id="h-6">When to change it</h2>
+<ul>
+<li>You have a paid cloud model service and want faster analysis than local.</li>
+<li>You use a proxy or self-hosted OpenAI-compatible endpoint: choose <code>「自定义（OpenAI 兼容）」 (Custom, OpenAI compatible)</code> and fill in the endpoint and model.</li>
+<li>Local only: keep Ollama and finish &quot;AI dependency check and install&quot; first.</li>
+</ul>
+<h2 id="h-7">Tips</h2>
+<blockquote><p><strong>Tip</strong>: cloud providers need a network, and the thumbnails and prompts used for analysis are sent to that provider; local Ollama never leaves this machine.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: API keys are stored as plain text in <code>app_settings.json</code>, so never send that file out.</p></blockquote>

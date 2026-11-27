@@ -1,0 +1,29 @@
+<p><code>netstat</code> 显示端口 LISTENING，不代表 Maya 活着；判活必须真投一条命令，看它答不答。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>工具提示连接失败或超时，但 <code>netstat</code> 里对应端口仍在监听。</li>
+<li><code>--ping</code> 没有返回版本与场景，或连接被拒绝（<code>WinError 10061</code>）。</li>
+<li>Maya 窗口看起来开着，但界面不响应，或前面挡着对话框。</li>
+<li>新启动的 Maya 没占用默认端口，客户端一直报「连不上」。</li>
+</ul>
+<h2 id="h-2">可能原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>Maya 主线程卡死</td><td>进程在、端口在监听，但命令超时或连接被拒</td><td>确认后清理卡死实例</td></tr><tr><td>模态对话框挡住主线程</td><td>Maya 窗口有崩溃恢复、报错或未保存提示</td><td>先点掉对话框，再重试</td></tr><tr><td>崩溃报告器仍占用端口</td><td>崩溃后端口还在监听，但没有正常响应</td><td>按崩溃恢复流程处理</td></tr><tr><td>端口换到了备用段</td><td>默认端口被同版本实例占用</td><td>扫描 7110–7129 备用段</td></tr><tr><td>客户端只认固定端口</td><td>实际实例在备用端口</td><td>用自动发现或设置端口环境变量</td></tr><tr><td>端口被其他进程占用</td><td>端口所有者不是 Maya</td><td>换端口或结束占用进程</td></tr></tbody></table>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>先看 Maya 窗口，如果有模态对话框，点掉后再执行一次探活。</li>
+<li>运行 <code>python maya_bridge.py --doctor</code>，查看每个端口的 <code>listening</code>、<code>responsive</code> 与 <code>verdict</code>。</li>
+<li>运行 <code>python maya_bridge.py --ping</code>，确认返回的是哪台 Maya、哪个场景。</li>
+<li>运行 <code>python maya_bridge.py --scan</code>，确认实例是否落在备用段 7110–7129。</li>
+<li>确认是卡死且不是模态框后，运行 <code>python maya_bridge.py --doctor --kill-hung</code>；它只清「监听但不应答」的实例。</li>
+<li>没有可用实例时运行 <code>python maya_bridge.py --doctor --launch</code>，等它真正能应答。</li>
+<li>客户端必须固定端口时，设置 <code>SQUIRREL_MAYA_PORT</code> 指向实际端口。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p><code>--ping</code> 返回「Maya 版本 | 当前场景」，<code>--doctor</code> 中对应端口显示 <code>verdict=healthy</code>，命令能正常往返。</p>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>查看 <code>~\.squirrel_asset_manager\bridge_port.log</code> 最近的端口分配记录，确认是否反复退到备用段。</li>
+<li>检查 <code>%TEMP%</code> 是否有新的 <code>MayaCrashLog*.dmp</code>，判断是卡死还是已经崩溃。</li>
+<li>不要只凭 <code>netstat</code> 就杀掉进程；健康实例和用户的活一律不动。</li>
+<li>按 6.7.2「崩溃恢复三步」继续处理，或按 6.8.2「诊断流程」收集信息。</li>
+</ul>

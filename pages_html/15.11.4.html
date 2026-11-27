@@ -1,0 +1,51 @@
+<blockquote><p>一句话定位：<strong>给已有资产「再加一档精度」或「再开一版」时依次弹出的两个窗：先选更新方式，再绑 LOD 档位。</strong></p></blockquote>
+<p>本页讲两个窗：</p>
+<ol>
+<li><strong>「更新资产」选择窗</strong>：右键 →「更新资产」后弹出，问你这次要怎么更新。</li>
+<li><strong>「追加 LOD」档位窗</strong>：在上一个窗里选「追加为 LOD」后弹出，把 Maya 当前选择绑到 LOD 档位上。</li>
+</ol>
+<h2 id="h-1">窗口一：更新资产（选择更新方式）</h2>
+<p>界面文字：「资产「&lt;名字&gt;」已存在。请选择更新方式：」，底部一排按钮：</p>
+<table><thead><tr><th>按钮</th><th>作用</th><th>结果</th></tr></thead><tbody><tr><td>追加为 LOD</td><td>把当前 Maya 选中导成同一资产的一条 LOD</td><td>接着弹「追加 LOD」档位窗</td></tr><tr><td>追加格式</td><td>把本次导出结果<strong>合并</strong>进现有资产，补/换格式</td><td>打开预填的创建资产窗（追加格式模式，见 8.10.1）</td></tr><tr><td>创建新版本</td><td>以当前内容克隆出一个新的子版本</td><td>打开预填的创建资产窗；导出完成后提示「已创建新版本 &lt;标签&gt;」</td></tr><tr><td>添加为新变体</td><td>把当前选中导成一个变体（只存几何）</td><td>先让你输变体名（同时作为目录名，可用中文），再打开导出配置</td></tr><tr><td>批量添加变体</td><td>每个选中物体各成一个变体</td><td>逐物体导出并生成缩略图</td></tr><tr><td>替换资产</td><td>用本次导入结果覆盖原资产内容</td><td>打开导出的配置窗，覆盖原资产</td></tr><tr><td>取消</td><td>什么都不做</td><td>关窗</td></tr></tbody></table>
+<p>补充规则：</p>
+<ul>
+<li><strong>默认主按钮</strong>是「替换资产」；如果资产里有旧版版本记录，默认变成「追加为 LOD」。</li>
+<li>当前条目是<strong>子版本/变体/LOD 内部</strong>时，「创建新版本」不显示（版本内部不能再建次级版本）。</li>
+<li>「创建新版本」<strong>不会让你填版本名</strong>：几何/材质资产由插件自动生成版本标签（如 V1、V2）。只有「添加为新变体」和「为变体追加 LOD」才会弹小输入框。</li>
+</ul>
+<h2 id="h-2">窗口二：追加 LOD（档位窗）</h2>
+<p>窗口标题「追加 LOD」，副标题「目标：&lt;当前资产/版本名&gt;」，下面一行实时显示「当前选择：&lt;模型名&gt;」。</p>
+<p><img src="media/shared/dialog-add-lod.webp" alt="追加 LOD 档位窗" loading="lazy" decoding="async"></p>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>LOD0 – LOD4 档位卡</td><td>可点击卡片 ×5</td><td>点一下把 <strong>Maya 当前选中的最后一个物体</strong>绑到该档；再点一次取消绑定</td><td>近景精度高（LOD0 最精细），远景低</td><td>绑错档：导入时按该档拿到的就是另一个模型</td></tr><tr><td>档位卡右上角 ☐ / ☑</td><td>状态标记</td><td>☐ 未绑定、☑ 已绑定</td><td>—</td><td>—</td></tr><tr><td>当前选择行</td><td>只读文字</td><td>显示 Maya 当前选择（多选时提示「绑定最后一个」）</td><td>先选好模型再点卡</td><td>无选择时点卡会提示「请先在 Maya 中选择一个模型，再点档位」</td></tr><tr><td>清空绑定</td><td>次按钮</td><td>清掉本次所有绑定，重新来</td><td>绑乱了用</td><td>只清本次窗口里的绑定，不动已存在的 LOD</td></tr><tr><td>取消</td><td>次按钮</td><td>关窗，不写入</td><td>—</td><td>—</td></tr><tr><td>导出并追加（N 档）</td><td>主按钮</td><td>按当前绑定导出并写入 LOD，N 随绑定数变化</td><td>确认档位对了再点</td><td>写入后覆盖同名档位的几何（见风险）</td></tr></tbody></table>
+<p>档位卡上的状态徽标：</p>
+<ul>
+<li><strong>空</strong>：该档还不存在 LOD；</li>
+<li><strong>已有 · N 面</strong>：该档已存在一条 LOD（N 是三角面数），再绑会覆盖它；</li>
+<li><strong>未绑定 / → 对象名</strong>：本次是否已绑、绑给了谁。</li>
+</ul>
+<h2 id="h-3">一次完整操作（给模型补 LOD1、LOD2）</h2>
+<ol>
+<li>Maya 里先选中要当 LOD1 的模型（可先别管别的档）。</li>
+<li>右键资产 →「更新资产」→「追加为 LOD」。</li>
+<li>「追加 LOD」窗打开后，点 <strong>LOD1</strong> 卡片；卡片变 ☑ 并显示「→ 模型名」。</li>
+<li>回 Maya 选中要当 LOD2 的模型，再点 <strong>LOD2</strong> 卡片。</li>
+<li>看窗口下方的警告行：<ul>
+<li>「「LOD1」已存在：将覆盖它的几何体，其它 LOD 不受影响。」→ 确认可以覆盖；</li>
+<li>「LOD0 是版本默认几何体，覆盖后双击卡片导入的就是新模型。」→ 特别注意；</li>
+<li>「将一次写入 N 条 LOD。」→ 确认档数。</li>
+</ul></li>
+<li>点「导出并追加（N 档）」，等导出完成，提示「已追加 N 档 LOD」。</li>
+<li>验证：双击预览图打开版本浏览器，在右栏「LOD 管理」卡里能看到新的档位；也可设其中一条为默认 LOD。</li>
+</ol>
+<blockquote><p>在版本浏览器里也能进这个窗口：LOD 管理卡 →「追加 LOD…」。为<strong>变体</strong>追加 LOD 走的是另一个小输入框（「为变体「X」追加 LOD 级别（1-9）」），不是这个档位窗。</p></blockquote>
+<h2 id="h-4">风险与反悔</h2>
+<table><thead><tr><th>操作</th><th>风险</th><th>反悔</th></tr></thead><tbody><tr><td>覆盖已有档位</td><td>该档原几何被新导出结果替换；其它 LOD 与版本不受影响</td><td>重新绑正确的模型再追加一次</td></tr><tr><td>覆盖 LOD0</td><td>LOD0 是<strong>版本默认几何体</strong>，覆盖后双击资产卡片导入的就是新模型</td><td>重新把原模型绑回 LOD0 再追加</td></tr><tr><td>一次写多档</td><td>只按当前绑定写，档位多于需求会多出无用 LOD</td><td>在版本浏览器的 LOD 管理卡里删掉多余档（至少留一条）</td></tr><tr><td>新建版本</td><td>会多出一份完整内容，占空间</td><td>在版本浏览器里删除该版本（不可撤销）</td></tr></tbody></table>
+<h2 id="h-5">出问题怎么办</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>处理</th></tr></thead><tbody><tr><td>右键里没有「创建新版本」</td><td>当前是子版本/变体/LOD 内部</td><td>回到主资产上再更新</td></tr><tr><td>点档位卡提示「请先在 Maya 中选择一个模型」</td><td>没选中或选中的是材质节点</td><td>在视口里选中模型</td></tr><tr><td>点「导出并追加」后报「找不到可写入 LOD 的版本目录」</td><td>目标版本目录缺失/被改名</td><td>刷新索引，或换主版本再试</td></tr><tr><td>追加完 LOD 列表没变</td><td>网格未刷新</td><td>手动刷新（F5/刷新按钮），或重开版本浏览器</td></tr><tr><td>新建版本没看到名字输入</td><td>几何/材质资产自动生成版本标签，设计如此</td><td>想自定义名字请用「添加为新变体」</td></tr></tbody></table>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>版本浏览器（看/设默认/删 LOD）：<a href="#/15.11.2"><code>8.11.2</code></a></li>
+<li>变体管理窗口：<a href="#/15.11.3"><code>8.11.3</code></a></li>
+<li>用户指南：追加 LOD <a href="#/4.10.2"><code>4.1.10.2</code></a>、创建新版本 <a href="#/4.10.3"><code>4.1.10.3</code></a>、导出时追加 LOD <a href="#/6.3.1"><code>4.3.3.1</code></a></li>
+<li>变体追加 LOD / 覆盖变体：<a href="#/4.13.4"><code>4.1.13.4</code></a></li>
+</ul>

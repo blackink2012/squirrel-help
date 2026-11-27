@@ -1,0 +1,50 @@
+<blockquote><p>一句话定位：<strong>把磁盘上的 .hdr / .exr 环境贴图批量打包成资产库能认的 <code>.zasset</code>，可选顺手生成缩略图。</strong></p></blockquote>
+<p>这是「快捷工具」里第一个工具，做的是&quot;库外文件 → 库内资产&quot;的搬运。它不改你的场景，只读源文件、写输出目录。</p>
+<h2 id="h-1">从哪打开</h2>
+<table><thead><tr><th>入口</th><th>具体怎么做</th></tr></thead><tbody><tr><td>顶部工具栏「快捷工具」菜单</td><td>点「快捷工具」→「hdr to zasset」</td></tr><tr><td>命令</td><td>命令面上叫 <code>hdr_to_zasset</code>（AI 助手 / 命令通道用，参数见 <a href="#/12.1.11"><code>5.1.11</code></a>）</td></tr><tr><td>脚本浏览器</td><td>「快捷工具」→「脚本浏览器」→ 添加插件目录下的 <code>quicktools</code> 目录 → 找到 <code>hdr_to_zasset.py</code> 双击运行</td></tr></tbody></table>
+<p>三种入口打开的是同一个窗口，标题是「HDR环境贴图转资产」。</p>
+<p><img src="media/shared/quicktool-hdr.webp" alt="HDR 转资产窗口" loading="lazy" decoding="async"></p>
+<h2 id="h-2">界面上每个控件做什么</h2>
+<h3 id="h-3">卡片「识别到的HDR文件」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>按钮「扫描HDR文件」</td><td>按&quot;输入模式 + 输入路径 + 格式过滤 + 递归&quot;这几项去扫，把找到的文件列出来</td><td><strong>每次改完输入都要重新扫</strong>，不扫直接点转换会提示「请先扫描HDR文件」</td></tr><tr><td>状态文字「就绪」/「正在扫描...」/「发现 N 个HDR文件」</td><td>扫描状态与结果数量</td><td>数量对不上就检查路径和递归</td></tr><tr><td>文件列表</td><td>扫到的文件（含子文件夹的会带目录层级）</td><td>用它确认&quot;是不是这几个文件&quot;</td></tr><tr><td>输入框「格式过滤:」（占位「留空扫描.hdr和.exr，例: hdr 或 exr」）</td><td>只扫指定扩展名；留空 = 同时扫 .hdr 和 .exr</td><td>只想转 exr 就填 <code>exr</code></td></tr></tbody></table>
+<h3 id="h-4">卡片「输入模式」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>单选「选择文件」</td><td>手工挑若干个文件</td><td>只转几个文件时用</td></tr><tr><td>单选「选择文件夹」</td><td>整目录转（默认）</td><td>批量入库用这个</td></tr></tbody></table>
+<h3 id="h-5">卡片「输入」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>路径输入框（占位「选择要转换的HDR/EXR文件...」/「选择包含.hdr/.exr文件的文件夹...」）</td><td>源文件或源文件夹</td><td>—</td></tr><tr><td>按钮「浏览...」</td><td>选文件 / 选文件夹（按上面模式决定）</td><td>显示的总比手打可靠</td></tr></tbody></table>
+<h3 id="h-6">卡片「输出位置」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>路径输入框（占位「选择资产输出文件夹...」）</td><td><code>.zasset</code> 生成到哪</td><td><strong>建议先输出到一个空目录</strong>（库外产出），核对没问题再拷进库</td></tr><tr><td>按钮「浏览...」</td><td>选输出目录</td><td>—</td></tr></tbody></table>
+<h3 id="h-7">卡片「转换选项」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>勾选「生成缩略图预览」</td><td>从 HDR 生成色调映射后的 PNG 缩略图，塞进资产里</td><td>建议勾上，否则库里是灰方块</td></tr><tr><td>勾选「优先使用已有缩略图」</td><td>在同目录找同名 PNG / JPG 当缩略图，省掉重新解码 HDR</td><td>源文件旁已经有预览图时勾</td></tr><tr><td>缩略图格式输入框（占位「png, jpg」）</td><td>「优先使用已有缩略图」时搜索哪些格式，逗号分隔</td><td>默认即可</td></tr><tr><td>勾选「递归扫描子文件夹」</td><td>把子文件夹里的 HDR 也扫进来</td><td>目录树很深时勾</td></tr><tr><td>勾选「保持层级结构」</td><td>勾 = 输出保留源目录层级；不勾 = 所有 <code>.zasset</code> 平铺到输出目录</td><td>想批量入库就<strong>不勾</strong>（扁平更好找）</td></tr><tr><td>勾选「转换后导入当前分类」</td><td>转完后把 <code>.zasset</code> <strong>拷到主界面当前选中的分类目录</strong>（只拷资产、不拷目录结构）</td><td>输出目录就是库内分类时可勾；否则先库外验证</td></tr><tr><td>输入框「格式过滤:」（在卡片底部）</td><td>同上面的扫描过滤</td><td>—</td></tr></tbody></table>
+<h3 id="h-8">底部按钮</h3>
+<table><thead><tr><th>按钮</th><th>作用</th></tr></thead><tbody><tr><td>图标按钮「使用帮助」</td><td>打开本工具的详细帮助</td></tr><tr><td>「取消」</td><td>关掉窗口，不转换</td></tr><tr><td>「转换」</td><td>开始逐文件转换，转换中可点「中止」</td></tr></tbody></table>
+<h2 id="h-9">一次完整的操作流程</h2>
+<ol>
+<li>快捷工具 →「hdr to zasset」；</li>
+<li>输入模式选「选择文件夹」，浏览选中 HDR / EXR 所在目录；</li>
+<li>输出位置选一个<strong>空目录</strong>（库外）；</li>
+<li>需要时勾「递归扫描子文件夹」；「保持层级结构」按需（批量入库建议不勾）；</li>
+<li>勾「生成缩略图预览」；源文件旁边已有同名 PNG/JPG 时补勾「优先使用已有缩略图」；</li>
+<li>点「扫描HDR文件」，确认「发现 N 个HDR文件」和你预期一致；</li>
+<li>点「转换」，等它跑完（弹「转换完成：成功 X，失败 Y」，有失败会列出错误详情）；</li>
+<li>去输出目录确认每个 HDR 都生成了一个同名 <code>.zasset</code> 文件夹，里面有 <code>textures/</code>、<code>thumb.sicon</code>、<code>meta.json</code>；</li>
+<li>确认没问题再把 <code>.zasset</code> 拷进资产库对应分类，回主界面点刷新（工具栏刷新按钮）后即可在分类里看到。</li>
+</ol>
+<h2 id="h-10">输出结果在哪</h2>
+<ul>
+<li><code>.zasset</code> 生成在<strong>输出位置</strong>下，一源文件一个，名字取自 HDR 文件名；</li>
+<li><code>.zasset</code> 是一个<strong>文件夹</strong>（不是单文件），里面有打包的贴图、缩略图和 <code>meta.json</code>；</li>
+<li>如果勾了「转换后导入当前分类」，还会往当前分类目录里<strong>再拷一份</strong>，并在完成提示里写「已导入 N 个到当前分类」；这时记得回主界面刷新，新资产才会出现。</li>
+</ul>
+<h2 id="h-11">风险与反悔</h2>
+<ul>
+<li><strong>同名资产会被整个替换</strong>：输出目录里已经有 <code>&lt;名字&gt;.zasset</code> 文件夹时，生成过程是&quot;先删旧的再放新的&quot;。所以别把输出位置直接指向一个已经有同名资产的分类目录 —— 先把输出放空目录，核对后再拷。</li>
+<li>转换<strong>只读源 HDR / EXR，不改它们</strong>；失败的文件会在错误详情里列出，原文件不受影响。</li>
+<li>缩略图生成失败时，会问「是否继续转换（跳过缩略图生成）」，可以选继续。</li>
+<li>反悔：删掉输出目录里新生成的 <code>.zasset</code> 即可；如果已经拷进库并刷新过，就在主界面里把它删到回收站（见 <a href="#/15.5.16"><code>8.5.16</code></a>）。</li>
+</ul>
+<h2 id="h-12">相关</h2>
+<ul>
+<li>它在「快捷工具」菜单里的位置：<a href="#/15.2.6"><code>8.2.6</code></a></li>
+<li>图像格式的批量转换（不是入库）：<a href="#/15.14.4"><code>8.14.4</code></a></li>
+<li>HDR 资产入库后在右键菜单里能做什么：<a href="#/15.5.7"><code>8.5.7</code></a></li>
+</ul>

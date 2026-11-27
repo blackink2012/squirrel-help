@@ -1,0 +1,28 @@
+<p>The HDR connection is made automatically by creating an environment light; each renderer connects it to the dome light differently, but all of them use the <code>Raw</code> color space.</p>
+<p><img src="media_en/shared/menu-context-assign-texture.webp" alt="Assigning an HDR to an existing dome light: right-click the HDR → assign texture" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>A dome light already exists, or an HDR asset is about to be used to create one.</li>
+<li>The HDR file exists and its path is reachable.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the HDR asset in the library and choose <code>「创建环境光」 (Create environment light)</code>, or pick an IBL under <code>「创建灯光」 (Create light)</code> in <code>Create asset</code>.</li>
+<li>The tool builds the connection for the current renderer:<ul>
+<li>Arnold: a <code>file</code> node with <code>outColor</code> → dome light <code>color</code>.</li>
+<li>V-Ray: <code>file</code> + <code>VRayPlaceEnvTex</code> with <code>useDomeTex=1</code> and the <code>file</code> output → dome light <code>domeTex</code>.</li>
+<li>Redshift: the HDR path is written directly into the dome light&#x27;s <code>tex0</code> string attribute.</li>
+</ul></li>
+<li>To confirm, open the attribute editor and look at the dome light&#x27;s texture attribute or connection.</li>
+<li>Rotate the environment with the dome light or its environment tool&#x27;s rotation parameter, not by changing the HDR file name.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The dome light&#x27;s texture attribute has a connection or path; the render background and reflections show the HDR content; the Arnold / V-Ray <code>file</code> node&#x27;s <code>colorSpace</code> is <code>Raw</code>.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>HDR is linear data and must use <code>Raw</code>; setting <code>sRGB</code> darkens the environment and distorts colors.</li>
+<li>Redshift&#x27;s <code>tex0</code> stores only a path and creates no <code>file</code> node, which is expected.</li>
+<li>Re-importing a <code>.zlight</code> re-resolves the texture paths against the asset&#x27;s <code>textures/</code>.</li>
+</ul>
+<h2 id="h-5">Warnings</h2>
+<p>When the HDR file is missing the tool only logs it: the light is still created but has no environment texture. After moving or deleting an HDR file, reconnect it.</p>

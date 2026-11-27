@@ -1,0 +1,19 @@
+<p><code>「默认缩略图大小」 (Default thumbnail size)</code> is the long-edge pixel size shared by generated and captured thumbnails; the factory value is 512.</p>
+<p><img src="media_en/shared/settings-general.webp" alt="Settings → General" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Where to set it</h2>
+<ol>
+<li>Open <code>Settings → 常规 (General)</code>.</li>
+<li>Find <code>「默认缩略图大小」 (Default thumbnail size)</code> in the <code>「缩略图」 (Thumbnails)</code> group.</li>
+<li>Pick one of 256, 384, 512, 768 or 1024.</li>
+<li>Save the settings. The new value applies to thumbnails generated or captured afterwards.</li>
+</ol>
+<h2 id="h-2">Where it applies</h2>
+<table><thead><tr><th>Scenario</th><th>How the size is used</th></tr></thead><tbody><tr><td>Background render</td><td>As the output edge length; also changeable in the background render dialog</td></tr><tr><td>Maya playblast, render</td><td>Edge length of the output image</td></tr><tr><td>Quick capture from the preview panel</td><td>The screenshot is scaled proportionally by its long edge to this value</td></tr><tr><td>Full screenshot tool</td><td>As the initial width and height, adjustable temporarily in the toolbar</td></tr><tr><td>HDR / model / PBR to asset</td><td>Used when quick tools produce thumbnails</td></tr><tr><td>Export asset</td><td>Used when the export flow produces thumbnails</td></tr></tbody></table>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>Generated thumbnails are output at the chosen edge length; captured ones scale proportionally by the long edge, so the short edge follows the picture ratio and may not be square.</li>
+<li>A larger preview looks sharper, and the file size grows accordingly.</li>
+<li>Old thumbnails are not redone automatically; only regenerating or recapturing uses the new size.</li>
+</ul>
+<div class="admonition note"><div class="admonition-title">注意</div><p>Changing the size in the background render dialog also writes it back to <code>Settings → 常规 → 默认缩略图大小 (General → Default thumbnail size)</code>; both entries share one value.</p></div>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>This size is the size of the thumbnail file itself, not how large cards appear in the grid; adjust card size with the toolbar slider.</p></div>

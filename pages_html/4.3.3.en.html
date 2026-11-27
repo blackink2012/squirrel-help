@@ -1,0 +1,21 @@
+<p>Moving a category takes the whole folder, including sub-categories and assets, to a new location; category order follows folder names, and there is no manual ordering entry yet.</p>
+<p><img src="media_en/shared/menu-category-move.webp" alt="Category context menu: move to" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Moving a category</h2>
+<ol>
+<li>Right-click the category to move and choose <code>「移动到...」 (Move to...)</code>.</li>
+<li>Choose the destination in the list: <code>根目录</code> (root) or a top-level category.</li>
+<li>Click <code>「确定」 (OK)</code>.</li>
+</ol>
+<p>Result: the folder on disk is moved as a whole, the tree and grid refresh, and sub-categories and assets move with it.</p>
+<h2 id="h-2">Moving assets</h2>
+<p>Select one or more asset cards in the grid and drag them onto the target category in the left column (the drop target is the category itself, not <code>「全部资产」 (All assets)</code>). A multi-selection moves as a batch, and the grid jumps to the target category afterwards.</p>
+<h2 id="h-3">Sorting</h2>
+<ul>
+<li>The category tree is displayed in folder-name order (the source uses <code>sorted(os.listdir(...))</code>); sibling nodes have no move-up / move-down or drag-to-reorder entry (whether this will be added later is to be confirmed).</li>
+<li>Sorting in the asset grid is a separate mechanism: see &quot;View modes and sorting&quot;.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>The <code>「移动到...」 (Move to...)</code> list only contains the root and top-level categories; a deep sub-category cannot be picked directly.</li>
+<li>Confirm the target category&#x27;s type before moving; moving across types can make the context menu mismatch the assets.</li>
+</ul>

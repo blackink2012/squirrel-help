@@ -1,0 +1,25 @@
+<p>The embedding model defines the vector space; when the model, dimensions or text template change, the old index must be rebuilt or it can only be judged unavailable.</p>
+<p><img src="media_en/shared/settings-global-llm.webp" alt="Global model" loading="lazy" decoding="async"></p>
+<h2 id="h-1">When a rebuild is mandatory</h2>
+<ul>
+<li>The embedding model changed, or the model recorded in the index differs from what is expected now.</li>
+<li>The index dimensions, primary key scheme or text template were upgraded.</li>
+<li>The index directory was copied by hand or points at another library.</li>
+<li>Index files are damaged or the consistency check fails.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Confirm the target model exists in Ollama: <code>ollama list</code>.</li>
+<li>Rebuild the asset text index: <code>python tools\asset_index.py --rebuild --model &lt;model name&gt;</code>. The default is <code>embeddinggemma-2:740m</code>.</li>
+<li>Rebuild the documentation index: <code>python tools\build_semantic_index.py --model &lt;model name&gt;</code>.</li>
+<li>Rebuild the image index: <code>python tools\asset_vision_encode.py sync --library &quot;&lt;library root&gt;&quot; --rebuild --model gemma2</code>.</li>
+<li>Check the status back in the plug-in; reopen the plug-in window if needed so settings and environment variables apply.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p><code>asset_semantic_status</code> shows <code>available</code> as true, <code>model</code> matching the target and <code>count</code> matching the number of assets; the semantic part of <code>maya_docs(action=&quot;status&quot;)</code> should be available as well.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>Changing the model re-encodes the whole library and takes noticeably long with many assets; do not change it without reason.</li>
+<li>The environment variables and the models recorded in the indexes must agree: the asset index reads <code>SQUIRREL_ASSET_EMBED_MODEL</code> and the documentation index reads <code>SQUIRREL_EMBED_MODEL</code>, and they must match or only half the system works.</li>
+<li>Rebuilding the image index is heavy work, so prefer doing it while Maya is idle or unused.</li>
+</ul>

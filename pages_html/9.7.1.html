@@ -1,0 +1,27 @@
+<p>自定义快捷工具就是一个放进 <code>quicktools/</code> 的 <code>.py</code> 文件，菜单按文件名自动列出它。</p>
+<h2 id="h-1">目录约定</h2>
+<table><thead><tr><th>位置</th><th>放什么</th></tr></thead><tbody><tr><td><code>&lt;插件根&gt;/quicktools/</code></td><td>快捷工具脚本；菜单只扫描这一层的 <code>.py</code>，不递归子目录</td></tr><tr><td><code>&lt;插件根&gt;/Assets/help/&lt;工具名&gt;/help.html</code></td><td>工具自己的帮助页；需要英文版时放 <code>help.html</code> 同名的 <code>_en.html</code></td></tr><tr><td><code>&lt;插件根&gt;/Assets/preset/</code></td><td>工具配置，如 <code>model_mapping.json</code>、<code>pbr_mapping.json</code>、<code>*_expression.json</code></td></tr><tr><td><code>&lt;插件根&gt;/Assets/material_mapper_presets/</code></td><td>材质映射 <code>.mmap</code> 与 <code>.mlist</code> 预设</td></tr></tbody></table>
+<h2 id="h-2">命名规范</h2>
+<ul>
+<li>文件必须以 <code>.py</code> 结尾，名字在同一目录内唯一。</li>
+<li>菜单条目名 = 去掉 <code>.py</code> 后的文件名，并把下划线替换为空格；中文文件名直接显示中文。</li>
+<li>菜单按文件名排序，不做隐藏过滤；临时脚本、备份脚本不要放在 <code>quicktools/</code>，否则也会出现在菜单里。</li>
+<li>需要被脚本浏览器或命令通道调用的工具，文件名应保持稳定，避免频繁改名导致收藏与映射失效。</li>
+</ul>
+<h2 id="h-3">代码约定</h2>
+<ul>
+<li>入口函数用 <code>main()</code> 或 <code>run()</code>；纯脚本式写法则保留 <code>if __name__ == &quot;__main__&quot;:</code> 块（详见 4.6.7.2）。</li>
+<li>与插件内其它模块一致，导入建议写成「包内绝对导入优先、失败再回退顶层 <code>ui.*</code> / <code>utils.*</code>」，这样在插件内和脚本编辑器里都能运行。</li>
+<li>工具自己的配置与预设不要写进 <code>quicktools/</code> 根目录，放到 <code>Assets/</code> 下对应目录，避免被当成脚本扫描。</li>
+</ul>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>打开「快捷工具」菜单，能看到新文件名（下划线显示为空格）。</li>
+<li>点击后窗口或脚本正常启动，脚本编辑器没有 <code>ImportError</code>。</li>
+<li>帮助按钮能打开 <code>Assets/help/&lt;工具名&gt;/help.html</code>。</li>
+</ul>
+<h2 id="h-5">注意事项</h2>
+<ul>
+<li>新增文件不需要改动菜单代码或注册表，菜单每次展开都会重新扫描目录。</li>
+<li>独立运行版会默认把快捷工具投送到 Maya；纯文件工具是否本地执行由宿主白名单决定（详见 4.6.7.3）。</li>
+</ul>

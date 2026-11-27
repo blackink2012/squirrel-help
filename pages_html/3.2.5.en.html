@@ -1,0 +1,31 @@
+<p>The layout needs no manual save: changes are written to the configuration file automatically and restored on the next start; use <code>「重置布局」 (Reset layout)</code> to return to the default.</p>
+<p><img src="media_en/shared/menu-panels-reset.webp" alt="Reset layout in the Panels and layout menu" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Automatic saving</h2>
+<p>The following state is written to <code>~/.squirrel_asset_manager/app_settings.json</code> as you work:</p>
+<ul>
+<li>Window size and position, the area layout tree and the maximized area.</li>
+<li>Visibility and width of the left and right columns.</li>
+<li>The current category, expanded category nodes and the active left-column tab.</li>
+<li>Icon / list view, sorting, thumbnail size, the AI search switch and the layout lock state.</li>
+</ul>
+<h2 id="h-2">Restoring</h2>
+<p>Reopening the plug-in window restores the saved values. If an area was closed or the layout is damaged, the plug-in restores a missing preview area or falls back to the default layout as far as possible.</p>
+<h2 id="h-3">Resetting the layout</h2>
+<ol>
+<li>Click <code>「面板与布局」 (Panels and layout)</code> in the toolbar.</li>
+<li>Choose <code>「重置布局」 (Reset layout)</code>.</li>
+<li>Areas return to the default structure: navigation, assets, properties, preview, AI assistant; both side columns are expanded.</li>
+<li>Data state such as the current category and selection is kept where possible, and assets are never cleared.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>After splitting or closing an area, closing and reopening the window keeps the adjusted layout.</li>
+<li>After resetting, the area structure is back to default while thumbnails and assets are still there.</li>
+<li>The maximized state survives a restart (if the window was maximized before closing).</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>Do not edit <code>app_settings.json</code> by hand while the plug-in is running; a bad edit can make the layout unreadable.</li>
+<li>To back up the layout, close the plug-in first and then copy that JSON file.</li>
+<li>Persistence of floating areas is to be confirmed; a docked layout is saved reliably.</li>
+</ul>

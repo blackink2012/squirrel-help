@@ -1,0 +1,20 @@
+<p><code>「读取当前分类文件夹」 (Read current category folders)</code> reads the actual folder structure of the library into settings, overwriting the <code>「默认分类列表」 (Default category list)</code> configuration without touching the disk.</p>
+<p><img src="media_en/shared/settings-sublibraries.webp" alt="Settings → Sub-libraries and categories: read current category folders" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<p>An asset library is loaded (main or project library).</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open <code>「设置」 (Settings)</code> → <code>「子库与分类」 (Sub-libraries and categories)</code>.</li>
+<li>Click <code>「读取当前分类文件夹」 (Read current category folders)</code> above the editor on the right.</li>
+<li>Click <code>「是」 (Yes)</code> in <code>「同步确认」 (Sync confirmation)</code>.</li>
+<li>Back in settings, click <code>「应用」 (Apply)</code> or <code>「确定」 (OK)</code> to save.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p><code>「分类已从当前资产库同步」 (categories synchronized from the current asset library)</code> appears; the sub-library list on the left and the <code>「默认分类列表」 (Default category list)</code> on the right are replaced by the actual folder structure, and new sub-libraries / categories show up in the list.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>This only updates the configuration file; it neither deletes nor modifies any folder on disk.</li>
+<li>The category tree itself always mirrors the disk and needs no syncing; this button brings the <code>「默认分类列表」 (Default category list)</code> configuration up to date with the library.</li>
+<li>It overwrites the existing default category configuration, so confirm beforehand that nothing hand-maintained needs to be kept.</li>
+<li>It suits the case where category folders were organized on disk first and the default categories in settings should follow; syncing itself does not change how the current category tree displays.</li>
+</ul>

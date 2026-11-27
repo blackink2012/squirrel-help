@@ -1,0 +1,35 @@
+<p>Export and import material networks from one window, in either the &quot;full radar&quot; or the &quot;MA+JSON&quot; flavor.</p>
+<p><img src="media/shared/maya-quicktool-transfer.webp" alt="Material import/export tool" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Purpose</h2>
+<p>Export the material networks of a scene together with textures and metadata, then restore them in another scene or on another machine and reassign them to models.</p>
+<h2 id="h-2">The two flavors</h2>
+<table><thead><tr><th>Tab</th><th>Export products</th><th>Best for</th></tr></thead><tbody><tr><td>Full radar</td><td><code>.zmetal</code> (material network JSON), optionally <code>.ameta</code> metadata, <code>.mcm</code> object mapping and <code>textures/</code></td><td>Keeping the complete material network parameters, imported straight in this tool</td></tr><tr><td>MA+JSON</td><td><code>.ma</code> (material network) + <code>.mcm</code> (object mapping JSON), optionally <code>.ameta</code> and <code>textures/</code></td><td>When a Maya MA file is wanted, for manual review or further processing</td></tr></tbody></table>
+<h2 id="h-3">Input and output</h2>
+<ul>
+<li>Export input: the selected models or materials in Maya, or <code>「导出所有」 (Export all)</code>.</li>
+<li>Export output: the chosen <code>「工作目录」 (Working directory)</code>; when unset it prefers the current scene&#x27;s directory and asks for one when the scene is unsaved. With <code>「创建文件夹」 (Create folders)</code> checked each material gets its own folder.</li>
+<li>Import input: for the radar flavor a <code>.zmetal</code> / <code>.json</code>; for MA+JSON a <code>.mcm</code> (JSON) named like the material, from which the tool finds the matching <code>.ma</code>; <code>「从文件夹导入...」 (Import from folder...)</code> collects recursively.</li>
+<li>Import output: material nodes in the current scene, assigned to the matching models according to the options.</li>
+</ul>
+<h2 id="h-4">Steps</h2>
+<ol>
+<li>Open <code>快捷工具 (Quick tools) → 材质导入导出工具(材质管理) (Material import/export tool)</code>.</li>
+<li>On the full radar or MA+JSON tab set <code>「工作目录」 (Working directory)</code> and <code>「文件名」 (File name)</code> (when empty the selected object name, then the scene name, then <code>MaterialData</code> is used).</li>
+<li>Under <code>「导出 - 选项」 (Export options)</code> choose export selected or export all, and check separate material files, export object mapping, export metadata, create folders and package textures as needed.</li>
+<li>Expand <code>「导出 - 元数据设置」 (Export metadata settings)</code> to fill in the color space (auto-detected by default, falling back to <code>ACEScg</code>), category, tags and Chinese name.</li>
+<li>Click <code>「执行导出」 (Run export)</code>.</li>
+<li>To import, pick a file or <code>「从文件夹导入...」 (Import from folder...)</code>, set the import mode and options and click <code>「执行导入」 (Run import)</code>.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>The working directory gains <code>.zmetal</code> or <code>.ma</code> / <code>.mcm</code> files, plus <code>.ameta</code> when metadata is checked and <code>textures/</code> when packaging textures is checked.</li>
+<li>After importing the materials appear in Maya, and with <code>「自动指定物体」 (Auto-assign objects)</code> checked the models already carry them.</li>
+<li>Progress details are printed in the Maya Script Editor (such as <code>「[材质导出] 成功」 ([material export] succeeded)</code> and <code>「导入完成」 (import finished)</code>).</li>
+</ul>
+<h2 id="h-6">Options and notes</h2>
+<ul>
+<li>Import options include <code>「自动指定物体」 (Auto-assign objects)</code> (on by default), <code>「模糊匹配」 (Fuzzy matching)</code> and <code>「拷贝纹理」 (Copy textures)</code> (on by default); the basic settings accept a namespace, material prefix / suffix and model path prefix / suffix replacement.</li>
+<li>The MA+JSON tab reminds you to make sure the scene already contains the models to assign to; prepare the target models before importing.</li>
+<li>Save the scene before exporting or importing; export-selected depends on the current selection and does nothing when it is empty.</li>
+<li>This tool produces material network files rather than <code>.zasset</code> assets; to add them to the library use the asset import flow.</li>
+</ul>

@@ -1,0 +1,26 @@
+<blockquote><p>一句话定位：<strong>右栏中间四块分区，管「材质/节点存成什么格式」和「几何体存成什么格式」。</strong></p></blockquote>
+<h2 id="h-1">分区一：导出选项（仅导出材质）</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>仅导出材质（跳过几何体/代理）</td><td>复选框</td><td>只存材质网络，跳过几何体与代理；即使勾了 .ma/.mb 也只写材质节点</td><td>只想要材质、不想要几何时勾</td><td>勾了之后模型类资产会变成「只有材质」的包；导入时拿不到模型</td></tr></tbody></table>
+<p>勾上后：几何体格式（.fbx/.obj/.usd 等）即使勾着也会被内部跳过；.ma/.mb 仍会导出，但导出的是材质节点网络而不是模型。<a href="#/6.2.7"><code>4.3.2.7</code></a> 有完整说明。</p>
+<p><img src="media/shared/dialog-export-right.webp" alt="右栏的材质 / 灯光 / 几何格式选择" loading="lazy" decoding="async"></p>
+<h2 id="h-2">分区二：材质格式 / 灯光格式 / 节点格式</h2>
+<p>分区标题随分类变，里面三项：</p>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>材质预设 .zmetal（材质分类）/ 灯光预设 .zlight（灯光分类）/ 节点预设 .zmetal（其他分类）</td><td>复选框</td><td>把材质/灯光/节点网络导出成插件自己的预设格式，导入时可原样还原节点网络</td><td>材质、灯光资产<strong>必勾</strong></td><td>不勾：资产里没有材质数据，导入只会得到几何或空壳</td></tr><tr><td>全部材质写入一个 .zmetal</td><td>复选框（缩进，.zmetal 勾上才显示）</td><td>多个材质合并进同一个 .zmetal</td><td>一个资产就是一个物体的多材质时勾</td><td>不勾：每个材质各一个 .zmetal 文件，导入时按需挑</td></tr><tr><td>材质映射 .mcm (检测到 N 个材质)</td><td>复选框</td><td>额外写一份「材质→模型」对应表，导入时可据此把材质精确贴回模型</td><td>资产里带模型、且模型有多个材质时勾（默认勾）</td><td>不勾：多材质模型导入时可能只能按名字猜，容易贴错</td></tr></tbody></table>
+<blockquote><p>灯光资产没有 .mcm 那一行（灯光没有材质映射），也没有「全部材质写入一个」。</p></blockquote>
+<h2 id="h-3">分区三：几何体格式（通过 Maya 原生导出）</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>Maya ASCII .ma</td><td>复选框</td><td>导成 Maya 文本格式，可读、便于排查</td><td>模型/场景资产<strong>默认选它</strong></td><td>文件偏大；超大场景转 ASCII 可能很慢甚至失败</td></tr><tr><td>Maya Binary .mb</td><td>复选框</td><td>导成 Maya 二进制格式，体积小、读写快</td><td>场景大、只在本机/同版本 Maya 用</td><td>跨版本兼容性差一些</td></tr><tr><td>FBX .fbx</td><td>复选框</td><td>供其他软件/引擎使用</td><td>需要交给 UE/Unity/Blender 时勾</td><td>材质/灯光不保证还原，通常只保几何</td></tr><tr><td>OBJ .obj</td><td>复选框</td><td>通用网格格式</td><td>只要几何、最通用时勾</td><td>不含动画、材质信息很弱</td></tr><tr><td>USD .usd</td><td>复选框</td><td>通用场景描述格式</td><td>管线里有 USD 时勾</td><td>需要 Maya 的 USD 插件（状态显示「未加载/不可用」就导不出）</td></tr></tbody></table>
+<h3 id="h-4">为什么有些格式是灰的</h3>
+<p>不适用于当前分类的格式会<strong>变灰 + 勾不进导出配置</strong>，悬停提示「该格式不适用于当前分类，已锁定（可在 设置 → 导出默认值 中调整）」。插件内置的锁定规则：</p>
+<table><thead><tr><th>分类</th><th>默认锁掉的格式</th></tr></thead><tbody><tr><td>材质 / 灯光</td><td>FBX、OBJ、USD、Alembic，以及全部代理格式（这类资产没有几何）</td></tr><tr><td>贴图 / HDR / 图片 / 音乐 / 动画数据</td><td>几乎所有节点与几何格式（它们本身就是文件或纯变换数据）</td></tr></tbody></table>
+<p>想改锁定项：设置 →「导出默认值」页里把该格式取消锁定，见 <a href="#/15.9.4"><code>8.9.4</code></a>。</p>
+<h2 id="h-5">建议的最小组合</h2>
+<table><thead><tr><th>资产类型</th><th>必勾</th><th>可选</th></tr></thead><tbody><tr><td>材质</td><td>材质预设 .zmetal</td><td>材质映射 .mcm（带模型时）</td></tr><tr><td>灯光</td><td>灯光预设 .zlight</td><td>—</td></tr><tr><td>模型</td><td>Maya ASCII .ma</td><td>FBX（要跨软件）+ 材质预设 + .mcm</td></tr><tr><td>场景</td><td>Maya ASCII .ma</td><td>.mb（体积优先）+ 贴图 textures/</td></tr><tr><td>节点树</td><td>节点预设 .zmetal</td><td>.ma（要看节点连接时）</td></tr></tbody></table>
+<h2 id="h-6">出问题怎么办</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>处理</th></tr></thead><tbody><tr><td>资产没有材质，只有模型</td><td>没勾 .zmetal</td><td>重新导出并勾上；或用「更新资产 → 追加格式」补</td></tr><tr><td>导入多材质模型，材质贴错位置</td><td>没勾 .mcm</td><td>补勾 .mcm 重新导出</td></tr><tr><td>勾了格式但导出报错「几何体一个文件都没导出」</td><td>该格式实际导出失败（例如 ma 转换失败、插件未加载）</td><td>看脚本编辑器里的具体原因；降级用 .mb 或先加载插件</td></tr><tr><td>FBX/OBJ/USD 复选框灰着</td><td>当前分类锁定</td><td>换到模型/场景分类，或到设置里解锁</td></tr></tbody></table>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>用户指南版材质节点与几何格式：<a href="#/6.2.5"><code>4.3.2.5</code></a>、仅导出材质：<a href="#/6.2.7"><code>4.3.2.7</code></a></li>
+<li>.zmetal 是什么：<a href="#/7.1.1"><code>4.4.1.1</code></a></li>
+<li>动画、缓存与代理：<a href="#/15.10.7"><code>8.10.7</code></a></li>
+<li>格式不可用的排查：<a href="#/6.5.4"><code>4.3.5.4</code></a></li>
+</ul>

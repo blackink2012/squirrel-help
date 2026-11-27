@@ -1,0 +1,36 @@
+<p>The sub-library list supports right-click <strong>Add sub-library</strong> and <strong>Delete sub-library</strong>. The <strong>11 built-in default sub-libraries cannot be deleted</strong>; you can only hide them by clearing <strong>Show in main UI</strong>. Only sub-libraries you created yourself can be deleted.</p>
+<p><img src="media_en/shared/settings-sublibraries.webp" alt="Settings → Sub-libraries and categories" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li><strong>Settings → Sub-libraries and categories</strong> is open and <strong>Unlock all settings</strong> is ticked.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<h3 id="h-3">Add a sub-library</h3>
+<ol>
+<li>Right-click an empty area of the left sub-library list and choose <strong>Add sub-library</strong>.</li>
+<li>A new sub-library is generated automatically: ID <code>custom_N</code> (N is the first unused value starting from 1) and display name <code>CustomN</code>.</li>
+<li>Adjust the display name, ID and default categories as needed.</li>
+<li>Click <strong>Apply</strong> or <strong>OK</strong>.</li>
+</ol>
+<h3 id="h-4">Delete a sub-library</h3>
+<ol>
+<li>Right-click the sub-library to delete and choose <strong>Delete sub-library</strong> (this item does not exist in the context menu of built-in sub-libraries).</li>
+<li>Confirm in the dialog &quot;Delete sub-library &#x27;name&#x27;?&quot;.</li>
+<li>Deletion is written to <code>config.json</code> immediately and also removes that sub-library&#x27;s default category configuration.</li>
+</ol>
+<h2 id="h-5">Scope of effect</h2>
+<ul>
+<li>None of the 11 built-in sub-libraries <code>materials</code>, <code>models</code>, <code>lights</code>, <code>textures</code>, <code>scenes</code>, <code>hdr</code>, <code>ani</code>, <code>images</code>, <code>audio</code>, <code>animation</code>, <code>nodetree</code> <strong>can be deleted</strong>. Trying reports &quot;Built-in default sub-libraries (materials, models, lights, textures, scenes, HDR, animation, images, audio, animation data, node tree) cannot be deleted; hide them with Show in main UI&quot;.</li>
+<li>To keep a built-in sub-library out of the sidebar, clear <strong>Show in main UI</strong>. Assets and disk folders stay.</li>
+<li>Deleting only changes configuration; it does not delete folders or assets on disk.</li>
+<li>If the default category folders of a built-in sub-library are removed by hand outside the system, reloading, switching or refreshing the library rebuilds the folders, metadata and the default custom sub-category.</li>
+<li>A newly added custom sub-library does not get folders in an existing library right away. If you need the folder structure, fill in the default categories first, then reload or switch the library once.</li>
+</ul>
+<h2 id="h-6">Verify the result</h2>
+<p>The entry appears in or disappears from the left list, and the state persists after reopening settings.</p>
+<h2 id="h-7">Tips</h2>
+<ul>
+<li>Before deleting, make sure no assets under that sub-library still rely on its configuration.</li>
+<li>Custom sub-libraries can only use the generic context-menu items and the <strong>Import / Do nothing</strong> double-click commands.</li>
+<li>To give a custom sub-library the same folder layout as the others, set its default categories first, then reload or switch the library once; folders are created from the default categories.</li>
+</ul>

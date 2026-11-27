@@ -1,0 +1,23 @@
+<p>If textures turn pink or black after import, or the asset has no <code>textures/</code> or <code>deps/</code>, first confirm whether the files were actually packaged at export time.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>After importing, the material shows pink or black and texture nodes point at empty paths.</li>
+<li>The <code>.zasset</code> has no <code>textures/</code>, or <code>deps/</code> lacks the matching cache, proxy or reference files.</li>
+<li><code>dependencies_missing</code> in <code>meta.json</code> is not empty and the export log reports missing dependencies.</li>
+</ul>
+<h2 id="h-2">Common causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Fix</th></tr></thead><tbody><tr><td>Texture paths were already broken at export</td><td>The <code>file</code> node&#x27;s path does not exist in Maya</td><td>Relocate the textures with the File Path Editor, then export</td></tr><tr><td><code>贴图 textures/</code> (textures) was not checked</td><td>No <code>textures/</code> inside the asset</td><td>Export again keeping that checkbox</td></tr><tr><td>&quot;Collect linked files&quot; was not checked</td><td>Caches / proxies / references are not in <code>deps/</code></td><td>Check it and export again</td></tr><tr><td>Dependencies are outside the collection scope</td><td><code>dependencies_out_of_scope</code> has entries</td><td>Put the dependencies on an accessible local path or deliver them alongside the asset</td></tr><tr><td>Paths contain unparsable tokens</td><td><code>dependencies_unresolved_tokens</code> has entries</td><td>Expand the paths into real file paths and export again</td></tr><tr><td>Referenced files are not loaded</td><td>The reference node state is unloaded</td><td>Load the reference in Maya first, then export or collect</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>In Maya check the selected objects&#x27; <code>file</code>, <code>aiImage</code> and similar texture nodes and confirm the paths point at real files.</li>
+<li>When exporting again keep <code>贴图 textures/</code> (textures), and check <code>收集场景中已挂载的缓存/代理/引用文件</code> (collect caches / proxies / references) when caches, proxies or references exist.</li>
+<li>After export check whether the matching files appear in <code>.zasset/textures/</code> and <code>.zasset/deps/</code>.</li>
+<li>Open <code>meta.json</code> and read <code>texture_map</code>, <code>dependencies_missing</code>, <code>dependencies_out_of_scope</code> and <code>dependencies_unresolved_tokens</code>.</li>
+<li>On import use the asset&#x27;s own import entry, which remaps the original paths to in-package paths through <code>texture_map</code>.</li>
+</ol>
+<h2 id="h-4">If it still fails</h2>
+<ul>
+<li>Search the Script Editor for <code>[StageTextures]</code>, <code>[Export] 依赖</code> and <code>[Export] 依赖警告</code> to see whether collection failed or the path itself is broken.</li>
+<li>Verify on another machine: if the other machine sees the textures, the problem was the path on the original machine rather than the asset structure.</li>
+<li>A <code>.ma</code> file keeps the original absolute texture paths from export time, so you cannot judge missing textures from the <code>.ma</code> text alone; trust <code>textures/</code> and <code>texture_map</code>.</li>
+</ul>

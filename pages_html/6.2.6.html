@@ -1,0 +1,13 @@
+<p>「动画导出」决定所有动画格式的帧范围；缓存和代理是两类不同产物，可以同时勾选。</p>
+<h2 id="h-1">帧范围</h2>
+<table><thead><tr><th>选项</th><th>行为</th><th>适用</th></tr></thead><tbody><tr><td><code>当前帧</code></td><td>只导出当前帧，得到静帧</td><td>静态资产、单帧代理</td></tr><tr><td><code>时间轴</code></td><td>按 Maya 播放范围导出</td><td>完整动画</td></tr><tr><td><code>关键帧</code></td><td>取选中物体所有动画曲线的最小到最大关键帧；没有关键帧时退回当前帧</td><td>只导有动画的区间</td></tr></tbody></table>
+<p>界面在动画分区右侧标注了 <code>(abc/usd/ass/rs/vrmesh)</code>。拍屏缩略图（playblast）超过 240 帧时只拍前 240 帧；渲染图缩略图没有这个截断。</p>
+<h2 id="h-2">缓存格式</h2>
+<table><thead><tr><th>格式</th><th>产物</th><th>说明</th></tr></thead><tbody><tr><td>Alembic <code>.abc</code></td><td><code>&lt;名称&gt;.abc</code></td><td>顶点动画缓存；写入 <code>-uvWrite -writeVisibility</code>，数据格式为 <code>ogawa</code>；帧范围由上面的选项决定</td></tr></tbody></table>
+<h2 id="h-3">代理格式</h2>
+<table><thead><tr><th>格式</th><th>扩展名</th><th>所需插件</th><th>时间轴 / 关键帧时的产物</th></tr></thead><tbody><tr><td>Arnold</td><td><code>.ass</code></td><td><code>mtoa</code></td><td>每帧一个文件，放在 <code>ass/&lt;名称&gt;_0001.ass</code> 这类序列中</td></tr><tr><td>Redshift</td><td><code>.rs</code></td><td><code>redshift4maya</code></td><td>每帧一个文件，放在 <code>rs/&lt;名称&gt;_0001.rs</code> 这类序列中</td></tr><tr><td>V-Ray Scene</td><td><code>.vrscene</code></td><td><code>vrayformaya</code></td><td>一个文件，导出时传入帧范围</td></tr><tr><td>V-Ray Mesh</td><td><code>.vrmesh</code></td><td><code>vrayformaya</code></td><td>一个文件，动画通过 <code>animOn</code> 一次写入</td></tr></tbody></table>
+<p>静帧模式下，四种代理各产出一个同名文件（<code>&lt;名称&gt;.ass</code>、<code>&lt;名称&gt;.rs</code>、<code>&lt;名称&gt;.vrscene</code>、<code>&lt;名称&gt;.vrmesh</code>）。</p>
+<h2 id="h-4">提示与警告</h2>
+<blockquote><p><strong>提示</strong>：缓存和代理是“重新烘焙”的产物，和「收集关联文件」的“复制磁盘上已有文件”不是一回事；同一资产可以两者都勾。</p></blockquote>
+<blockquote><p><strong>提示</strong>：代理格式只在对应插件已加载时导出。插件不可用时复选框会置灰；导出时若插件状态不是已加载，该格式会被静默跳过，导出结束后请检查 <code>.zasset</code> 内是否真的出现了代理文件。</p></blockquote>
+<blockquote><p><strong>警告</strong>：时间轴 + 渲染图会逐帧渲染，Maya 会暂时无响应；代理序列会生成大量文件，导出前先确认磁盘空间。</p></blockquote>

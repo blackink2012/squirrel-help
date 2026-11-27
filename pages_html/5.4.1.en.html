@@ -1,0 +1,27 @@
+<p><code>「添加引用」 (Add reference)</code> uses a Maya Reference to bring the asset&#x27;s geometry file into the scene; the scene keeps only the reference relationship and never copies the model data.</p>
+<p><img src="media_en/shared/menu-context-reference.webp" alt="Model asset context menu: add reference" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The asset contains one of ma, mb, fbx, abc, usd or obj.</li>
+<li>The Maya scene is saved.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the asset and choose <code>「添加引用」 (Add reference)</code>.</li>
+<li>With one referenceable format it runs directly; with several, choose the format in the submenu.</li>
+<li>The plug-in creates a namespace named after the asset; duplicates get <code>_1</code>, <code>_2</code> appended.</li>
+<li>For ma/mb the default LOD&#x27;s geometry is preferred, and the dependency import policy decides where the referenced file lives.</li>
+<li>After the reference is created, confirm the entry in the Reference Editor.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>A namespaced reference node appears in the Outliner.</li>
+<li>The Reference Editor lists the referenced file and its namespace.</li>
+<li>For ma/mb the texture paths were rewritten per the texture policy and the referenced objects display correctly.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>When the dependency policy is <code>「当前资产目录」 (current asset directory)</code> or <code>「源文件目录」 (source file directory)</code> the reference points directly at files inside the <code>.zasset</code>; with <code>「拷贝到项目」 (copy into the project)</code> they are copied to <code>references/squirrel_asset/</code> in the project.</li>
+<li>Referenced objects cannot be vertex- or edge-edited in the current scene; to edit them open the referenced source file or remove the reference in the Reference Editor.</li>
+<li>Replacing the asset later does not refresh existing references automatically; reload them in the Reference Editor.</li>
+</ul>

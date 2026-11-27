@@ -1,0 +1,28 @@
+<p>Every context menu item can be switched per sub-library; it only appears in the asset card&#x27;s context menu when checked.</p>
+<p><img src="media_en/shared/settings-ctx-menu.webp" alt="Menu items" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>The right side of <code>Settings → 右键菜单 (Context menu)</code> is a set of checkboxes, each mapping to one menu item. Checked means shown, unchecked means hidden. The sub-library list on the left decides which configuration is being edited.</p>
+<h2 id="h-2">Values and defaults</h2>
+<ul>
+<li>Values: checked / unchecked, written as <code>true</code> / <code>false</code>.</li>
+<li>Defaults come from <code>Assets/preset/context_menu_preset.json</code>: each sub-library checks only the items it actually has, while unrelated items are <code>false</code>.</li>
+<li>Unregistered sub-libraries or custom categories read the <code>default</code> section of the same file.</li>
+</ul>
+<p>By scope the items fall into two kinds (the table follows the actual checkboxes on the settings page, 27 in total):</p>
+<table><thead><tr><th>Kind</th><th>Menu items</th></tr></thead><tbody><tr><td>Shared by all categories</td><td>Import, import geometry, add reference, favorites, select all, copy, open folder, move to, copy to, edit, create asset, update thumbnail, update asset, delete, preview nodes, AI thumbnail analysis, asset details</td></tr><tr><td>Category specific</td><td>Background render (models / scenes / dynamics / materials / textures / lights / node trees), format conversion (models / node trees / scenes / dynamics / audio only), assign material to the current selection (materials / textures), apply material parameters (materials), create material (textures only), convert import (materials / lights), import texture (textures only), assign texture to material (textures / HDR only), apply light parameters to the selected light (lights only), create environment light (HDR only)</td></tr></tbody></table>
+<p>Notes:</p>
+<ul>
+<li>The generic <code>「导入」 (Import)</code> of the <code>「贴图」 (Textures)</code> sub-library is greyed out with a hint to use <code>「导入贴图」 (Import texture)</code> instead.</li>
+<li><code>「后台渲染」 (Background render)</code> is the headless offscreen thumbnail generation (the old &quot;generate thumbnail&quot;); it sits at the bottom of the <code>「更新缩略图」 (Update thumbnail)</code> submenu and is on by default only for models / scenes / dynamics / materials / textures / lights / node trees.</li>
+<li>The <strong>first group of import items for images, audio and animation data is generated statically</strong> and is not controlled by this page: images have import as file node / create imagePlane / assign to selected material slot, audio has import to timeline / Time Editor / Trax Editor / camera sequencer, and animation data has automatic mapping import / import animation / import to selected attributes. What this page can switch for them are the generic items above (favorites, select all, copy, open folder, move / copy to, edit, delete, AI analysis, asset details and so on).</li>
+<li>In the factory preset images, audio and animation data have the generic <code>「导入」 (Import)</code> turned off (their dedicated imports replace it), while node trees use the same set as models.</li>
+</ul>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>It only affects the asset card&#x27;s context menu and never double-click behavior (see &quot;Choosing a command per sub-library&quot;).</li>
+<li>Changes require unlocking first and then <code>「应用」 (Apply)</code> or <code>「确定」 (OK)</code> to write the JSON; the next context menu is built with the new configuration.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<p>When the menu is too long, dangerous items are often clicked by mistake (delete, format conversion), or a sub-library never uses a feature.</p>
+<h2 id="h-5">Related settings</h2>
+<p>The lower half of the same tab holds double-click commands, and both share the sub-library list on the left.</p>

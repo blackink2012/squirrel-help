@@ -1,0 +1,25 @@
+<p>A variant is <strong>one of several geometry forms that share a single set of textures and materials</strong> under the same asset: textures and materials are stored once in the asset root and the variant directory holds only geometry. It solves the storage duplication of &quot;one set of dependencies, many shapes&quot;.</p>
+<h2 id="h-1">How it differs from versions and LODs</h2>
+<table><thead><tr><th>Dimension</th><th>What is stored</th><th>Materials and textures</th><th>Typical use</th></tr></thead><tbody><tr><td>Version (<code>V1/</code>, <code>V2/</code>)</td><td>A complete self-contained asset</td><td>Independent per version, may all differ</td><td>Revisitable iterations of damage, UVs or shape</td></tr><tr><td>LOD (<code>lod1/</code>, <code>lod2/</code>)</td><td>Different detail levels of one shape</td><td>Inherited from the owning version</td><td>High-poly display, low-poly placement</td></tr><tr><td>Variant (<code>variants/</code>)</td><td><strong>Geometry only</strong></td><td>Inherited from the asset root, shared by all variants</td><td>Many styles of bricks, screws or tiles under one material set</td></tr></tbody></table>
+<p>All three can coexist without affecting each other.</p>
+<h2 id="h-2">Storage layout</h2>
+<pre><code class="language-text">Brick.zasset/
+├── meta.json
+├── variants.json          # the variants section registers id / label / geometry / LOD / thumbnail per variant
+├── node.ma                # main version geometry
+├── textures/              # textures shared by every variant
+├── materials/             # materials shared by every variant
+└── variants/              # flat, no second-level directories
+    ├── standard_brick.ma
+    ├── standard_brick.sicon   # thumbnail of this variant
+    ├── broken_brick.ma
+    ├── broken_brick.sicon
+    └── broken_brick_lod1.ma   # a variant's LOD level: &lt;id&gt;_lodN.&lt;ext&gt;</code></pre>
+<ul>
+<li>Variant geometry is stored flat as <code>&lt;id&gt;.&lt;ext&gt;</code> under <code>variants/</code>, with no per-variant sub-directory.</li>
+<li>Variants <strong>do not appear in the asset grid</strong>: they hang off their asset and are viewed through the context menu, the variant management window or the version browser; an asset with variants shows a <code>V</code> badge at the top left of its card.</li>
+<li>Variant thumbnails are stored separately (<code>variants/&lt;id&gt;.sicon</code> and so on) and never overwrite the asset&#x27;s main thumbnail.</li>
+</ul>
+<h2 id="h-3">When to use variants</h2>
+<table><thead><tr><th>Need</th><th>Dimension to use</th></tr></thead><tbody><tr><td>Same material, slightly different shapes (a chipped brick, a screw head type)</td><td>Variant</td></tr><tr><td>Overall model revision that must keep earlier results</td><td>Version</td></tr><tr><td>High and low poly of the same model</td><td>LOD</td></tr><tr><td>Different textures per version of the same model</td><td>Version (with its own materials)</td></tr></tbody></table>
+<div class="admonition note"><div class="admonition-title">注意</div><p>Variants are designed around <strong>shared textures</strong>: a variant stores geometry only and carries no textures or materials of its own. When independent materials are really needed, use a version instead.</p></div>

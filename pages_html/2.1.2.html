@@ -1,0 +1,24 @@
+<p>花两分钟逐项确认下面的事，能避免「覆盖失败、配置丢失、装完打不开」这三类常见问题。</p>
+<h2 id="h-1">操作步骤</h2>
+<ol>
+<li><strong>确认安装包类型</strong>：发布版文件名不含 <code>test</code>；</li>
+<li><strong>校验安装包</strong>：按「安装包与 SHA256 校验」比对哈希，确认下载完整。</li>
+<li><strong>关闭 Maya</strong>。</li>
+<li><strong>记录当前版本</strong>：记下旧版本号，方便回滚时找对应安装包。</li>
+<li><strong>备份配置与资产库</strong>：复制 <code>~/.squirrel_asset_manager/app_settings.json</code> 与资产库目录；卸载不会替你备份。</li>
+<li><strong>检查旧副本</strong>：确认各版本 <code>scripts</code> 下是否还有历史安装留下的 <code>squirrel_asset_manager</code> 副本（旧版脚本安装会留在 <code>%MAYA_APP_DIR%\squirrel_asset_manager</code>），安装时按提示清理。</li>
+<li><strong>确认端口空闲</strong>：独立版驱动 Maya 需要本机 <code>127.0.0.1:7001</code> 起的端口；同版本多开会占用备用段 <code>7110–7129</code>。</li>
+<li><strong>准备授权信息</strong>：在线激活需要激活码；离线激活需要机器码与许可证文件。</li>
+</ol>
+<h2 id="h-2">结果验证</h2>
+<ul>
+<li>所有 Maya 已关闭，插件目录可写。</li>
+<li>配置与资产库已有可用的备份副本。</li>
+<li>激活方式已确定（在线或离线）。</li>
+</ul>
+<h2 id="h-3">常见失败</h2>
+<ul>
+<li><strong>没备份就卸载</strong>：资产库通常不会被删除，但自定义设置可能被重置。</li>
+<li><strong>Maya 没关</strong>：覆盖 <code>.pyd</code> 时报「拒绝访问」。</li>
+<li><strong>装错版本</strong>：测试版被当成发布版分发，包含不应公开的文档。</li>
+</ul>

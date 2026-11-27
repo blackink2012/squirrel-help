@@ -1,0 +1,29 @@
+<p>Dragging an unselected card first selects only it and then drags it; dragging a selected card brings the whole selection.</p>
+<p><img src="media_en/shared/area-multi-select.webp" alt="With several cards selected, dragging any one of them imports the whole batch" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The asset grid holds several cards that can be dragged out of the plug-in window.</li>
+<li>A Maya scene is open.</li>
+</ul>
+<h2 id="h-2">Rule</h2>
+<table><thead><tr><th>Card state while dragging</th><th>What is actually dragged in</th></tr></thead><tbody><tr><td>The card is in the selection</td><td>The whole selection is dragged in</td></tr><tr><td>The card is not in the selection (something else is selected)</td><td>Only the dragged card, which is selected first</td></tr></tbody></table>
+<p>This rule prevents &quot;dragging B but importing the currently selected A&quot;.</p>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Simply hold and drag the target card; if it is not in the selection it becomes the only selection automatically.</li>
+<li>To drag several assets at once, multi-select first and then hold any one of them.</li>
+<li>Drag out of the plug-in window and release in the viewport.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The cards highlighted during the drag match the assets actually imported.</li>
+<li>After a multi-selection drag the number of newly added assets equals the number selected.</li>
+<li>The IDs in the Script Editor&#x27;s <code>[DragDrop] 收到拖拽: [asset IDs…]</code> match what you expect.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>A single click also changes the selection; confirm the highlighted range before dragging.</li>
+<li>Dragging a selected card never changes the selection, and the batch imports using each asset&#x27;s double-click preset format.</li>
+<li>A mixed selection of materials and models imports item by item without sharing a format.</li>
+<li>&quot;Dragging selects&quot; also holds for images and audio, but releasing over the viewport does not import them (see <a href="#/en/5.6.1">5.6.1</a>).</li>
+</ul>

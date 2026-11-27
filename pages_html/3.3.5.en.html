@@ -1,0 +1,24 @@
+<p>Drag an asset card out of the plug-in window and release over the Maya viewport to import it; the drop semantics differ by sub-library.</p>
+<p><img src="media_en/shared/ui-assets-cards.webp" alt="Hold a card and drag it out of the plug-in window, then release over the Maya viewport to import; dragging one card of a multi-selection drags the whole batch" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Drop behavior by sub-library</h2>
+<table><thead><tr><th>Sub-library</th><th>Result after releasing</th></tr></thead><tbody><tr><td>Models / Dynamics / Scenes</td><td>Imports and snaps to the surface under the cursor: stands up along the normal with its bottom edge on the surface</td></tr><tr><td>Lights</td><td>Imports and aims the light direction (−Z) at the normal of the hit surface</td></tr><tr><td>Materials / Textures</td><td>Rebuilds the material network; assigns it to the selected object when something is selected</td></tr><tr><td>HDR</td><td>Picks a template by the current renderer and creates a dome light</td></tr></tbody></table>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Hold a card in the asset grid and drag it out of the plug-in window.</li>
+<li>While dragging model-type assets the viewport shows an axis preview: the origin is the drop point and the green axis is the normal direction.</li>
+<li>Move the cursor onto the target model surface and release.</li>
+<li>With several cards selected, dragging one imports the whole batch using each asset&#x27;s double-click preset; if the whole batch can snap, the assets line up side by side along the surface.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The newly imported model appears on the surface under the cursor and is selected automatically.</li>
+<li>After dropping a material onto a selected object, the object&#x27;s shading network is replaced or assigned.</li>
+<li>The Script Editor shows a <code>[DragDrop] 收到拖拽: [...]</code> log line.</li>
+<li>If no surface is hit, the import happens at the original position and the model still appears in the scene.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Snapping is controlled by <code>Settings → 常规 → 拖放 (General → Drag and drop)</code> and is on by default; with it off, models import at their original position.</li>
+<li>Dragging selects: if you drag a card that is not currently selected it is selected first, so you never import the wrong asset.</li>
+<li>A mixed selection of models and materials is imported one by one without snapping.</li>
+</ul>

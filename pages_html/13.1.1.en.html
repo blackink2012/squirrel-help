@@ -1,0 +1,28 @@
+<p>If the plug-in is not loaded, usually the install directory is not on Maya&#x27;s import path, the <code>userSetup.py</code> startup block is missing, or a stale copy is imported first.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>After Maya starts there is no Squirrel Asset Manager entry in the status line (the shelf button is only created during installation and is not recreated at startup).</li>
+<li>Running <code>import squirrel_asset_manager</code> in the Script Editor raises <code>No module named &#x27;squirrel_asset_manager&#x27;</code>.</li>
+<li>The package imports, but opening the window reports a missing submodule, for example <code>No module named &#x27;squirrel_asset_manager.core&#x27;</code>.</li>
+<li>Different Maya versions on the same machine behave differently, or an update still loads the old interface.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>Incomplete install directory</td><td>No <code>__init__.py</code> or <code>ui\main_window.py</code> under <code>%LOCALAPPDATA%\SquirrelAM\squirrel_asset_manager\</code> (or the directory you chose during install)</td><td>Rerun the installer with <strong>Maya integration</strong> ticked</td></tr><tr><td>Missing <code>userSetup.py</code> startup block</td><td>The current version&#x27;s <code>Documents\maya\&lt;version&gt;[\&lt;language&gt;]\scripts\userSetup.py</code> has no &quot;Squirrel Asset Manager - import path&quot; marker</td><td>Rerun the installer and tick <strong>Maya integration</strong> for that version so the startup block is written</td></tr><tr><td>Shelf button deleted</td><td>The <strong>Custom</strong> shelf has no Squirrel Asset Manager button, but the status line icon works</td><td>Rerun the installer (the button is only created at install time and is not recreated at startup)</td></tr><tr><td>Package directory cached as an empty namespace package</td><td>Only <code>Assets\</code> remains, there is no <code>__init__.py</code>, yet <code>sys.modules</code> already contains <code>squirrel_asset_manager</code></td><td>Fix the directory and restart Maya; the startup block clears that cache</td></tr><tr><td>A stale copy loads first</td><td><code>&lt;app&gt;\scripts\squirrel_asset_manager</code> or <code>&lt;version&gt;\scripts\squirrel_asset_manager</code> still exists</td><td>After confirming it is an old copy of this plug-in, delete it and restart Maya</td></tr><tr><td>Core module ABI mismatch</td><td>Import reports an extension module or DLL error</td><td>See 6.1.2 &quot;Version and ABI mismatch&quot;</td></tr><tr><td>Install directory is not readable</td><td>Directory attributes or antivirus blocking</td><td>Restore read access, or reinstall into a user-readable directory</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Confirm the install directory exists and contains <code>__init__.py</code> and <code>ui\main_window.py</code>.</li>
+<li>Open <code>userSetup.py</code> for the current Maya version and check for both marker lines, &quot;Squirrel Asset Manager - import path&quot; and &quot;Squirrel Asset Manager END&quot;.</li>
+<li>If the markers are missing, rerun the installer with <strong>Maya integration</strong> ticked, then fully quit and restart Maya.</li>
+<li>Check for stale copy directories. Delete only copies you are certain belong to this plug-in; never delete the whole <code>scripts</code> directory.</li>
+<li>In the Script Editor run <code>import squirrel_asset_manager as sq; print(sq.__file__)</code> and confirm the loaded path points at the install directory.</li>
+<li>Open the plug-in again from the menu, the shelf or the status line.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p><code>sq.__file__</code> points at <code>%LOCALAPPDATA%\SquirrelAM\squirrel_asset_manager\__init__.py</code> (or the directory you chose during install), and the plug-in window opens with a working category tree.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Copy the full traceback from the Script Editor, keeping the first error line and the last few stack frames.</li>
+<li>Check whether the current Maya&#x27;s Python version matches the installer&#x27;s ABI, see 6.1.2 &quot;Version and ABI mismatch&quot;.</li>
+<li>If only AI, bridging or licensing features are unavailable, follow 6.1.3 &quot;Startup errors&quot; to check the matching logs instead of reinstalling repeatedly.</li>
+<li>When reporting, include the <code>sq.__file__</code> result, the install directory tree and the relevant part of <code>userSetup.py</code>.</li>
+</ul>

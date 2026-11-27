@@ -1,0 +1,36 @@
+<blockquote><p>一句话定位：<strong>这两个条目是「把资产内容搬进 Maya」的正门。</strong> 菜单上它长什么样，取决于资产里到底有几种可导入的格式。</p></blockquote>
+<h2 id="h-1">哪些子库有这两个条目</h2>
+<table><thead><tr><th>子库</th><th>导入</th><th>添加引用</th></tr></thead><tbody><tr><td>材质 / 模型 / 灯光 / 场景 / HDR / 动态 / 节点树</td><td>✓</td><td>✓</td></tr><tr><td>贴图</td><td>—（用「导入贴图 ▶」）</td><td>—</td></tr><tr><td>图片</td><td>—（用「导入为 file 节点」等）</td><td>—</td></tr><tr><td>音频</td><td>—（用「导入到时间轴」等）</td><td>—</td></tr><tr><td>动画数据</td><td>—（用「导入动画 ▶」）</td><td>—</td></tr></tbody></table>
+<p>没有通用「导入」的子库并不是不能导，而是各有更具体的入口，见对应的子库页。</p>
+<p><img src="media/shared/menu-import-formats.webp" alt="「导入 ▶」子菜单：列出该资产可导入的格式" loading="lazy" decoding="async"></p>
+<h2 id="h-2">「导入」在菜单上的三种形态</h2>
+<table><thead><tr><th>形态</th><th>什么时候出现</th><th>例子</th></tr></thead><tbody><tr><td>单行「导入 &lt;格式&gt;」</td><td>资产里只有<strong>一种</strong>可用格式</td><td>模型：<code>导入 ma</code>；HDR：<code>导入 hdr</code></td></tr><tr><td>「导入 ▶」子菜单</td><td>资产里有<strong>多种</strong>可用格式</td><td>材质：zmetal / ma；灯光：zlight / ma；动态：ma / abc</td></tr><tr><td>子库专用入口</td><td>该子库的导入方式不止「导文件」</td><td>贴图 <code>导入贴图 ▶</code>、图片 <code>导入为 file 节点</code>、音频 <code>导入到时间轴…</code>、动画数据 <code>导入动画 ▶</code></td></tr></tbody></table>
+<p>子菜单里的每一项都是「格式名」（只有一种格式时也会显示成「导入 ma」这种带格式的写法），选哪个就直接按哪个格式导。</p>
+<h2 id="h-3">「导入 ▶」里还可能多出「导入版本 / LOD」</h2>
+<p>当资产是<strong>带版本、带变体或多条 LOD</strong> 的主资产时，「导入 ▶」子菜单里会再出现一段内部条目（标题随内容变化）：</p>
+<table><thead><tr><th>条目</th><th>说明</th></tr></thead><tbody><tr><td>导入变体 / 版本 ▶（或「导入变体 ▶」「导入版本 / LOD ▶」）</td><td>展开资产内部的各版本 / 变体 / LOD，可以只导其中一份</td></tr><tr><td>版本节点（如 <code>V1</code>、<code>V2</code>）</td><td>版本自身；点进去再选该版本里的 LOD 或几何格式</td></tr><tr><td>变体</td><td>变体条目，标签后面会带面数（如「— 12,345面」）</td></tr><tr><td>主版本</td><td>资产的主版本内容</td></tr><tr><td>查看版本 / 查看变体 / 查看 LOD 管理</td><td>不是导入，而是把资产区切换成「内部视图」，像文件夹一样浏览内部条目</td></tr></tbody></table>
+<p>内部条目本身的右键菜单（精简版）见 <a href="#/15.5.18"><code>8.5.18</code></a>。</p>
+<h2 id="h-4">「添加引用」的两种形态</h2>
+<table><thead><tr><th>形态</th><th>什么时候出现</th></tr></thead><tbody><tr><td>单行「添加引用」</td><td>资产里只有<strong>一种</strong>可引用格式</td></tr><tr><td>「添加引用 ▶」子菜单</td><td>资产里有<strong>多种</strong>可引用格式（典型：动态的 ma / abc）</td></tr></tbody></table>
+<p>可被引用的格式是固定的这一组：<code>.ma</code> / <code>.mb</code> / <code>.fbx</code> / <code>.abc</code> / <code>.usd</code> / <code>.obj</code>。资产里一个都没有时，这一行不会出现。</p>
+<h2 id="h-5">导入和引用该选哪个</h2>
+<table><thead><tr><th>你想要的</th><th>选</th><th>原因</th></tr></thead><tbody><tr><td>在场景里改几何体、改材质</td><td>导入</td><td>进来的是真正可编辑的节点</td></tr><tr><td>只是摆放 / 跟着资产更新</td><td>添加引用</td><td>场景只存路径，资产更新后重载即生效</td></tr><tr><td>需要节省场景文件体积</td><td>添加引用</td><td>内容留在资产包里，不写进当前场景</td></tr></tbody></table>
+<p>引用的代价：<strong>资产包被移动、改名或删除，引用会断</strong>（场景里显示成找不到文件）。导入没有这个问题，但内容进了场景，改资产不会自动跟着变。</p>
+<h2 id="h-6">点了之后会看到什么</h2>
+<ul>
+<li><strong>导入</strong>：直接在当前场景里生成内容；材质、灯光、节点树类会<strong>自动选中新建的节点</strong>，方便你接着操作。当前渲染器与资产不同源时，会再弹一次「是否转换」的询问。</li>
+<li><strong>添加引用</strong>：场景里出现一个引用节点（Outliner 里带引用标记），文件本身不动。</li>
+<li><strong>多选后点导入 / 引用</strong>：对<strong>所有选中资产</strong>各执行一次（同一格式），不是只处理你右键的那一个。</li>
+</ul>
+<h2 id="h-7">注意点</h2>
+<ul>
+<li><strong>导入不复制资产文件</strong>：素材还是从资产包里读的；把资产包挪走，场景里贴图会丢。</li>
+<li><strong>同名冲突会先问你</strong>：场景里已有同名节点时按设置走（询问 / 自动改名 / 覆盖），见 <a href="#/6.6.1"><code>4.3.6.1</code></a>。</li>
+<li><strong>文档里说「导入」的地方，界面上可能显示成「导入 ma」</strong>：这是同一条命令的不同长相，别以为是两个功能。</li>
+</ul>
+<h2 id="h-8">相关</h2>
+<ul>
+<li>收藏 / 全选 / 复制 / 打开文件夹：<a href="#/15.5.14"><code>8.5.14</code></a>；移动到 / 复制到：<a href="#/15.5.15"><code>8.5.15</code></a></li>
+<li>导入总览与格式路由：<a href="#/5.1.1"><code>4.2.1.1</code></a>；引用几何体：<a href="#/5.4.1"><code>4.2.4.1</code></a>；导入变体 / 版本 / LOD：<a href="#/5.3.2"><code>4.2.3.2</code></a></li>
+<li>子库差异总表：<a href="#/15.5.1"><code>8.5.1</code></a></li>
+</ul>

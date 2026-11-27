@@ -1,0 +1,33 @@
+<blockquote><p>一句话定位：<strong>「AI 助手」区域里只有一颗开关按钮，点一下启动 dsh 对话面，再点一下彻底关闭。</strong></p></blockquote>
+<p>它本身不是聊天窗口 —— 真正跟你对话的是 <strong>dsh 的 Web 对话面</strong>，这个区域负责把那个对话面叫起来、显示出来、再关掉。</p>
+<p><img src="media/shared/ui-ai-assistant.webp" alt="「AI 助手」区域里只有这一颗开关按钮" loading="lazy" decoding="async"></p>
+<h2 id="h-1">区域里有什么</h2>
+<table><thead><tr><th>部件</th><th>说明</th></tr></thead><tbody><tr><td>区域头部的「AI 助手」标签</td><td>区域名；区域能被拖动 / 拆分 / 撕下（见 <a href="#/3.2.1"><code>3.2.1</code></a>）</td></tr><tr><td>区域功能按钮（悬停提示「AI 助手」）</td><td>区域通用菜单：停靠 / 拆分 / 撕下 / 最大化 / 并入 / 关闭</td></tr><tr><td>开关按钮</td><td>本区域的全部功能：开 / 关 dsh 对话面</td></tr></tbody></table>
+<h2 id="h-2">按钮的三种状态</h2>
+<table><thead><tr><th>按钮文案</th><th>颜色</th><th>含义</th></tr></thead><tbody><tr><td>AI 助手</td><td>中性次级色</td><td>dsh 没在跑（关着）</td></tr><tr><td>正在启动 AI 助手…</td><td>中性次级色</td><td>正在拉起 dsh 进程（通常几秒）</td></tr><tr><td>关闭 AI 助手</td><td>蓝色强调色</td><td>dsh 已在跑，对话面已经打开</td></tr></tbody></table>
+<h2 id="h-3">点一下会发生什么</h2>
+<table><thead><tr><th>当前状态</th><th>点击结果</th></tr></thead><tbody><tr><td>关着</td><td>启动 dsh Web 端：按设置决定把对话面<strong>内嵌停靠进 Maya</strong>（默认）或<strong>用系统浏览器打开</strong>；启动完按钮变成「关闭 AI 助手」</td></tr><tr><td>正在启动</td><td>等它启动完，不要连点（连点不会重复起进程）</td></tr><tr><td>已开着</td><td><strong>关面板 + 结束 dsh 进程</strong>（彻底关闭，不是最小化）；再点一次会重新拉起</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>「关闭 AI 助手」是<strong>真的把 dsh 进程杀掉</strong>，不是把面板收起来。再开时是全新的一次启动，对话上下文以 dsh 自己保存的会话为准。</p></div>
+<h2 id="h-4">内嵌面板还是系统浏览器</h2>
+<p>由 <strong>设置 → AI → AI 对话面 →「在 Maya 内嵌 AI 对话面」</strong> 决定（默认勾选），见 <a href="#/15.9.3"><code>8.9.3</code></a>：</p>
+<table><thead><tr><th>选项</th><th>表现</th></tr></thead><tbody><tr><td>勾选（默认）</td><td>对话面停靠在 Maya 里，随开随用；面板标题会自动带上当前场景名，方便和自己的其它 dsh 窗口区分</td></tr><tr><td>取消勾选</td><td>用系统浏览器打开同一个 dsh 对话面；会话与工具完全一致，只是窗口在外面</td></tr></tbody></table>
+<p>改完这个选项后，<strong>下一次</strong>点「AI 助手」才按新方式生效，不需要重启 Maya。</p>
+<h2 id="h-5">面板不见了 / 浏览器页签被关了</h2>
+<p>这是最容易卡住的情况：dsh 其实还在跑，但对话面看不见了。</p>
+<ul>
+<li>打开顶部「AI 工具」菜单 →「召回AI面板」：只把已经在跑的对话面重新摆出来，<strong>不重启、不杀进程</strong>；</li>
+<li>浏览器模式下你手动关掉页签时，插件感知不到（页签归浏览器管），所以再点「AI 助手」会是「关闭」；用「召回AI面板」才能找回来；</li>
+<li>窗口里的浮动气泡也有同样作用：AI 在跑时气泡会缓慢呼吸，点它就能把面板召回。</li>
+</ul>
+<h2 id="h-6">本机没装 dsh 时</h2>
+<p>第一次点「AI 助手」会弹出安装引导（见 <a href="#/15.13.6"><code>8.13.6</code></a>），里面有四个动作：复制安装命令 / 一键安装 dsh 运行时 / 打开安装帮助 / 打开官网或仓库。装好后再点一次即可。</p>
+<h2 id="h-7">常见疑问</h2>
+<table><thead><tr><th>现象</th><th>原因 / 怎么办</th></tr></thead><tbody><tr><td>点了按钮一直「正在启动」</td><td>首次启动要拉起进程 + 开 Web 服务，通常几秒；超过一两分钟没变化，看 Maya 脚本编辑器输出</td></tr><tr><td>按钮灰色不可点</td><td>极少见，通常是窗口/面板状态异常；重开面板或重启插件</td></tr><tr><td>对话面开在浏览器里，找不到</td><td>点「AI 工具」→「召回AI面板」</td></tr><tr><td>关闭后再开，之前的对话没了</td><td>dsh 侧会话是否保留由它自己管理；插件只负责进程与面板的开关</td></tr></tbody></table>
+<h2 id="h-8">相关</h2>
+<ul>
+<li>dsh 对话面板与工具调用 → <a href="#/8.3.1"><code>4.5.3.1</code></a></li>
+<li>内嵌与浏览器模式的区别 → <a href="#/8.3.2"><code>4.5.3.2</code></a></li>
+<li>打开、召回与停止 → <a href="#/8.3.3"><code>4.5.3.3</code></a></li>
+<li>在设置里切换内嵌 / 浏览器 → <a href="#/15.9.3"><code>8.9.3</code></a></li>
+<li>未装 dsh 的安装引导 → <a href="#/15.13.6"><code>8.13.6</code></a></li>
+</ul>

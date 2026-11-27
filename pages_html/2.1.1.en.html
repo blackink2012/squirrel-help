@@ -1,0 +1,25 @@
+<p>Check the Windows architecture, Maya version and permissions before installing; this avoids most &quot;failed halfway&quot; installations.</p>
+<p><img src="media_en/shared/installer-welcome.webp" alt="Installer page" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Minimum requirements</h2>
+<table><thead><tr><th>Item</th><th>Requirement</th></tr></thead><tbody><tr><td>Operating system</td><td>64-bit Windows; the installer is a Windows desktop program (minimum Windows version to be confirmed)</td></tr><tr><td>Maya (plug-in edition)</td><td>Maya 2022–2027</td></tr><tr><td>Standalone edition / EXE</td><td>Bundled Python 3.11.9 (amd64) and PySide6 6.9.2; no separate Python install</td></tr><tr><td>UI language</td><td>The installer and uninstaller support Simplified Chinese / English; the language follows the system by default and can be changed during installation</td></tr><tr><td>Permissions</td><td>Installs per user; administrator rights are not required</td></tr><tr><td>Disk</td><td>The installer and runtime take a few hundred MB; the optional dsh / Node takes about another 300 MB (see the actual package)</td></tr><tr><td>Network</td><td>Core features work offline; online activation, dsh download and cloud AI need a network</td></tr></tbody></table>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Double-click the exe to install. If Windows shows a warning, click “More info” and then “Run anyway”.</li>
+<li>Confirm Windows is 64-bit; 32-bit systems are not supported.</li>
+<li>Confirm free disk space for the installer, the runtime and the asset library.</li>
+<li>Close all running Maya instances before installing the plug-in edition.</li>
+<li>If you only use the standalone edition you do not need Maya; the installer unchecks <code>「Maya 集成」 (Maya integration)</code> automatically.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The Maya version can be read and falls within 2022–2027.</li>
+<li>The target disk is writable and the current user can write to the install directory.</li>
+<li>No running Maya instance is locking the plug-in directory.</li>
+</ul>
+<h2 id="h-4">Common failures</h2>
+<ul>
+<li><strong>Maya too old</strong>: there is no <code>.pyd</code> for that ABI, so the plug-in cannot load.</li>
+<li><strong>32-bit system</strong>: the bundled Python and Qt are both 64-bit and cannot run.</li>
+<li><strong>Company policy</strong>: antivirus software or an application allowlist may block the installer; request an exception first.</li>
+<li><strong>macOS / Linux</strong>: only a Windows installer (<code>Setup.exe</code>) is provided; macOS and Linux have no package and are not supported.</li>
+</ul>

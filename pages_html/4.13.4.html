@@ -1,0 +1,31 @@
+<p>已有变体需要改造型或补精度档位时，不用删除重建，直接在「更新变体」里操作；共享的贴图与材质始终不变。</p>
+<p><img src="media/shared/concept-variant-update-flow.webp" alt="更新变体：菜单路径与文件落位" loading="lazy" decoding="async"></p>
+<h2 id="h-1">入口</h2>
+<p>右键资产 →「更新资产」→「更新变体 ▶」→ 选择具体变体。子菜单内含：</p>
+<table><thead><tr><th>菜单项</th><th>作用</th></tr></thead><tbody><tr><td>截取 / 导入 / Maya 拍屏 / 渲染图 / 添加 / 截取添加</td><td>只重做<strong>该变体</strong>的缩略图，入口与「更新缩略图」一致</td></tr><tr><td>覆盖（用当前选中）</td><td>用视口当前选中的几何体覆盖该变体</td></tr><tr><td>追加 LOD…</td><td>为该变体追加精度档位</td></tr><tr><td>删除变体</td><td>删除该变体（见「变体管理与删除」）</td></tr></tbody></table>
+<h2 id="h-2">覆盖变体</h2>
+<ol>
+<li>在视口里选中新的几何体（框选会收敛到根物体）。</li>
+<li>右键资产 →「更新资产」→「更新变体 ▶」→ 目标变体 →「覆盖（用当前选中）」。</li>
+<li>确认提示后完成覆盖。</li>
+</ol>
+<ul>
+<li>只替换 <code>variants/&lt;id&gt;.&lt;ext&gt;</code> 的几何体内容，贴图 / 材质不动。</li>
+<li>覆盖后请在「更新变体」里重新出图，避免缩略图与几何体不一致。</li>
+</ul>
+<h2 id="h-3">追加 LOD</h2>
+<ol>
+<li>选中作为该档位的低模或高模物体。</li>
+<li>「更新变体 ▶」→ 目标变体 →「追加 LOD…」，输入 1–9 的档位数字。</li>
+<li>完成后文件写入 <code>variants/&lt;id&gt;_lodN.&lt;ext&gt;</code>，并登记进 <code>variants.json</code> 的该变体 <code>lods</code>。</li>
+</ol>
+<ul>
+<li><code>LOD0</code> 是该变体的本体几何体（<code>variants/&lt;id&gt;.&lt;ext&gt;</code>），不需要额外追加。</li>
+<li>追加后，「导入变体 / 版本」里该变体多出一层档位菜单（本体几何体 + <code>LOD1</code>、<code>LOD2</code>…）。</li>
+</ul>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>覆盖：脚本编辑器提示「变体「…」已用当前选中覆盖」；场景里重新导入该变体即得到新造型。</li>
+<li>追加 LOD：提示「变体「…」已追加 LODn」；<code>variants/</code> 下出现 <code>&lt;id&gt;_lodN.&lt;ext&gt;</code>。</li>
+</ul>
+<div class="admonition note"><div class="admonition-title">注意</div><p>变体的「后台渲染」（无头生成）入口不提供：该方式按整包资产出图，而变体没有独立资产包。</p></div>

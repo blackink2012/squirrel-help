@@ -1,0 +1,28 @@
+<p><code>「创建新版本」 (Create new version)</code> builds a complete sub-version <code>V{n}</code> inside the main asset and fills it with this export, leaving the main version unchanged.</p>
+<p><img src="media_en/shared/dialog-export-right.webp" alt="Choose &quot;create new version&quot; here and fill in the version number" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The main <code>.zasset</code> already exists.</li>
+<li>Select the modified geometry, material nodes or texture nodes as needed; a new version does not require geometry, exporting only materials also works.</li>
+<li>To give the version its own materials, be ready to check <code>材质预设 .zmetal</code> (material preset).</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select what the new version should export in Maya.</li>
+<li>Right-click the main asset card, expand <code>「更新资产」 (Update asset)</code> and choose <code>「创建新版本」 (Create new version)</code>.</li>
+<li>In the export dialog that opens, check this export&#x27;s content: geometry, <code>材质预设 .zmetal</code>, <code>贴图 textures/</code> and so on.</li>
+<li>Click <code>「创建资产」 (Create asset)</code>.</li>
+<li>Wait for it to finish; the program runs a separate thumbnail capture for the new version.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li><code>「「资产名」已创建新版本 V1」 (asset &quot;…&quot; got new version V1)</code> appears; the number is the highest existing <code>V{n}</code> plus one.</li>
+<li>Double-clicking the main asset&#x27;s preview on the right opens the asset versions window, where <code>「主版本」 (main version)</code> and <code>V1</code> are listed.</li>
+<li>Right-click the asset → <code>「导入变体 / 版本」 (Import variant / version)</code> (or <code>「导入版本 / LOD」 (Import version / LOD)</code> when there are no variants) → a <code>V1</code> submenu appears.</li>
+<li><code>V1/</code> has its own <code>meta.json</code>; the main asset&#x27;s <code>meta.json</code> records it under <code>version_assets</code> and <code>has_versions</code> is true.</li>
+</ul>
+<h2 id="h-4">Tips and warnings</h2>
+<blockquote><p><strong>Tip</strong>: a sub-version is a self-contained version asset: creation first copies the main version&#x27;s content as a skeleton, then replaces it entirely with this export while keeping the sub-version identity fields (<code>is_version</code>, <code>version_of</code>, <code>version_label</code>, <code>version_tag</code>).</p></blockquote>
+<blockquote><p><strong>Tip</strong>: when the <code>V{n}</code> directory already exists the number moves up automatically instead of overwriting the old version.</p></blockquote>
+<blockquote><p><strong>Warning</strong>: a failed sub-version export reports <code>「子版本导出失败，内容可能不完整」 (sub-version export failed; the content may be incomplete)</code>; that directory already exists, so check it and retry or delete it.</p></blockquote>
+<blockquote><p><strong>Current version</strong>: version directories are <code>V1/</code>, <code>V2/</code> inside the main asset, not the <code>variants/v2/</code> structure described in older help.</p></blockquote>

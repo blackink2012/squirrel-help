@@ -1,0 +1,28 @@
+<p>The dependency scan walks the scene nodes during export or import to collect textures, caches, proxies and referenced files; missing items are recorded in the asset&#x27;s <code>meta.json</code>.</p>
+<p><img src="media_en/shared/dialog-export-left.webp" alt="The collect linked files option and the thumbnail source area in the export dialog" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The objects are in the scene and cache / proxy nodes are connected.</li>
+<li><code>「收集关联文件」 (Collect linked files)</code> is checked on export; importing external files also runs a text-level collection.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Check <code>「收集关联文件」 (Collect linked files)</code> in the export dialog.</li>
+<li>The scan runs automatically during export; it is read-only and does not modify the scene.</li>
+<li>Open <code>&lt;asset&gt;.zasset/meta.json</code> and read <code>dependencies_missing</code>, <code>dependencies_out_of_scope</code>, <code>dependencies_unresolved_tokens</code> and <code>dependency_scan</code>.</li>
+<li>Put missing files back at their original paths and export again.</li>
+</ol>
+<h2 id="h-3">What is scanned</h2>
+<table><thead><tr><th>Layer</th><th>Notes</th></tr></thead><tbody><tr><td>Native registry</td><td>The broken-link list from <code>filePathEditor</code></td></tr><tr><td>Attribute scan</td><td><code>listAttr(usedAsFilename=True)</code>, not limited to a node allowlist</td></tr><tr><td>Special node patches</td><td>Attributes of Bifrost, Yeti, nCache, file sequences and similar</td></tr><tr><td>Expansion and classification</td><td>Frame sequences and UDIM expanded and classified by extension</td></tr><tr><td>Collected directories</td><td><code>deps/</code> sub-directories such as textures, caches, proxies, volumes, references, audio</td></tr></tbody></table>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li><code>dependencies_missing</code> is empty in <code>meta.json</code>.</li>
+<li><code>deps/</code> contains every needed file.</li>
+<li>The export log says <code>「依赖扫描: 命中 N 个源文件…缺失 0」 (dependency scan: N source files matched… 0 missing)</code>.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>Out-of-scope dependencies are recorded in <code>dependencies_out_of_scope</code> and are not packaged.</li>
+<li>Paths containing <code>&lt;MAYA_RESOURCES&gt;</code> land in <code>dependencies_unresolved_tokens</code> and need manual handling.</li>
+<li>Library-wide batch maintenance lives in the <code>「维护」 (Maintenance)</code> menu of the top toolbar: <code>「补缺失缩略图…」 (Fill in missing thumbnails…)</code> scans the whole library for missing or placeholder thumbnails (<a href="#/en/15.12.8">15.12.8</a>), <code>「清理无效资产」 (Clean invalid assets)</code> finds entries without <code>meta.json</code> or empty shells (<a href="#/en/15.12.9">15.12.9</a>), and <code>「重建资产索引」 (Rebuild asset index)</code> rescans the list (<a href="#/en/4.12.2">4.12.2</a>).</li>
+</ul>

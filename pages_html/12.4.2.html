@@ -1,0 +1,26 @@
+<p>三个预设文件分别控制右键菜单、双击缩略图和创建资产的默认导出格式，都由设置窗口写入，并按子库（<code>asset_type</code>）分节。</p>
+<table><thead><tr><th>文件</th><th>作用</th><th>设置入口</th></tr></thead><tbody><tr><td><code>Assets/preset/context_menu_preset.json</code></td><td>每个子库显示哪些右键菜单项</td><td>设置 → 右键菜单</td></tr><tr><td><code>Assets/preset/double_click_preset.json</code></td><td>双击缩略图执行哪条命令</td><td>设置 → 右键菜单（该页下半部分的「双击命令」分组）</td></tr><tr><td><code>Assets/preset/export_preset.json</code></td><td>创建资产时的默认导出选项</td><td>设置 → 导出默认值</td></tr></tbody></table>
+<blockquote><p>设置里<strong>没有</strong>独立的「双击命令」页签；双击命令在「右键菜单」页的下半部分。</p></blockquote>
+<h2 id="h-1">右键菜单预设</h2>
+<p><code>default</code> 段是兜底，未登记的自定义子库或分类按它显示；11 个内置子库各有自己的段。每个键为布尔值，缺省即 <code>false</code>。</p>
+<ul>
+<li>通用项默认开启：<code>import</code>（导入）、<code>import_geometry</code>（导入几何体）、<code>add_reference</code>、<code>favorites</code>、<code>select_all</code>、<code>duplicate</code>、<code>open_folder</code>、<code>move_to</code>、<code>copy_to</code>、<code>edit</code>、<code>create_asset</code>、<code>update_thumbnail</code>、<code>update_asset</code>、<code>delete</code>、<code>preview_node</code>、<code>ai_analysis</code>、<code>generate_thumbnail</code>（后台渲染）、<code>asset_details</code>。</li>
+<li>专用项默认关闭，按子库打开：材质打开 <code>apply_material</code>、<code>apply_material_params</code>、<code>convert_import</code>；贴图打开 <code>apply_material</code>、<code>create_material</code>、<code>import_texture</code>、<code>assign_texture</code>；灯光打开 <code>apply_light</code>、<code>convert_import</code>；HDR 打开 <code>create_dome_light</code>、<code>assign_texture</code>；模型 / 场景 / 动态 / 节点树打开 <code>convert_format</code>。</li>
+<li><strong>图片 / 音频 / 动画数据</strong>这三类只有通用项（收藏、复制、打开文件夹、移动到、编辑、删除、AI 分析、资产详情等）；音频额外开 <code>convert_format</code>（转 WAV 副本），动画数据额外开 <code>update_thumbnail</code>。它们各自的专属导入项不在这个预设表里，由界面按子库直接提供。</li>
+<li>文件里只列出该子库实际拥有的项，不存在的项不会显示。</li>
+</ul>
+<h2 id="h-2">双击预设</h2>
+<p><code>default</code> 为 <code>{&quot;cmd&quot;: &quot;import&quot;, &quot;option&quot;: &quot;&quot;}</code>，即导入第一个可用格式。当前内置值：</p>
+<table><thead><tr><th>子库</th><th>命令</th><th>子选项</th></tr></thead><tbody><tr><td>materials</td><td><code>import</code></td><td><code>zmetal</code></td></tr><tr><td>models / scenes / nodetree / ani</td><td><code>import</code></td><td><code>ma</code></td></tr><tr><td>lights</td><td><code>import</code></td><td><code>zlight</code></td></tr><tr><td>textures</td><td><code>create_material</code></td><td><code>openPBRSurface</code></td></tr><tr><td>hdr</td><td><code>create_dome_light</code></td><td><code>aiSkyDomeLight.ma</code></td></tr><tr><td>audio / animation</td><td><code>import</code></td><td><code>&quot;&quot;</code>（无子选项，交给导入器按内容选格式）</td></tr><tr><td>images</td><td>未登记 → 走 <code>default</code></td><td>导入第一个可用格式</td></tr></tbody></table>
+<h2 id="h-3">导出预设</h2>
+<p><code>_default</code> 提供兜底，其余键按 <code>asset_type</code> 覆盖。字段分四组：</p>
+<ul>
+<li>格式开关：<code>zmetal</code>、<code>zmetal_merge</code>、<code>mcm</code>、<code>mcm_min_count</code>、<code>ma</code>、<code>mb</code>、<code>fbx</code>、<code>obj</code>、<code>usd</code>、<code>abc</code>、<code>arnold</code>、<code>vray</code>、<code>redshift</code>、<code>vrmesh</code>。</li>
+<li>内容开关：<code>material_only</code>、<code>collect_associated</code>、<code>textures</code>。</li>
+<li>动画取帧：<code>ani_frame_mode</code> 取 <code>current</code> / <code>timeline</code> / <code>keyframe</code>。</li>
+<li>缩略图：<code>delay_ms</code>（默认 2000）与 <code>thumb_source</code>（<code>screenshot</code> / <code>playblast</code> / <code>render</code>）。</li>
+</ul>
+<p>当前默认：收集关联文件与贴图均为开，缩略图来源为 <code>screenshot</code>；材质子库 <code>material_only=true</code>；动态子库 <code>ani_frame_mode=timeline</code>。</p>
+<p>11 个内置子库都有段落，其中新增的几段差别比较明显：</p>
+<table><thead><tr><th>子库段</th><th>与 <code>_default</code> 的差别</th></tr></thead><tbody><tr><td><code>images</code></td><td>关闭全部几何格式（<code>ma</code> 也是 false）、<code>material_only=true</code>、<code>collect_associated=false</code>、只留图片相关的纹理打包</td></tr><tr><td><code>audio</code> / <code>animation</code></td><td>关闭全部几何格式，<code>material_only</code> / <code>collect_associated</code> / <code>textures</code> 均为 false（这两类没有可导出的几何或贴图）</td></tr><tr><td><code>nodetree</code></td><td>与 <code>_default</code> 基本一致（<code>ma</code> 开）</td></tr><tr><td><code>ani</code></td><td><code>abc=true</code>、<code>ani_frame_mode=timeline</code></td></tr></tbody></table>
+<blockquote><p><strong>提示</strong>：手工改完需重新打开主窗口或重载插件；设置窗口里的改动会立即写回这些文件。</p></blockquote>

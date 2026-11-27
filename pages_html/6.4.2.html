@@ -1,0 +1,40 @@
+<p>导出预设文件就是 <code>Assets/preset/export_preset.json</code>，备份、换机或团队统一默认格式时直接复制这个 JSON 即可。</p>
+<p><img src="media/shared/dialog-export-preset.webp" alt="导出预设" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已按「按子库保存默认值」配置好当前机器。</li>
+<li>能访问插件安装目录下的 <code>squirrel_asset_manager/Assets/preset/</code>。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<h3 id="h-3">导出预设文件</h3>
+<ol>
+<li>找到 <code>squirrel_asset_manager/Assets/preset/export_preset.json</code>。</li>
+<li>把它复制到备份目录或共享位置。</li>
+<li>建议在文件名里带上日期或项目名，例如 <code>export_preset_20261019.json</code>。</li>
+</ol>
+<h3 id="h-4">导入预设文件</h3>
+<ol>
+<li>先关闭正在打开的导出对话框和设置窗口。</li>
+<li>备份本机当前的 <code>export_preset.json</code>。</li>
+<li>用目标文件覆盖同路径的 <code>export_preset.json</code>。</li>
+<li>重新打开「创建资产」或「设置 → 导出默认值」，新默认值立即生效。</li>
+</ol>
+<h2 id="h-5">结果验证</h2>
+<ul>
+<li>重新打开「设置 → 导出默认值」，各子库的勾选与替换后的文件一致。</li>
+<li>在对应子库打开「创建资产」，格式复选框按新默认值勾选。</li>
+<li>用文本编辑器打开 <code>export_preset.json</code>，能看到替换后的子库条目和布尔值。</li>
+</ul>
+<h2 id="h-6">文件结构</h2>
+<pre><code class="language-json">{
+  "_default": { "ma": true, "zmetal": false },
+  "materials": { "zmetal": true, "ma": true, "material_only": true },
+  "models": { "ma": true, "material_only": false }
+}</code></pre>
+<table><thead><tr><th>键</th><th>作用</th></tr></thead><tbody><tr><td><code>_default</code></td><td>子库没有单独条目时的兜底</td></tr><tr><td><code>materials</code> / <code>models</code> / <code>lights</code> / <code>textures</code> / <code>scenes</code> / <code>hdr</code> / <code>ani</code> / <code>images</code> / <code>audio</code> / <code>animation</code> / <code>nodetree</code></td><td>各内置子库的默认值（与 <code>config.json</code> 的 <code>sub_libraries</code> 一一对应，共 11 个）</td></tr><tr><td><code>zmetal</code> / <code>zmetal_merge</code> / <code>mcm</code></td><td>材质节点与材质映射</td></tr><tr><td><code>ma</code> / <code>mb</code> / <code>fbx</code> / <code>obj</code> / <code>usd</code></td><td>几何体格式</td></tr><tr><td><code>abc</code> / <code>arnold</code> / <code>vray</code> / <code>redshift</code> / <code>vrmesh</code></td><td>缓存与代理</td></tr><tr><td><code>material_only</code> / <code>collect_associated</code> / <code>textures</code></td><td>仅材质、收集关联、打包贴图</td></tr><tr><td><code>ani_frame_mode</code></td><td><code>current</code> / <code>timeline</code> / <code>keyframe</code></td></tr><tr><td><code>delay_ms</code></td><td>截图延迟，毫秒；<code>2000</code> 即 2 秒</td></tr><tr><td><code>thumb_source</code></td><td><code>screenshot</code> / <code>playblast</code> / <code>render</code></td></tr></tbody></table>
+<h2 id="h-7">提示与警告</h2>
+<blockquote><p><strong>提示</strong>：新建资产对话框打开时才读取该文件；替换后不需要重启 Maya，重开对话框即可。</p></blockquote>
+<blockquote><p><strong>提示</strong>：AI 侧的新建资产同样读取 <code>export_preset.json</code>，所以这份文件也是 UI 与 AI 的共同默认值来源。</p></blockquote>
+<blockquote><p><strong>警告</strong>：JSON 格式错误时插件会打印加载失败并退回内置默认值，表现为“所有格式都没勾”。替换前先用任意 JSON 校验工具检查。</p></blockquote>
+<blockquote><p><strong>当前版本</strong>：设置窗口没有「导入预设 / 导出预设文件」按钮（2026-11-03 核实），本页的导入导出通过文件复制完成，这样最直接也最稳。</p>
+<p><strong>别和「导出材质为预设」混淆</strong>：插件里另有一个「导出材质为预设」对话框，作用是把<strong>场景里的材质</strong>导出成 <code>.zmetal</code> / JSON 预设文件，和本页的 <code>export_preset.json</code>（「新建资产默认勾什么」）不是一件事；而且该对话框当前没有挂到任何菜单入口（详见 <a href="#/15.12.3"><code>8.12.3</code></a>），所以在本页场景里不用找它。</p></blockquote>

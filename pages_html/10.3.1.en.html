@@ -1,0 +1,23 @@
+<p>There are two commands for applying materials: <code>apply_material</code> only creates the material network, while <code>apply_material_to_selection</code> builds it and assigns it straight to the current selection.</p>
+<p><img src="media_en/shared/menu-context-apply-material.webp" alt="Material asset context menu → assign material to the current selection" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>Maya is online and the target objects exist in the scene.</li>
+<li>The asset is a material asset; a texture asset without <code>.zmetal</code> falls back to &quot;create a new material from the textures&quot;.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select one or more objects in Maya.</li>
+<li>Right-click the material asset in the library and choose <code>「为当前选择指定材质」 (Assign material to the current selection)</code>. The standalone edition dispatches this step to Maya through the command channel.</li>
+<li>The AI assistant can also call <code>apply_material_to_selection</code> with the asset&#x27;s <code>zasset_path</code>.</li>
+<li>To only create the material without assigning it, call <code>apply_material</code> and take the material name from the returned <code>nodes</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>It returns <code>status=ok</code> with <code>material</code> and <code>objects</code> counts; the new material appears in the Maya Hypershade and the selected objects&#x27; shading network points at it.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>Using <code>apply_material</code> alone looks like &quot;nothing happened&quot; because it only creates and never assigns; use the composite command to put a material on the selection.</li>
+<li>With nothing selected the command reports an error instead of guessing a target.</li>
+<li>Cross-renderer materials are converted for the current renderer; check the conversion result and attribute mapping in the returned <code>nodes</code>.</li>
+<li>To only overwrite an existing material&#x27;s parameters with the asset&#x27;s values without rebuilding the network, use <code>apply_material_params</code>.</li>
+</ul>

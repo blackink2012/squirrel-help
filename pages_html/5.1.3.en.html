@@ -1,0 +1,30 @@
+<p>After an import, check the selection, the Outliner, the Hypershade and the Script Editor log to confirm the asset really entered the scene.</p>
+<p><img src="media_en/shared/dialog-asset-details.webp" alt="Asset details: cross-check the import result with the metadata" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>One library import has just finished and the format used is known.</li>
+<li>Maya&#x27;s Script Editor is available (to read plug-in logs).</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Check the current selection: after a material import the new material is selected; after a zlight import the new light is selected; some geometry imports select the new root nodes.</li>
+<li>Open the Outliner and confirm a new transform or shape exists. Imports go into the root namespace <code>:</code>, and Maya renames same-named nodes automatically.</li>
+<li>Open the Hypershade (Window &gt; Rendering Editors &gt; Hypershade) and confirm the material network and file node exist.</li>
+<li>Select the file node and check <code>fileTextureName</code> in the properties panel to confirm the texture points at <code>sourceimages/</code>, the project cache or <code>.zasset/textures/</code>.</li>
+<li>Open the Script Editor and read the logs starting with <code>[ImportExecutor]</code>, <code>[FileImporter]</code> or <code>[Import]</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The log says <code>「导入成功」 (import succeeded)</code> or <code>「已创建 N 个节点」 (created N nodes)</code> and contains no &quot;import failed&quot; or &quot;unknown format&quot;.</li>
+<li>The expected number of new nodes appears in the scene, and materials or lights can be found in the Hypershade and Outliner.</li>
+<li>Models, textures and lights look right in the viewport; textures are neither black nor missing.</li>
+</ul>
+<h2 id="h-4">Where to verify the four special asset types</h2>
+<p>Images, audio, animation data and node trees produce no geometry, so verification differs from the Outliner / Hypershade steps above:</p>
+<table><thead><tr><th>Sub-library</th><th>Where to look afterwards</th></tr></thead><tbody><tr><td>Images</td><td>A file node (with place2dTexture) appears in the Hypershade; check that <code>fileTextureName</code> points at a library file. An imagePlane is found in the Outliner by <code>imagePlane</code></td></tr><tr><td>Audio</td><td>A sound waveform appears on the timeline (sound node); the Time Editor gains an audio clip; Trax gains a sound track; the camera sequencer shot carries the sound</td></tr><tr><td>Animation data</td><td>The target node&#x27;s attributes receive keyframes: look at the curves in the Graph Editor / timeline; the matching hierarchy must exist beforehand</td></tr><tr><td>Node trees</td><td>You may <strong>see nothing</strong> new in the viewport — it is not geometry; look in the Hypershade / Node Editor, or simply at the current selection (new nodes are selected after import)</td></tr></tbody></table>
+<p>If &quot;nothing appears&quot; for one of these four, first confirm with the table above that this is expected, then troubleshoot as described in <a href="#/en/5.7.1">5.7.1</a>.</p>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>A log line such as <code>「无 … 映射路径，保留原材质/原灯光」 (no mapping path for …, keeping the original material / light)</code> is not a failure: it means that item has no cross-renderer conversion path and the asset keeps its original type.</li>
+<li>Seeing only <code>「材质已创建（无选中物体，未赋予）」 (material created; no object selected, not assigned)</code> means the material was built but nothing was selected to assign it to.</li>
+</ul>

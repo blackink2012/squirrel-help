@@ -1,0 +1,29 @@
+<p>Drag an asset card out of the plug-in window and release over the Maya viewport; the plug-in completes the import automatically according to the asset type.</p>
+<p><img src="media_en/shared/ui-assets-cards.webp" alt="Hold a card and drag it out of the plug-in window, then release over the Maya viewport to import" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>A Maya scene is open.</li>
+<li>The cursor drags from an asset card out of the plug-in window and lands inside the Maya viewport.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Hold an asset card and start dragging.</li>
+<li>Drag out of the plug-in window and move to the position you want in the viewport.</li>
+<li>Release.</li>
+<li>Wait for the plug-in to finish importing.</li>
+</ol>
+<h2 id="h-3">Behavior by asset type</h2>
+<table><thead><tr><th>Asset type</th><th>Behavior after dropping</th></tr></thead><tbody><tr><td>Models, dynamics, scenes</td><td>Imports with the default format; with snapping on it lands on the surface under the cursor</td></tr><tr><td>Lights</td><td>Imports with the default format; with snapping on it lights along the hit surface normal</td></tr><tr><td>Materials, textures</td><td>Assigns to the selected object if there is one; otherwise creates and selects the new material</td></tr><tr><td>HDR</td><td>Picks a template from the current renderer or the double-click preset and creates a dome light directly</td></tr><tr><td>Node trees</td><td>Imports <code>ma</code>; the newly created nodes are selected afterwards (no visible geometry is normal)</td></tr><tr><td>Animation data</td><td>Asks for <code>「动画起始位置」 (animation start position)</code> and then imports keyframes by hierarchy mapping; the hierarchy must exist in the scene</td></tr><tr><td>Images, audio</td><td><strong>Dropping into the viewport does not import them</strong>: they are loose files and not part of the geometry drag pipeline. For images use the context menu&#x27;s <code>「导入为 file 节点 / 创建 imagePlane」 (Import as file node / create imagePlane)</code>; for audio use <code>「导入到时间轴 / 时间编辑器 / Trax 编辑器 / 摄像机序列器」 (Import to timeline / Time Editor / Trax Editor / camera sequencer)</code></td></tr></tbody></table>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The asset appears in the scene, or the material is assigned to the selected object (images and audio do not take this path, see the table).</li>
+<li>The Script Editor shows a <code>[DragDrop]</code> log.</li>
+<li>When a multi-selection of snappable assets is dropped, they line up near the drop point.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>Dragging never opens a format dialog; the format follows the same rule as double-click import.</li>
+<li>Dropping images or audio into the viewport does not import them (they have no geometry or audio import target), so this is not a &quot;lost drag&quot; — use the context menu. Node trees and animation data can be dropped, but what they import is not visible in the viewport (node network / keyframes).</li>
+<li>A mixed selection with different placement rules (such as models plus lights) skips snapping and imports item by item.</li>
+<li>The dragged thumbnail follows the cursor, and snappable assets also show a drop-point preview.</li>
+</ul>

@@ -1,0 +1,21 @@
+<p>导入的材质或灯光与当前渲染器不一致时，插件会弹窗询问是否转换；选「否」会保留资产原来的渲染器节点。</p>
+<p><img src="media/shared/dialog-mapping-preview.webp" alt="跨渲染器前先看属性映射预览：哪些属性有对应、哪些会丢" loading="lazy" decoding="async"></p>
+<h2 id="h-1">症状</h2>
+<p>导入资产后出现「材质与渲染器不匹配」或「灯光与渲染器不匹配」对话框，提示资产属于某个渲染器、当前渲染器是另一个，并询问是否转换成当前渲染器类型。</p>
+<h2 id="h-2">原因</h2>
+<p>资产记录的是导出时的具体节点类型（常见为 Arnold、V-Ray、Redshift）。当前 Maya 的 <code>defaultRenderGlobals.currentRenderer</code> 与它不同，直接创建会得到另一套渲染器不认识的节点。</p>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>确认当前渲染器与对应插件已加载，避免转换目标类型不存在。</li>
+<li>选「是」：材质转换为当前渲染器的默认材质，灯光转换为当前渲染器对应类型；原节点会被替换。</li>
+<li>选「否」：按资产原类型保留节点，可之后右键「转换导入」再选目标类型。</li>
+<li>如果脚本编辑器提示「无 xxx -&gt; yyy 的映射路径」，说明缺少 <code>.mmap</code>，节点会保持原样，不会报错中断。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p>转换后 Hypershade / Outliner 中的节点类型属于当前渲染器；渲染不会再提示未知节点；场景材质或灯光显示正常。</p>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>检查目标 <code>.mmap</code> 是否在 <code>Assets/material_mapper_presets</code> 或 <code>Assets/light_mapper_presets</code>，以及文件名是否为 <code>源类型_目标类型.mmap</code>。</li>
+<li>只有 Arnold、V-Ray、Redshift 三种渲染器会自动询问转换；Maya 原生材质请用材质转换工具手动转。</li>
+<li>右键「导入」是先建后问；双击 <code>.zlight</code> 会直接按当前渲染器转换，不弹询问。</li>
+</ul>

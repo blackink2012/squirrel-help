@@ -1,0 +1,43 @@
+<blockquote><p>One-line summary: <strong>copy files of the chosen formats from a source folder to a target folder in bulk — with a dry run first so you can see what would be copied.</strong></p></blockquote>
+<p>It only copies files and <strong>never changes content, imports into the library or touches Maya</strong>. &quot;Mirror&quot; here means &quot;copy the matching files over&quot;, not two-way sync, and it <strong>never deletes</strong> extra files in the target.</p>
+<h2 id="h-1">Where to open it</h2>
+<table><thead><tr><th>Entry</th><th>How</th></tr></thead><tbody><tr><td>Top toolbar <strong>Quick tools</strong> menu</td><td><strong>Quick tools</strong> → <strong>Batch mirror copy</strong></td></tr><tr><td>Script browser</td><td><strong>Script browser</strong> → add the plug-in&#x27;s <code>quicktools</code> directory → double-click <code>批量镜像复制.py</code></td></tr></tbody></table>
+<p>The window is titled &quot;Batch mirror copy tool&quot;.</p>
+<p><img src="media_en/shared/quicktool-mirror.webp" alt="Batch mirror copy window" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What every control does</h2>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Title &quot;Batch mirror copy tool&quot;</td><td>The window&#x27;s purpose</td><td>—</td></tr><tr><td><strong>Help</strong> icon button</td><td>Opens this tool&#x27;s detailed help</td><td>—</td></tr><tr><td><strong>Source folder:</strong> plus <strong>Browse</strong></td><td>Where to look for files</td><td>Choose the assets&#x27; top directory</td></tr><tr><td><strong>Target folder:</strong> plus <strong>Browse</strong></td><td>Where files are copied</td><td>Never choose the source folder itself (it reports &quot;source and target must differ&quot;)</td></tr><tr><td><strong>File formats (comma separated, e.g. .exr, .hdr, .png)</strong> input (default <code>.exr, .hdr, .png, .jpg</code>)</td><td>Copies only these extensions; with or without the dot works, but follow the default style with dots</td><td>Change it as needed to <code>.png</code>, <code>.jpg, .jpeg</code> and so on</td></tr><tr><td>Checkbox <strong>Preview only (do not actually copy)</strong></td><td>Ticked = scan and log &quot;which files would be copied&quot; with no disk change</td><td><strong>Always tick it on the first run</strong></td></tr><tr><td>Checkbox <strong>Copy hierarchy</strong></td><td>Ticked = keep the source subdirectory structure; unticked = flatten everything into the target root</td><td>Tick it to keep the classification structure</td></tr><tr><td><strong>Start copy</strong></td><td>Runs (in preview mode it only writes the log)</td><td>—</td></tr><tr><td><strong>Clear log</strong></td><td>Clears the log area</td><td>—</td></tr><tr><td><strong>Close</strong></td><td>Closes the window</td><td>—</td></tr><tr><td>Status line (&quot;waiting to start...&quot; / &quot;processing&quot; / &quot;scanning files...&quot; / &quot;done&quot;)</td><td>Current stage</td><td>—</td></tr><tr><td><strong>Operation log:</strong> area</td><td>Prints per entry: source / target scanned, formats, each file&#x27;s <code>[copied]</code> / <code>[skipped] already exists</code> / <code>[preview] would copy</code> / <code>[failed]</code>, and totals at the end</td><td>Use it to verify the result</td></tr></tbody></table>
+<h2 id="h-3">A complete flow</h2>
+<ol>
+<li>Quick tools → <strong>Batch mirror copy</strong>;</li>
+<li>Choose the asset directory as <strong>Source folder</strong> and the destination as <strong>Target folder</strong> (a new directory is easiest);</li>
+<li>Fill the formats you want, such as <code>.png, .jpg</code>;</li>
+<li><strong>Tick Preview only (do not actually copy)</strong> and click <strong>Start copy</strong>;</li>
+<li>Read the totals at the end of the log and sample a few <code>[preview] would copy</code> lines to confirm the scope;</li>
+<li>Untick <strong>Preview only</strong> and decide whether to tick <strong>Copy hierarchy</strong>;</li>
+<li>Click <strong>Start copy</strong> again; this time it really copies;</li>
+<li>Read the final &quot;operation finished: total X, copied Y, skipped Z, failed W&quot;.</li>
+</ol>
+<h2 id="h-4">Where the output lands</h2>
+<ul>
+<li>Copied files land in the <strong>target folder</strong>;</li>
+<li>With <strong>Copy hierarchy</strong> ticked the source subdirectory structure is rebuilt under the target; unticked, everything piles into the target root (which is how same-named files collide, see below);</li>
+<li>Failed files appear in the log as <code>[failed] path - reason</code> and are counted in the final totals.</li>
+</ul>
+<h2 id="h-5">Behaviors to know</h2>
+<ul>
+<li><strong>A same-named file already in the target is skipped</strong>, with <code>[skipped] already exists: path</code> in the log — it <strong>never overwrites</strong>. So &quot;replace the old with the new&quot; cannot be done here: delete or rename the old file in the target before copying.</li>
+<li><strong>It only copies: no deleting and no renaming</strong>: extra old files in the target are left alone and never cleaned.</li>
+<li>Without <strong>Copy hierarchy</strong>, same-named files from different subdirectories collide in the target root and the later one is skipped as &quot;already exists&quot; — so whenever the source has duplicate names, tick <strong>Copy hierarchy</strong>.</li>
+<li>Because the strategy is &quot;skip if it exists&quot;, <strong>clicking Start copy repeatedly is safe</strong> and never piles up duplicates.</li>
+</ul>
+<h2 id="h-6">Risks and how to undo</h2>
+<ul>
+<li>Its only write is &quot;add files to the target directory&quot;: <strong>no overwrite and no delete</strong>, so the risk is low.</li>
+<li>The worst case is &quot;the target gained a pile of files&quot;: delete them using the <code>[copied]</code> paths in the log, or simply delete the whole target directory and start over.</li>
+<li>The one thing to be careful about is <strong>choosing the wrong target directory</strong> (pointing at a project directory in use, for example), where the copied files would mix into the project. Check the target path before running.</li>
+</ul>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>Its position in the <strong>Quick tools</strong> menu: <a href="#/en/15.2.6"><code>8.2.6</code></a></li>
+<li>Running scripts in batch on Maya files (not copying): <a href="#/en/15.14.5"><code>8.14.5</code></a></li>
+</ul>

@@ -1,0 +1,27 @@
+<p>Right-click a model asset in the grid and choose a geometry format under <code>「导入」 (Import)</code> to bring the model into the current Maya scene.</p>
+<p><img src="media_en/shared/menu-context-model.webp" alt="Model asset context menu: import geometry" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>A Maya scene is open and anything that must be kept has been saved.</li>
+<li>The model asset contains a geometry file such as ma, mb, fbx, obj, usd, abc, glb, gltf or dae.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the target model asset in the asset grid.</li>
+<li>With only one available format the menu shows <code>「导入 &lt;format&gt;」 (Import &lt;format&gt;)</code> directly; with several formats expand the <code>「导入」 (Import)</code> submenu.</li>
+<li>Choose the geometry format to use.</li>
+<li>Wait for the import log in the Script Editor.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>A new transform appears in the Outliner; for some formats the plug-in selects the new root nodes.</li>
+<li>The Script Editor shows <code>「导入成功」 (import succeeded)</code> or the import log of that format.</li>
+<li>For ma/mb the texture paths were rewritten and materials look right in the viewport; abc and usd were copied into the project cache.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Imports go into the root namespace <code>:</code>; Maya renames automatically when a same-named node already exists.</li>
+<li>ma/mb rewrite texture paths per the dependency import policy and redirect linked files under <code>deps/</code>.</li>
+<li>Formats that need persistent paths, such as abc and usd, are first copied into the project cache and then imported.</li>
+<li>If an fbx import does nothing, first check in Maya&#x27;s plug-in manager that <code>fbxmaya</code> is loaded.</li>
+</ul>

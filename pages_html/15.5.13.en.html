@@ -1,0 +1,36 @@
+<blockquote><p>One-line summary: <strong>these two items are the front door for &quot;bring asset content into Maya&quot;.</strong> How they look on the menu depends on how many importable formats the asset holds.</p></blockquote>
+<h2 id="h-1">Which sub-libraries have these two items</h2>
+<table><thead><tr><th>Sub-library</th><th>Import</th><th>Add reference</th></tr></thead><tbody><tr><td>Materials / models / lights / scenes / HDR / animation / node tree</td><td>✓</td><td>✓</td></tr><tr><td>Textures</td><td>— (uses <strong>Import textures ▶</strong>)</td><td>—</td></tr><tr><td>Images</td><td>— (uses <strong>Import as file node</strong> and similar)</td><td>—</td></tr><tr><td>Audio</td><td>— (uses <strong>Import to timeline</strong> and similar)</td><td>—</td></tr><tr><td>Animation data</td><td>— (uses <strong>Import animation ▶</strong>)</td><td>—</td></tr></tbody></table>
+<p>Sub-libraries without a generic Import are not unable to import; they each have a more specific entry — see their own pages.</p>
+<p><img src="media_en/shared/menu-import-formats.webp" alt="Import ▶ submenu: lists the formats this asset can be imported in" loading="lazy" decoding="async"></p>
+<h2 id="h-2">The three forms of Import on the menu</h2>
+<table><thead><tr><th>Form</th><th>When it appears</th><th>Example</th></tr></thead><tbody><tr><td>Single row &quot;Import &lt;format&gt;&quot;</td><td>The asset has only <strong>one</strong> usable format</td><td>Models: <code>Import ma</code>; HDR: <code>Import hdr</code></td></tr><tr><td>&quot;Import ▶&quot; submenu</td><td>The asset has <strong>several</strong> usable formats</td><td>Materials: zmetal / ma; lights: zlight / ma; animation: ma / abc</td></tr><tr><td>Sub-library specific entry</td><td>That sub-library&#x27;s import is more than &quot;import a file&quot;</td><td>Textures <code>Import textures ▶</code>, images <code>Import as file node</code>, audio <code>Import to timeline…</code>, animation data <code>Import animation ▶</code></td></tr></tbody></table>
+<p>Every submenu item is a &quot;format name&quot; (even with a single format the row reads like &quot;Import ma&quot;), and choosing one imports in that format.</p>
+<h2 id="h-3">&quot;Import ▶&quot; may also contain &quot;import version / LOD&quot;</h2>
+<p>When the asset is a master asset <strong>with versions, variants or several LODs</strong>, the <strong>Import ▶</strong> submenu gains a block of internal items (the heading varies with content):</p>
+<table><thead><tr><th>Item</th><th>Description</th></tr></thead><tbody><tr><td>Import variant / version ▶ (or &quot;Import variant ▶&quot;, &quot;Import version / LOD ▶&quot;)</td><td>Expands the asset&#x27;s versions / variants / LODs so you can import just one of them</td></tr><tr><td>Version nodes (such as <code>V1</code>, <code>V2</code>)</td><td>The version itself; go in and pick its LOD or geometry format</td></tr><tr><td>Variant</td><td>Variant entries, whose label carries a face count (such as &quot;— 12,345 faces&quot;)</td></tr><tr><td>Main version</td><td>The content of the asset&#x27;s main version</td></tr><tr><td>View versions / view variants / view LOD management</td><td>Not imports but a switch of the asset area into an &quot;internal view&quot; that browses internal entries like folders</td></tr></tbody></table>
+<p>The context menu of internal entries themselves (a reduced version) is in <a href="#/en/15.5.18"><code>8.5.18</code></a>.</p>
+<h2 id="h-4">The two forms of Add reference</h2>
+<table><thead><tr><th>Form</th><th>When it appears</th></tr></thead><tbody><tr><td>Single row &quot;Add reference&quot;</td><td>The asset has only <strong>one</strong> referenceable format</td></tr><tr><td>&quot;Add reference ▶&quot; submenu</td><td>The asset has <strong>several</strong> referenceable formats (typically animation&#x27;s ma / abc)</td></tr></tbody></table>
+<p>The referenceable formats are always this set: <code>.ma</code> / <code>.mb</code> / <code>.fbx</code> / <code>.abc</code> / <code>.usd</code> / <code>.obj</code>. When the asset holds none of them, the row does not appear.</p>
+<h2 id="h-5">Import or reference?</h2>
+<table><thead><tr><th>What you want</th><th>Choose</th><th>Why</th></tr></thead><tbody><tr><td>Edit geometry or material in the scene</td><td>Import</td><td>What comes in is real editable nodes</td></tr><tr><td>Just place it / follow asset updates</td><td>Add reference</td><td>The scene stores only a path, so reloading picks up asset updates</td></tr><tr><td>Keep the scene file small</td><td>Add reference</td><td>Content stays in the asset package and is not written into the scene</td></tr></tbody></table>
+<p>The price of referencing: <strong>moving, renaming or deleting the asset package breaks the reference</strong> (the scene then reports a missing file). Importing has no such problem, but content enters the scene and later asset changes do not follow.</p>
+<h2 id="h-6">What you see after clicking</h2>
+<ul>
+<li><strong>Import</strong>: content is created in the current scene; materials, lights and node trees <strong>select the newly created nodes</strong> automatically so you can keep working. When the current renderer differs from the asset&#x27;s source, a &quot;convert?&quot; prompt appears once.</li>
+<li><strong>Add reference</strong>: a reference node appears in the scene (marked as a reference in the Outliner) and the file itself is untouched.</li>
+<li><strong>Clicking import / reference with a multi-selection</strong>: it runs once for <strong>every selected asset</strong> (same format), not only the one you right-clicked.</li>
+</ul>
+<h2 id="h-7">Notes</h2>
+<ul>
+<li><strong>Import does not copy asset files</strong>: materials are still read from the package, so moving the package loses the textures in the scene.</li>
+<li><strong>Name conflicts ask first</strong>: when a node with the same name exists, the setting decides (ask / auto rename / overwrite), see <a href="#/en/6.6.1"><code>4.3.6.1</code></a>.</li>
+<li><strong>Where the docs say &quot;Import&quot;, the UI may read &quot;Import ma&quot;</strong>: the same command with a different look; it is not two features.</li>
+</ul>
+<h2 id="h-8">Related</h2>
+<ul>
+<li>Favorites / select all / duplicate / open folder: <a href="#/en/15.5.14"><code>8.5.14</code></a>; move to / copy to: <a href="#/en/15.5.15"><code>8.5.15</code></a></li>
+<li>Import overview and format routing: <a href="#/en/5.1.1"><code>4.2.1.1</code></a>; referencing geometry: <a href="#/en/5.4.1"><code>4.2.4.1</code></a>; importing variants / versions / LODs: <a href="#/en/5.3.2"><code>4.2.3.2</code></a></li>
+<li>Sub-library comparison table: <a href="#/en/15.5.1"><code>8.5.1</code></a></li>
+</ul>

@@ -1,0 +1,28 @@
+<p>The plug-in drives a <strong>running</strong> Maya through Maya&#x27;s native <code>commandPort</code>, and the connection only uses the loopback address <code>127.0.0.1</code>, so Maya is never exposed to the LAN.</p>
+<p><img src="media_en/shared/menu-maya-target.webp" alt="The Maya selection menu in the toolbar: online instances, ports and versions" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>Maya is running and its version is supported by the plug-in.</li>
+<li><code>「允许外部工具连接 Maya（独立版 / 命令行）」 (allow external tools to connect to Maya, standalone / command line)</code> is checked in settings. The matching option is <code>bridge_auto_port</code>, on by default, written into each version&#x27;s <code>userSetup.py</code> startup block at install time.</li>
+</ul>
+<h2 id="h-2">Port rules</h2>
+<p>Default ports count down by year: <code>port = 7001 + (2026 - version year)</code>.</p>
+<table><thead><tr><th>Maya</th><th>2026</th><th>2025</th><th>2024</th><th>2023</th><th>2022</th></tr></thead><tbody><tr><td>Port</td><td>7001</td><td>7002</td><td>7003</td><td>7004</td><td>7005</td></tr></tbody></table>
+<p>When a second instance of the same version starts, the default port is taken by the first one, so the later instance uses the backup range <code>7110~7129</code>; see &quot;Backup ports and auto-discovery&quot;.</p>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Start the target Maya and confirm the option above is enabled in settings.</li>
+<li>In the project root run <code>python maya_bridge.py --ping</code> and confirm a reply arrives.</li>
+<li>To see which versions are online run <code>python maya_bridge.py --scan</code>.</li>
+<li>To open the port manually, run this in Maya&#x27;s Script Editor (Python tab):</li>
+</ol>
+<pre><code class="language-python">import maya.cmds as cmds
+cmds.commandPort(name="127.0.0.1:7001", sourceType="python")</code></pre>
+<h2 id="h-4">Verify the result</h2>
+<p><code>--ping</code> returns a string like <code>2026 | &lt;untitled&gt;</code>, the first part being the Maya version and the second the current scene; <code>--scan</code> lists the online state of every port.</p>
+<h2 id="h-5">Tips and warnings</h2>
+<ul>
+<li>The channel is <strong>eval mode</strong>: it evaluates a single-line expression and returns its value; <code>print</code> output only goes to the Maya Script Editor and never back to the caller.</li>
+<li>Never call the bridge client from inside the Maya process: it would connect to itself and block the main thread, and the code has an explicit deadlock guard for that.</li>
+<li>To pin a target, set the <code>SQUIRREL_MAYA_PORT</code> environment variable, or use <code>--maya 2025</code> / <code>--port 7002</code>.</li>
+</ul>

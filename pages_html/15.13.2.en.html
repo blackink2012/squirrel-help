@@ -1,0 +1,43 @@
+<blockquote><p>One-line summary: <strong>a separate model configuration for AI search — choose a provider, enter a key and address, pick a model.</strong></p></blockquote>
+<p>It is the small window behind the ⚙ button at the top right of the AI search window and only governs <strong>AI search</strong>. Note that it is <strong>a different configuration from the global model in Settings → AI settings</strong>: changing this does not affect AI thumbnail analysis, and vice versa. The reason is practical — search needs to be fast and cheap while analysis needs to understand images, so they naturally pick different model tiers.</p>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Open the AI search window (see <a href="#/en/15.13.1"><code>8.13.1</code></a>);</li>
+<li>Click the <strong>⚙ (AI service configuration)</strong> button at its top right.</li>
+</ol>
+<h2 id="h-2">The four fields</h2>
+<p><img src="media_en/shared/dialog-ai-search-config.webp" alt="AI search settings window" loading="lazy" decoding="async"></p>
+<table><thead><tr><th>Control</th><th>Effect</th><th>How to fill it</th></tr></thead><tbody><tr><td>Provider</td><td>Which vendor&#x27;s model API to use. Options: Ollama (local), DeepSeek, Qwen (Alibaba Cloud DashScope), Zhipu (BigModel), OpenAI, custom (OpenAI compatible)</td><td>With Ollama installed locally choose <strong>Ollama (local)</strong> — no key and no network; for cloud choose the matching vendor</td></tr><tr><td>API key</td><td>The key for a cloud provider; local services do not need one</td><td>Required for cloud providers; the input is a password field showing dots. With Ollama the row grays out and clears</td></tr><tr><td>API address</td><td>The endpoint. When switching providers, if the current value is still some default address it is <strong>automatically replaced by that provider&#x27;s default</strong></td><td>Usually leave it; change it only for a proxy / relay (custom <strong>must</strong> be filled in)</td></tr><tr><td>AI model</td><td>The model actually used for intent analysis. The dropdown is <strong>fetched live from the provider</strong>, and you can also type a model name directly</td><td>Pick one from the list, or type the model when you know it</td></tr></tbody></table>
+<h2 id="h-3">Behaviors to know</h2>
+<ul>
+<li><strong>The model list is fetched live, not hard-coded.</strong> Opening the window, switching provider, or changing the API key / address and pressing Enter all refetch it; while loading it shows &quot;fetching model list…&quot;.</li>
+<li><strong>When the list cannot be fetched</strong> the dropdown holds only &quot;(cannot fetch model list, check the address / API key)&quot; — the address or key is wrong, fix those first.</li>
+<li><strong>Choosing a model saves immediately</strong> (still there after restarting the plug-in) and does not wait for OK.</li>
+<li><strong>Clicking OK before the list finishes loading is blocked</strong> with &quot;the model list has not finished loading, please wait&quot; — this prevents storing an empty model name.</li>
+<li><strong>Cancel only discards this session&#x27;s page changes</strong>, while model selections already saved live stay on disk. To truly return to the old state, select the previous provider / model again.</li>
+<li>This configuration only affects AI search&#x27;s <strong>intent analysis</strong>. It does not take part in retrieval when <strong>use global model</strong> is unticked in the AI search window.</li>
+</ul>
+<h2 id="h-4">How it relates to the global model in Settings → AI settings</h2>
+<table><thead><tr><th></th><th>AI search settings (this page)</th><th>Settings → AI settings (global model)</th></tr></thead><tbody><tr><td>Governs</td><td>Only AI search intent analysis</td><td>AI thumbnail analysis, AI assistant and other global calls</td></tr><tr><td>Storage</td><td>AI search&#x27;s own namespace, saved independently</td><td>Plug-in settings (applied as a whole on OK)</td></tr><tr><td>Do they affect each other</td><td>No: changing one leaves the other alone</td><td>Same</td></tr><tr><td>When it applies</td><td>When the AI search window has <strong>use global model</strong> ticked</td><td>All AI features use it by default</td></tr></tbody></table>
+<h2 id="h-5">Troubleshooting a model list that will not load</h2>
+<table><thead><tr><th>Symptom</th><th>Likely cause</th><th>What to do</th></tr></thead><tbody><tr><td>The dropdown shows only &quot;(cannot fetch model list…)&quot;</td><td>Wrong or expired API key, or a wrong API address</td><td>First confirm the key belongs to this provider, then reset the address to that provider&#x27;s default</td></tr><tr><td>Ollama cannot list models either</td><td>Local Ollama is not running, or the port is not the default 11434</td><td>Start Ollama, then switch provider once in the window to trigger a refetch</td></tr><tr><td>The list loads but sending reports &quot;model does not exist&quot;</td><td>The chosen model is unavailable / retired for that provider</td><td>Pick another from the list, or type a model name that really exists</td></tr><tr><td>OK is blocked with &quot;model list has not finished loading&quot;</td><td>The list is still fetching in the background</td><td>Wait two seconds or select an existing entry first</td></tr></tbody></table>
+<h2 id="h-6">A complete configuration flow</h2>
+<ol>
+<li>AI search window → ⚙;</li>
+<li>Choose the <strong>provider</strong> (on first use, validate the path with Ollama (local));</li>
+<li>For a cloud provider enter the API key; the default address is correct, leave it;</li>
+<li>Wait for the <strong>AI model</strong> dropdown to change from &quot;fetching model list…&quot; to a real list;</li>
+<li>Pick a model (or type its name);</li>
+<li>Click <strong>OK</strong>;</li>
+<li>Back in the AI search window tick <strong>use global model</strong>, send a sentence and check which mode the result note reports.</li>
+</ol>
+<h2 id="h-7">What you see afterwards / how to undo</h2>
+<ul>
+<li>Once configured, AI search performs intent analysis with these settings; the note above the results reflects the current mode.</li>
+<li>To undo, switch the provider back (to Ollama (local), for example) or reselect the previous model. Everything here only affects AI search and never touches the library or the scene, so the worst case is inaccurate search.</li>
+</ul>
+<h2 id="h-8">Related</h2>
+<ul>
+<li>Using the window itself: <a href="#/en/15.13.1"><code>8.13.1</code></a></li>
+<li>Where the global model (for AI thumbnail analysis) is configured: <a href="#/en/15.9.3"><code>8.9.3</code></a></li>
+</ul>

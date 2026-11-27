@@ -1,0 +1,27 @@
+<p>The thumbnail output size is the default edge length shared by generated and captured thumbnails; it decides sharpness as well as render time and file size.</p>
+<p><img src="media_en/shared/settings-thumb-size.webp" alt="Thumbnail" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>It unifies the square edge length used by default for headless renders, AI thumbnail shots, export screenshots and the screenshot tool.</p>
+<h2 id="h-2">Values and default</h2>
+<ul>
+<li>256 × 256, 384 × 384, 512 × 512 (default), 768 × 768, 1024 × 1024.</li>
+<li>When the settings file holds a value off the list, the dropdown shows an extra <code>「自定义」 (Custom)</code> entry keeping that value.</li>
+<li>It is clamped to 64–4096 pixels when read.</li>
+</ul>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>Generation side: headless offscreen rendering, AI thumbnail shots, playblast and render thumbnails on export, and the thumbnail cap for ingesting external files and PBR imports.</li>
+<li>Capture side: the initial width × height of the screenshot tool and the long edge of preview-panel quick captures.</li>
+<li>Quick tools (HDR / model / PBR to <code>.zasset</code>) also follow it.</li>
+<li>It never decides how large thumbnails appear in the main grid; the toolbar slider does that.</li>
+<li>It applies from the next generation or capture after <code>「应用」 (Apply)</code>; no restart is needed.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<ul>
+<li>Raise it for sharper asset covers, at the cost of headless render time and file size.</li>
+<li>Lower it when batch output needs speed or disk space is tight.</li>
+<li>512 balances sharpness and cost, so the default suits most cases.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<blockquote><p><strong>Tip</strong>: raising it never redoes existing thumbnails; regenerate or recapture them.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: headless rendering and the screenshot tool share this one value, so do not change it in only one dialog.</p></blockquote>

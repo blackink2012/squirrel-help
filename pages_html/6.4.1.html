@@ -1,0 +1,32 @@
+<p>「设置 → 导出默认值」按子库保存新建资产时默认勾选的格式和选项，保存在插件目录的 <code>Assets/preset/export_preset.json</code>。</p>
+<p><img src="media/shared/settings-export.webp" alt="设置 → 导出默认值" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>能打开插件设置窗口。</li>
+<li>明确哪个子库要改默认值。左侧列表来自 <code>Assets/preset/config.json</code> 的 <code>sub_libraries</code>，当前内置 <strong>11 个</strong>子库：材质（materials）、模型（models）、灯光（lights）、贴图（textures）、场景（scenes）、HDR（hdr）、动态（ani）、图片（images）、音频（audio）、动画数据（animation）、节点树（nodetree）；此外还有自定义子库。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>打开「设置」，切到「导出默认值」页签。</li>
+<li>在左侧列表选择子库，例如 <code>materials</code>。</li>
+<li>在右侧勾选默认项：<ul>
+<li>「材质格式」：<code>材质节点 (.zmetal)</code>、<code>合并材质 (.zmetal_merge)</code>、<code>材质→模型映射 (.mcm)</code>。</li>
+<li>「几何体格式」：<code>ma</code>、<code>mb</code>、<code>fbx</code>、<code>obj</code>、<code>usd</code>。</li>
+<li>「缓存与代理」：<code>abc</code>、<code>arnold</code>、<code>vray</code>、<code>redshift</code>、<code>vrmesh</code>。</li>
+<li>「收集关联文件」：是否默认收集缓存/代理/引用，是否默认打包贴图。</li>
+<li>「导出选项」：是否默认「仅导出材质」。</li>
+</ul></li>
+<li>切换到另一个子库继续设置；当前子库的勾选会先记在内存里。</li>
+<li>点击「应用」或「确定」写回 <code>export_preset.json</code>。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>关闭并重新打开设置，「导出默认值」页签仍显示刚才的勾选。</li>
+<li>在对应子库点击「创建资产」，对话框里的格式勾选与默认值一致。</li>
+<li><code>Assets/preset/export_preset.json</code> 中对应子库的布尔值已更新。</li>
+</ul>
+<h2 id="h-4">提示与警告</h2>
+<blockquote><p><strong>提示</strong>：默认值只影响「创建资产」；「更新资产」会按资产已有格式恢复勾选，选择「追加格式」时则所有格式默认不勾选。</p></blockquote>
+<blockquote><p><strong>提示</strong>：在导出对话框里临时改的勾选只作用于这一次，不会写回默认值。</p></blockquote>
+<blockquote><p><strong>提示</strong>：子库在预设文件里没有条目时读取 <code>_default</code>；<code>_default</code> 也没有时退回 <code>materials</code> 段。</p></blockquote>
+<blockquote><p><strong>当前版本</strong>：该页签的界面按钮是「应用」和「确定」，没有单独的「保存」按钮。</p></blockquote>

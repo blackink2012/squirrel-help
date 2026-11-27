@@ -1,0 +1,25 @@
+<p>A disconnect usually is not a broken plug-in: Maya has exited, the bridge port is closed, the port moved to the backup range, or the main thread is held by a modal dialog or a long command.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The standalone edition reports no online Maya, or a call returns <code>maya_offline</code> / <code>port_closed</code>.</li>
+<li><code>--ping</code> cannot connect, or connects but never gets a reply.</li>
+<li>An asset cannot be imported although Maya is online, or it lands in another Maya.</li>
+</ul>
+<h2 id="h-2">Causes and fixes</h2>
+<ol>
+<li><strong>Look at the Maya window first</strong>: with a crash-recovery, unsaved-changes or error dialog present, dismiss it and retry the read-only query. A modal dialog holds the main thread and looks exactly like a hang.</li>
+<li>Run <code>python maya_bridge.py --doctor</code> to see who is online, who listens without answering and whether render leftovers exist.</li>
+<li>If only the port changed, use <code>--scan</code> to find the actual port and then connect with <code>--maya version</code> or <code>--port port</code>; setting <code>SQUIRREL_MAYA_PORT</code> also works.</li>
+<li>If the port is closed, check <code>「允许外部工具连接 Maya（独立版 / 命令行）」 (allow external tools to connect to Maya)</code> in settings, or run <code>cmds.commandPort(...)</code> inside Maya.</li>
+<li>Once it is confirmed to be a hang (not a dialog), use <code>python maya_bridge.py --doctor --kill-hung</code> to clear only instances that listen but do not answer.</li>
+<li>With no usable instance use <code>python maya_bridge.py --doctor --launch</code>, which starts Maya and waits until it really answers.</li>
+<li>Idempotent tasks can add <code>--retry-if-crashed</code> to clean up, launch and resubmit once; a task file containing <code>SQ_DESTRUCTIVE = True</code> is refused.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p><code>--ping</code> returns <code>version | scene</code> again, <code>--doctor</code> marks the target port healthy, and the standalone toolbar&#x27;s target tooltip shows the expected scene.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>Self-healing only suits idempotent or read-only tasks. A crash loses the unsaved scene, and a resubmit only reruns the task itself, never restoring the original session state.</li>
+<li>There is no resident supervisor process, so Maya is not started automatically when nobody is running a task.</li>
+<li>Every self-healing attempt appends a record to <code>~/.squirrel_asset_manager/bridge_recover.log</code>.</li>
+</ul>

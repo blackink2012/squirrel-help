@@ -1,0 +1,33 @@
+<p>The plug-in edition opens from the Custom category of the Maya shelf or from the status-line icon; the standalone edition opens from the Start menu, the desktop shortcut or the main program.</p>
+<p><img src="media/2.3.1-1.webp" alt="Maya shelf: switch to the Custom tab and click the framed squirrel button to start the plug-in" loading="lazy" decoding="async"></p>
+<p><img src="media/2.3.1-2.webp" alt="The squirrel icon on the right of the Maya status line: another launch entry point" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Maya plug-in edition</h2>
+<ol>
+<li>Open Maya and wait until startup finishes.</li>
+<li>Switch the shelf to the <code>「自定义（Custom）」 (Custom)</code> tab and click the <code>「松鼠资产管家」 (Squirrel Asset Manager)</code> button.</li>
+<li>Or click the squirrel icon on the right side of the Maya status line.</li>
+<li>You can also run this in the Script Editor:</li>
+</ol>
+<pre><code class="language-python">from squirrel_asset_manager.ui.main_window import MaterialLibraryWindow
+MaterialLibraryWindow.show_window()</code></pre>
+<p>The plug-in does not register a separate Maya menu item; the shelf, the status line and the script are the complete set of entry points. Calling it again in the same Maya session brings the existing window forward instead of opening a second one.</p>
+<h2 id="h-2">Standalone edition / EXE</h2>
+<ul>
+<li>Start menu: <code>Squirrel Asset Manager</code>.</li>
+<li>Desktop shortcut: <code>Squirrel Asset Manager</code>.</li>
+<li>Run <code>SquirrelAssetManager.exe</code> in the install directory directly.</li>
+<li>From source: double-click <code>启动独立预览.bat</code> (Start standalone preview), or run <code>python squirrel_asset_manager\standalone_preview.py</code>.</li>
+</ul>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The main window appears and its title contains the current version number.</li>
+<li>The category tree on the left and the asset grid are visible.</li>
+<li>In the standalone edition the toolbar shows the Maya selection dropdown and the connection state.</li>
+</ul>
+<h2 id="h-4">Common failures</h2>
+<ul>
+<li><strong>No button on the shelf</strong>: the button is created only at install time and is not rebuilt at startup after manual deletion; run the installer again to recreate it. It can also be missed when Maya was running but the shelf was not ready during installation — reinstall once more.</li>
+<li><strong>Status-line icon missing</strong>: <code>PySide</code> / <code>shiboken</code> failed to import; check the Maya Script Editor output.</li>
+<li><strong>Script says the module cannot be found</strong>: the install directory is not on <code>sys.path</code>; run the installer again and check the matching Maya version to repair the integration.</li>
+<li><strong>Double-clicking the standalone edition does nothing</strong>: check whether antivirus software blocked it, and whether <code>runtime\python\python.exe</code> is intact.</li>
+</ul>

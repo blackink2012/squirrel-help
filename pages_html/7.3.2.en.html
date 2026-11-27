@@ -1,0 +1,22 @@
+<p>An attribute mapping can be saved as an <code>.mmap</code> preset, loaded again next time and reused by the material conversion tool.</p>
+<p><img src="media_en/shared/dialog-mapping-preview.webp" alt="Material attribute mapping" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The source / target node types are loaded in the mapping tool and the mapping rows are filled in.</li>
+<li>Write access to the plug-in directory <code>Assets/material_mapper_presets</code>.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Click <code>「保存预设」 (Save preset)</code>; the tool names the file <code>source node type_target node type</code> by default and saves it to <code>Assets/material_mapper_presets</code>.</li>
+<li>When the file name does not end in <code>.mmap</code> the tool appends it; the saved content includes <code>source_type</code>, <code>target_type</code>, <code>created_date</code> and the complete <code>mappings</code>.</li>
+<li>Next time click <code>「加载预设」 (Load preset)</code>, choose the <code>.mmap</code>, and the tool restores the source / target types and all mapping rows.</li>
+<li>For a reverse mapping click <code>「反向映射」 (Reverse mapping)</code>; the tool swaps the source / target node types and attributes and tries to replace transform functions with their reverse counterparts.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>After reloading, the source / target node types and the row count match what was saved; after placing that <code>.mmap</code> in the material mapping directory, <code>「浏览...」 (Browse...)</code> in the material conversion tool finds and loads it.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Closing the window saves the current configuration to <code>_last_preset.mmap</code> automatically and restores it next time.</li>
+<li>For the conversion tool to find a mapping automatically by &quot;source → target&quot;, the file must be named <code>source type_target type.mmap</code> and live in <code>Assets/material_mapper_presets</code>.</li>
+<li>What is saved is an attribute rule, not a material instance; changes to a preset only take effect after converting again.</li>
+</ul>

@@ -1,0 +1,29 @@
+<p>The plug-in has no central log hub; most diagnostic output goes to the Maya Script Editor, and you then look in the matching directory by problem type.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>You want to report a problem but do not know which file to attach.</li>
+<li>The Script Editor only shows part of the output, and the record disappears after a restart.</li>
+<li>Crashes, bridging and AI installation each leave a pile of logs and you cannot tell which is relevant.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>Only the UI message was read</td><td>The UI shows one line while the full error is in the Script Editor</td><td>Open the Script Editor and reproduce once</td></tr><tr><td>Logs are split by feature</td><td>Bridging, AI installation and headless jobs each have their own files</td><td>Find the matching file in the table below</td></tr><tr><td>Logs were rotated or cleaned</td><td>The directory only holds the last few runs</td><td>Copy them immediately after reproducing</td></tr><tr><td>The crash left no time to write logs</td><td>The process exited outright</td><td>Check the crash dump and the Windows event log</td></tr></tbody></table>
+<h2 id="h-3">Common log locations</h2>
+<table><thead><tr><th>Location</th><th>Content</th></tr></thead><tbody><tr><td>Maya Script Editor</td><td>Main output and tracebacks for plug-in runtime, import/export, rendering and material conversion</td></tr><tr><td><code>~\.squirrel_asset_manager\bridge_port.log</code></td><td>commandPort port assignment, conflicts and fallback ports</td></tr><tr><td><code>~\.squirrel_asset_manager\bridge_recover.log</code></td><td>Disconnect self-healing, cleanup, launch and re-dispatch records</td></tr><tr><td><code>~\.squirrel_asset_manager\broker_boot.log</code></td><td>Why registering with the AI broker failed at Maya startup</td></tr><tr><td><code>&lt;package&gt;\dsh_home\dsh_install.log</code></td><td>dsh installation process</td></tr><tr><td><code>&lt;package&gt;\dsh_home\broker_daemon.log</code></td><td>AI broker process output</td></tr><tr><td><code>&lt;package&gt;\dsh_home\squirrel_web_&lt;instance&gt;.log</code></td><td>dsh front-end startup output</td></tr><tr><td><code>%TEMP%\squirrel_asset_manager\ai_install.log</code></td><td>AI dependency installation log</td></tr><tr><td><code>%TEMP%\squirrel_standalone_host.log</code></td><td>Standalone host startup log</td></tr><tr><td><code>worker.log</code> in the headless job working directory</td><td>Job logs for headless thumbnail generation, format conversion and similar</td></tr><tr><td><code>%TEMP%\MayaCrashLog&lt;date&gt;.&lt;time&gt;.dmp</code></td><td>Maya crash dump</td></tr><tr><td>Windows Event Viewer → Application</td><td>Crash module name, fault offset and exception code</td></tr><tr><td><code>%TEMP%\squirrel_pre_render\</code></td><td>Scene backups taken before rendering, not logs</td></tr></tbody></table>
+<p><code>dsh_home</code> is the <code>dsh_home</code> directory inside the plug-in package by default; if <code>SQUIRREL_DSH_HOME</code> or <code>DSH_HOME</code> is set, the environment variable wins.</p>
+<h2 id="h-4">Steps</h2>
+<ol>
+<li>Open the Maya Script Editor, clear it, reproduce the problem and copy the full traceback.</li>
+<li>Locate logs by problem type: <code>bridge_*</code> for bridging, <code>dsh_home</code> for AI, <code>ai_install.log</code> for installation.</li>
+<li>For crashes, also record the module name and offset from the event log and keep the matching dump.</li>
+<li>Copy the key snippets into your report instead of just saying &quot;it errored&quot;.</li>
+<li>For long logs keep the beginning, the end and the area around the timestamp, and state when you reproduced it.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<p>You can state clearly which layer failed and point at the log or dump from the matching time.</p>
+<h2 id="h-6">If it still fails</h2>
+<ul>
+<li>Copy logs right after reproducing so the next launch does not overwrite them.</li>
+<li>If a directory does not exist, that feature never reached the logging step; go back to the troubleshooting page for that feature.</li>
+<li>If you are unsure which file to read, work through 6.8.2 &quot;Diagnostic workflow&quot; layer by layer.</li>
+<li>When submitting feedback, use 6.8.3 &quot;Feedback template&quot; and include log paths and key snippets.</li>
+</ul>

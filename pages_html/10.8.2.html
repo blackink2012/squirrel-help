@@ -1,0 +1,25 @@
+<p>Maya 崩溃后，端口往往仍显示 LISTENING，但那通常是残留进程或崩溃报告器；恢复要先体检，再决定清理还是拉起。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>Maya 窗口消失，或重启后客户端仍报连不上。</li>
+<li><code>netstat</code> 显示端口在监听，但 <code>--ping</code> 被拒或超时。</li>
+<li>新启动的 Maya 跑到了 <code>7110</code> 而不是默认的 <code>7001</code>。</li>
+<li><code>%TEMP%</code> 下出现新的 <code>MayaCrashLog&lt;日期&gt;.&lt;时间&gt;.dmp</code>。</li>
+</ul>
+<h2 id="h-2">解决步骤</h2>
+<ol>
+<li><strong>先看 Maya 窗口</strong>：如果是崩溃恢复、未保存提示这类模态框，点掉它可以救回未保存场景，不要急着杀进程。</li>
+<li>执行 <code>python maya_bridge.py --doctor</code>，查看每个端口的监听、应答、PID 与判定。</li>
+<li>确认是「监听但不应答」后，执行 <code>python maya_bridge.py --doctor --kill-hung</code>，只清卡死实例，健康实例不动。</li>
+<li>没有可用实例时执行 <code>python maya_bridge.py --doctor --launch</code>，它会拉起 Maya 并等到真能应答。</li>
+<li>收尾用 <code>--scan</code> / <code>--ping</code> 确认在线的版本与场景；客户端只认某端口时设 <code>SQUIRREL_MAYA_PORT=7110</code>。</li>
+<li>根据 <code>--doctor</code> 列出的渲染残留进程（<code>mayabatch</code> / <code>Render</code> / <code>kick</code> / <code>oiiotool</code>）确认是否需要结束。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p><code>--ping</code> 返回 <code>版本 | 场景</code>，<code>--doctor</code> 中目标端口判定为 healthy，且没有新增崩溃转储。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>目前没有常驻监督进程，不会在没人跑任务时自动拉起 Maya。</li>
+<li><code>--retry-if-crashed</code> 只对幂等 / 只读任务可用；任务声明 <code>SQ_DESTRUCTIVE = True</code> 时会被拒绝重投。</li>
+<li>自动保存只保护已存过盘的场景；程序驱动、无人工交互时是否落盘尚未验证，重要场景请先手动保存。</li>
+</ul>

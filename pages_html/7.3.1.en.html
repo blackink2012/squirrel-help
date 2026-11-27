@@ -1,0 +1,24 @@
+<p>Two-column attribute mapping is the row-by-row correspondence of &quot;source material attribute → target material attribute&quot;; conversion copies or converts values according to these rows.</p>
+<p><img src="media_en/shared/dialog-mapping-preview.webp" alt="Material attribute mapping" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The source and target material nodes can be selected in the Maya scene.</li>
+<li><code>「材质节点属性映射工具」 (Material node attribute mapping tool)</code> is open.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select the source material node in Maya and click <code>「加载源材质」 (Load source material)</code> in the tool.</li>
+<li>Select the target material node and click <code>「加载目标材质」 (Load target material)</code>.</li>
+<li>Click <code>「添加行」 (Add row)</code>, pick the source attribute in the left column and the target attribute in the right column.</li>
+<li>When a conversion is needed, pick a function in the <code>「转换函数」 (Transform function)</code> column (such as <code>glossiness to roughness</code> or <code>transparency to transmission (weight)</code>); functions with arguments take JSON in the <code>「参数(JSON)」 (Parameters (JSON))</code> column, for example <code>{&quot;scalar&quot;: 2.0}</code>.</li>
+<li>Fill <code>「默认值」 (Default value)</code> for a fallback; you can also select a target material first and click <code>「载入默认值」 (Load defaults)</code> to batch-fill the column with its current values.</li>
+<li>When an attribute is unclear, click <code>「属性浏览器」 (Attribute browser)</code> and pick from the selected node&#x27;s readable, writable and visible attributes.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The row count matches the intended mapping and both columns show attribute names; the status bar shows the row count; after converting to a new material the target values match the source values or the selected function&#x27;s conversion result.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Do not map color sub-channels (such as <code>diffuseColorR</code>) individually; a color is written through its parent attribute, and writing sub-channels separately often yields wrong results.</li>
+<li>When the same source attribute appears again, the later row is cleared and a duplicate is reported.</li>
+<li>The search box filters rows live by keyword, which helps in large tables.</li>
+</ul>

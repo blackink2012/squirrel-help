@@ -1,0 +1,28 @@
+<p>If the category tree will not open, usually the library root is unreachable, the index cache is incompatible with the current code, or the category metadata is corrupted.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The sidebar stays on the loading placeholder, or is simply blank with no sub-libraries or categories.</li>
+<li>Sub-library nodes exist, but sub-categories are empty, or the custom category disappeared.</li>
+<li>The category tree does not refresh after switching asset libraries; only restarting the plug-in restores it.</li>
+<li>The Script Editor shows <code>[MaterialManager] 库路径无效</code> (invalid library path) or an incompatible index cache message.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>Library root is invalid</td><td>The path was moved or deleted, or a network drive is not connected</td><td>Reselect an existing directory in the library list</td></tr><tr><td>No read permission</td><td>Opening the library directory is denied, or antivirus blocks it</td><td>Restore read access and refresh</td></tr><tr><td>Index cache incompatible with the current version</td><td>The log says &quot;index cache incompatible, falling back to a full scan&quot;</td><td>Clear the cache and reload</td></tr><tr><td>Category metadata corrupted</td><td>One sub-library or category directory keeps failing to load</td><td>Back up the library, then rescan it separately or restore from backup</td></tr><tr><td>Sub-library/category changed in configuration</td><td><code>config.json</code> was edited but the UI did not change</td><td>Re-read the configuration</td></tr><tr><td>Folders added or renamed by hand were not synced</td><td>A directory exists on disk but not in the tree</td><td>Use <strong>Sync categories from folder</strong></td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>In the library list or settings, confirm the current library root exists, can be opened, and is not a disconnected network drive.</li>
+<li>In the AI assistant or command surface run <code>library_health</code> with <code>op=status</code> and check <code>library_root</code>, <code>is_loaded</code>, <code>asset_count</code> and <code>category_count</code>.</li>
+<li>If you suspect the cache, run <code>op=clear_cache</code>, then <code>op=reload</code>, so the plug-in rescans the disk.</li>
+<li>If you changed sub-library or category configuration, run <code>op=reload_config</code>, then refresh the UI.</li>
+<li>If you added category folders on disk by hand, use <strong>Sync categories from folder</strong> to bring them into the tree.</li>
+<li>After fixing permissions or paths, close and reopen the plug-in window.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>The sidebar shows all sub-libraries and sub-categories, the asset counts match the number of <code>.zasset</code> folders on disk, and the grid refreshes when switching categories.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Check the <code>[MaterialManager]</code> log in the Script Editor to see whether the problem is the path, permissions, or a specific asset failing to load.</li>
+<li>Back up the whole asset library before trying <code>library_health</code> <code>op=reload</code>; never hand-edit or delete category metadata files.</li>
+<li>If only one sub-library is affected, switch to another library to confirm the plug-in itself is fine, then handle that sub-library separately.</li>
+<li>Follow 6.3.3 &quot;Library health anomalies&quot; to read the load-failure list, or 6.8.2 &quot;Diagnostic workflow&quot; to collect information for a report.</li>
+</ul>

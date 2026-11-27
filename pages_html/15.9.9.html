@@ -1,0 +1,47 @@
+<blockquote><p>一句话定位：<strong>三份清单：哪些扩展名算几何体、哪些算图像、哪些节点算材质节点。</strong></p></blockquote>
+<p><strong>这一页默认是锁住的</strong>，必须先勾「解锁全部配置」并确认警告才能改（见 <a href="#/15.9.1"><code>8.9.1</code></a>）。</p>
+<p><img src="media/shared/settings-other.webp" alt="设置窗口（其它配置页）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">怎么打开</h2>
+<p>设置窗口 → 勾「解锁全部配置」→ 页签「其它配置」→ 在左侧列表里选中要改的那一项。</p>
+<h2 id="h-2">控件详解</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值</th><th>改了会怎样</th><th>需要先解锁</th></tr></thead><tbody><tr><td>配置项列表</td><td>左侧列表</td><td>选要编辑哪一份清单</td><td>「几何体扩展名」</td><td>右侧显示该项的完整说明与编辑框</td><td>是</td></tr><tr><td>说明行</td><td>只读文字</td><td>跟着左侧选中项变化的完整解释</td><td>—</td><td>—</td><td>否</td></tr><tr><td>编辑提示</td><td>只读文字</td><td>「每行一个，修改后请点击「应用」」</td><td>—</td><td>—</td><td>否</td></tr><tr><td>清单编辑框</td><td>多行等宽文本框（每行一个值）</td><td>编辑当前选中的那份清单</td><td>见下面三份默认清单</td><td>见每一项的「改了会怎样」</td><td>是</td></tr></tbody></table>
+<h2 id="h-3">三项清单分别是什么</h2>
+<h3 id="h-4">1. 几何体扩展名</h3>
+<ul>
+<li><strong>作用</strong>：导入时识别几何体文件的扩展名（如 <code>.ma</code>、<code>.fbx</code>、<code>.obj</code>）。</li>
+<li><strong>默认值</strong>：<code>.ma</code> <code>.mb</code> <code>.fbx</code> <code>.obj</code> <code>.abc</code> <code>.usd</code> <code>.usda</code> <code>.usdc</code> <code>.glb</code> <code>.gltf</code> <code>.dae</code> <code>.ass</code> <code>.proxy</code> <code>.vrmesh</code> <code>.vdb</code></li>
+<li><strong>改了会怎样</strong>：只对「<strong>整个文件夹收进资产库</strong>」这条路径生效 —— 根级文件按它分成 <code>node.{ext}</code>（几何）；单文件收进库按内置扩展名表推断子库，改这里不影响。</li>
+<li><strong>坑</strong>：少了 <code>.fbx</code>，整个文件夹入库时 FBX 就不会被认成几何文件。</li>
+</ul>
+<h3 id="h-5">2. 图像 / 贴图扩展名</h3>
+<ul>
+<li><strong>作用</strong>：导入时识别图像 / 贴图文件的扩展名（如 <code>.png</code>、<code>.exr</code>、<code>.hdr</code>）。</li>
+<li><strong>默认值</strong>：<code>.png</code> <code>.jpg</code> <code>.jpeg</code> <code>.exr</code> <code>.hdr</code> <code>.tga</code> <code>.tiff</code> <code>.tif</code> <code>.bmp</code> <code>.psd</code></li>
+<li><strong>改了会怎样</strong>：同样只对「整个文件夹收进资产库」生效（命中的文件进 <code>textures/</code>）；贴图扫描、单文件收进库走内置表，改这里不影响。</li>
+<li><strong>坑</strong>：少了 <code>.exr</code>，整套 PBR 里 EXR 贴图不会跟着进库。</li>
+</ul>
+<h3 id="h-6">3. 材质节点类型</h3>
+<ul>
+<li><strong>作用</strong>：导出 / 更新资产时，用来判断场景里哪些节点算材质节点。</li>
+<li><strong>默认值</strong>：<code>aiStandardSurface</code>、<code>standardSurface</code>、<code>lambert</code>、<code>blinn</code>、<code>phong</code>、<code>openPBRSurface</code>、<code>pxrSurface</code>、<code>aiHair</code>、<code>aiSkin</code>、<code>aiVolume</code>、<code>VRayMtl</code>、<code>RedshiftMaterial</code></li>
+<li><strong>改了会怎样</strong>：导出资产、右键「更新资产」、批量导出三条路径都读这一项，是它们的<strong>唯一来源</strong>。</li>
+<li><strong>坑</strong>：少了你常用的渲染器材质（比如只装了 Redshift 却没写 <code>RedshiftStandardMaterial</code>），导出时会「找不到材质节点」，结果是空资产或「仅导出材质」报错（见 <a href="#/6.5.1"><code>4.3.5.1</code></a>）；加多了（比如把 <code>transform</code> 也写进去）会把非材质节点当材质。</li>
+</ul>
+<h2 id="h-7">改的时候的通用规则</h2>
+<ul>
+<li>一行一个值；扩展名要带点，Maya 节点名按原样大小写写；</li>
+<li>空行会被忽略；</li>
+<li>改完必须点「应用」或「确定」才写入 <code>config.json</code>；</li>
+<li>三份清单是各自独立的，切换左侧项时插件会自动保存上一项的编辑内容。</li>
+</ul>
+<h2 id="h-8">反悔</h2>
+<table><thead><tr><th>情况</th><th>怎么反悔</th></tr></thead><tbody><tr><td>还没保存</td><td>点「取消」</td></tr><tr><td>已保存</td><td>点「恢复默认设置」→ 这一页的三份清单会<strong>恢复成内置出厂值</strong>（这是本页和「支持格式」页不同的地方，见 <a href="#/15.9.1"><code>8.9.1</code></a>），再点「应用 / 确定」落盘</td></tr><tr><td>手改坏了 config.json</td><td>用备份的 <code>config.json</code> 覆盖回去（<code>&lt;插件目录&gt;\Assets\preset\</code>）</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>「材质节点类型」直接影响导出能不能认出材质。改之前用一份小库试一下导出，确认没问题再在正式库上用。</p></div>
+<h2 id="h-9">相关</h2>
+<ul>
+<li>设置窗口总览与全局锁定 → <a href="#/15.9.1"><code>8.9.1</code></a></li>
+<li>「支持格式」页（资产文件白名单） → <a href="#/15.9.6"><code>8.9.6</code></a></li>
+<li>材质节点与几何格式（导出对话框） → <a href="#/6.2.5"><code>4.3.2.5</code></a></li>
+<li>空壳资产（导出找不到材质的后果） → <a href="#/6.5.1"><code>4.3.5.1</code></a></li>
+<li>config.json 的结构 → <a href="#/12.4.1"><code>5.4.1</code></a></li>
+</ul>

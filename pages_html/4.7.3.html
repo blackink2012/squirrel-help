@@ -1,0 +1,25 @@
+<p>拍屏用视口快速出图，渲染图用当前渲染器出高质量图；两者都可以选当前帧或时间轴。</p>
+<p><img src="media/shared/menu-thumbnail.webp" alt="右键 → 更新缩略图 →「Maya 拍屏」/「渲染图」" loading="lazy" decoding="async"></p>
+<h2 id="h-1">两种来源对比</h2>
+<table><thead><tr><th>来源</th><th>速度</th><th>画质</th><th>适合</th></tr></thead><tbody><tr><td>Maya 拍屏</td><td>较快</td><td>视口画面</td><td>模型、场景、需要动画预览的资产</td></tr><tr><td>渲染图</td><td>较慢</td><td>当前渲染器质量</td><td>材质、灯光、需要高质量封面的资产</td></tr></tbody></table>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>右键资产，选「更新缩略图 → Maya拍屏」或「更新缩略图 → 渲染图」。</li>
+<li>在帧模式对话框中选择「当前帧」或「时间轴」。</li>
+<li>等待出图。当前帧输出单张静态缩略图；时间轴输出序列并合成 MP4，同时保留首帧作为静态图。</li>
+<li>完成后自动写回缩略图并刷新卡片与预览。</li>
+</ol>
+<h2 id="h-3">执行细节</h2>
+<ul>
+<li>拍屏会临时关闭取景框与遮罩装饰，并临时隔离目标物体，结束后还原。</li>
+<li>渲染图会创建临时渲染层，只渲染目标物体，结束后删除临时层并还原场景状态。</li>
+<li>独立版或非本机 Maya 场景下，会委托目标 Maya 现场出图，再把结果读回。</li>
+</ul>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>卡片与右侧预览显示新图。</li>
+<li>选择时间轴时，缩略图会变成动图或多帧预览，预览面板可切换。</li>
+<li>渲染完成后场景中的临时隔离对象、渲染层和相机装饰已恢复。</li>
+</ul>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>渲染图耗时较长，渲染期间不要操作 Maya 或切换场景，否则可能中断出图。</p></div>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>只是想快速看一眼效果时用拍屏；需要干净、可展示的封面时用渲染图。</p></div>

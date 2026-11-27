@@ -1,0 +1,21 @@
+<p>The context menu configuration is not one global set but one per sub-library, independent of each other.</p>
+<p><img src="media_en/shared/settings-ctx-sublib.webp" alt="Sub-library" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>The list on the left shows every entry of <code>sub_libraries</code> in <code>config.json</code>, including the 11 built-in sub-libraries (materials, models, lights, textures, scenes, HDR, dynamics, images, audio, animation data, node trees) and custom sub-libraries. Selecting one shows that sub-library&#x27;s current checks on the right.</p>
+<h2 id="h-2">Values and defaults</h2>
+<ul>
+<li>Each menu item is <code>true</code> / <code>false</code> for that sub-library.</li>
+<li>Factory presets are stored per sub-library in <code>context_menu_preset.json</code>. For example models have <code>「格式转换」 (Format conversion)</code> on by default, and HDR has <code>「创建环境光」 (Create environment light)</code> and <code>「指定贴图到材质」 (Assign texture to material)</code> on.</li>
+<li>Custom sub-libraries and categories not registered in the preset read the <code>default</code> section: shared items are <code>true</code> and category-specific items are <code>false</code>.</li>
+<li>When switching sub-libraries the checks of the current page are held in memory, and only <code>「应用」 (Apply)</code> writes them all.</li>
+</ul>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>The context menu uses the section matching the asset&#x27;s sub-library (the category <code>type</code>), so the same asset can show different menus under different sub-libraries.</li>
+<li>Category-specific items are greyed out in sub-libraries where they do not apply, with notes such as <code>「（仅 材质/贴图）」 (materials / textures only)</code> appended; their checked value is kept and becomes usable again in the right sub-library.</li>
+<li>Custom sub-libraries can only use shared items; category-specific items are always greyed out for them.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<p>When different asset types should have different menus, for example showing <code>「格式转换」 (Format conversion)</code> in the model library and hiding it in the material library, or keeping only import and open folder for a custom sub-library.</p>
+<h2 id="h-5">Tips</h2>
+<p>An unregistered category never ends up with &quot;no menu&quot;: it inherits the <code>default</code> section, so the context menu is never missing items.</p>

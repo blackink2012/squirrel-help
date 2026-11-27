@@ -1,0 +1,28 @@
+<p>「创建新版本」会在主资产内部新建一个完整的子版本 <code>V{n}</code>，并用本次导出的内容填充它，主版本保持不变。</p>
+<p><img src="media/shared/dialog-export-right.webp" alt="在这里选择「创建新版本」并填写版本号" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>主 <code>.zasset</code> 已经存在。</li>
+<li>按需要选中修改后的几何体、材质节点或贴图节点；新版本不强制要求几何体，只导材质也可以。</li>
+<li>需要版本带独立材质时，准备勾选 <code>材质预设 .zmetal</code>。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在 Maya 中选中新版本要导出的内容。</li>
+<li>右键主资产卡片，展开「更新资产」并选择「创建新版本」。</li>
+<li>在随后打开的导出对话框中勾选本次内容：几何体、<code>材质预设 .zmetal</code>、<code>贴图 textures/</code> 等。</li>
+<li>点击「创建资产」。</li>
+<li>等待创建完成；程序会为新版本单独启动一次缩略图截取。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>弹出提示「「资产名」已创建新版本 V1」；编号取现有 <code>V{n}</code> 目录最大编号 +1。</li>
+<li>双击主资产右侧预览图，打开「资产版本」窗口，列表中能看到「主版本」和 <code>V1</code>。</li>
+<li>右键资产 →「导入变体 / 版本」（无变体时为「导入版本 / LOD」）→ 出现 <code>V1</code> 子菜单。</li>
+<li><code>V1/</code> 内有自己的 <code>meta.json</code>；主资产 <code>meta.json</code> 的 <code>version_assets</code> 记录该目录，<code>has_versions</code> 为真。</li>
+</ul>
+<h2 id="h-4">提示与警告</h2>
+<blockquote><p><strong>提示</strong>：子版本是自包含的版本资产：创建时先复制主版本内容作为骨架，再用本次导出整体替换，并保留子版本身份字段（<code>is_version</code>、<code>version_of</code>、<code>version_label</code>、<code>version_tag</code>）。</p></blockquote>
+<blockquote><p><strong>提示</strong>：<code>V{n}</code> 目录已存在时编号会自动上移，不会覆盖旧版本。</p></blockquote>
+<blockquote><p><strong>警告</strong>：子版本导出失败时会提示「子版本导出失败，内容可能不完整」；该目录此时已建好，请检查后重试或删除该目录。</p></blockquote>
+<blockquote><p><strong>当前版本</strong>：版本目录是主资产内的 <code>V1/</code>、<code>V2/</code>，不是旧帮助里的 <code>variants/v2/</code> 结构。</p></blockquote>

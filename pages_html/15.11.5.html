@@ -1,0 +1,39 @@
+<blockquote><p>一句话定位：<strong>带版本/变体/LOD 的资产，导入时不是「导入资产」，而是「先挑一条再导入」——本页讲这个挑选动作在哪儿做、怎么做。</strong></p></blockquote>
+<h2 id="h-1">两种入口，先记结论</h2>
+<table><thead><tr><th>场景</th><th>你该用哪个入口</th></tr></thead><tbody><tr><td>只想快点把某个变体/版本/LOD 导进场景</td><td>资产右键 →「导入变体 / 版本」子菜单里直接点那一条（最快）</td></tr><tr><td>想先看清楚图、看信息再导</td><td>双击预览图打开<strong>版本浏览器</strong>，左栏选条目 → 右栏「导入此版本 / 导入此 LOD / 导入此变体」</td></tr></tbody></table>
+<h3 id="h-2">入口一：右键子菜单</h3>
+<p>右键带版本/变体的资产 →「导入…」子菜单，标题会随资产内容变：</p>
+<table><thead><tr><th>子菜单标题</th><th>出现条件</th></tr></thead><tbody><tr><td>导入变体</td><td>资产只有变体（没有多版本）</td></tr><tr><td>导入版本 / LOD</td><td>资产只有版本/LOD（没有变体）</td></tr><tr><td>导入变体 / 版本</td><td>变体和版本都有（或存在旧版版本记录）</td></tr></tbody></table>
+<p>子菜单里逐条列出变体/版本：</p>
+<ul>
+<li>一条变体有多档 LOD → 会再多一层子菜单（LOD 精度）；</li>
+<li>一条变体有多种几何格式 → 再多一层格式子菜单（<code>ma</code>、<code>fbx</code>…；同扩展名多个文件时会带文件名区分）；</li>
+<li>鼠标悬停条目会在旁边弹出该条目的缩略图大图。</li>
+</ul>
+<p>点最末一级 = 直接导入。</p>
+<h3 id="h-3">入口二：版本浏览器</h3>
+<p>在 <a href="#/15.11.2"><code>8.11.2</code></a> 的版本浏览器里：左栏选中条目 → 右栏按钮导入。按钮文字会变成「导入此版本 / 导入此 LOD / 导入此变体」，与所选条目对应。</p>
+<p><img src="media/shared/dialog-version-browser-variant.webp" alt="版本浏览器中的变体" loading="lazy" decoding="async"></p>
+<h2 id="h-4">源码里还有一个独立的小选择窗</h2>
+<p>插件源码里保留了一个独立的「导入变体几何体」对话框（旧版选择方式）：列出该资产的<strong>版本</strong>单选 + 对应的 <strong>LOD 精度</strong>单选，确定后按选择导入。<strong>当前版本没有把它挂到任何菜单上</strong>，正常操作路径下点不到它——日常请用上面两个入口。它的结构如下，供对照旧文档/旧截图时辨认：</p>
+<table><thead><tr><th>控件</th><th>内容</th></tr></thead><tbody><tr><td>标题</td><td>导入变体几何体</td></tr><tr><td>顶部</td><td>显示要导入的资产名</td></tr><tr><td>版本</td><td>单选列表，每项 <code>tag - 显示名 (创建日期)</code>，有注释的会另起一行显示注释</td></tr><tr><td>LOD 精度</td><td>单选列表，每项 <code>显示名 (LODx)</code> + 三角面/顶点数 + 可用格式；该版本没有 LOD 时显示「该版本无可用 LOD」</td></tr><tr><td>无变体时</td><td>只显示「该资产不包含变体数据」和「取消」</td></tr><tr><td>按钮</td><td>取消 / 确定</td></tr></tbody></table>
+<blockquote><p>一句话：<strong>看到这个窗口说明你用的是旧版入口</strong>；当前版本请走右键「导入变体 / 版本」或版本浏览器。</p></blockquote>
+<h2 id="h-5">一次完整操作（导入某个变体的 LOD1、ma 格式）</h2>
+<ol>
+<li>在资产网格里找到带变体角标的资产。</li>
+<li>右键 → 展开「导入变体 / 版本」子菜单。</li>
+<li>找到目标变体那一行，悬停看一下弹出的缩略图，确认没点错。</li>
+<li>若有 LOD 层，展开并选「LOD1」。</li>
+<li>若有多格式层，选 <code>ma</code>。</li>
+<li>松手后几何导入当前 Maya 场景。</li>
+<li>想核对导进来的版本对不对：看脚本编辑器里的 <code>[VariantImport]</code> 日志，会写清 version/lod/geom。</li>
+</ol>
+<h2 id="h-6">出问题怎么办</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>处理</th></tr></thead><tbody><tr><td>右键里没有导入变体/版本子菜单</td><td>该资产没有变体/多版本；或只有一个可用格式因而没显示子菜单</td><td>直接用普通「导入」；或先创建变体/版本</td></tr><tr><td>选完没反应</td><td>该条目几何文件缺失，或独立运行模式没连上 Maya</td><td>看脚本编辑器 <code>[VariantImport]</code> 日志；确认 Maya 在线</td></tr><tr><td>导入后发现模型不对</td><td>选错了 LOD 或格式</td><td>重新导入正确条目，用 Maya 撤销（Ctrl+Z）撤掉上一个</td></tr><tr><td>导入动画资产报错</td><td>动画版本走的是 ATOM 映射导入，不是几何导入</td><td>用资产右键的动画导入路径，或版本浏览器里对应的导入按钮</td></tr></tbody></table>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>版本浏览器（带预览的选择方式）：<a href="#/15.11.2"><code>8.11.2</code></a></li>
+<li>变体管理窗口：<a href="#/15.11.3"><code>8.11.3</code></a></li>
+<li>切换版本与 LOD（用户指南）：<a href="#/4.10.4"><code>4.1.10.4</code></a></li>
+<li>批量添加变体：<a href="#/4.13.3"><code>4.1.13.3</code></a></li>
+</ul>

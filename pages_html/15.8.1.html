@@ -1,0 +1,21 @@
+<blockquote><p>一句话定位：<strong>窗口最底部那一条细栏，左边报数量、右边报当前选中的是谁。</strong></p></blockquote>
+<p>它横跨右侧工作区（不含最左侧的导航栏），高度固定、不可拖动、也不占操作空间。</p>
+<h2 id="h-1">两段文字分别是什么</h2>
+<table><thead><tr><th>位置</th><th>显示内容</th><th>含义</th></tr></thead><tbody><tr><td>左侧</td><td><code>材料: 84/84</code></td><td>斜杠左边是<strong>当前视图里能看到的资产数</strong>（可见数），右边是<strong>资产库加载到的资产总数</strong></td></tr><tr><td>左侧（有选中时追加）</td><td>`\</td><td>已选: 3`</td><td>当前选中了几个资产（多选时才有意义）</td></tr><tr><td>右侧</td><td><code>已选择: CARTOON12</code></td><td>当前选中资产的易读名（名称字段）；多选时显示第一个选中的</td></tr></tbody></table>
+<p>「材料」是历史文案，在这里就等于「资产」，和资产库里有多少个材质没有关系。</p>
+<p><img src="media/15.8.1-1.webp" alt="底部状态栏" loading="lazy" decoding="async"></p>
+<h2 id="h-2">什么时候数字会变</h2>
+<table><thead><tr><th>操作</th><th>影响</th></tr></thead><tbody><tr><td>切换分类 / 子库 / 收藏夹</td><td>可见数变（总数不变，总数是整个资产库的数量）</td></tr><tr><td>关键词搜索 / 标签筛选 / AI 搜索 / 以图搜图</td><td>可见数变，这就是「当前命中几个」</td></tr><tr><td>多选 / 框选 / 取消选择</td><td>「已选」出现或消失</td></tr><tr><td>新建、导入、删除资产并刷新后</td><td>总数变</td></tr><tr><td>加载资产库过程中</td><td>先显示占位信息，加载完才出正式数字</td></tr></tbody></table>
+<h2 id="h-3">右侧那一段还会临时显示别的</h2>
+<p>右侧信息位不是只显示资产名，很多操作的结果提示会临时占用它（显示到下一次选中资产为止）：</p>
+<table><thead><tr><th>场景</th><th>右侧可能出现</th></tr></thead><tbody><tr><td>选中资产</td><td><code>已选择: 资产名</code></td></tr><tr><td>AI 搜索 / 以图搜图</td><td>「AI 搜索『关键词』：找到 n 个资产」「图片搜索：…」等结果说明</td></tr><tr><td>文字搜视频 / 音乐</td><td>「文字搜视频：命中 n 个动画」等</td></tr><tr><td>后台出图 / 修 UUID</td><td>「正在用 … 生成 n 个缩略图…」「修复 UUID: 3/20」等进度</td></tr><tr><td>布局操作失败</td><td>「至少要保留一个区域」等提示</td></tr></tbody></table>
+<p>所以右侧文字变了不一定是出错，看它说的是哪件事就行。</p>
+<h2 id="h-4">常见疑问</h2>
+<table><thead><tr><th>现象</th><th>原因</th></tr></thead><tbody><tr><td>左右两个数字不一样（如 <code>12/84</code>）</td><td>正常：左边是当前分类 / 搜索下的可见数，右边是全库总数</td></tr><tr><td>数字一直是 0</td><td>资产库没加载、或当前分类里确实没有资产</td></tr><tr><td>「已选择」一直不消失</td><td>选中状态还在；在资产网格空白处单击一下即可取消选择，它就会变回空的</td></tr><tr><td>看不到资产路径</td><td>状态栏不显示路径；路径在资产详情窗口里看（见 <a href="#/15.11.1"><code>8.11.1</code></a>）</td></tr></tbody></table>
+<h2 id="h-5">相关</h2>
+<ul>
+<li>右侧 AI 助手区 → <a href="#/15.8.2"><code>8.8.2</code></a></li>
+<li>回收站里状态栏会换成条目数与占用 → <a href="#/15.8.3"><code>8.8.3</code></a></li>
+<li>资产网格里怎么选中 / 多选 → <a href="#/4.4.1"><code>4.1.4.1</code></a></li>
+<li>状态栏、浮动气泡与快速打开的整体说明 → <a href="#/3.1.7"><code>3.1.7</code></a></li>
+</ul>

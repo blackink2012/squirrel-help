@@ -1,0 +1,19 @@
+<p>「默认缩略图大小」是生成与截取缩略图共用的长边像素值，出厂为 512。</p>
+<p><img src="media/shared/settings-general.webp" alt="设置 → 常规" loading="lazy" decoding="async"></p>
+<h2 id="h-1">在哪里设置</h2>
+<ol>
+<li>打开「设置 → 常规」。</li>
+<li>找到「缩略图」分组中的「默认缩略图大小」。</li>
+<li>从 256、384、512、768、1024 中选择一档。</li>
+<li>保存设置。新值用于之后生成或截取的缩略图。</li>
+</ol>
+<h2 id="h-2">影响范围</h2>
+<table><thead><tr><th>场景</th><th>尺寸如何生效</th></tr></thead><tbody><tr><td>后台渲染</td><td>作为输出边长；后台渲染对话框里也能改</td></tr><tr><td>Maya 拍屏、渲染图</td><td>输出图片的边长</td></tr><tr><td>预览面板快速截取</td><td>截图按该值等比缩放到长边</td></tr><tr><td>完整截图工具</td><td>作为宽高初值，可在工具栏临时修改</td></tr><tr><td>HDR、模型、PBR 转资产</td><td>快捷工具出缩略图时使用</td></tr><tr><td>导出资产</td><td>导出流程出缩略图时使用</td></tr></tbody></table>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>生成类缩略图按所选边长输出；截取类按长边等比缩放，短边按画面比例决定，可能不是正方形。</li>
+<li>放大预览时画面更清晰，文件体积也相应变大。</li>
+<li>旧缩略图不会自动重做，需要重新生成或截取才会使用新尺寸。</li>
+</ul>
+<div class="admonition note"><div class="admonition-title">注意</div><p>在「后台渲染」对话框里修改尺寸，会同步写回「设置 → 常规 → 默认缩略图大小」，两个入口共用同一个值。</p></div>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>这里的尺寸是缩略图文件本身的大小，不是网格卡片的显示大小；卡片大小用工具栏的滑块调整。</p></div>

@@ -1,0 +1,32 @@
+<p>Scene and dynamics assets use the same geometry import pipeline; formats that contain animation come in with a time range or frame sequence setting.</p>
+<p><img src="media_en/shared/menu-context-scene.webp" alt="Scene asset context menu: import scenes and animation" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The current Maya scene is saved, so imported cameras and lights do not get confused with the existing scene.</li>
+<li>The scene asset contains ma, mb, fbx, usd, abc or similar, or an ass / rs frame sequence.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the scene or dynamics asset and click <code>「导入 ma」 (Import ma)</code> (it runs directly with a single format; with several formats expand <code>「导入 ▶」 (Import ▶)</code>).</li>
+<li>Choose the format to import; multi-format assets list each format name.</li>
+<li>Wait for the import to finish.</li>
+<li>Play the timeline and check that the animation updates with the frames.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>Nodes for the scene&#x27;s models, cameras and lights appear in the Outliner.</li>
+<li>Within the dynamics asset&#x27;s time range the model changes with the frames.</li>
+<li>Proxy nodes of ass / rs sequence assets have frame extension enabled (<code>useFrameExtension</code>); USD animation is imported over the overridden time range.</li>
+<li>The Script Editor shows the import success log.</li>
+</ul>
+<h2 id="h-4">Related: four other asset types are not on this pipeline</h2>
+<p>This page covers geometry assets such as scenes and dynamics. Images, audio, animation data and node trees are four other types with different entries and results:</p>
+<table><thead><tr><th>Asset</th><th>Context menu entry</th><th>Details</th></tr></thead><tbody><tr><td>Animation data (ATOM keyframes)</td><td><code>「导入动画 ▶」 (Import animation ▶)</code> / <code>「导入动画（层级映射）…」 (Import animation (hierarchy mapping)…)</code> / <code>「导入到选择属性 ▶」 (Import to selected attributes ▶)</code></td><td><a href="#/en/15.5.11">15.5.11</a></td></tr><tr><td>Node trees (node networks)</td><td><code>「导入 ma」 (Import ma)</code></td><td><a href="#/en/15.5.12">15.5.12</a></td></tr><tr><td>Audio (music)</td><td><code>「导入到时间轴 / 时间编辑器 / Trax 编辑器 / 摄像机序列器」 (Import to timeline / Time Editor / Trax Editor / camera sequencer)</code></td><td><a href="#/en/15.5.10">15.5.10</a></td></tr><tr><td>Images</td><td><code>「导入为 file 节点 / 创建 imagePlane / 指定到选中材质槽 / 打开图像」 (Import as file node / create imagePlane / assign to selected material slot / open image)</code></td><td><a href="#/en/15.5.9">15.5.9</a></td></tr></tbody></table>
+<p>Animation data and node trees are <strong>often used together</strong>: the node tree (or a model) provides the hierarchy in the scene, and then the animation data&#x27;s keyframes are applied to that hierarchy.</p>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>USD animation import uses <code>importTimeRange=override</code> and <code>readAnimData=1</code>, and the working range follows what the asset records.</li>
+<li>abc and usd are first copied into the project cache and then imported, avoiding temporary paths inside the asset package.</li>
+<li>A scene asset is merged into the current scene rather than opened as a new file; save the current scene before importing.</li>
+<li>Whether an ass / rs frame sequence enables frame extension depends on the <code>ani</code> record in the asset&#x27;s <code>meta.json</code>.</li>
+</ul>

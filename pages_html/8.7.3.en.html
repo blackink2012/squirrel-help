@@ -1,0 +1,21 @@
+<p>Once you have the exact name, use <code>maya_docs(action=&quot;show&quot;)</code> for structured details; for command parameters prefer the live local help, because it reflects the current Maya version and installed plug-ins.</p>
+<p><img src="media_en/shared/menu-ai-tools.webp" alt="The AI tools menu: detail lookups happen in the AI assistant conversation; the menu itself has no documentation entry" loading="lazy" decoding="async"></p>
+<blockquote><p>The image is only a signpost: command details and node attributes are fetched with the <code>maya_docs</code> tool inside <code>AI 助手 (AI assistant)</code>, not from this menu.</p></blockquote>
+<h2 id="h-1">Prerequisites</h2>
+<p>The exact name has been found by search; note that Maya commands are case-sensitive.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>In the AI assistant say &quot;show me the details of polyReduce&quot;, or call <code>maya_docs(action=&quot;show&quot;, name=&quot;polyReduce&quot;)</code> directly.</li>
+<li>It returns a compact summary by default: the synopsis, long and short flag names with types and related notes. When a long list exceeds the limit it names the remaining items.</li>
+<li>To focus on one parameter add <code>flag=&quot;percentage&quot;</code> to get that flag&#x27;s full description.</li>
+<li>For the complete body add <code>full=true</code>; guide bodies can run to tens of thousands of characters, so use it sparingly.</li>
+<li>For a command&#x27;s live parameters use <code>maya_docs(action=&quot;help&quot;, name=&quot;polyReduce&quot;)</code>, which goes through Maya&#x27;s <code>cmds.help</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>It returns <code>status=ok</code> with the name, type and detail fields; a flag query returns only the target parameter&#x27;s full description. An unknown name returns nearby candidates to retry with.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>Node types cannot be looked up with <code>cmds.help</code>; use <code>show</code>, because <code>help</code> only knows commands.</li>
+<li>The online fallback only has page bodies and no flag tables; parameter help requires a local Maya or the local knowledge base.</li>
+<li>Commands from installed plug-ins follow the live help, and the offline library may not include them.</li>
+</ul>

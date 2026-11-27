@@ -1,0 +1,43 @@
+/* 帮助中心令牌桥：把预设令牌映射到 help.css 的语义令牌。
+   加载顺序必须是 help.css → presets/<id>.css → 本文件。
+   预设已定义的同名令牌（--accent / --radius / --code-bg / --font-* 等）直接生效，
+   这里只补帮助中心独有的名字。 */
+
+html[data-style] {
+  --bg: var(--paper, #ffffff);
+  --bg-soft: var(--surface, #f5f7f9);
+  --bg-sidebar: var(--surface, #f7f8fa);
+  --border: var(--rule, #e4e8ee);
+  --border-strong: var(--rule-strong, #d5dbe3);
+  --text: var(--ink, #1f2329);
+  --text-2: var(--ink-2, #4e5969);
+  --text-3: var(--muted, #86909c);
+
+  --note-bg: var(--accent-soft, #eef5ff);
+  --note-border: var(--accent, #4b8fe2);
+  --warning-bg: color-mix(in srgb, var(--warn, #d98b16) 12%, var(--paper, #ffffff));
+  --warning-border: var(--warn, #d98b16);
+  --warning-text: var(--warn, #8a5a0a);
+  --tip-bg: color-mix(in srgb, var(--ok, #38a169) 10%, var(--paper, #ffffff));
+  --tip-border: var(--ok, #38a169);
+
+  --hover-bg: var(--surface-2, #eceff3);
+  --card-hover-border: color-mix(in srgb, var(--accent) 45%, var(--rule, #b9d5f5));
+  --mark-bg: color-mix(in srgb, var(--accent) 26%, var(--paper, #ffffff));
+  --table-alt-bg: color-mix(in srgb, var(--surface) 45%, var(--paper, #ffffff));
+  --highlight-row-bg: color-mix(in srgb, var(--warn) 14%, var(--paper, #ffffff));
+  --topbar-bg: color-mix(in srgb, var(--paper, #ffffff) 92%, transparent);
+  --focus-ring: color-mix(in srgb, var(--accent) 22%, transparent);
+  --overlay-bg: color-mix(in srgb, var(--ink, #1f2329) 30%, transparent);
+  --shadow-lift: 0 8px 22px color-mix(in srgb, var(--ink, #1f2329) 8%, transparent);
+  --drawer-shadow: 12px 0 30px color-mix(in srgb, var(--ink, #1f2329) 12%, transparent);
+
+  --radius-pill: calc(var(--radius, 8px) * 2.5);
+  /* 目录树栏：预设栏宽 × 1.5（当前 220 → 330px）；窄屏抽屉最多占 86vw */
+  --sidebar-w: min(calc(var(--rail-w, 300px) * 1.5), 86vw);
+
+  /* 帮助中心是长文档：标题收到预设展示字号的 2/3；正文跟随浏览器默认字号
+     （默认 16px，并随用户调大浏览器默认字号一起缩放） */
+  --fs-title: calc(var(--fs-h2, 44px) * 2 / 3);
+  --fs-doc: 1rem;
+}

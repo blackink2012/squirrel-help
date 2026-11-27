@@ -1,0 +1,37 @@
+<blockquote><p>一句话定位：<strong>在资产区右键一张资产卡片弹出的，就是这张菜单；它是插件功能的主入口，而且每个子库的菜单都不一样。</strong> 本页先给你「谁有什么」的对照表，再按子库跳到逐条详解。</p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>左侧「分类」页签（也可以是「项目」或「收藏」页签）里点进任意一个分类；</li>
+<li>中间资产区里<strong>右键任意一张资产卡片</strong>。</li>
+</ol>
+<p>图标视图和列表视图是同一张菜单：列表视图里右键某一行，弹出内容与图标视图完全一致。</p>
+<p><img src="media/shared/menu-asset-context.webp" alt="材质资产右键菜单（示例）" loading="lazy" decoding="async"></p>
+<p>上图画的是<strong>材质</strong>资产的菜单。别的子库在这张菜单上<strong>增减条目</strong>——最上面那段（导入 / 引用 / 应用 / 转换）每个子库都不一样，下面的公共段大体相同。</p>
+<h2 id="h-2">菜单分成 6 段</h2>
+<p>从上到下永远是这个顺序，记住分段比记住条目省事：</p>
+<table><thead><tr><th>段</th><th>内容</th><th>说明</th></tr></thead><tbody><tr><td>① 子库专属段</td><td>导入 / 添加引用 / 应用… / 转换导入 / 创建材质 / 导入贴图 / 创建环境光 / 导入到时间轴…</td><td><strong>只有某些子库才有</strong>，见下面的对照表</td></tr><tr><td>② 收藏与选择</td><td>添加到收藏夹 ▶、全选、复制、打开文件夹</td><td>11 个子库都有</td></tr><tr><td>③ 整理</td><td>移动到 ▶、复制到 ▶</td><td>11 个子库都有</td></tr><tr><td>④ 维护</td><td>编辑、更新缩略图 ▶、更新资产 ▶、删除 ▶、格式转换</td><td>更新缩略图 / 更新资产在图片、音频上没有；格式转换只有部分子库有</td></tr><tr><td>⑤ 查看与 AI</td><td>预览节点 ▶、AI 分析缩略图</td><td>预览节点要看资产里有没有节点文件</td></tr><tr><td>⑥ 最后一条</td><td>资产详情</td><td>11 个子库都有，永远在菜单最下方</td></tr></tbody></table>
+<h2 id="h-3">11 个子库：条目数与独有条目</h2>
+<table><thead><tr><th>子库</th><th>详解页</th><th>整张菜单条目数</th><th>这个子库独有的条目</th></tr></thead><tbody><tr><td>材质 materials</td><td><a href="#/15.5.2"><code>8.5.2</code></a></td><td>228</td><td>导入（zmetal / ma）、为当前选择指定材质、应用材质参数、转换导入（18 种目标类型）、预览节点</td></tr><tr><td>模型 models</td><td><a href="#/15.5.3"><code>8.5.3</code></a></td><td>203</td><td>导入 ma、添加引用、格式转换</td></tr><tr><td>灯光 lights</td><td><a href="#/15.5.4"><code>8.5.4</code></a></td><td>212</td><td>导入（zlight / ma）、应用灯光参数到选中灯光、转换导入（含自身类型＝原地还原）</td></tr><tr><td>贴图 textures</td><td><a href="#/15.5.5"><code>8.5.5</code></a></td><td>220</td><td>为当前选择指定材质、<strong>创建材质</strong>、<strong>导入贴图</strong>、指定贴图到材质、打开图像</td></tr><tr><td>场景 scenes</td><td><a href="#/15.5.6"><code>8.5.6</code></a></td><td>205</td><td>导入 ma、添加引用、格式转换、预览节点</td></tr><tr><td>HDR hdr</td><td><a href="#/15.5.7"><code>8.5.7</code></a></td><td>206</td><td>导入 hdr、<strong>创建环境光</strong>、指定贴图、打开图像</td></tr><tr><td>动态 ani</td><td><a href="#/15.5.8"><code>8.5.8</code></a></td><td>209</td><td>导入 ▶（ma / abc）、添加引用 ▶（ma / abc）、格式转换</td></tr><tr><td>图片 images</td><td><a href="#/15.5.9"><code>8.5.9</code></a></td><td>188</td><td>导入为 file 节点、创建 imagePlane、指定到选中材质槽、打开图像</td></tr><tr><td>音频 audio</td><td><a href="#/15.5.10"><code>8.5.10</code></a></td><td>189</td><td>导入到时间轴 / 时间编辑器 / Trax 编辑器 / 摄像机序列器、转换为 WAV</td></tr><tr><td>动画数据 animation</td><td><a href="#/15.5.11"><code>8.5.11</code></a></td><td>207</td><td>导入动画 ▶、导入动画（层级映射）…、导入到选择属性 ▶</td></tr><tr><td>节点树 nodetree</td><td><a href="#/15.5.12"><code>8.5.12</code></a></td><td>205</td><td>导入 ma、添加引用、格式转换、预览节点（导入后选中新建的节点）</td></tr></tbody></table>
+<blockquote><p>「条目数」= 把子菜单与「移动到 / 复制到」的分类级联全部展开后的条数（同一资产、同一份清单统计得出）。分类级联在每张菜单里结构相同，所以这里的差异全部来自上面那一列独有条目。</p></blockquote>
+<h2 id="h-4">公共条目出现范围一览</h2>
+<p>「✓」= 该子库会出现；「—」= 不出现；「条件」= 要看资产内容或设置。</p>
+<table><thead><tr><th>菜单项</th><th>材质</th><th>模型</th><th>灯光</th><th>贴图</th><th>场景</th><th>HDR</th><th>动态</th><th>图片</th><th>音频</th><th>动画数据</th><th>节点树</th></tr></thead><tbody><tr><td>导入（通用）</td><td>✓</td><td>✓</td><td>✓</td><td>—</td><td>✓</td><td>✓</td><td>✓</td><td>—</td><td>—</td><td>—</td><td>✓</td></tr><tr><td>添加引用</td><td>✓</td><td>✓</td><td>✓</td><td>—</td><td>✓</td><td>✓</td><td>✓</td><td>—</td><td>—</td><td>—</td><td>✓</td></tr><tr><td>添加到收藏夹</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>全选 / 复制 / 打开文件夹</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>移动到 / 复制到</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>编辑</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>更新缩略图</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>—</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>其中「后台渲染」</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>—</td><td>✓</td><td>—</td><td>—</td><td>—</td><td>✓</td></tr><tr><td>更新资产</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>—</td><td>—</td><td>✓</td><td>✓</td></tr><tr><td>删除</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>格式转换</td><td>—</td><td>✓</td><td>—</td><td>—</td><td>✓</td><td>—</td><td>✓</td><td>—</td><td>—</td><td>—</td><td>✓</td></tr><tr><td>预览节点</td><td>条件</td><td>条件</td><td>条件</td><td>条件</td><td>条件</td><td>条件</td><td>条件</td><td>—</td><td>—</td><td>—</td><td>条件</td></tr><tr><td>AI 分析缩略图</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr><tr><td>资产详情</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr></tbody></table>
+<p><strong>「条件」是什么意思</strong>：「预览节点 ▶」只有在资产包里找到 <strong>.zmetal</strong> 或<strong>有具体名字的 .ma</strong> 节点文件时才出现。导出模型 / 场景时常见的通用文件名 <code>node.ma</code> 不算在内——所以模型、场景的样本菜单里可能看不到这一项，这不是功能坏了。</p>
+<p><strong>「—」是什么意思</strong>：</p>
+<ul>
+<li>图片、音频<strong>没有</strong>「更新缩略图 / 更新资产」——它们的缩略图与内容更新走「导入」类条目；</li>
+<li>贴图、HDR、图片的「导入」不做成通用的一行，而是各自的具体入口（导入贴图 / 导入 hdr / 导入为 file 节点）；</li>
+<li>贴图、HDR 里跟在导入后面的是「打开图像」，不是「预览节点」；</li>
+<li>动画数据的「更新资产」是精简版：只有替换资产、创建新版本、添加新变体…、变体管理…，没有追加格式 / 追加为 LOD / 批量添加变体。</li>
+</ul>
+<h2 id="h-5">条目被设置隐藏了怎么办</h2>
+<p>「右键菜单」里的每一项都能在<strong>设置 → 右键菜单</strong>里按子库单独开关（见 <a href="#/15.9.5"><code>8.9.5</code></a>）。别人截图里有、你这里没有的条目，先去看那一页的开关是不是被关掉了。</p>
+<h2 id="h-6">多选时菜单会变短</h2>
+<p>多选之后右键，菜单只保留<strong>能批量执行</strong>的条目（导入、收藏、移动、删除等），一次性对全部选中资产生效。批量入口看 <a href="#/15.5.21"><code>8.5.21</code></a>。</p>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>每个子库的逐条详解：从上面的对照表点进去，公共条目见 <a href="#/15.5.13"><code>8.5.13</code></a>~<a href="#/15.5.17"><code>8.5.17</code></a></li>
+<li>版本 / 变体 / LOD 这些内部条目的右键：<a href="#/15.5.18"><code>8.5.18</code></a></li>
+<li>空白处与列表视图右键：<a href="#/15.5.19"><code>8.5.19</code></a>；空格快速导入环：<a href="#/15.5.20"><code>8.5.20</code></a></li>
+<li>旧的「右键菜单完整项」总表：<a href="#/4.4.6"><code>4.1.4.6</code></a></li>
+</ul>

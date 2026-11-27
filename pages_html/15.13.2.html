@@ -1,0 +1,43 @@
+<blockquote><p>一句话定位：<strong>给 AI 搜索单独配一套模型 —— 选服务商、填 Key 和地址、挑模型。</strong></p></blockquote>
+<p>它是 AI 搜索窗口右上那颗 ⚙ 按钮弹出来的小窗，只管「AI 搜索」这一件事。注意它和「设置 → AI 设置」里的<strong>全局大模型是两套配置</strong>：改这里不影响 AI 缩略图分析，反过来也一样。原因很实际 —— 搜索要的是&quot;快、便宜&quot;，分析要的是&quot;看得懂图&quot;，本来就会选不同档位的模型。</p>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>打开 AI 搜索窗口（见 <a href="#/15.13.1"><code>8.13.1</code></a>）；</li>
+<li>点窗口右上角的 <strong>⚙（AI 服务配置）</strong> 按钮。</li>
+</ol>
+<h2 id="h-2">四个输入项</h2>
+<p><img src="media/shared/dialog-ai-search-config.webp" alt="AI 搜索设置窗口" loading="lazy" decoding="async"></p>
+<table><thead><tr><th>控件</th><th>作用</th><th>怎么填</th></tr></thead><tbody><tr><td>服务商</td><td>决定用哪家的模型接口。可选：Ollama（本地）、DeepSeek、通义千问（阿里云 DashScope）、智谱（BigModel）、OpenAI、自定义（OpenAI 兼容）</td><td>本机装了 Ollama 就选「Ollama（本地）」，不要 Key 也不出网；想用云端就选对应厂商</td></tr><tr><td>API Key</td><td>云端服务商的密钥；本机服务不需要</td><td>选云端时必填；输入框是密码态，只显示圆点。选 Ollama 时这一行会变灰、内容清空</td></tr><tr><td>API 地址</td><td>接口地址。切服务商时，如果当前值仍是某个默认地址，会<strong>自动换成该服务商的默认地址</strong></td><td>一般不用动；用代理 / 中转时才改（「自定义」必须自己填）</td></tr><tr><td>AI 模型</td><td>真正用来分析意图的模型名。下拉列表是<strong>实时从服务商拉取</strong>的，也可以直接在输入框里打字填模型名</td><td>列表里挑一个；知道自己要哪个模型时可以直接打</td></tr></tbody></table>
+<h2 id="h-3">这些行为要知道</h2>
+<ul>
+<li><strong>模型列表是现拉的，不是写死的。</strong> 打开窗口、切换服务商、改完 API Key 或地址回车，都会重新拉一次；加载中显示「正在获取模型列表…」。</li>
+<li><strong>拉不到列表</strong>时下拉里只有「（无法获取模型列表，请检查地址 / API Key）」—— 说明地址或 Key 有问题，先改这两项。</li>
+<li><strong>选定模型会立刻保存</strong>（下次重开插件还是它），不用等「确定」。</li>
+<li><strong>点「确定」时如果列表还没加载完会被拦住</strong>，提示「模型列表尚未加载完成，请稍候再选」—— 防止存进一个空模型名。</li>
+<li><strong>点「取消」只是不提交&quot;这一次&quot;的整页改动</strong>，但前面实时保存过的模型选择已经落盘。想彻底回到原样，重新选回原来的服务商 / 模型。</li>
+<li>这份配置只影响 AI 搜索的<strong>意图分析</strong>。不勾 AI 搜索窗口的「使用全局大模型」时，它不参与检索。</li>
+</ul>
+<h2 id="h-4">和「设置 → AI 设置」的全局大模型是什么关系</h2>
+<table><thead><tr><th></th><th>AI 搜索设置（本页）</th><th>设置 → AI 设置（全局大模型）</th></tr></thead><tbody><tr><td>管什么</td><td>只有 AI 搜索的意图分析</td><td>AI 缩略图分析、AI 助手等全局调用</td></tr><tr><td>怎么存</td><td>AI 搜索自己的命名空间，独立保存</td><td>插件设置（点「确定」才整体生效）</td></tr><tr><td>互不影响吗</td><td>互不影响：改一边不会改另一边</td><td>同上</td></tr><tr><td>什么时候生效</td><td>AI 搜索窗口勾了「使用全局大模型」时</td><td>所有 AI 功能默认走它</td></tr></tbody></table>
+<h2 id="h-5">拉不到模型列表时怎么排查</h2>
+<table><thead><tr><th>现象</th><th>大概率原因</th><th>处理</th></tr></thead><tbody><tr><td>下拉里只有「（无法获取模型列表…）」</td><td>API Key 错 / 过期，或 API 地址填错</td><td>先确认 Key 来自当前这家服务商；再把地址改回该家的默认值</td></tr><tr><td>Ollama 也拉不到列表</td><td>本机 Ollama 没启动，或端口不是默认的 11434</td><td>先启动 Ollama，再回到窗口切一次服务商触发重拉</td></tr><tr><td>列表能拉出来，但发送后报&quot;模型不存在&quot;</td><td>选的模型名在该服务商下不可用 / 已下线</td><td>从列表里重选一个，或手工输入确实存在的模型名</td></tr><tr><td>点「确定」被拦：「模型列表尚未加载完成」</td><td>列表还在后台拉</td><td>等两秒再点，或先选一个已有条目</td></tr></tbody></table>
+<h2 id="h-6">一次完整的配置流程</h2>
+<ol>
+<li>AI 搜索窗口 → ⚙；</li>
+<li>「服务商」选好（第一次用建议先用 Ollama（本地）验证链路通不通）；</li>
+<li>云端服务商：填 API Key；地址默认就是对的，不改；</li>
+<li>等「AI 模型」下拉从「正在获取模型列表…」变成真实列表；</li>
+<li>选一个模型（或直接输入模型名）；</li>
+<li>点「确定」；</li>
+<li>回 AI 搜索窗口，勾上「使用全局大模型」，发一句话试搜，看结果说明里走的是哪种模式。</li>
+</ol>
+<h2 id="h-7">做完能看见什么 / 怎么反悔</h2>
+<ul>
+<li>配好后 AI 搜索按这套设置做意图分析；结果上方的说明文字会反映当前模式。</li>
+<li>想反悔：把服务商换回原来的（例如 Ollama（本地）），或把模型选回原来那个即可。这里所有改动都只作用于 AI 搜索，不会动资产库、不会动场景，改坏了最坏情况就是搜不准。</li>
+</ul>
+<h2 id="h-8">相关</h2>
+<ul>
+<li>窗口本体的用法：<a href="#/15.13.1"><code>8.13.1</code></a></li>
+<li>全局大模型（AI 缩略图分析用）在哪配：<a href="#/15.9.3"><code>8.9.3</code></a></li>
+</ul>

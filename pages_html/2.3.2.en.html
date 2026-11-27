@@ -1,0 +1,29 @@
+<p>There is no multi-step &quot;Next&quot; wizard. The first launch does three things: check the license, create a default asset library, and open the main window.</p>
+<p><img src="media_en/shared/dialog-license.webp" alt="The first launch shows the License Manager window; clicking Close still lets you continue in read-only mode" loading="lazy" decoding="async"></p>
+<h2 id="h-1">What happens</h2>
+<ol>
+<li><strong>License check</strong>: if the product is not activated or the license has expired, the <code>「授权管理」 (License Manager)</code> window appears first and offers one activation attempt.</li>
+<li><strong>Read-only fallback</strong>: clicking <code>「关闭」 (Close)</code> in that window still continues; the main window opens in read-only mode and the library can still be browsed.</li>
+<li><strong>Default library</strong>: when no library is configured, <code>SquirrelLib</code> is created in the user directory and set as the current library.</li>
+<li><strong>Main window</strong>: shows the category tree on the left, the asset grid in the middle and the properties / preview area on the right; the title contains the version number.</li>
+</ol>
+<h2 id="h-2">Suggested first settings</h2>
+<ol>
+<li>Open <strong>Settings → License activation</strong> and confirm the current state; if you have a key, enter it under the machine code, or click <code>「授权管理」 (License management)</code> for offline import / deactivation.</li>
+<li>Open <code>Settings → General → Asset library management</code> and add an existing library or create a new one.</li>
+<li>Adjust interface language, theme and font size as needed.</li>
+<li>AI features are not installed automatically at startup; the dsh install prompt appears only when you click <code>「AI 助手」 (AI assistant)</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The main window opens normally and is not stuck on a blank page.</li>
+<li><strong>Settings → License activation</strong> shows the state and the machine code.</li>
+<li>The category tree has at least one library, and all 11 built-in sub-libraries are visible (materials, models, lights, textures, scenes, HDR, dynamics, images, audio, animation data, node trees).</li>
+</ul>
+<h2 id="h-4">Common failures</h2>
+<ul>
+<li><strong>Only the license window is visible</strong>: that is the normal flow; after closing it you can still browse read-only.</li>
+<li><strong>The main window is blank</strong>: the library path is invalid or has no assets; check the path and directory permissions first.</li>
+<li><strong>It keeps saying not activated</strong>: confirm the activation code or license file matches this machine&#x27;s machine code, see &quot;License troubleshooting&quot;.</li>
+<li><strong>No default library</strong>: it is not rebuilt automatically when the settings file is corrupt; restore from <code>.bak</code> or add a library manually.</li>
+</ul>

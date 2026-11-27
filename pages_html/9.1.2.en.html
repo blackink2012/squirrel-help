@@ -1,0 +1,38 @@
+<p>Quick tools have three run paths: the toolbar menu, the AI command <code>quicktool_run</code>, and the script browser or Script Editor; all three run the same script in <code>quicktools/</code>.</p>
+<p><img src="media_en/shared/quicktool-script-browser.webp" alt="Script browser" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>Tools that read or write the Maya scene must run inside Maya; the standalone edition dispatches them to an online Maya automatically.</li>
+<li><code>图像格式转换工具.py</code> and <code>批量镜像复制.py</code> are pure file tools and can run locally.</li>
+</ul>
+<h2 id="h-2">Path 1: the UI menu</h2>
+<ol>
+<li>Click <code>「快捷工具」 (Quick tools)</code> in the main window toolbar.</li>
+<li>Choose a tool entry and follow the page instructions once its window opens.</li>
+</ol>
+<h2 id="h-3">Path 2: the command channel</h2>
+<ol>
+<li>Call <code>quicktool_run</code>; without <code>name</code> it only returns the script list (including entry points and whether a first-class command already covers it).</li>
+<li>Pass <code>name</code> (with or without <code>.py</code>) to run it, and optionally <code>params</code> as arguments.</li>
+<li>Add <code>dry_run=true</code> first to see which script and entry would be called without running it.</li>
+<li><code>name</code> only accepts a bare file name inside <code>quicktools/</code>; path separators and <code>..</code> are rejected.</li>
+</ol>
+<p>When a dedicated command exists, prefer it: <code>hdr_to_zasset</code>, <code>model_to_zasset</code>, <code>pbr_to_zasset</code>, <code>convert_image_format</code>, <code>mirror_copy</code>, <code>convert_material</code>, <code>convert_import</code>, <code>material_conversion_info</code>.</p>
+<h2 id="h-4">Path 3: script browser / Script Editor</h2>
+<ul>
+<li>The script browser scans <code>script_assets/</code> and extra script roots by default; adding the <code>quicktools/</code> directory as an extra script root lets you run them there (a general capability, not specially registered for quick tools).</li>
+<li>You can also run a <code>.py</code> directly in the Maya Script Editor, which is equivalent to running it as <code>__main__</code>.</li>
+</ul>
+<h2 id="h-5">Entry resolution order</h2>
+<p>The menu and the command channel behave the same: <code>main()</code> → <code>run()</code> → run once as <code>__main__</code> when the source contains <code>if __name__ == &quot;__main__&quot;</code>. When only <code>main</code> / <code>run</code> exists the module body is not executed again, so top-level side effects never run twice.</p>
+<h2 id="h-6">Verify the result</h2>
+<ul>
+<li>Menu path: the tool window appears.</li>
+<li>Command path: it returns <code>status: ok</code>, <code>entry</code> and <code>opened: true</code>; for GUI tools this only means the window opened, not that the work finished.</li>
+<li>Script browser: the status bar shows success / failure and the elapsed time.</li>
+</ul>
+<h2 id="h-7">Notes</h2>
+<ul>
+<li>The menu calls <code>main()</code> / <code>run()</code> without arguments; scripts that need arguments must go through the command channel or &quot;run with parameters&quot;.</li>
+<li>After the command channel returns, a GUI tool is still waiting for user interaction; do not treat that as a finished task.</li>
+</ul>

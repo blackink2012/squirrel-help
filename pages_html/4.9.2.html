@@ -1,0 +1,35 @@
+<p>收藏集是收藏夹面板里的一级容器；默认收藏夹固定存在，其余收藏集可以新建、重命名、清空和删除。</p>
+<p><img src="media/shared/nav-favorites.webp" alt="收藏集列表：标题右侧 + 新建，右键可重命名 / 清空 / 删除" loading="lazy" decoding="async"></p>
+<h2 id="h-1">新建收藏集</h2>
+<ol>
+<li>点击「收藏夹」标题右侧的「+」（提示「新建收藏夹」），或在列表空白处右键选择「新建收藏夹」。</li>
+<li>输入名称并确认，列表出现新条目并自动选中。</li>
+</ol>
+<h2 id="h-2">重命名</h2>
+<ol>
+<li>右键一个非默认收藏集，选择「重命名」。</li>
+<li>输入新名称并确认。</li>
+</ol>
+<h2 id="h-3">清空收藏集</h2>
+<ol>
+<li>右键收藏集，选择「清空收藏夹」。</li>
+<li>在「确认清空」对话框确认。清空只移除收藏关系，资产本体不会被删除。</li>
+</ol>
+<h2 id="h-4">删除收藏集</h2>
+<ol>
+<li>右键一个非默认收藏集，选择「删除收藏夹」。</li>
+<li>在「确认删除」对话框确认。删除的只是容器，里面的资产本体不受影响；若删的是当前收藏集，界面回退到默认收藏夹。</li>
+</ol>
+<h2 id="h-5">结果验证</h2>
+<ul>
+<li>收藏夹列表中的名称与数量立即更新。</li>
+<li>库根目录 <code>favorites.json</code> 的 <code>collections</code> 相应增加、改名或减少。</li>
+<li>重新打开插件后改动仍然存在。</li>
+</ul>
+<h2 id="h-6">提示</h2>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>默认收藏夹不提供重命名和删除入口；删除收藏集不会删除资产，但会丢掉该夹的收藏关系。</p></div>
+<ul>
+<li>新建收藏集的内部 id 形如 <code>fav_xxxxxxxx</code>，显示名可随时修改。</li>
+<li>命令侧用 <code>collection_manage</code>：<code>op=list/create/rename/delete/clear</code>，支持 <code>dry_run</code> 预览。</li>
+<li>收藏集按库存储，切换资产库后看到的是该库自己的收藏集。</li>
+</ul>

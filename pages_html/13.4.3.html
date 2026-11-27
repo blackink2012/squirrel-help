@@ -1,0 +1,28 @@
+<p>插件按扩展名把文件路由到不同导入器；扩展名不在支持集合里时，会被判为未知格式而直接失败。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>右键导入没有反应，或日志出现「未知格式」。</li>
+<li>文件选择器里看不到某类文件，或选中后无法导入。</li>
+<li>图像格式转换提示不支持的目标格式。</li>
+<li>导出对话框里某个格式复选框置灰，或右侧显示「不可用」。</li>
+</ul>
+<h2 id="h-2">可能原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>扩展名不在支持集合</td><td><code>explain_format</code> 返回 <code>importer=unknown</code></td><td>转成受支持的格式，或用外部文件导入</td></tr><tr><td>大小写或多重后缀异常</td><td>文件名后缀不是单一点号扩展名</td><td>改成标准扩展名后重试</td></tr><tr><td>缺少 Maya 侧插件</td><td>该格式依赖的导入插件没有加载</td><td>在插件管理器里加载对应插件</td></tr><tr><td>把内部格式当外部文件</td><td><code>.zmetal</code>、<code>.zlight</code> 不是普通外部文件</td><td>从资产库导入，或改用对应转换工具</td></tr><tr><td>外部文件导入集合更窄</td><td><code>importable_external</code> 组里没有该扩展名</td><td>先收进库或先转换格式</td></tr><tr><td>导出格式插件不可用</td><td>格式复选框置灰</td><td>见 4.3.5.4「格式不可用」</td></tr></tbody></table>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>执行 <code>list_supported_formats</code>，确认该扩展名属于哪一组：几何、代理、体积、贴图、HDR、zmetal、zlight。</li>
+<li>对单个文件执行 <code>explain_format</code>，传入扩展名，确认返回的 <code>importer</code> 不是 <code>unknown</code>。</li>
+<li>几何类支持 <code>ma</code>、<code>mb</code>、<code>fbx</code>、<code>obj</code>、<code>abc</code>、<code>usd</code>、<code>usda</code>、<code>usdc</code>、<code>glb</code>、<code>gltf</code>、<code>dae</code>；代理类支持 <code>ass</code>、<code>rs</code>、<code>proxy</code>、<code>vrmesh</code>、<code>vrscene</code>；体积类支持 <code>vdb</code>。</li>
+<li>贴图类支持 <code>png</code>、<code>jpg</code>、<code>jpeg</code>、<code>exr</code>、<code>hdr</code>、<code>tga</code>、<code>tiff</code>、<code>tif</code>、<code>bmp</code>、<code>psd</code>。</li>
+<li>需要把外部文件收进库时，先确认 <code>list_supported_formats</code> 的 <code>importable_external</code> 组是否包含该扩展名；不包含就先转换。</li>
+<li>依赖 Maya 插件的格式，先在插件管理器加载对应插件，再重试导入或导出。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p><code>explain_format</code> 返回明确的导入器类型（如 <code>geometry</code>、<code>texture</code>、<code>hdri</code>），文件能正常导入或转换。</p>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>记录文件扩展名、来源软件和完整报错，确认不是文件本身损坏。</li>
+<li>把文件先用目标软件另存为标准格式，再导入验证。</li>
+<li>导出侧的问题按 4.3.5.4「格式不可用」检查插件与格式预设。</li>
+<li>反馈时附 <code>list_supported_formats</code> 与 <code>explain_format</code> 的返回，便于确认是清单缺失还是插件未加载。</li>
+</ul>

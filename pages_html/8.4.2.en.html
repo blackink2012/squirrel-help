@@ -1,0 +1,13 @@
+<p>AI analysis produces four results: a display name, a suggested sub-category, tags and notes. All of them are suggestions that can be edited or unchecked before applying.</p>
+<h2 id="h-1">What the four results mean</h2>
+<table><thead><tr><th>Field</th><th>Where it is written</th><th>Effect</th></tr></thead><tbody><tr><td>Display name</td><td>The asset&#x27;s <code>name_cn</code></td><td>Shows a friendlier Chinese name in the interface</td></tr><tr><td>Suggested sub-category</td><td>The asset&#x27;s category</td><td>Picked from the existing sub-categories under that top-level category in the current library</td></tr><tr><td>Tags</td><td>The asset&#x27;s <code>tags</code></td><td>Keywords such as material, color and purpose, used by search</td></tr><tr><td>Notes</td><td>The asset&#x27;s <code>notes</code></td><td>A short description that is also included in keyword search</td></tr></tbody></table>
+<p>Tags merge with the asset&#x27;s existing tags rather than replacing them; category candidates come from the real sub-categories of the current library, not a list the model invented.</p>
+<h2 id="h-2">Why human confirmation matters</h2>
+<p>The model only sees the thumbnail and cannot know the asset&#x27;s real use, scale or project conventions, so treating suggestions as final easily files assets under the wrong category. With <code>「移动到分析出的分类」 (move to the suggested category)</code> checked by default, applying actually moves the asset to that category directory, which matters more than changing tags.</p>
+<h2 id="h-3">Scope of application</h2>
+<ul>
+<li>Single asset: check fields one by one in the result window and confirm to write them immediately.</li>
+<li>Batch: select all or check items one by one in the batch result window and click <code>「应用选中的资产」 (Apply selected assets)</code>.</li>
+</ul>
+<h2 id="h-4">Recommendation</h2>
+<p>When the category is uncertain, first uncheck <code>「移动到分析出的分类」 (move to the suggested category)</code> and apply only the name and tags; move the asset once the category is confirmed.</p>

@@ -1,0 +1,25 @@
+<p>Geometry formats preset which geometry file formats are checked by default when exporting each asset type.</p>
+<p><img src="media_en/shared/settings-geo-formats.webp" alt="Geometry formats" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>When a new export dialog or asset creation starts, geometry formats such as Maya, FBX, OBJ and USD are pre-checked for the current asset type.</p>
+<h2 id="h-2">Values and defaults</h2>
+<ul>
+<li>Choose the asset type in the list on the left, shown as a sub-library ID.</li>
+<li>The five options and their default asset types:</li>
+</ul>
+<table><thead><tr><th>Option</th><th>Asset types where it is checked by default</th></tr></thead><tbody><tr><td>Maya ASCII (.ma)</td><td><code>materials</code>, <code>models</code>, <code>lights</code>, <code>scenes</code>, <code>ani</code></td></tr><tr><td>Maya Binary (.mb)</td><td>None</td></tr><tr><td>FBX (.fbx)</td><td>None</td></tr><tr><td>OBJ (.obj)</td><td>None</td></tr><tr><td>USD (.usd)</td><td>None</td></tr></tbody></table>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>It only decides the initial state of checkboxes in the export interface; a single export can still change them.</li>
+<li>It never changes existing assets, the context menu or quick tools.</li>
+<li>It is stored under the matching asset type key in <code>Assets/preset/export_preset.json</code>.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<ul>
+<li>Models must be delivered to an engine or another DCC: check <code>.fbx</code> or <code>.usd</code> for <code>models</code>.</li>
+<li>Only Maya itself uses them: keep <code>.ma</code>, or switch to <code>.mb</code> for smaller files.</li>
+<li>Material or light assets should not carry geometry by default: uncheck <code>.ma</code> for those types.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<blockquote><p><strong>Tip</strong>: <code>.ma</code> excludes the default initial <code>SE</code> nodes so the default shader never enters the asset.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: the list on the left holds asset types, not categories; all categories under one type share the same defaults.</p></blockquote>

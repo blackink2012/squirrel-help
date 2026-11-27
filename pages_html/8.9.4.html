@@ -1,0 +1,12 @@
+<p>超时要先分清是模型慢、底座没起、网络被拦，还是 Maya 主线程被占住；不同层的处理方式完全不同。</p>
+<h2 id="h-1">常见症状与处理</h2>
+<p><strong>第一次语义搜索或 AI 分析很慢</strong>：模型首次加载需要时间，稍等或再试一次。之后应明显变快。</p>
+<p><strong>Ollama 请求超时</strong>：确认 <code>http://127.0.0.1:11434/api/tags</code> 能打开；若系统或环境变量设了代理（<code>HTTP_PROXY</code> / <code>HTTPS_PROXY</code>）且没把 <code>127.0.0.1</code> 放进 <code>NO_PROXY</code>，本地回环请求也会被代理拦掉。必要时调大 <code>SQUIRREL_EMBED_TIMEOUT</code>。</p>
+<p><strong>云端接口超时</strong>：检查 API 地址、Key、网络与代理；换一个可用模型再试。</p>
+<p><strong>AI 助手提示 Web 端启动失败，日志为空且退出码为 0</strong>：几乎都是 Node 版本太低，需要 <code>^22.19 || &gt;=24</code>。用一键安装装便携 Node，或用 <code>SQUIRREL_NODE</code> 指向达标解释器。</p>
+<p><strong>底座连不上</strong>：确认底座在运行，查看 <code>~\.squirrel_asset_manager\broker_endpoint.json</code> 里的实际端口；端口被占用时会自动换端口。</p>
+<p><strong>Maya 命令没回</strong>：可能主线程正忙。先查延迟结果与作业状态，不要因为一次超时就重跑破坏性命令。</p>
+<h2 id="h-2">结果验证</h2>
+<p>超时项恢复正常返回；<code>squirrel_list_instances</code> 能看到当前 Maya；再跑一次依赖体检确认没有新的缺失。</p>
+<h2 id="h-3">仍不行</h2>
+<p>用崩溃/断连诊断工具检查端口是「真的在应答」还是只是「在监听」；监听不等于健康。</p>

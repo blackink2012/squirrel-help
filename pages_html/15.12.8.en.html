@@ -1,0 +1,35 @@
+<blockquote><p>One-line summary: <strong>the whole-library scan window opened from Maintenance → Fill missing thumbnails…: it first lists assets missing a thumbnail or holding only a placeholder, lets you choose, then hands the selection to headless batch rendering.</strong></p></blockquote>
+<p><img src="media_en/shared/dialog-fill-thumbnails.webp" alt="Fill missing thumbnails window" loading="lazy" decoding="async"></p>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Top toolbar → <strong>Maintenance ▾</strong> → <strong>Fill missing thumbnails…</strong>;</li>
+<li>It scans the current library immediately on opening (reading every meta in the library, so large libraries take a moment and the cursor becomes a wait cursor).</li>
+</ol>
+<p>Prerequisite: an asset library is loaded; when none is loaded it asks you to open one first.</p>
+<h2 id="h-2">What the window contains</h2>
+<table><thead><tr><th>Area</th><th>Content</th></tr></thead><tbody><tr><td>Summary line</td><td>&quot;Scanned N assets that need images (missing thumbnail or placeholder only)&quot;; with none it reads &quot;No assets need images: the whole library has thumbnails.&quot;</td></tr><tr><td>Hint line</td><td>Explains multi-select, the context menu and what <strong>Start generating</strong> will do</td></tr><tr><td>Asset list</td><td>Each row shows &quot;name / asset path · status&quot;, with only two statuses: <strong>missing thumbnail</strong> and <strong>placeholder only</strong>; <strong>selected entirely by default</strong></td></tr><tr><td>Bottom buttons</td><td>From the left: <strong>Rescan</strong>, <strong>Start generating (N)</strong>, <strong>Cancel</strong></td></tr></tbody></table>
+<h2 id="h-3">How to choose</h2>
+<ul>
+<li>Everything is selected by default, which suits routine maintenance;</li>
+<li>To fill only some: Ctrl+click / Shift+click to deselect the rest;</li>
+<li>Right-clicking a row (it opens on press) offers three items:</li>
+</ul>
+<table><thead><tr><th>Item</th><th>Effect</th><th>Description</th></tr></thead><tbody><tr><td>Locate asset</td><td>Switches the main window to the asset&#x27;s sub-library / category, selects it and brings it forward</td><td>Falls back to selecting by path when the record cannot be found; this window changes no library state</td></tr><tr><td>Open asset path</td><td>Opens the asset&#x27;s disk directory in Explorer</td><td>For checking the asset content by hand</td></tr><tr><td>Remove from list</td><td>Takes the row out of <strong>this list only</strong></td><td>UI only, nothing on disk; <strong>Rescan</strong> brings it back</td></tr></tbody></table>
+<h2 id="h-4">After clicking Start generating</h2>
+<ol>
+<li>The <strong>Background render</strong> options window appears first: renderer, preset model, environment light, size and quality (<a href="#/en/15.12.6"><code>8.12.6</code></a>);</li>
+<li>After confirming, a separate mayapy process renders the selected assets one by one; the progress window is in <a href="#/en/15.12.7"><code>8.12.7</code></a>;</li>
+<li>The job runs in the background and <strong>does not occupy the current viewport or change the scene</strong>, so you can keep working in Maya;</li>
+<li>When it finishes the main window refreshes and the card images update.</li>
+</ol>
+<h2 id="h-5">Risks and how to undo</h2>
+<table><thead><tr><th>Operation</th><th>Risk</th><th>Undo</th></tr></thead><tbody><tr><td>Start generating</td><td>It <strong>overwrites</strong> those assets&#x27; existing thumbnails (placeholders are replaced too)</td><td>Render again; the old image has no backup, so first save important images with <strong>Update thumbnail → Import</strong></td></tr><tr><td>Remove from list</td><td>Only skipped this time</td><td><strong>Rescan</strong> restores it</td></tr><tr><td>Cancel midway</td><td>Cooperative cancellation: it stops after the current asset finishes</td><td>Finished images are kept, so fill in the rest next time</td></tr></tbody></table>
+<h2 id="h-6">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>The scan result is empty</td><td>The whole library really does have thumbnails</td><td>Use <strong>Update thumbnail → Background render</strong> on individual assets</td></tr><tr><td>It reports no usable headless renderer</td><td>kick / oiiotool is missing, or no same-version mayapy</td><td>See &quot;Troubleshooting&quot; in <a href="#/en/15.12.6"><code>8.12.6</code></a></td></tr><tr><td>The image is still gray afterwards</td><td>The asset lacks geometry, or rendering failed</td><td>Read the progress window log, or capture / import an image manually</td></tr></tbody></table>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>Other Maintenance menu items: <a href="#/en/15.2.8"><code>8.2.8</code></a></li>
+<li>Background render options: <a href="#/en/15.12.6"><code>8.12.6</code></a>; headless job progress: <a href="#/en/15.12.7"><code>8.12.7</code></a></li>
+<li>The single-asset thumbnail flow: <a href="#/en/4.7.1"><code>4.1.7.1</code></a></li>
+<li>Batch rendering and cancelling jobs: <a href="#/en/10.6.2"><code>4.7.6.2</code></a></li>
+</ul>

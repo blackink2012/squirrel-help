@@ -1,0 +1,8 @@
+<p>本页由命令注册表自动生成，共 <strong>3</strong> 条命令。命令 ID 可直接用于 AI / MCP 调用；通用字段见 <a href="#/12.2.1">参数与返回结构</a>。</p>
+<div class="table-scroll"><table>
+<thead><tr><th>命令</th><th>说明</th><th>参数</th><th>风险</th><th>执行</th></tr></thead>
+<tbody>
+<tr id="cmd-quicktool_run"><td><code>quicktool_run</code><br><strong>运行快捷工具</strong></td><td>把 <code>quicktools/</code> 下的脚本跑起来 —— 与插件「快捷工具」菜单<strong>同一条路</strong>（同样把主窗口引用递进去）。不传 name 就列出全部脚本（含 <code>entry</code>＝会走哪个入口、以及「是否已被一等公民命令覆盖」，优先用后者）。<strong>入口解析</strong>：main() → run() → 源码里有 <code>if __name__ == &quot;__main__&quot;</code> 就<strong>以 __main__ 身份执行一次</strong>（与在脚本编辑器里直接运行等价）（判定在源码上做，同一份模块体不会被跑两遍）。多数快捷工具是 <strong>GUI 工具</strong>：会打开窗口等用户操作，命令立即返回、不代表操作完成。只允许 quicktools 下的纯文件名（拒绝路径与 ..）。典型用途：跑那些还没有一等公民命令覆盖的工具（如「批量处理 maya 文件」）。</td><td><span title="name: 脚本文件名（带不带 .py 都行）；省略=只列清单；params: 传给脚本 run(params) 的参数（可选）"><code>name</code> / <code>params</code></span></td><td title="dry_run=是；undo=否">低危</td><td>同步</td></tr>
+<tr id="cmd-refresh_commands"><td><code>refresh_commands</code><br><strong>重报命令清单</strong></td><td>重建命令执行器并让连接器重连 → broker 上的命令清单立即更新。插件里<strong>新加了命令 / 改了参数 schema</strong> 之后用它，不必重启 Maya。重连瞬间在飞的命令会失败，别在长任务执行中调用。</td><td>—</td><td title="dry_run=是；undo=否">低危</td><td>同步</td></tr>
+<tr id="cmd-web_assistant"><td><code>web_assistant</code><br><strong>AI 助手开关 / 底座</strong></td><td>AI 助手（dsh Web 端）与底座的运行期状态与开关：op=status 看 web_state（off/starting/open，含面板是否内嵌、服务进程是否在跑）与底座实例；op=open / close 开关面板与服务（走 ai_service.toggle_web，和 Maya 里「AI 工具 → AI 助手」同一个入口）；op=reopen 把<strong>已经在跑</strong>的对话面重新摆出来（用户在系统浏览器里关掉了标签页、或面板被单独关掉时用它，复用服务、不重启不杀进程）；op=stop_broker <strong>停掉共享底座进程</strong>（其它 Maya/会话也会断连，慎重）。需确认。</td><td><code>op</code></td><td title="dry_run=是；undo=否">低危</td><td>同步</td></tr>
+</tbody></table></div>

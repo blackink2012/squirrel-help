@@ -1,0 +1,37 @@
+<p>The AI chat surface setting decides whether the dsh chat panel docks inside Maya or opens in the system browser when <code>「AI 助手」 (AI assistant)</code> is clicked.</p>
+<p><img src="media_en/shared/settings-ai-conversation.webp" alt="AI chat surface" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>It chooses how the dsh front end is hosted.</p>
+<h2 id="h-2">Values and default</h2>
+<ul>
+<li>The checkbox <code>「在 Maya 内嵌 AI 对话面（取消则用系统浏览器打开）」 (embed the AI chat surface in Maya; uncheck to open it in the system browser)</code> is checked by default.</li>
+<li>Checked: dsh docks into Maya as a panel on the right.</li>
+<li>Unchecked: the system default browser opens it and the plug-in creates no panel.</li>
+</ul>
+<h2 id="h-3">dsh release track (stable / early access)</h2>
+<p>The same group has a <code>「版本轨」 (Release track)</code> dropdown that decides <strong>which dsh the next one-click install</strong> fetches:</p>
+<ul>
+<li><strong>Stable track</strong> (default): installs the pinned version verified with the plug-in, so problems find a backstop; recommended.</li>
+<li><strong>Early access track</strong>: clicking <code>「一键安装」 (One-click install)</code> queries the latest version on npm and installs that <strong>exact version</strong>, pinned;</li>
+</ul>
+<p>it never auto-upgrades afterwards. That version is <strong>unverified</strong>, and individual tool behavior may differ.</p>
+<p>An early-access install first lands in a staging directory and replaces the current one only after verification, so <strong>a failure never damages the installed stable version</strong>. Switching the dropdown itself never changes an already installed dsh; installing the new version still needs another one-click install. If the early-access version misbehaves, switch the track back to <code>「稳定轨」 (Stable track)</code> and click one-click install again to recover.</p>
+<h2 id="h-4">Scope</h2>
+<ul>
+<li>Both modes start the same dsh front end with identical sessions, skills and tool calls.</li>
+<li>The embedded panel takes space on the right of the Maya main window; the browser mode suits a second screen.</li>
+<li>The panel or tab title automatically carries the current scene name so it is easy to tell apart from your own dsh.</li>
+<li>Changes apply the next time <code>「AI 助手」 (AI assistant)</code> is clicked; no restart is needed.</li>
+</ul>
+<h2 id="h-5">When to change it</h2>
+<ul>
+<li>To chat while watching the viewport: keep it embedded.</li>
+<li>Two-screen work, or when the panel should not compress the Maya layout: uncheck and use the browser.</li>
+</ul>
+<h2 id="h-6">Verify the result</h2>
+<ul>
+<li>Click <code>AI 工具 (AI tools) → AI 助手 (AI assistant)</code> in the main window and the chat surface appears in the chosen mode.</li>
+</ul>
+<h2 id="h-7">Tips</h2>
+<blockquote><p><strong>Tip</strong>: this only decides where the chat surface opens and never installs dsh; when it is missing follow &quot;Install guide when dsh is missing&quot;.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: the Settings window is the only place to switch this; the <code>「AI 工具」 (AI tools)</code> menu does not offer it.</p></blockquote>

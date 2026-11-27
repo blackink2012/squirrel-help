@@ -1,0 +1,28 @@
+<p>Splitting divides one area in two, while merging hands the current area&#x27;s space to a neighboring area.</p>
+<p><img src="media_en/shared/area-menu-split.webp" alt="Second column of the area menu: the four split directions" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Splitting an area</h2>
+<ol>
+<li>Click the function button on the right of the target area&#x27;s header.</li>
+<li>Choose a direction in the second column: <code>「向右拆分」 (Split right)</code>, <code>「向下拆分」 (Split down)</code>, <code>「向左拆分」 (Split left)</code>, <code>「向上拆分」 (Split up)</code>.</li>
+<li>The original and the new area each take half, and the new area shows the same panel type as the original.</li>
+<li>To change its content, switch the panel type in the new area&#x27;s header (see 3.2.6).</li>
+</ol>
+<h2 id="h-2">Merging an area</h2>
+<p><img src="media_en/shared/area-join-menu.webp" alt="The direction list that opens to the right of &quot;Merge into…&quot;" loading="lazy" decoding="async"></p>
+<ol>
+<li>Click the function button of the area that should disappear.</li>
+<li>Choose <code>「并入…」 (Merge into…)</code> and then a direction (up / down / left / right).</li>
+<li>That area closes and its space goes to the neighbor in that direction; a direction without a neighbor is not shown.</li>
+</ol>
+<p>If you only want to remove an area, choose <code>「关闭本区域」 (Close this area)</code> instead; the space is distributed among sibling neighbors.</p>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>After splitting the area count increases and two panels of the same type appear, each working independently.</li>
+<li>After merging the area count decreases, the neighbor grows and the original area&#x27;s content is gone.</li>
+<li>Reopening the window keeps the split and merge results (the layout is saved automatically).</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>A newly split area holds its own independent panel instance and does not compete with the original; the same panel type can appear in several areas at once.</li>
+<li>At least one area must remain; when only one is left it can no longer be closed or merged.</li>
+</ul>

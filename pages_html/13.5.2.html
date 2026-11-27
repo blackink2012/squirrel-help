@@ -1,0 +1,28 @@
+<p>资产库索引与 Maya 文档索引是两套独立数据，缺哪套就补哪套；换了嵌入模型则必须重建。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>提示「还没有资产库语义索引」或「没有 <code>kb/semantic/meta.json</code>」。</li>
+<li>索引目录存在，但缺少 <code>vectors.i8</code>、<code>scales.f32</code> 或 <code>meta.json</code>。</li>
+<li>状态提示索引模型与期望模型不一致，或「索引目录属于另一个资产库」。</li>
+<li>换模型后搜索突然退回词法，或结果明显变差。</li>
+</ul>
+<h2 id="h-2">可能原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>资产库索引从未建立</td><td>库根下没有 <code>.squirrel_ai_index\&lt;official / ollama&gt;</code></td><td>首次同步或重建</td></tr><tr><td>索引文件不完整</td><td>缺 <code>vectors.i8</code> 或 <code>scales.f32</code></td><td>重建索引</td></tr><tr><td>换模型/改文本模板/改主键方案/换后端</td><td><code>meta.json</code> 记录与当前代码或当前后端不一致</td><td>全量重建</td></tr><tr><td>索引目录指向了别的库</td><td>提示索引属于另一个资产库</td><td>清掉覆盖目录或重建接管</td></tr><tr><td>Ollama 没有该模型</td><td><code>ollama list</code> 中没有对应名称</td><td>拉取模型后再重建</td></tr><tr><td>Maya 文档索引缺失</td><td><code>kb/semantic/&lt;official / ollama&gt;</code> 下没有 <code>meta.json</code></td><td>重建文档索引</td></tr><tr><td>索引放在网络盘</td><td>同一后端多机同时写同一目录</td><td>改为每台机器本地目录（不同后端已分家）</td></tr></tbody></table>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>执行 <code>asset_semantic_status</code>，记录 <code>dir</code>、<code>model</code>、<code>count</code>、<code>reason</code> 与 <code>index_dir</code>。</li>
+<li>资产库索引缺失时，执行 <code>python tools/asset_index.py --rebuild</code>；只是想追平新增资产时用 <code>--sync</code>。</li>
+<li>Maya 文档索引缺失时，执行 <code>python tools/build_semantic_index.py --model embeddinggemma-2:740m</code>。</li>
+<li>模型没有拉取时，先执行 <code>ollama pull embeddinggemma-2:740m</code>，再重建。</li>
+<li>设置过索引根目录时，确认该目录在本机磁盘；每个库会在根下自动使用自己的子目录。</li>
+<li>提示索引属于另一个库时，清掉索引目录覆盖设置后重建，或确认原库索引不再使用后让它接管。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p><code>asset_semantic_status</code> 显示索引条数大于 0，<code>model</code> 与索引记录一致，搜索不再提示索引缺失。</p>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>确认 <code>meta.json</code> 里的模型名与实际拉取的模型完全一致，包括 tag。</li>
+<li>删除索引目录前先备份；重建失败时保留 <code>meta.json</code> 与报错信息。</li>
+<li>文档索引可用 <code>maya_docs(action=&quot;status&quot;, probe=true)</code> 或 <code>tools/setup_semantic_env.py --all</code> 验证。</li>
+<li>按 4.5.6.5「重建与模型选择」确认换模型后的正确流程。</li>
+</ul>

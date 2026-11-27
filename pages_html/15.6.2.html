@@ -1,0 +1,37 @@
+<blockquote><p>一句话定位：<strong>在属性区的任意字段上按右键，会弹出「复制 / 复制 ID / 编辑」菜单；点「编辑」才进入可改状态。</strong></p></blockquote>
+<p>先纠正一个常见误会：<strong>现在双击字段不会进入编辑</strong>（旧版本会，容易在只想看一眼时误改，已经取消）。双击只有一种用法 —— 双击某个<strong>标签胶囊</strong>，直接进入标签编辑。字段本身的编辑入口是<strong>右键</strong>，或标题栏的铅笔按钮（见 <a href="#/15.6.3"><code>8.6.3</code></a>）。</p>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>在资产网格里选中一个资产；</li>
+<li>把鼠标放到右侧属性区的任意一行上（字段名、字段值、甚至空白处都行）；</li>
+<li><strong>按鼠标右键</strong>，弹出菜单。</li>
+</ol>
+<p>回收站条目也能弹这个菜单，但「编辑」是灰的（只读）。</p>
+<p><img src="media/shared/menu-field-edit.webp" alt="属性字段右键菜单：复制 / 复制 ID / 编辑" loading="lazy" decoding="async"></p>
+<h2 id="h-2">菜单逐项详解</h2>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>复制</td><td>把该字段的文字放进剪贴板</td><td>字段有文字</td><td>已选中的部分文字被复制；没选中则整段值被复制</td><td>只读字段（资产名 / 分类 / 格式 / 大小 / 分辨率 / 音频 / 创建时间）也走这个菜单，所以复制一定在这里</td></tr><tr><td>复制 ID</td><td>复制资产的唯一 ID（meta 里的 <code>id</code>）</td><td>该资产有 ID</td><td>剪贴板里是一串 ID</td><td>ID 不在属性区显示，按 ID 搜索 / 对外沟通只能从这里拿</td></tr><tr><td>编辑</td><td>进入编辑态，并<strong>定位到这一行对应的字段</strong></td><td>不是回收站只读条目</td><td>属性区切换成编辑卡片，光标落在对应输入框里</td><td>在只读字段上点「编辑」只会进入编辑态，不会定位到那一行（那行本来就不能改）</td></tr></tbody></table>
+<p>菜单里各项会自动置灰：字段没文字时「复制」灰；资产没 ID 时「复制 ID」灰；只读条目「编辑」灰。</p>
+<h2 id="h-3">点「编辑」之后：编辑态里能改什么</h2>
+<table><thead><tr><th>编辑态字段</th><th>控件</th><th>能改吗</th><th>说明</th></tr></thead><tbody><tr><td>名称</td><td>单行输入框</td><td>能</td><td>就是卡片上显示的名字（易读名）</td></tr><tr><td>材质类型</td><td>单行输入框</td><td>能</td><td>对应显示态的「节点类型」，纯文本</td></tr><tr><td>资产类型</td><td>下拉框</td><td><strong>不能</strong>（灰）</td><td>由资产所在子库决定</td></tr><tr><td>分类</td><td>下拉框</td><td><strong>不能</strong>（灰）</td><td>换分类用右键「移动到」</td></tr><tr><td>软件</td><td>单行输入框</td><td>能</td><td>记录信息</td></tr><tr><td>渲染器</td><td>单行输入框</td><td>能</td><td>记录信息</td></tr><tr><td>色彩空间</td><td>可输入的下拉框</td><td>能</td><td>预设：sRGB / Raw / ACEScg / Linear sRGB / Utility - Raw / Output - sRGB，也可以直接打字</td></tr><tr><td>标签</td><td>标签胶囊 +「+ 添加标签」</td><td>能</td><td>点「+ 添加标签」弹窗：输入新标签回车加入、点常用标签快速加入、点胶囊上的 ✖ 移除（见 <a href="#/4.6.1"><code>4.1.6.1</code></a>）</td></tr><tr><td>注释</td><td>多行输入框</td><td>能</td><td>输入框有最大高度，写长注释时内部滚动</td></tr></tbody></table>
+<p>编辑态里还有两条约定：</p>
+<ul>
+<li>滚轮停在「资产类型 / 分类 / 色彩空间」三个下拉框上<strong>不会</strong>改值（防误改）；</li>
+<li>编辑时点一下<strong>资产卡片区</strong>（中间网格），会自动应用本次修改并退出编辑态。</li>
+</ul>
+<h2 id="h-4">保存与取消</h2>
+<table><thead><tr><th>操作</th><th>结果</th><th>反悔可能</th></tr></thead><tbody><tr><td>标题栏 ✓（保存）</td><td>把改动写回资产元数据并刷新面板与卡片</td><td>保存后<strong>没有撤销栈</strong>，Ctrl+Z 撤不回；只能再编辑改回原值</td></tr><tr><td>标题栏 ×（取消）</td><td>丢弃本次全部改动，恢复进入编辑前的快照</td><td>完全还原，可以放心点</td></tr><tr><td>点卡片区（自动应用）</td><td>等同「保存」</td><td>同第一行</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>属性编辑改的是资产元数据（<code>.zasset</code> 里的 meta），删掉 / 覆盖资产才会丢；但保存之后插件没有提供「撤销这次属性修改」，改错了只能手动改回去。一次要改多个字段时，先想好再点保存。</p></div>
+<h2 id="h-5">一次典型操作：给资产补注释和标签</h2>
+<ol>
+<li>选中资产 → 右键「注释」那一行 →「编辑」；</li>
+<li>在注释框里输入说明；点「+ 添加标签」，输入或用常用标签快速加入；</li>
+<li>确认无误点标题栏 ✓（或点一下资产卡片区）；</li>
+<li>面板回到显示态，注释与标签立刻可见；状态栏右侧显示的还是这个资产的名称。</li>
+</ol>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>每个字段显示什么、哪些字段不能改 → <a href="#/15.6.1"><code>8.6.1</code></a></li>
+<li>标题栏上的收藏 / 编辑 / 保存 / 取消按钮 → <a href="#/15.6.3"><code>8.6.3</code></a></li>
+<li>名称、标签、注释的通用规则 → <a href="#/4.6.1"><code>4.1.6.1</code></a></li>
+<li>右键资产卡片里的「编辑」是另一个入口（打开属性编辑窗口）→ <a href="#/15.5.16"><code>8.5.16</code></a></li>
+</ul>

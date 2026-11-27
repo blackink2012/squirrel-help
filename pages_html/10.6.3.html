@@ -1,0 +1,23 @@
+<p>批量格式转换在 mayapy 里把资产自带的几何转成其他格式，并把结果追加进资产包，原格式保留。</p>
+<p><img src="media/shared/dialog-format-convert.webp" alt="批量格式转换" loading="lazy" decoding="async"></p>
+<h2 id="h-1">支持的格式</h2>
+<table><thead><tr><th>扩展名</th><th>名称</th></tr></thead><tbody><tr><td><code>ma</code></td><td>Maya ASCII</td></tr><tr><td><code>mb</code></td><td>Maya Binary</td></tr><tr><td><code>fbx</code></td><td>FBX</td></tr><tr><td><code>obj</code></td><td>Wavefront OBJ</td></tr><tr><td><code>usd</code></td><td>USD</td></tr><tr><td><code>abc</code></td><td>Alembic</td></tr></tbody></table>
+<h2 id="h-2">前置条件</h2>
+<ul>
+<li>资产里<strong>自带几何</strong>；材质、贴图、灯光这类没有几何的资产会被跳过并说明原因。</li>
+<li>本机有与当前 Maya 同版本的 mayapy。</li>
+</ul>
+<h2 id="h-3">操作步骤</h2>
+<ol>
+<li>选中一个或多个资产，右键选择「格式转换」。</li>
+<li>在对话框中勾选要写入资产包的目标格式；已存在同名格式时会标注「已存在」，勾选表示用本次结果替换。</li>
+<li>点「开始转换」，等待进度窗口完成。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p>返回逐项结果与成功 / 失败 / 跳过数量；在资产目录中能看到新增格式文件，原有格式没有被删除。转换全部在库外临时目录完成并验证后才写回资产包。</p>
+<h2 id="h-5">提示与警告</h2>
+<ul>
+<li>没有几何的资产无法转换，这是设计限制，不是失败。</li>
+<li>不同分类下可以存在同名资产，作业内部会用序号区分产出，避免互相覆盖。</li>
+<li>取消或失败时资产库保持原样，最多留下一份未被采纳的临时产出。</li>
+</ul>

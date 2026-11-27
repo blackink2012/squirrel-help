@@ -1,0 +1,20 @@
+<p>点「AI 助手」时若本机没有 dsh，插件会弹出可操作的安装引导；按它给的方式装一次即可，不必重启 Maya。</p>
+<p><img src="media/shared/dialog-dsh-install.webp" alt="未安装 dsh 的安装引导" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<p>能联网。dsh 要求 Node.js <code>^22.19 || &gt;=24</code>，22.18 及以下和 23 都不行。</p>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在 Maya 里点「AI 工具 → AI 助手」。</li>
+<li>在提示框里选「一键安装（推荐）」。插件会先检查 Node，不达标就下载便携 Node 到 <code>&lt;插件目录&gt;\node</code>，再用它把 dsh 装进 <code>&lt;插件目录&gt;\dsh</code>，装完自动打开助手。</li>
+<li>网络受限或想自己控制版本时，改用「复制安装命令」，在终端执行带完整路径的 npm 安装命令；装到插件目录下的 <code>dsh</code> 子目录，避免覆盖系统全局安装。</li>
+<li>手动安装完回到 Maya，重新打开资产窗口并点「AI 助手」，无需重启 Maya。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>执行 <code>python squirrel_asset_manager/install_ai_dsh.py --list</code>：dsh 运行时一行应显示 <code>0.2.2-rc.3</code> 与包内路径，node 一行应显示达标解释器。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>一键安装约需下载 38 MB 的 Node 与 60–80 MB 的 dsh 依赖，默认先走国内镜像。</li>
+<li>手动安装前先关闭已打开的 AI 面板，否则文件被占用会报 EBUSY。</li>
+<li><code>pip install deepseek-harness-sdk</code> 装的是 SDK 单文件运行时，不含 web profile，不能当对话面用。</li>
+<li>若 dsh 装在别处，可用 <code>SQUIRREL_DSH_BIN</code> 或 <code>SQUIRREL_DSH_ROOT</code> 指向它。</li>
+</ul>

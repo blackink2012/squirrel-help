@@ -1,0 +1,30 @@
+<p>The appearance theme switches the plug-in interface between dark and light colors and only affects plug-in windows.</p>
+<p><img src="media_en/shared/settings-theme.webp" alt="Theme" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>It chooses the color scheme used by the plug-in main window and dialogs.</p>
+<h2 id="h-2">Values and default</h2>
+<ul>
+<li>Dark (default), Light.</li>
+</ul>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>After <code>「应用」 (Apply)</code> the main window immediately rebinds color tokens, rebuilds the style sheet and re-renders icons.</li>
+<li>Backgrounds, text, borders, buttons and status colors all switch together; colored icons in toolbars and menus are re-tinted for the new background.</li>
+<li>Dialogs opened afterwards use the new colors.</li>
+<li>It never affects Maya&#x27;s native interface, the viewport background or render results, and never changes icon shapes or layout.</li>
+<li>It is stored under the <code>theme</code> key in <code>app_settings.json</code>.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<ul>
+<li>Light reads better in a bright office; keep dark for dim rooms or night work.</li>
+<li>Switch when colors should match screenshots or a presentation.</li>
+<li>Sticking with one theme is fine; frequent switching never affects asset data.</li>
+</ul>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>The main window&#x27;s background and text colors change immediately, and newly opened dialogs match the main window.</li>
+<li>Closing and reopening Settings still shows the chosen value in the theme dropdown.</li>
+</ul>
+<h2 id="h-6">Tips</h2>
+<blockquote><p><strong>Tip</strong>: if a window that is already open still shows the old colors, reopen it.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: switching the theme never changes font size or interface scaling.</p></blockquote>

@@ -1,0 +1,37 @@
+<blockquote><p>一句话定位：<strong>按子库逐个决定：资产右键菜单里显示哪些项、双击卡片时执行哪条命令。</strong></p></blockquote>
+<p><strong>这一页默认是锁住的</strong>，必须先勾「解锁全部配置」并确认警告才能改（见 <a href="#/15.9.1"><code>8.9.1</code></a>）。</p>
+<p><img src="media/shared/settings-context-menu.webp" alt="设置窗口（右键菜单页）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">怎么打开</h2>
+<p>设置窗口 → 勾「解锁全部配置」→ 页签「右键菜单」。</p>
+<p>左边先选<strong>子库</strong>（材质 / 模型 / 灯光 / 贴图 / 场景 / HDR / 动态 / 节点树 / 图片 / 音频 / 动画数据），右边分成上下两块：上面是「右键菜单项」勾选，下面是「双击命令」单选与子选项。</p>
+<h2 id="h-2">上半部分：右键菜单项开关</h2>
+<table><thead><tr><th>控件</th><th>控制哪一项</th><th>默认（材质 / 兜底段）</th><th>说明</th></tr></thead><tbody><tr><td>导入</td><td>右键「导入」及其格式子菜单</td><td>勾选 / 勾选</td><td>贴图分类下被「导入贴图」取代，因此这里会置灰并标注</td></tr><tr><td>导入几何体</td><td>右键「导入几何体」</td><td>勾选 / 勾选</td><td>—</td></tr><tr><td>添加引用</td><td>右键「添加引用」</td><td>勾选 / 勾选</td><td>资产含 <code>.ma/.mb</code> 等可引用文件时才有意义</td></tr><tr><td>收藏夹</td><td>右键「添加到收藏夹」</td><td>勾选 / 勾选</td><td>—</td></tr><tr><td>全选</td><td>右键「全选」</td><td>勾选 / 勾选</td><td>—</td></tr><tr><td>复制</td><td>右键「复制」（复制资产）</td><td>勾选 / 勾选</td><td>不是系统的复制文字</td></tr><tr><td>打开文件夹</td><td>右键「打开文件夹」</td><td>勾选 / 勾选</td><td>在资源管理器打开资产目录</td></tr><tr><td>移动到</td><td>右键「移动到 ▶」</td><td>勾选 / 勾选</td><td>—</td></tr><tr><td>复制到</td><td>右键「复制到 ▶」</td><td>勾选 / 勾选</td><td>—</td></tr><tr><td>编辑</td><td>右键「编辑」</td><td>勾选 / 勾选</td><td>打开属性编辑窗口</td></tr><tr><td>创建资产</td><td>右键「创建资产」</td><td>勾选 / 勾选</td><td>从当前选择导出新资产</td></tr><tr><td>更新缩略图</td><td>右键「更新缩略图 ▶」</td><td>勾选 / 勾选</td><td>关掉后预览图右键也<strong>不再弹</strong>缩略图菜单（见 <a href="#/15.7.2"><code>8.7.2</code></a>）</td></tr><tr><td>更新资产</td><td>右键「更新资产 ▶」</td><td>勾选 / 勾选</td><td>替换 / 追加格式 / 追加 LOD / 新建版本等</td></tr><tr><td>删除</td><td>右键「删除 ▶」（移到回收站 / 彻底删除）</td><td>勾选 / 勾选</td><td>关掉后连回收站入口也没了</td></tr><tr><td>后台渲染</td><td>「更新缩略图」里最后一项（无头离屏出图）</td><td>勾选 / 不勾</td><td>适用：模型 / 节点树 / 场景 / 动态 / 材质 / 贴图 / 灯光</td></tr><tr><td>格式转换（仅 模型/节点树/场景/动态/音频）</td><td>右键「格式转换」</td><td>不勾 / 不勾</td><td>只对带几何的子库或音频（转 WAV）有意义</td></tr><tr><td>预览节点</td><td>右键「预览节点」</td><td>勾选 / 勾选</td><td>在场景里预览 <code>.zmetal</code> / <code>.ma</code> 节点内容</td></tr><tr><td>AI 分析缩略图</td><td>右键「AI 分析缩略图」</td><td>勾选 / 勾选</td><td>需要 AI 依赖可用</td></tr><tr><td>为当前选择指定材质</td><td>右键「为当前选择指定材质」</td><td>勾选 / 不勾</td><td>适用：材质 / 贴图</td></tr><tr><td>应用材质参数</td><td>右键「应用材质参数」</td><td>勾选 / 不勾</td><td>适用：材质</td></tr><tr><td>创建材质（仅 贴图）</td><td>右键「创建材质」</td><td>不勾 / 不勾</td><td>适用：贴图</td></tr><tr><td>转换导入</td><td>右键「转换导入」</td><td>勾选 / 不勾</td><td>适用：材质 / 灯光</td></tr><tr><td>导入贴图（仅 贴图）</td><td>右键「导入贴图」</td><td>不勾 / 不勾</td><td>适用：贴图</td></tr><tr><td>指定贴图到材质（仅 贴图/HDR）</td><td>右键「指定贴图到材质」</td><td>不勾 / 不勾</td><td>适用：贴图 / HDR</td></tr><tr><td>应用灯光参数到选中灯光（仅 灯光）</td><td>右键「应用灯光参数到选中灯光」</td><td>不勾 / 不勾</td><td>适用：灯光</td></tr><tr><td>创建环境光（仅 HDR）</td><td>右键「创建环境光」</td><td>不勾 / 不勾</td><td>适用：HDR</td></tr><tr><td>资产详情</td><td>右键最下方「资产详情」</td><td>勾选 / 勾选</td><td>打开资产详情窗口</td></tr></tbody></table>
+<h3 id="h-3">分类专属项为什么会置灰</h3>
+<ul>
+<li>当前子库不适用的项会<strong>置灰不可勾选</strong>，并在名字后面补一句「（仅 材质/贴图）」这样的说明；鼠标悬停有提示；</li>
+<li>置灰<strong>不会清掉</strong>原来的勾选值：切回适用分类，你之前配的勾选状态还在；</li>
+<li>没在配置里登记过的分类（自定义子库、自建的顶级分类）走「兜底段」<code>default</code> 的配置，不会出现整片空白。</li>
+</ul>
+<h2 id="h-4">下半部分：双击命令</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>默认值（材质 / 兜底段）</th><th>改了会怎样</th></tr></thead><tbody><tr><td>双击缩略图时要执行的命令</td><td>单选组（按子库不同）</td><td>双击资产卡片时执行什么</td><td>导入 / 导入</td><td>保存后立即生效；「无操作」= 双击什么都不做</td></tr><tr><td>子选项</td><td>下拉框</td><td>给选中的命令指定细节</td><td><code>zmetal</code> / 自动（资产默认格式）</td><td>例如「导入」选 <code>zmetal</code> 就只导入材质文件；选「自动」则用资产默认格式</td></tr></tbody></table>
+<p>不同子库能选的命令不一样：</p>
+<table><thead><tr><th>子库</th><th>可选的双击命令</th></tr></thead><tbody><tr><td>材质</td><td>无操作 / 导入 / 为当前选择指定材质</td></tr><tr><td>模型、节点树、场景、动态</td><td>无操作 / 导入</td></tr><tr><td>灯光</td><td>无操作 / 导入 / 应用灯光参数到选中灯光</td></tr><tr><td>贴图</td><td>无操作 / 导入 / 导入贴图 / 创建材质 / 为当前选择指定材质 / 指定贴图到材质</td></tr><tr><td>HDR</td><td>无操作 / 导入 / 创建环境光 / 指定贴图</td></tr></tbody></table>
+<p>子选项下拉里会出现什么，取决于选了哪条命令：</p>
+<table><thead><tr><th>选中的命令</th><th>子选项内容</th></tr></thead><tbody><tr><td>导入</td><td>自动（资产默认格式）、ma、mb、fbx、obj、usd、abc、ass、vrscene、rs、vrmesh、zmetal、zlight、proxy、vdb</td></tr><tr><td>导入贴图</td><td>导入全部</td></tr><tr><td>创建材质</td><td>自动（跟随渲染器）+ 材质预设列表（带渲染器后缀，如 <code>VRayMtl（VR）</code>）</td></tr><tr><td>创建环境光</td><td><code>HDR_ligt/</code> 目录里的环境光模板（<code>.ma</code>）</td></tr><tr><td>无操作 / 其它</td><td>不显示子选项</td></tr></tbody></table>
+<h2 id="h-5">改了之后什么时候生效</h2>
+<ul>
+<li>保存（应用 / 确定）后，资产右键菜单与双击行为立刻按新配置重建；</li>
+<li>只影响<strong>菜单长什么样、双击做什么</strong>，不会改动已有资产；</li>
+<li>关闭「删除」这一项等于把回收站入口从右键菜单里拿掉——之后想删资产得先把这里勾回来。</li>
+</ul>
+<h2 id="h-6">反悔与风险</h2>
+<table><thead><tr><th>情况</th><th>怎么反悔</th></tr></thead><tbody><tr><td>还没保存</td><td>点「取消」</td></tr><tr><td>已保存</td><td>点「恢复默认设置」→ 重新从 <code>context_menu_preset.json</code> / <code>double_click_preset.json</code> 读取（读的是文件里的值，见 <a href="#/15.9.1"><code>8.9.1</code></a>）</td></tr><tr><td>想彻底回出厂</td><td>用备份的这两个 JSON 覆盖回去（<code>&lt;插件目录&gt;\Assets\preset\</code>）</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>把「删除」「更新资产」这类关键项关掉后，对应操作在右键菜单里就彻底消失（不是置灰）；不熟悉配置时别一次性关很多项。</p></div>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>设置窗口总览与全局锁定 → <a href="#/15.9.1"><code>8.9.1</code></a></li>
+<li>资产右键菜单总览 → <a href="#/15.5.1"><code>8.5.1</code></a></li>
+<li>菜单项开关的完整说明 → <a href="#/11.6.1"><code>4.8.6.1</code></a></li>
+<li>按子库配置双击命令 → <a href="#/11.7.1"><code>4.8.7.1</code></a>、<a href="#/11.7.2"><code>4.8.7.2</code></a></li>
+<li>预设文件结构 → <a href="#/12.4.2"><code>5.4.2</code></a></li>
+</ul>

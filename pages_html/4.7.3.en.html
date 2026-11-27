@@ -1,0 +1,25 @@
+<p>A playblast grabs the viewport quickly, a render uses the current renderer for high quality; both can use the current frame or the timeline.</p>
+<p><img src="media_en/shared/menu-thumbnail.webp" alt="Context menu → update thumbnail → Maya playblast / Render" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Comparing the two sources</h2>
+<table><thead><tr><th>Source</th><th>Speed</th><th>Quality</th><th>Best for</th></tr></thead><tbody><tr><td>Maya playblast</td><td>Fairly fast</td><td>Viewport image</td><td>Models, scenes, assets that need an animated preview</td></tr><tr><td>Render</td><td>Slower</td><td>Current renderer quality</td><td>Materials, lights, assets that need a clean cover image</td></tr></tbody></table>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the asset and choose <code>「更新缩略图 → Maya拍屏」 (Update thumbnail → Maya playblast)</code> or <code>「更新缩略图 → 渲染图」 (Update thumbnail → Render)</code>.</li>
+<li>Choose <code>「当前帧」 (Current frame)</code> or <code>「时间轴」 (Timeline)</code> in the frame mode dialog.</li>
+<li>Wait for the render. The current frame produces a single still thumbnail; the timeline produces a sequence compiled into an MP4 and also keeps the first frame as a still.</li>
+<li>It is written back as a thumbnail automatically and the card and preview refresh.</li>
+</ol>
+<h2 id="h-3">Execution details</h2>
+<ul>
+<li>A playblast temporarily turns off the camera gate and mask decorations and temporarily isolates the target object, restoring everything afterwards.</li>
+<li>A render creates a temporary render layer that renders only the target object, then deletes the temporary layer and restores the scene state.</li>
+<li>In the standalone edition or when driving a remote Maya, the job is delegated to the target Maya and the result is read back.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The card and the right-hand preview show the new image.</li>
+<li>With the timeline chosen the thumbnail becomes an animation or multi-frame preview that can be stepped through in the preview panel.</li>
+<li>After rendering, temporary isolated objects, render layers and camera decorations in the scene are restored.</li>
+</ul>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Rendering takes a while; do not operate Maya or switch scenes during a render or the output may be interrupted.</p></div>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>Use a playblast to glance at the result quickly; use a render when you need a clean, presentable cover.</p></div>

@@ -1,0 +1,24 @@
+<blockquote><p>一句话定位：<strong>属性区域顶部只有一行 —— 左边写着「属性」，右边是一排小图标按钮，最右是区域功能按钮。</strong></p></blockquote>
+<p>这一行同时是所在区域的「抓手」（按住空白处可以拖动这个区域），所以按钮都做得很小。</p>
+<h2 id="h-1">按钮一览</h2>
+<table><thead><tr><th>按钮</th><th>图标</th><th>什么时候出现</th><th>点了做什么</th></tr></thead><tbody><tr><td>收藏</td><td>空心灰星 / 实心金星</td><td>选中了资产、且不是回收站只读条目</td><td>立刻切换收藏状态（不用保存）：空心 = 未收藏，实心金星 = 已收藏；卡片与收藏夹同步刷新</td></tr><tr><td>编辑</td><td>铅笔</td><td>一直显示（没选中资产时也在，但点了没反应）</td><td>进入属性编辑态；等价于右键字段 →「编辑」</td></tr><tr><td>保存</td><td>对勾（绿色）</td><td><strong>只在编辑态出现</strong></td><td>把编辑态的改动写回资产元数据，然后退回显示态</td></tr><tr><td>取消</td><td>×（叉）</td><td><strong>只在编辑态出现</strong></td><td>丢弃本次未保存的改动，退回显示态（完全还原）</td></tr><tr><td>区域功能按钮</td><td>主图标 + 紧贴的小下箭头，悬停提示「属性」</td><td>一直显示</td><td>弹出区域菜单：停靠回主窗口 / 各种拆分 / 撕下 / 撕下副本 / 最大化 / 还原 / 并入 / 关闭本区域</td></tr></tbody></table>
+<p>四颗小按钮的显示状态是互斥切换的：</p>
+<table><thead><tr><th>状态</th><th>收藏</th><th>编辑</th><th>保存</th><th>取消</th></tr></thead><tbody><tr><td>没选中资产</td><td>隐藏</td><td>显示</td><td>隐藏</td><td>隐藏</td></tr><tr><td>选中资产（显示态）</td><td>显示</td><td>显示</td><td>隐藏</td><td>隐藏</td></tr><tr><td>选中资产（编辑态）</td><td>隐藏</td><td>隐藏</td><td>显示</td><td>显示</td></tr><tr><td>回收站只读条目</td><td>隐藏</td><td>隐藏</td><td>隐藏</td><td>隐藏</td></tr></tbody></table>
+<p><img src="media/15.6.3-1.webp" alt="属性面板标题栏上的按钮" loading="lazy" decoding="async"></p>
+<h2 id="h-2">区域功能按钮菜单</h2>
+<p>这颗按钮不属于属性面板本身，是<strong>所有区域共用</strong>的入口，只是悬停提示写着当前区域名（这里是「属性」）。菜单项包括：</p>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>详见</th></tr></thead><tbody><tr><td>停靠回主窗口</td><td>撕下来的浮动窗回到主窗</td><td><a href="#/3.2.1"><code>3.2.1</code></a></td></tr><tr><td>向右 / 向下 / 向左 / 向上拆分</td><td>把本区域切开，多出一个空区域</td><td><a href="#/3.2.2"><code>3.2.2</code></a></td></tr><tr><td>撕下 / 撕下副本</td><td>把属性区变成独立浮动窗口（副本是再开一份）</td><td><a href="#/3.2.1"><code>3.2.1</code></a></td></tr><tr><td>最大化 / 还原</td><td>本区域临时占满窗口 / 还原</td><td><a href="#/3.2.3"><code>3.2.3</code></a></td></tr><tr><td>并入…</td><td>把本区域合并到相邻区域</td><td><a href="#/3.2.2"><code>3.2.2</code></a></td></tr><tr><td>关闭本区域</td><td>关掉这个属性区域</td><td>见下文</td></tr></tbody></table>
+<h2 id="h-3">把属性面板关掉了怎么找回来</h2>
+<ul>
+<li>顶部「面板」菜单里重新打开「属性」区域（见 <a href="#/15.2.5"><code>8.2.5</code></a>）；</li>
+<li>或者用「重置布局」把所有区域恢复默认（见 <a href="#/3.2.5"><code>3.2.5</code></a>）。</li>
+</ul>
+<h2 id="h-4">常见疑问</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>怎么办</th></tr></thead><tbody><tr><td>看不到星星按钮</td><td>没选中资产，或选中的是回收站条目</td><td>回到资产网格选中一个正常资产</td></tr><tr><td>看不到保存 / 取消</td><td>当前不在编辑态</td><td>先点铅笔（或右键字段 →「编辑」）</td></tr><tr><td>点了铅笔没反应</td><td>没选中资产 / 回收站只读条目 / 刚点了取消后的半秒内（防误触）</td><td>选中资产、稍等一下再点</td></tr><tr><td>编辑时星星不见了</td><td>编辑态下收藏按钮隐藏，属于正常切换</td><td>保存或取消后它就回来</td></tr></tbody></table>
+<h2 id="h-5">相关</h2>
+<ul>
+<li>每个字段是什么意思 → <a href="#/15.6.1"><code>8.6.1</code></a></li>
+<li>右键编辑菜单与编辑态细节 → <a href="#/15.6.2"><code>8.6.2</code></a></li>
+<li>区域的拖动、拆分、撕下 → <a href="#/3.2.1"><code>3.2.1</code></a>、<a href="#/3.2.2"><code>3.2.2</code></a></li>
+<li>「面板与布局」菜单 → <a href="#/15.2.5"><code>8.2.5</code></a></li>
+</ul>

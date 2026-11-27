@@ -1,0 +1,24 @@
+<p>空壳资产指 <code>.zasset</code> 里只有 <code>meta.json</code> 和缩略图，没有几何体、材质或贴图。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>资产出现在网格里，但打开文件夹只有 <code>meta.json</code>、<code>thumb.sicon</code>，没有 <code>node.*</code>、<code>node.zmetal</code> 或 <code>textures/</code>。</li>
+<li>或者导出直接报错：<code>几何体一个文件都没导出（...）</code>。</li>
+<li><code>meta.json</code> 的 <code>formats</code> 只有 <code>sicon</code>/<code>aicon</code>。</li>
+</ul>
+<h2 id="h-2">常见原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>没有勾选任何内容来源</td><td><code>formats</code> 只有 <code>sicon</code>/<code>aicon</code>，也没有 <code>textures/</code> 或 <code>deps/</code></td><td>至少勾一种格式，或保留 <code>贴图 textures/</code></td></tr><tr><td>勾了「仅导出材质」但没有材质节点</td><td>没有 <code>node.zmetal</code>/<code>node.mcm</code></td><td>选中材质节点，或选中带材质的物体；不需要只导材质时取消勾选</td></tr><tr><td>勾了几何格式但选中物体没有网格</td><td>日志出现「找不到可导出对象」</td><td>在视口中选中带 shape 的模型，而不是空组或纯 transform</td></tr><tr><td>格式插件不可用</td><td>格式右侧显示「不可用」，复选框置灰</td><td>安装或加载对应插件，或改用 <code>.ma</code>/<code>.mb</code></td></tr><tr><td><code>.ma</code> 导出失败</td><td><code>notes</code> 里出现 <code>ma: 导出失败</code></td><td>勾 <code>.mb</code> 重导；未勾 <code>.mb</code> 时程序会自动改导 <code>.mb</code>，仍失败则见下一节</td></tr></tbody></table>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>打开 <code>.zasset/meta.json</code>，确认 <code>formats</code> 是否包含预期的格式。</li>
+<li>回到 Maya，确认选中对象确实是带网格或带材质的节点。</li>
+<li>在导出对话框里至少勾选一种内容格式，并确认格式右侧状态为「已就绪」。</li>
+<li>材质资产优先勾 <code>材质预设 .zmetal</code> + <code>贴图 textures/</code>；模型资产至少勾 <code>Maya ASCII .ma</code> 或 <code>Maya Binary .mb</code>。</li>
+<li>重新导出。若勾了几何格式却一个文件都没产出，导出会直接中止，不会用空内容覆盖已有资产。</li>
+</ol>
+<h2 id="h-4">仍不行怎么办</h2>
+<ul>
+<li>打开 Maya Script Editor，搜索 <code>[Export]</code>、<code>[Export::zmetal]</code>、<code>[Perf]</code>，确认是哪一种格式失败。</li>
+<li>新建一个只含目标物体的空场景再试，排除未知节点或未知数据导致的格式转换失败。</li>
+<li>先只勾 <code>.mb</code> 导出，确认几何体本身可写；成功后再逐项加回其他格式。</li>
+<li>具体格式的插件键名与 Maya 实际插件名不一致的情况仍待确认（例如 <code>abc</code>、<code>obj</code>）。</li>
+</ul>

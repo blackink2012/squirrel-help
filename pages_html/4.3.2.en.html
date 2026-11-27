@@ -1,0 +1,20 @@
+<p>A category&#x27;s display name can be changed at any time, while the folder name (its internal ID) is read-only in the edit dialog.</p>
+<p><img src="media_en/shared/menu-category-edit.webp" alt="Category context menu: edit display name" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Steps</h2>
+<ol>
+<li>Right-click the category and choose <code>「编辑」 (Edit)</code>.</li>
+<li><code>「文件夹名」 (Folder name)</code> is read-only and cannot be changed.</li>
+<li>Change <code>「易读名」 (Display name)</code>; saving an empty value has no effect.</li>
+<li>Change the <code>「类型」 (Type)</code> dropdown if needed (it affects which context commands are available for assets in that category).</li>
+<li>Click <code>「确定」 (OK)</code>.</li>
+</ol>
+<h2 id="h-2">Verify the result</h2>
+<p>The category name in the tree changes to the new display name immediately while the folder name on disk stays the same; neither asset locations nor existing assets are affected.</p>
+<h2 id="h-3">Tips</h2>
+<ul>
+<li>The display name is only for reading; search and locate still match by category ID and path.</li>
+<li>The plug-in offers no way to change a folder name. Do not rename category folders in Explorer, or the index will drift from disk and assets may disappear from the tree.</li>
+<li>The type field decides which sub-library a top-level category is handled as; a wrong value makes the context menu offer mismatched import / apply items, so confirm it before changing.</li>
+<li>Changes are written back to <code>FolderMetadata.fdata</code> in the category folder; no plug-in restart is needed.</li>
+<li>When you only want to change the category hierarchy, use <code>「移动到...」 (Move to...)</code>; do not try to rename the folder.</li>
+</ul>

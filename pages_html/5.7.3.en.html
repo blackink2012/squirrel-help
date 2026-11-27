@@ -1,0 +1,27 @@
+<p>Name clashes happen at two levels: a duplicate asset name gets a number appended when added to the library, and a duplicate node name is renamed by Maya when entering the scene.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>After importing an asset, <code>name_001</code> appears in the grid.</li>
+<li>Imported nodes in the scene carry a numeric suffix and differ from the asset&#x27;s original name.</li>
+<li>MCM matching or material assignment cannot find the target by name.</li>
+</ul>
+<h2 id="h-2">Causes and rules</h2>
+<table><thead><tr><th>Situation</th><th>Rule</th></tr></thead><tbody><tr><td>Adding from files, textures, HDR or a .zasset</td><td>When the target category already has a same-named asset, the new name gets <code>_001</code>, <code>_002</code></td></tr><tr><td>Importing into the scene</td><td>By default into an isolated namespace named after the asset (<code>_1</code>/<code>_2</code> on clashes); this can be turned off in <code>Settings → 常规 → 导入命名空间 (General → Import namespace)</code>, after which everything goes into the root namespace <code>:</code> and Maya renames duplicate nodes</td></tr><tr><td>Adding a reference</td><td>The namespace uses the asset name, appending <code>_1</code>, <code>_2</code> when it already exists</td></tr><tr><td>MCM name mapping</td><td>When Maya appends a numeric suffix to a scene material, matching falls back to the name with the trailing number removed</td></tr><tr><td>Importing audio to the timeline</td><td>A same-named sound node would be replaced, so the plug-in first gives the new sound a unique name</td></tr><tr><td>Importing images</td><td>Importing the same image several times creates several file nodes, with Maya numbering the node names</td></tr><tr><td>Importing animation data</td><td>Written by node name / hierarchy mapping; when names do not match nothing is written (see 5.7.1)</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Check the final asset name in the grid and rename it in the properties panel if needed.</li>
+<li>When the scene needs fixed names, create an isolated namespace with a Reference first and then work inside it.</li>
+<li>When a name gets an automatic suffix, check whether a same-named node or material already exists and was not cleaned up.</li>
+<li>When MCM matching fails, check the selected object&#x27;s topology instead of relying on names.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The new asset name matches expectations and nothing in the grid is overwritten or lost.</li>
+<li>Node names in the Outliner carry the expected namespace or number.</li>
+<li>Material assignments correspond to the selected objects.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>The plug-in never overwrites an existing asset or an existing scene node.</li>
+<li>When unique names are required, clean up same-named nodes in Maya first or isolate them with a Reference.</li>
+</ul>

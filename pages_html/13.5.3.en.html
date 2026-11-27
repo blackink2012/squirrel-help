@@ -1,0 +1,28 @@
+<p>Irrelevant results usually mean the asset lacks searchable text, the index lags behind, or a strong lexical hit pins another name to first place — not that the model is broken.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>Colloquial descriptions miss the target asset, and the top results are clearly unrelated.</li>
+<li>Typing the asset name exactly still ranks the target second.</li>
+<li>An asset whose tags were just added or changed cannot be found.</li>
+<li>Searching inside one category returns very little, but searching all assets works.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>The asset lacks searchable text</td><td>No Chinese name, tags, note or AI description</td><td>Add metadata, then sync</td></tr><tr><td>The index lags behind the library</td><td><code>index_lag</code> above 5 seconds, or a stale notice</td><td>Run an incremental sync</td></tr><tr><td>A strong lexical hit pins first place</td><td>The query happens to match another asset name</td><td>Use a more precise name or add a category filter</td></tr><tr><td>The scope is limited to one category</td><td>Search runs only inside the current category</td><td>Switch to all assets and search again</td></tr><tr><td>The index model differs from the query model</td><td>The status reports a model mismatch</td><td>Unify the model or rebuild the index</td></tr><tr><td>The query is too broad or ambiguous</td><td>One phrase could mean several assets</td><td>Add qualifiers such as material, style or purpose</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>First type the exact asset name to confirm the target asset itself can be found.</li>
+<li>Look at the <code>match</code> field of the results: <code>keyword</code> is a lexical hit, <code>semantic</code> a semantic hit, <code>both</code> both.</li>
+<li>Give the target asset a Chinese name, tags, a note or an AI description; all of these fields enter the indexed text.</li>
+<li>Run <code>asset_semantic_status</code> to check <code>index_lag</code>; when the index lags, run <code>python tools/asset_index.py --sync</code>.</li>
+<li>Switch the search scope back to all assets to rule out filtering by the current category.</li>
+<li>Use <code>mode=keyword</code> when you need a purely literal match, and <code>mode=semantic</code> when investigating semantic recall.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>The target asset enters the top three, <code>match</code> shows <code>semantic</code> or <code>both</code>, and newly added tags and Chinese names can be found.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Record the query, the target asset name and the actual top five results to see whether recall or ranking is the problem.</li>
+<li>If results are still off right after a rebuild, confirm the model matches the index and no old index directory is mixed in.</li>
+<li>For ambiguous queries, add qualifiers such as material, color or purpose and compare the results again.</li>
+<li>Continue with 4.5.9.3 &quot;Irrelevant search results&quot; and 4.5.6.4 &quot;Incremental and full sync&quot;.</li>
+</ul>

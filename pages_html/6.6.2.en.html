@@ -1,0 +1,28 @@
+<p><code>「导入贴图」 (Import texture)</code> merges the selected textures into one PBR texture asset inside the current category.</p>
+<p><img src="media_en/shared/menu-import-texture.webp" alt="Import from Files → Import texture" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>A <strong>specific category</strong> is selected on the left. On <code>「全部资产」 (All assets)</code> the whole <code>「从外部导入」 (Import from Files)</code> menu is disabled and only the grey line <code>「当前分类不支持从外部导入」 (this category does not support importing from files)</code> is shown.</li>
+<li>The current top-level category is <strong>materials</strong> or <strong>textures</strong>: <code>「导入贴图」 (Import texture)</code> only appears in <code>「从外部导入」 (Import from Files)</code> of those two sub-libraries and not in the others.</li>
+<li>The texture file names indicate their role (such as <code>_basecolor</code>, <code>_normal</code>, <code>_roughness</code>).</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Click <code>「从外部导入」 (Import from Files)</code> in the toolbar above the asset area.</li>
+<li>Choose <code>「导入贴图」 (Import texture)</code>.</li>
+<li>Select several textures of one PBR set in the file dialog; png, jpg, jpeg, tga, tif, tiff, bmp and exr are supported.</li>
+<li>On confirm the plug-in creates one <code>.zasset</code> and puts all textures into its <code>textures/</code>.</li>
+<li>The asset name comes from the color texture&#x27;s file name: the PBR role suffix is removed first, then resolution suffixes such as <code>_1k</code>, <code>_2k</code> and <code>_4k</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>One texture asset appears in the grid, with a thumbnail generated from the color texture.</li>
+<li><code>textures/</code> in the asset directory contains every texture selected.</li>
+<li>It reports <code>「成功导入 N 个贴图资产」 (imported N texture assets)</code>; when no color role is recognized the thumbnail uses the last file.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>A multi-selection is treated as <strong>one</strong> PBR set; import different sets separately.</li>
+<li>Role detection relies on the alias rules in <code>Assets/preset/pbr_mapping.json</code>; non-standard names affect channel matching.</li>
+<li>After it is in the library, right-click <code>「创建材质」 (Create material)</code> to connect the textures to the material channels by role.</li>
+</ul>

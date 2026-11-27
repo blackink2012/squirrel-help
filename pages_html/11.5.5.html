@@ -1,0 +1,25 @@
+<p>仅导出材质为每种资产类型预设导出时是否跳过几何体与代理，只打包材质。</p>
+<p><img src="media/shared/settings-export-options.webp" alt="导出选项" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>新建导出对话框或创建资产时，预勾「仅导出材质（跳过几何体/代理）」。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<ul>
+<li>复选框「仅导出材质（跳过几何体/代理）」，对应 <code>material_only</code>。</li>
+<li>默认值：<code>materials</code> 勾选；其余 <code>models</code>、<code>lights</code>、<code>textures</code>、<code>scenes</code>、<code>hdr</code>、<code>ani</code> 均不勾。</li>
+</ul>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>勾选后跳过几何体与代理导出阶段，只导出材质节点。</li>
+<li><code>.ma</code> / <code>.mb</code> 在仅导出材质时仍可写材质节点，不会导出关联的 DAG 物体。</li>
+<li>动画帧模式会按当前帧处理，截图取当前视口。</li>
+<li>不改变已有资产；保存到 <code>Assets/preset/export_preset.json</code> 对应资产类型的键。</li>
+</ul>
+<h2 id="h-4">何时修改</h2>
+<ul>
+<li>材质库资产只需要材质与贴图：保持 <code>materials</code> 默认勾选。</li>
+<li>模型、场景或动画资产需要完整几何：确认对应类型未勾选。</li>
+<li>临时只想交付材质：在单次导出对话框里勾选即可，不必改默认值。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<blockquote><p><strong>警告</strong>：勾选「仅导出材质」但选中对象没有材质节点时，会导出空壳资产；导出前先确认选中了材质或带材质的物体。</p></blockquote>
+<blockquote><p><strong>提示</strong>：仅导出材质时贴图是否打包仍由「收集关联文件」决定。</p></blockquote>

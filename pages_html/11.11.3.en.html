@@ -1,0 +1,21 @@
+<p>The current version has no one-click multi-machine sync. To keep several computers consistent, share the asset library and maintain local configuration and licensing on each machine.</p>
+<h2 id="h-1">What it does</h2>
+<p>This page helps you decide what can be shared and what must be handled per machine, so you do not treat the configuration directory as a sync drive.</p>
+<h2 id="h-2">What can be shared and what must stay separate</h2>
+<table><thead><tr><th>Item</th><th>Shared with the library</th><th>Notes</th></tr></thead><tbody><tr><td>Asset files and category folders</td><td>Yes</td><td>Put the asset library on a network or sync drive and point each machine at the same path in settings</td></tr><tr><td>Plug-in presets <code>Assets/preset/*.json</code></td><td>Manual copy</td><td>They live in the plug-in install directory and do not sync automatically; overwrite them with backup files</td></tr><tr><td><code>app_settings.json</code></td><td>No</td><td>It lives in <code>~/.squirrel_asset_manager/</code> on each machine and holds the library list, UI preferences and AI keys</td></tr><tr><td>License</td><td>No</td><td>Licensing is bound to the machine, so each computer must be activated separately</td></tr><tr><td>Semantic index</td><td>Shared by default (separated per backend)</td><td>By default it lives inside the library in `.squirrel_ai_index\&lt;official\</td><td>ollama&gt;<code>: vectors from the two backends are not interchangeable, each uses its own subfolder and they do not overwrite each other. Concurrent writes from multiple machines on the same backend are still not coordinated, so you can point </code>ai_asset_index_dir` to a per-machine local folder</td></tr><tr><td>Library lock</td><td>No</td><td>The lock only applies inside one plug-in process; multiple machines writing the same library at once are not coordinated</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>On each machine, add the same shared asset library path in settings and make it the default.</li>
+<li>Activate the license separately on every machine.</li>
+<li>When the context menu, double-click commands and export defaults must match, copy the corresponding preset JSON from one machine to the others.</li>
+<li>Set a local <code>ai_asset_index_dir</code> on each machine so the indexes do not overwrite each other.</li>
+<li>Agree that only one machine writes to the library at a time, or coordinate concurrency manually.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>Every machine opens the same asset library and sees the same categories and assets, and each shows a licensed state.</p>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>Do not copy <code>app_settings.json</code> straight onto another machine: its absolute library paths and AI keys are machine-specific.</li>
+<li>Several machines writing the library simultaneously can conflict; see <strong>Library lock and concurrency</strong>.</li>
+<li>There is currently <strong>no</strong> formal configuration sync feature: the settings window has no such switch, so multi-machine consistency depends on copying preset files by hand.</li>
+</ul>

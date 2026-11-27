@@ -1,0 +1,22 @@
+<p>The plug-in puts a read-write lock (&quot;many readers share, a writer is exclusive, writers win&quot;) on the asset library manager, so the Maya interface and the AI / connector cannot corrupt the index by writing at the same time.</p>
+<h2 id="h-1">How the lock behaves</h2>
+<table><thead><tr><th>Scenario</th><th>Behavior</th></tr></thead><tbody><tr><td>Read-only queries (listing, search, reading favorites)</td><td>Several readers run in parallel</td></tr><tr><td>Write operations (loading a library, create / update / delete, writing favorites)</td><td>Exclusive; while a writer waits, new readers queue (writers win)</td></tr><tr><td>Read lock wait limit</td><td>20 seconds by default, adjustable with the <code>SQUIRREL_LIBRARY_READ_TIMEOUT</code> environment variable</td></tr><tr><td>Read wait timeout</td><td>Raises <code>LockTimeout</code>; the caller should report &quot;library is busy, please retry later&quot;</td></tr><tr><td>Reentrancy</td><td>Reads and writes reenter within the same thread; a read lock cannot be upgraded to a write lock, and upgrading raises an error</td></tr></tbody></table>
+<h2 id="h-2">When the library is busy</h2>
+<ol>
+<li>Stop the current large batch import, export or index rebuild.</li>
+<li>Wait for the current write to finish and retry the query or command.</li>
+<li>If it still times out, check the Script Editor and the logs for a long-running job.</li>
+<li>Do not &quot;bypass&quot; the lock by restarting the plug-in or editing library files by hand.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>After the write finishes, queries and search work normally without <code>LockTimeout</code> or &quot;library is busy&quot;.</li>
+<li>The asset and category counts in the health check stay stable and nothing was lost to concurrency.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Write locks have no timeout by default, so long AI jobs cannot make interface writes fail; only read locks have a wait limit.</li>
+<li>The lock is a runtime patch on the manager class, shared by the interface and the AI, so there is no false sense of safety limited to AI.</li>
+<li>The lock only works inside one plug-in process; multiple processes or machines writing the same library have no cross-process coordination, so concurrent writes must be avoided by people.</li>
+<li>Developers can use <code>coverage_report()</code> to check whether a public method escapes the locking scope.</li>
+</ul>

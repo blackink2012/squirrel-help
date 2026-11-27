@@ -1,0 +1,20 @@
+<p>If dsh is not installed when <code>「AI 助手」 (AI assistant)</code> is clicked, the plug-in shows an actionable install guide; installing once that way needs no Maya restart.</p>
+<p><img src="media_en/shared/dialog-dsh-install.webp" alt="Install guide for a missing dsh" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<p>Network access. dsh requires Node.js <code>^22.19 || &gt;=24</code>; 22.18 and below as well as 23 do not work.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>In Maya click <code>AI 工具 (AI tools) → AI 助手 (AI assistant)</code>.</li>
+<li>In the prompt choose <code>「一键安装（推荐）」 (One-click install, recommended)</code>. The plug-in checks Node first, downloads portable Node into <code>&lt;plug-in directory&gt;\node</code> when needed, uses it to install dsh into <code>&lt;plug-in directory&gt;\dsh</code> and opens the assistant when it finishes.</li>
+<li>On a restricted network, or to control the version yourself, choose <code>「复制安装命令」 (Copy the install command)</code> and run the npm command with full paths in a terminal; install into the plug-in&#x27;s <code>dsh</code> sub-directory so the system-wide install is not overwritten.</li>
+<li>After a manual install, return to Maya, reopen the asset window and click <code>「AI 助手」 (AI assistant)</code>; no Maya restart is needed.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>Run <code>python squirrel_asset_manager/install_ai_dsh.py --list</code>: the dsh runtime line should show <code>0.2.2-rc.3</code> with an in-package path, and the node line should show a qualifying interpreter.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>The one-click install downloads about 38 MB of Node and 60–80 MB of dsh dependencies, preferring a domestic mirror first.</li>
+<li>Close any open AI panel before a manual install, or files are locked and it reports EBUSY.</li>
+<li><code>pip install deepseek-harness-sdk</code> installs the single-file SDK runtime without the web profile, so it cannot serve as the chat surface.</li>
+<li>When dsh lives elsewhere, point at it with <code>SQUIRREL_DSH_BIN</code> or <code>SQUIRREL_DSH_ROOT</code>.</li>
+</ul>

@@ -1,0 +1,13 @@
+<p>右侧「属性」面板显示当前资产的可编辑元数据，并可直接改名称、标签、注释等字段。</p>
+<p><img src="media/4.4.3-1.webp" alt="属性面板：当前资产的元数据字段" loading="lazy" decoding="async"></p>
+<h2 id="h-1">字段</h2>
+<table><thead><tr><th>字段</th><th>说明</th><th>可编辑</th></tr></thead><tbody><tr><td>名称</td><td>资产的易读中文名</td><td>是</td></tr><tr><td>材质类型（节点类型）</td><td>如 standardSurface、VRayMtl</td><td>是</td></tr><tr><td>资产类型</td><td>所属子库（材质/模型/贴图等）</td><td>否</td></tr><tr><td>分类</td><td>资产所在分类</td><td>否</td></tr><tr><td>格式</td><td>资产包含的文件格式胶囊</td><td>否</td></tr><tr><td>大小</td><td>资产占用空间</td><td>否</td></tr><tr><td>分辨率</td><td>贴图等资产的分辨率</td><td>否</td></tr><tr><td>软件 / 渲染器 / 色彩空间</td><td>导出时记录的元信息</td><td>是</td></tr><tr><td>创建时间</td><td>导出时间</td><td>否</td></tr><tr><td>标签</td><td>自由标签胶囊，可增删</td><td>是</td></tr><tr><td>注释</td><td>多行说明</td><td>是</td></tr></tbody></table>
+<h2 id="h-2">操作</h2>
+<ul>
+<li>点标题行「编辑」按钮进入编辑；改完点「保存」应用，点「取消」还原。</li>
+<li>编辑状态下点击资产卡片会立即保存并应用修改。</li>
+<li>右键可编辑字段：菜单为「复制 / 复制 ID / 编辑」；「复制 ID」取的是 <code>meta.json</code> 里的资产 ID。</li>
+<li>双击标签胶囊或点「+ 添加标签」打开标签弹窗，可输入新标签或点选常用标签。</li>
+</ul>
+<h2 id="h-3">提示</h2>
+<p>分类与资产类型在编辑状态下只读，要改分类请用右键「移动到」。</p>

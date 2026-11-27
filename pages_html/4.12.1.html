@@ -1,0 +1,28 @@
+<p>库体检一次给出库根、资产与分类数量、重复 UUID 和加载失败清单，是排查「资产在盘上但列表里没有」的第一步。</p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>资产库已加载（存在活着的库管理器）。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>打开插件窗口并确认目标库已加载。</li>
+<li>调用命令 <code>library_health</code>，使用默认的 <code>op=status</code>。</li>
+<li>对照下表判断问题类型。</li>
+<li>有重复 UUID 时执行 <code>op=fix_uuids</code>，它会重写重复 id 并自动重扫。</li>
+<li>有加载失败时查看每条的 <code>reason</code>，修正资产 <code>meta.json</code> 或执行 <code>op=reload</code> 重扫磁盘。</li>
+<li>怀疑子库/分类配置异常时执行 <code>op=reload_config</code> 重读 <code>config.json</code>。</li>
+</ol>
+<h2 id="h-3">状态字段</h2>
+<table><thead><tr><th>字段</th><th>含义</th></tr></thead><tbody><tr><td><code>library_root</code></td><td>当前库根目录</td></tr><tr><td><code>is_loaded</code></td><td>库是否已加载</td></tr><tr><td><code>asset_count</code></td><td>已索引的资产数</td></tr><tr><td><code>category_count</code></td><td>分类数</td></tr><tr><td><code>has_duplicate_uuids</code></td><td>是否存在重复 UUID</td></tr><tr><td><code>load_failure_count</code> / <code>load_failures</code></td><td>盘上有但未扫入的资产及原因（最多列 20 条）</td></tr></tbody></table>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>再次执行 <code>op=status</code>，<code>has_duplicate_uuids</code> 为 false，<code>load_failure_count</code> 降为 0 或明显减少。</li>
+<li>原先缺失的资产重新出现在网格与搜索结果中。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<ul>
+<li>单项检查失败会以 <code>*_error</code> 字段单独返回，不会让整条体检失败。</li>
+<li>加载失败时脚本编辑器还会打印「⚠ 加载失败 N 个资产」，可与体检结果对照。</li>
+<li>工具栏的刷新按钮等价于重扫磁盘（<code>op=reload</code>），并会检查残留临时目录。</li>
+<li><code>fix_uuids</code> 会改写资产 id，收藏夹等引用旧 id 的位置可能需要人工核对。</li>
+</ul>

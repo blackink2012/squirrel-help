@@ -1,0 +1,28 @@
+<p>A blank thumbnail usually means the <code>.sicon</code> is missing or invalid, the render did not actually produce an image, or the grid still caches old pixels.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The asset card shows a gray square, but opening the asset shows its name and category.</li>
+<li>Only some assets are blank, typically the first one created in a batch, or one whose thumbnail was just updated.</li>
+<li>Refreshing changes nothing; the new image appears only after closing and reopening the plug-in window.</li>
+<li>The Script Editor shows <code>[Render] 未找到输出文件</code> (output file not found) or <code>[Batch] ... 保留占位图</code> (keeping placeholder).</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>Neither render attempt produced an image</td><td>The log says the thumbnail failed to render twice</td><td>Use playblast, import an image, or headless generation instead</td></tr><tr><td><code>thumb.sicon</code> does not exist</td><td>The asset directory has no <code>thumb.sicon</code></td><td>Capture, import or render it again</td></tr><tr><td><code>thumb.sicon</code> is not a valid image</td><td>The file exists but an image viewer cannot open it</td><td>Rewrite the thumbnail; <code>.sicon</code> content should be PNG data</td></tr><tr><td>The old image is still shown</td><td>Disk already holds the new image but the card shows the old one</td><td>Refresh the view; reopen the plug-in window to clear the cache if needed</td></tr><tr><td>Animated image fails to load</td><td>An <code>.mp4</code> thumbnail shows a play-icon placeholder</td><td>Replace it with a still image, or check the video file</td></tr><tr><td>The renderer produced nothing</td><td>The render log shows failure or a crash</td><td>Follow 6.7.3 &quot;Renderer crash&quot;</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Right-click the asset, open <strong>Update thumbnail</strong> and try <strong>Capture</strong> or <strong>Import</strong> first to confirm the write path works.</li>
+<li>When a render is needed, prefer <strong>Update thumbnail → Background render</strong> (headless offscreen), or try <strong>Maya playblast</strong> first.</li>
+<li>Check whether <code>thumb.sicon</code> exists in the asset directory and opens in an image viewer.</li>
+<li>Refresh the current category, or switch to another category and back, so the grid re-reads the thumbnail.</li>
+<li>If the old image still shows, close and reopen the plug-in window to clear the grid&#x27;s pixel cache.</li>
+<li>In batch creation, if only the first asset is gray, generate it again; the program retries a failed thumbnail once by itself.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>The asset card shows a real thumbnail, it persists after reopening the plug-in window, and the log no longer reports &quot;keeping placeholder&quot;.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Test with another asset to tell whether it is one asset or a whole batch.</li>
+<li>Check the <code>[Render]</code>, <code>[Batch]</code> and <code>[Export]</code> logs in the Script Editor to see whether nothing was rendered or the write failed.</li>
+<li>Handle renderer-related failures per 6.7.3 &quot;Renderer crash&quot;; check library anomalies per 6.3.3 &quot;Library health anomalies&quot;.</li>
+<li>When reporting, include the thumbnail file name and size in the asset directory plus the relevant log lines.</li>
+</ul>

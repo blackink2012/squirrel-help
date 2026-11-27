@@ -1,0 +1,9 @@
+<p>2025 与 2026 的 Python 相同，只编译一次；Maya 会自动加载匹配的那份。装在版本无关的 <code>Documents/maya/squirrel_asset_manager/</code> 一处即可供所有版本使用。</p>
+<h2 id="h-1">独立版与运行时</h2>
+<table><thead><tr><th>项</th><th>版本 / 要求</th></tr></thead><tbody><tr><td>独立版 EXE 内置 Python</td><td>3.11.9（<code>installer/build_installer.py</code>）</td></tr><tr><td>操作系统</td><td>Windows 64 位（构建与安装器均按 Windows 配置；macOS / Linux 待确认）</td></tr><tr><td>dsh 运行时</td><td>固定 <code>0.2.2-rc.3</code>（<code>ai_base/dsh_runtime.py</code>）</td></tr><tr><td>Node</td><td><code>^22.19</code> 或 <code>&gt;=24</code>；23.x 被上游排除</td></tr></tbody></table>
+<h2 id="h-2">渲染器与材质节点</h2>
+<table><thead><tr><th>渲染器</th><th>支持的材质节点</th><th>代理格式</th></tr></thead><tbody><tr><td>Arnold</td><td><code>aiStandardSurface</code>、<code>aiHair</code>、<code>aiSkin</code>、<code>aiVolume</code></td><td><code>.ass</code></td></tr><tr><td>V-Ray</td><td><code>VRayMtl</code></td><td><code>.vrmesh</code></td></tr><tr><td>Redshift</td><td><code>RedshiftMaterial</code>、<code>RedshiftStandardMaterial</code>、<code>RedshiftOpenPBRMaterial</code></td><td><code>.rs</code></td></tr><tr><td>Maya 原生</td><td><code>standardSurface</code>、<code>openPBRSurface</code>、<code>lambert</code>、<code>blinn</code>、<code>phong</code></td><td>—</td></tr></tbody></table>
+<p>材质预设还包含 <code>rsStandardMaterial</code> 与 <code>RedshiftOpenPBR</code> 两个显示名，节点类型分别对应上表。跨渲染器转换依赖 <code>Assets/material_mapper_presets/*.mmap</code>，目标材质不存在时会跳过该条映射。</p>
+<h2 id="h-3">许可</h2>
+<p>自有代码为专有软件；第三方组件清单见 <code>THIRD_PARTY_NOTICES.md</code>、<code>THIRD_PARTY_NOTICES.html</code> 与 <code>licenses/</code>。随包 FFmpeg 已改为自建最小构建（GPLv2+，约 17.77 MB），源码获取方式见 <code>SOURCE_OFFER.md</code>。</p>
+<blockquote><p><strong>提示</strong>：Maya 2027 与 macOS / Linux 的支持状态均为「待确认」，部署前请先用目标环境完成一次导入、导出与缩略图验证。</p></blockquote>

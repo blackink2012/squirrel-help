@@ -1,0 +1,22 @@
+<p>属性映射可以保存成 <code>.mmap</code> 预设，下次直接加载，也能给材质转换工具复用。</p>
+<p><img src="media/shared/dialog-mapping-preview.webp" alt="材质属性映射" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已在映射工具里载入源/目标节点类型并填好映射行。</li>
+<li>对插件目录 <code>Assets/material_mapper_presets</code> 有写权限。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>点「保存预设」，工具默认以 <code>源节点类型_目标节点类型</code> 作为文件名，并保存到 <code>Assets/material_mapper_presets</code>。</li>
+<li>文件名后缀不是 <code>.mmap</code> 时工具会自动补上；保存内容包含 <code>source_type</code>、<code>target_type</code>、<code>created_date</code> 和完整 <code>mappings</code>。</li>
+<li>下次点「加载预设」，选择 <code>.mmap</code>，工具会恢复源/目标类型和全部映射行。</li>
+<li>需要反向映射时点「反向映射」，工具交换源/目标节点类型与属性，并尽量把转换函数换成对应的反向函数。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>重新加载后，源/目标节点类型与保存时一致，表格行数一致；把该 <code>.mmap</code> 放进材质映射目录后，材质转换工具「浏览...」能看到并加载它。</p>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>关闭窗口时工具会自动保存当前配置到 <code>_last_preset.mmap</code>，下次打开自动恢复。</li>
+<li>要让转换工具按「源→目标」自动找到映射，文件名必须是 <code>源类型_目标类型.mmap</code>，且放在 <code>Assets/material_mapper_presets</code>。</li>
+<li>保存的是属性规则，不是材质实例；修改预设后需要重新执行转换才会生效。</li>
+</ul>

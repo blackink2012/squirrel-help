@@ -1,0 +1,34 @@
+<blockquote><p>One-line summary: <strong>this window&#x27;s confirm button is not at the bottom — it sits at the top of the left column. Clicking it is the actual export: same-name check first, then packing, then the capture.</strong></p></blockquote>
+<h2 id="h-1">Where the buttons are</h2>
+<table><thead><tr><th>Button</th><th>Position</th><th>Effect</th></tr></thead><tbody><tr><td>Create asset (blue main button)</td><td><strong>Top of the left column</strong> (not the bottom of the window)</td><td>Confirms and starts the export using the Maya selection and category at that moment</td></tr><tr><td>Orange help icon</td><td>Right of <strong>Create asset</strong></td><td>Opens the legacy export help page in a browser</td></tr><tr><td>Close (window ×)</td><td>Top right of the window</td><td>Closes the dialog without exporting; changed parameters are not saved</td></tr></tbody></table>
+<blockquote><p>Older versions and older help called the confirm button a &quot;bottom button&quot;, which is why this page title keeps the wording; in the current version it really is at the top of the left column. When you cannot find the button, look in the <strong>upper left</strong> of the window.</p></blockquote>
+<p><img src="media_en/shared/dialog-export-bottom.webp" alt="The button row in the export dialog" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What happens after clicking Create asset</h2>
+<ol>
+<li><strong>Validation</strong>: whether a category is selected and whether objects are selected in Maya. Either failing shows a prompt and aborts without closing the window.</li>
+<li><strong>Live state</strong>: it re-reads the current Maya selection (not the one from when the window opened).</li>
+<li><strong>Name conflict check</strong>: when the target category already holds an asset (or folder) with the same name, the &quot;asset name conflict&quot; window appears first, see <a href="#/en/15.12.5"><code>8.12.5</code></a>. Cancelling it means no export.</li>
+<li><strong>Pack and export</strong>: writes meta, collects textures, writes material / geometry / cache / proxy files and generates the thumbnail.</li>
+<li><strong>Thumbnail</strong>: with <strong>Screenshot tool</strong> a capture overlay asks you to frame; <strong>playblast / render image</strong> produce it automatically.</li>
+<li><strong>Finish</strong>: the grid refreshes, the new asset card appears and is <strong>selected automatically</strong>, and the preview and properties panel switch to it.</li>
+</ol>
+<h2 id="h-3">What the three outcomes look like</h2>
+<table><thead><tr><th>Outcome</th><th>What you see</th><th>Explanation</th></tr></thead><tbody><tr><td>Success (single)</td><td>One more card in the grid, selected, <strong>no success dialog</strong></td><td>Single asset mode finishes silently by design</td></tr><tr><td>Success (batch of 2+)</td><td>A dialog &quot;Export finished! All succeeded: N assets&quot;</td><td>Only batch mode shows a summary</td></tr><tr><td>Partial failure (batch)</td><td>&quot;Export finished!&quot; with N succeeded / M failed plus failure details and <strong>Retry / Close</strong> buttons</td><td><strong>Retry</strong> reruns only the failed items</td></tr><tr><td>Failure (single)</td><td>An error prompt, with the cause also printed in the Script Editor (<code>[AssetExport] export failed: …</code>)</td><td>Common causes in the table below</td></tr></tbody></table>
+<h3 id="h-4">What to check first when it fails</h3>
+<table><thead><tr><th>Symptom</th><th>Common cause</th><th>What to do</th></tr></thead><tbody><tr><td>It reports that no geometry file was exported</td><td>The target format really failed (an .ma text conversion failure, a plug-in not loaded)</td><td>Check the Script Editor; tick .mb instead or load the plug-in and export again</td></tr><tr><td>The asset has no material</td><td>.zmetal / .zlight was not ticked</td><td>Add it with <strong>Update asset → Append format</strong></td></tr><tr><td>The card is a gray placeholder</td><td>No real thumbnail was produced</td><td>Right-click → <strong>Update thumbnail → Background render</strong> or <strong>Capture</strong></td></tr><tr><td>It reports a missing category directory</td><td>The category was deleted / renamed, so the index and disk disagree</td><td>Refresh the category tree or rebuild the index (<a href="#/en/4.12.2"><code>4.1.12.2</code></a>)</td></tr><tr><td>Clicking the button does nothing at all</td><td>The category is on All assets, or nothing is selected in Maya</td><td>Follow the prompts to pick a category or objects</td></tr></tbody></table>
+<h2 id="h-5">The progress window during batch export</h2>
+<p>A batch (fully automatic / semi-automatic with more than one object) opens a <strong>batch export progress</strong> window showing which item of how many is running, with <strong>Cancel batch export</strong>. Cancellation is <strong>cooperative</strong>: the current asset finishes first and already exported assets stay in the library. In semi-automatic mode each asset also asks for its own framing.</p>
+<h2 id="h-6">How to undo</h2>
+<ul>
+<li><strong>Abandon this export</strong>: just close the window (×) before exporting and nothing is written.</li>
+<li><strong>Exported with the wrong name / formats</strong>: you cannot change it back in this window. The asset is already on disk, so delete and re-export (deleting moves it to the recycle bin and is restorable), or use right-click <strong>Update asset</strong> to overwrite with the new result.</li>
+<li><strong>Deleted an asset by mistake</strong>: deleted assets go to the <strong>recycle bin</strong> and can be restored; <strong>delete permanently</strong> skips the recycle bin and cannot be restored. See <a href="#/en/4.8.2"><code>4.1.8.2</code></a>.</li>
+<li><strong>Overwrote a same-name asset</strong>: the pre-overwrite content is not kept and the plug-in saves no backup. Copy important assets before overwriting.</li>
+</ul>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>Window overview and how to open it: <a href="#/en/15.10.1"><code>8.10.1</code></a></li>
+<li>The name conflict window: <a href="#/en/15.12.5"><code>8.12.5</code></a></li>
+<li>The complete export flow: <a href="#/en/6.1.2"><code>4.3.1.2</code></a>; troubleshooting an interrupted export: <a href="#/en/6.5.3"><code>4.3.5.3</code></a></li>
+<li>Troubleshooting hollow assets: <a href="#/en/6.5.1"><code>4.3.5.1</code></a></li>
+</ul>

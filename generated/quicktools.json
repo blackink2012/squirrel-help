@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "count": 10,
+  "tools": [
+    {
+      "file": "hdr_to_zasset.py",
+      "name": "HDR 转资产",
+      "description": "每个 HDR/EXR 生成一个 .zasset，可生成缩略图。",
+      "page": "9.2.1",
+      "covered_by": "hdr_to_zasset",
+      "has_main": true,
+      "has_run": false,
+      "help_page": true
+    },
+    {
+      "file": "model_to_zasset.py",
+      "name": "模型转资产",
+      "description": "模型文件夹批量转 .zasset，可复用源目录元数据。",
+      "page": "9.2.2",
+      "covered_by": "model_to_zasset",
+      "has_main": true,
+      "has_run": false,
+      "help_page": true
+    },
+    {
+      "file": "pbr_to_zasset.py",
+      "name": "PBR 贴图转资产",
+      "description": "PBR 贴图按材质分组转 .zasset，支持多精度。",
+      "page": "9.2.3",
+      "covered_by": "pbr_to_zasset",
+      "has_main": true,
+      "has_run": false,
+      "help_page": true
+    },
+    {
+      "file": "图像格式转换工具.py",
+      "name": "图像格式转换",
+      "description": "HDR/EXR/TIFF/PNG/JPEG 批量转格式。",
+      "page": "9.3.1",
+      "covered_by": "convert_image_format",
+      "has_main": true,
+      "has_run": false,
+      "help_page": true
+    },
+    {
+      "file": "批量处理maya文件.py",
+      "name": "批量处理 Maya 文件",
+      "description": "对多个 .ma/.mb 执行同一段 MEL/Python。",
+      "page": "9.4.1",
+      "covered_by": "batch_run_maya_scripts",
+      "has_main": false,
+      "has_run": true,
+      "help_page": false
+    },
+    {
+      "file": "批量镜像复制.py",
+      "name": "批量镜像复制",
+      "description": "批量镜像复制场景对象。",
+      "page": "9.4.2",
+      "covered_by": "mirror_copy",
+      "has_main": true,
+      "has_run": false,
+      "help_page": true
+    },
+    {
+      "file": "材质导入导出工具(材质管理).py",
+      "name": "材质导入导出工具",
+      "description": "材质导入/导出与材质管理。",
+      "page": "9.5.1",
+      "covered_by": "create_asset / import / apply_material",
+      "has_main": true,
+      "has_run": false,
+      "help_page": false
+    },
+    {
+      "file": "材质转换工具.py",
+      "name": "材质转换工具",
+      "description": "按映射把材质从一种类型转换为另一种。",
+      "page": "9.5.2",
+      "covered_by": "convert_material / convert_import",
+      "has_main": true,
+      "has_run": false,
+      "help_page": true
+    },
+    {
+      "file": "材质节点属性映射工具.py",
+      "name": "材质节点属性映射工具",
+      "description": "两列材质属性映射，支持 .mmap 预设。",
+      "page": "9.5.3",
+      "covered_by": "material_conversion_info（只覆盖「看映射」，不含逐属性套用）",
+      "has_main": true,
+      "has_run": false,
+      "help_page": true
+    },
+    {
+      "file": "脚本浏览器.py",
+      "name": "脚本浏览器",
+      "description": "浏览、搜索、运行、导入与收藏脚本。",
+      "page": "9.6.1",
+      "covered_by": "（无：它是「跑任意脚本」的工具，命令通道已有 maya_run_python）",
+      "has_main": true,
+      "has_run": true,
+      "help_page": false
+    }
+  ]
+}

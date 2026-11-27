@@ -1,0 +1,25 @@
+<p>An interrupted export falls into two kinds: a long job that makes Maya temporarily unresponsive, and a real failure or a manual cancel; the handling differs.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The batch progress stops at one asset and the Maya interface does not respond.</li>
+<li>You clicked <code>「取消批量导出」 (Cancel batch export)</code> or <code>「跳过当前」 (Skip current)</code>.</li>
+<li>A failure list appears at the end and some assets were not created.</li>
+<li>With timeline plus render the wait is long and looks like a hang.</li>
+</ul>
+<h2 id="h-2">Common causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Fix</th></tr></thead><tbody><tr><td>Rendering or playblasting right now</td><td>The progress window is still there and Maya is merely unresponsive</td><td>Wait for it to finish; do not click repeatedly</td></tr><tr><td>Timeline plus render</td><td>Many frames, slow render</td><td>Use a playblast to confirm framing first, or shorten the playback range</td></tr><tr><td>The user cancelled</td><td>The progress window says <code>「正在取消」 (cancelling)</code></td><td>Finished assets are kept and later ones are not exported</td></tr><tr><td>One asset failed</td><td>The failure list names the asset and the error</td><td>Fix the cause and click <code>「重试」 (Retry)</code> to rerun only the failures</td></tr><tr><td>Not enough disk space or permissions</td><td>The log reports write failures or access denied</td><td>Free space or switch to a writable category directory</td></tr><tr><td>A format plug-in became unavailable during the export</td><td>The asset lacks that format&#x27;s file</td><td>Load the plug-in and export that asset again</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>First check whether Maya is only rendering: if the progress window is alive and CPU/GPU are busy, keep waiting.</li>
+<li>When you really want to stop, use <code>「跳过当前」 (Skip current)</code> or <code>「取消批量导出」 (Cancel batch export)</code> in the progress window; cancelling stops later assets from exporting.</li>
+<li>After the batch ends read the result dialog: note the success count plus the failed asset names and reasons.</li>
+<li>Fix the failure cause (plug-in, selection, permissions, disk) and click <code>「重试」 (Retry)</code> to rerun only the failures.</li>
+<li>Finished assets are never rolled back by a cancel; asset updates go through a temporary directory, so a failure never overwrites the original asset.</li>
+</ol>
+<h2 id="h-4">If it still fails</h2>
+<ul>
+<li>Open the Script Editor and search for <code>[AssetExport]</code>, <code>[Export]</code> and <code>[Perf]</code> to see which stage it stopped at.</li>
+<li>Check that the category directory is writable and the disk has space; a disconnected network drive also shows up as a write failure.</li>
+<li>Select the failed asset alone and re-export with only one format checked to narrow the problem down.</li>
+<li>If Maya is completely unresponsive for a long time, follow the crash recovery workflow; already exported assets are unaffected.</li>
+</ul>

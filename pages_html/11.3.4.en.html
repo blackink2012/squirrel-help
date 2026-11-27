@@ -1,0 +1,25 @@
+<p>The dependency file import policy decides whether linked files such as caches, proxies and references are copied into the project on import.</p>
+<p><img src="media_en/shared/settings-dep-policy.webp" alt="Dependency file import policy" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Effect</h2>
+<p>It controls where files under <code>.zasset/deps/</code> end up in Maya and which paths they use.</p>
+<h2 id="h-2">Values and defaults</h2>
+<table><thead><tr><th>Option</th><th>Behavior</th></tr></thead><tbody><tr><td>Copy into the project</td><td>Caches and proxies are copied to <code>{project}/cache/squirrel_asset/{asset name}_{last 4 of ID}/</code>; reference files go to <code>{project}/references/squirrel_asset/...</code></td></tr><tr><td>Current asset directory (default)</td><td>No copying; points directly at <code>deps/</code> inside the <code>.zasset</code></td></tr><tr><td>Source file directory</td><td>Rewrites nothing and keeps the original paths recorded at export</td></tr></tbody></table>
+<ul>
+<li>The preset file currently holds <code>asset_directory</code>; when that key is missing the code falls back to <code>copy_to_project</code>.</li>
+</ul>
+<h2 id="h-3">Scope</h2>
+<ul>
+<li>It applies to file-based nodes such as Alembic, gpuCache, proxies, Maya references and volumes when importing geometry, scenes and animation.</li>
+<li>It only changes the paths after import and never modifies the asset package.</li>
+<li>Scanning always runs even without redirection, and missing dependencies are recorded in the asset metadata and the log.</li>
+<li>It is stored as <code>dependency_import_policy</code> in <code>config.json</code>.</li>
+</ul>
+<h2 id="h-4">When to change it</h2>
+<ul>
+<li>The asset must be delivered to another machine, or the project must be self-contained: choose <code>「拷贝到项目」 (Copy into the project)</code>.</li>
+<li>Single-machine use where dependencies live with the asset: keep <code>「当前资产目录」 (Current asset directory)</code>.</li>
+<li>Still in the original working environment and wanting to keep referencing it: choose <code>「源文件目录」 (Source file directory)</code>.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<blockquote><p><strong>Warning</strong>: <code>「源文件目录」 (Source file directory)</code> relies on the original absolute paths; after moving machines the paths break and import reports missing dependencies.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: reference files land in a different place from ordinary caches, going into the project&#x27;s <code>references/</code> and <code>cache/</code> areas respectively.</p></blockquote>

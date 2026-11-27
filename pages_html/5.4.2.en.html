@@ -1,0 +1,18 @@
+<p>A version represents a different design draft of the asset and a LOD represents a different detail level of the same version; both are chosen at import time.</p>
+<h2 id="h-1">Version versus LOD</h2>
+<table><thead><tr><th>Concept</th><th>Meaning</th><th>Storage</th><th>Effect on import</th></tr></thead><tbody><tr><td>Version</td><td>Different design drafts of the same asset (such as V1, V2)</td><td>A version directory under the parent asset, or <code>variants/</code> on older models</td><td>Decides which design is imported</td></tr><tr><td>LOD</td><td>Different detail levels of one version (such as lod0, lod1)</td><td>Indexed in <code>lods.json</code>; lod0 points at the version root geometry and the rest live in sub-directories</td><td>Decides how many faces are imported</td></tr></tbody></table>
+<h2 id="h-2">Selection rules</h2>
+<ol>
+<li>The context menu&#x27;s <code>「导入版本 / LOD」 (Import version / LOD)</code> only appears with <strong>several versions</strong> or <strong>several LODs on the main version</strong>.</li>
+<li>Choose the version first and then the LOD; the menu shows the LOD label and face count.</li>
+<li>When one LOD has several geometry formats, choose the format last.</li>
+<li>Without a choice the <code>default_lod</code> from <code>lods.json</code> is used; with no index the default geometry is taken from <code>node.*</code> in the root.</li>
+</ol>
+<h2 id="h-3">Why they are separate</h2>
+<p>Versions preserve design iterations and LODs control scene cost. Keeping them apart lets you switch detail levels inside one version without affecting the others.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>A version root&#x27;s <code>.zmetal</code> and <code>.mcm</code> appear in the submenu alongside the geometry files, and choosing them runs a material import.</li>
+<li>To use only the current version&#x27;s own materials, import its <code>.zmetal</code> from that version directory after importing the geometry.</li>
+<li>The version and LOD indexes are written during export; editing the directories by hand does not update the index.</li>
+</ul>

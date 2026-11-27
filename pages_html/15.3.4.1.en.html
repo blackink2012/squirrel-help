@@ -1,0 +1,34 @@
+<blockquote><p>One-line summary: <strong>right-clicking the top &quot;All assets&quot; row (or blank space in the tree) opens a menu with a single item — Add top-level category — which creates a new major category under the library root.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Left navigation → <strong>Category</strong> tab;</li>
+<li><strong>Right-click</strong> the <strong>All assets</strong> node at the top of the tree;</li>
+<li>Or <strong>right-click blank space</strong> in the tree (both locations open the same menu).</li>
+</ol>
+<blockquote><p>This menu has exactly <strong>1 item</strong>: Add top-level category.</p></blockquote>
+<p><img src="media_en/shared/menu-cat-all.webp" alt="Right-click on the All assets node: only &quot;Add top-level category&quot; (blank tree space opens the same menu)" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Add top-level category</td><td>Creates a top-level category under the asset library <strong>root</strong> (in effect a new custom major category)</td><td>The current library is loaded; you are on the <strong>Category</strong> or <strong>Project</strong> tab</td><td>Opens the &quot;Add category&quot; dialog with <strong>folder name</strong> + <strong>readable name</strong> + <strong>type</strong>; on confirm a top-level node appears at the root and is selected</td><td>The folder name must not duplicate an existing category or a built-in sub-library (such as <code>materials</code>), otherwise the dialog reports &quot;Cannot create a category named …&quot; and refuses; a new top-level category <strong>comes with a Custom sub-category</strong> for assets that belong to no specific category</td></tr></tbody></table>
+<h2 id="h-3">How to fill the dialog</h2>
+<table><thead><tr><th>Field</th><th>What to enter</th><th>Notes</th></tr></thead><tbody><tr><td>Folder name</td><td>The folder name on disk and the internal category id; English letters / digits are recommended</td><td>Required; must not conflict with an existing category chain; it becomes the folder name and <strong>cannot be changed afterwards</strong> (the field is read-only in the later <strong>Edit</strong> dialog)</td></tr><tr><td>Readable name</td><td>The Chinese name shown in the tree</td><td>May be left empty, in which case the folder name is shown</td></tr><tr><td>Type</td><td>Which asset type this top-level category behaves as (materials / models / lights / textures / scenes / HDR / animation…)</td><td><strong>This matters</strong>: it decides which context menu assets under this category get and which import modes they support; a wrong choice makes the <strong>Import / Create</strong> options behave unexpectedly</td></tr></tbody></table>
+<h2 id="h-4">Submenus</h2>
+<p>This menu has <strong>no second level</strong> (one item measured, nothing with ▶). <strong>Add top-level category</strong> opens a dialog directly rather than another menu.</p>
+<h2 id="h-5">Risks and how to undo</h2>
+<ul>
+<li>Creating a category <strong>touches no existing asset</strong>; it only adds an empty folder level.</li>
+<li>Created it wrongly: right-click that top-level category → <strong>Delete category</strong> (it goes to the recycle bin and can be restored), see <a href="#/en/15.3.4.3"><code>8.3.4.3</code></a>.</li>
+<li>A <strong>wrong folder name</strong> cannot be renamed here (it is read-only in the edit dialog), so you must delete and recreate — name carefully the first time.</li>
+</ul>
+<h2 id="h-6">Beginner pitfalls</h2>
+<ul>
+<li><strong>Expecting to import / create assets by right-clicking All assets</strong>: you cannot. It is only the library-root entry and its menu only creates top-level categories; importing assets is in <a href="#/en/15.4.2"><code>8.4.2</code></a>.</li>
+<li><strong>Right-clicking a sub-library root shows only 6 items with no &quot;Add top-level category&quot;</strong>: menus differ per node. On a sub-library root the item is called <strong>Add sub-category</strong>, see <a href="#/en/15.3.4.2"><code>8.3.4.2</code></a>.</li>
+<li><strong>No idea where the assets went after creating</strong>: a new top-level category automatically contains a <strong>Custom</strong> sub-category, which is where created / imported assets land by default.</li>
+<li><strong>Chose &quot;materials&quot; as the type and now want models</strong>: right-click the node → <strong>Edit</strong> and switch the type (this only changes the category&#x27;s type tag and does not convert existing assets).</li>
+</ul>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>Category tree node types and click behavior: <a href="#/en/15.3.3"><code>8.3.3</code></a>.</li>
+<li>The sub-library root menu: <a href="#/en/15.3.4.2"><code>8.3.4.2</code></a>; the category node menu: <a href="#/en/15.3.4.3"><code>8.3.4.3</code></a>.</li>
+<li>The tutorial version of creating a category: <a href="#/en/4.3.1"><code>4.1.3.1</code></a>.</li>
+</ul>

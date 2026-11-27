@@ -1,0 +1,23 @@
+<p>Uninstalling removes the program and the Maya startup block, but the asset library, user settings and license are yours to keep or delete.</p>
+<h2 id="h-1">Uninstall</h2>
+<ol>
+<li>Run the uninstaller from Windows <code>Settings → Apps</code> or from <code>「卸载 Squirrel Asset Manager」 (Uninstall Squirrel Asset Manager)</code> in the Start menu.</li>
+<li>The uninstaller first removes the startup block from each version&#x27;s <code>userSetup.py</code>, then deletes the install directory, shortcuts and registry entries.</li>
+<li>It does not delete the asset library, <code>~/.squirrel_asset_manager</code> or Ollama models.</li>
+<li>Restart Maya; if the <code>「松鼠资产管家」 (Squirrel Asset Manager)</code> button is still in the Custom shelf category, delete it from the context menu (the plug-in creates the button only at install time and does not rebuild it at startup).</li>
+</ol>
+<h2 id="h-2">Leftover checklist</h2>
+<table><thead><tr><th>Location</th><th>Removed automatically</th><th>Notes</th></tr></thead><tbody><tr><td><code>%LOCALAPPDATA%\SquirrelAM</code></td><td>Yes, by the EXE uninstaller</td><td>Install directory (plug-in code, dsh/node/python runtimes); if you installed elsewhere, your chosen directory applies</td></tr><tr><td><code>%MAYA_APP_DIR%\squirrel_asset_manager</code></td><td>No</td><td>Leftover from <strong>older script-based installs</strong>; new versions do not create it, delete it manually if found</td></tr><tr><td><code>~/.squirrel_asset_manager</code></td><td>No</td><td>Settings and bridge/recovery logs</td></tr><tr><td>Asset library (default <code>~/SquirrelLib</code>)</td><td>No</td><td>Your asset data; always back it up before deleting</td></tr><tr><td><code>%PROGRAMDATA%\SquirrelAssetManager</code></td><td>No</td><td>May contain <code>license.dat</code> / <code>trial.dat</code></td></tr><tr><td><code>%LOCALAPPDATA%\SquirrelAssetManager\license.dat</code></td><td>No</td><td>License data directory (a different location from the install directory); uninstalling keeps it, back it up before moving machines</td></tr><tr><td>Maya shelf button</td><td>No</td><td>Delete it manually</td></tr><tr><td>Ollama models / third-party components</td><td>No</td><td>Managed by you</td></tr></tbody></table>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>After Maya starts there is no squirrel entry point and the Script Editor shows no plug-in import errors.</li>
+<li>The install directory is gone and the disk space is released.</li>
+<li>The asset library is still there and opens normally.</li>
+</ul>
+<h2 id="h-4">Common failures</h2>
+<ul>
+<li><strong>Maya reports import errors after uninstalling</strong>: a startup block is still in <code>userSetup.py</code>; delete the four sentinel blocks by hand (<code>「导入路径」 import path</code>, <code>「状态行按钮」 status-line button</code>, <code>「MCP 启动注册」 MCP startup registration</code>, <code>「桥接端口」 bridge port</code>), each of which appears as a pair.</li>
+<li><strong>The license is lost</strong>: the EXE&#x27;s local license may sit inside the install directory; back up <code>license.dat</code> before uninstalling, and reactivate if needed.</li>
+<li><strong>The asset library is deleted by mistake</strong>: uninstalling never deletes it, but do not treat it as an install leftover during manual cleanup.</li>
+<li><strong>The shelf button remains</strong>: the button is defined in Maya preferences and the uninstaller does not clean it up; delete it manually.</li>
+</ul>

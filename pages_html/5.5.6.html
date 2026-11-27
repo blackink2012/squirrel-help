@@ -1,0 +1,27 @@
+<p>「创建材质」用贴图资产新建一个指定类型的材质节点，并按 PBR 用途自动连接贴图。</p>
+<p><img src="media/shared/menu-context-create-material.webp" alt="贴图资产右键：创建材质" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>贴图资产带 <code>properties</code> 记录。</li>
+<li>目标材质类型对应的渲染器插件已安装；未安装的类型在菜单中不可用。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>右键贴图资产，展开「创建材质」。</li>
+<li>选择材质类型：<code>openPBRSurface</code>、<code>aiStandardSurface</code>、<code>VRayMtl</code>、<code>RedshiftStandardMaterial</code>、<code>RedshiftOpenPBRMaterial</code>、<code>standardSurface</code>、<code>lambert</code> 等，以当前 <code>config.json</code> 的 <code>material_presets</code> 为准。</li>
+<li>资产有多个精度目录时，再选精度。</li>
+<li>插件创建材质节点，并按用途把基础色、法线、粗糙度、金属度等贴图接到对应通道。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>Hypershade 中出现新材质节点，节点类型与所选一致。</li>
+<li>贴图通道已连接，file 节点指向资产内对应精度的贴图。</li>
+<li>脚本编辑器输出材质名、节点类型与贴图数量。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>创建的是新材质，不修改场景中已有材质；要给已有材质换贴图请用「指定贴图」。</li>
+<li>材质名由资产名加资产 ID 后四位组成，避免与场景中同名材质冲突。</li>
+<li>贴图与 <code>properties</code> 对不上时创建失败，需检查资产是否为完整 PBR 资产。</li>
+<li>未指定精度时使用资产 <code>meta.json</code> 的 <code>default_resolution</code>。</li>
+</ul>

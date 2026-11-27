@@ -1,0 +1,25 @@
+<p>节点编辑器可以打开 <code>.ma</code> 或 <code>.zmetal</code>，把 <code>createNode</code> / <code>connectAttr</code> 或 JSON 里的节点网络画成可读的节点图。</p>
+<p><img src="media/shared/dialog-mapping-preview.webp" alt="材质属性映射" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已有 Maya ASCII <code>.ma</code> 或资产里的 <code>.zmetal</code> 文件。</li>
+<li>文件不是二进制 <code>.mb</code>。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在资产库右键资产，指向「预览节点」，选择 <code>.zmetal</code> 或非 <code>node.ma</code> 的 <code>.ma</code>。</li>
+<li>也可以直接在编辑器点「打开文件」，或把 <code>.ma</code> / <code>.zmetal</code> 拖进窗口。</li>
+<li>用鼠标中键或 Ctrl+左键拖拽平移，滚轮缩放；「层级布局」按从左到右重排。</li>
+<li>连线时点击节点右侧橙色输出端口，再点目标节点左侧灰色输入端口；方向不能反。</li>
+<li>选中节点或连线后按 Delete 删除；Ctrl+Z / Ctrl+Y 撤销与重做。</li>
+<li>点「保存文件」覆盖原文件；「另存为...」可选择保存为 <code>.ma</code> 或 <code>.zmetal</code>。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>画布上的节点数与文件中的节点数一致，连接关系与 <code>connectAttr</code>（或 <code>source_node</code>/<code>source_attr</code>）一致；保存后重新打开，改动仍在。</p>
+<h2 id="h-4">提示</h2>
+<ul>
+<li><code>.ma</code> 保存以原文件为基底，只删除你移除的节点，几何体、相机等其它数据保留；<code>.zmetal</code> 保存以原 JSON 为基底，只更新变动的节点和连接。</li>
+<li>当前版本不支持手动添加新节点；要新增节点请先在 Maya 中创建，保存为 <code>.ma</code> 后再编辑。</li>
+</ul>
+<h2 id="h-5">警告</h2>
+<p>保存会直接覆盖原文件。编辑资产内的 <code>.zmetal</code> 前先备份整个 <code>.zasset</code>。</p>

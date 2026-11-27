@@ -1,0 +1,54 @@
+<blockquote><p>One-line summary: <strong>when an asset carries several versions, LODs or variants, double-clicking the preview opens this three-column window.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<table><thead><tr><th>Entry</th><th>Action</th><th>Prerequisite</th></tr></thead><tbody><tr><td>Double-click the right preview</td><td>Double-click the image in the <strong>Preview</strong> panel</td><td>The asset has versions or variants</td></tr><tr><td>Asset context menu</td><td>Right-click the asset → <strong>Asset details</strong></td><td>Same as above (this window is used when versions / variants exist)</td></tr></tbody></table>
+<blockquote><p>To browse inside the version / variant folders in the grid instead, use right-click → <strong>View versions / View variants / View LOD management</strong>, which expands inside the grid and does not open this window.</p></blockquote>
+<p><img src="media_en/shared/dialog-version-browser.webp" alt="Version browser" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Three-column structure</h2>
+<table><thead><tr><th>Column</th><th>Content</th><th>How to use it</th></tr></thead><tbody><tr><td>Left · list</td><td>The main version, each version, each variant, and their own LOD rows</td><td>Click to switch; entries with LODs expand into several rows</td></tr><tr><td>Middle · preview</td><td>The large preview plus a multi-thumbnail strip below</td><td>Wheel to change image, click a thumbnail to switch; the image can be dragged out of the window into Maya</td></tr><tr><td>Right · information</td><td>Title card (name / breadcrumb / badges), details card, LOD management card, included formats card, tags card, notes card, path card</td><td>Read-only; the LOD management card holds <strong>Set as default LOD</strong>, <strong>Delete this LOD</strong> and <strong>Append LOD…</strong></td></tr><tr><td>Right · buttons</td><td>Import this version / delete this version / close (the text changes when an LOD or variant is selected)</td><td>See below</td></tr></tbody></table>
+<p>The button text follows the current entry:</p>
+<table><thead><tr><th>Current selection</th><th>Button text</th></tr></thead><tbody><tr><td>Main version / ordinary version</td><td>Import this version, delete this version</td></tr><tr><td>LOD row</td><td>Import this LOD, delete this LOD</td></tr><tr><td>Variant row</td><td>Import this variant, delete this variant</td></tr></tbody></table>
+<h2 id="h-3">Version vs LOD vs variant: what really differs</h2>
+<table><thead><tr><th>Item</th><th>Version</th><th>LOD (same asset, different detail)</th><th>Variant</th></tr></thead><tbody><tr><td>In one sentence</td><td>A <strong>different iteration</strong> of the same asset</td><td>A <strong>different level of detail</strong> of the same asset</td><td>A <strong>different form / dressing</strong> of the same asset</td></tr><tr><td>Typical case</td><td>&quot;Chair v1 shape → v2 restyle&quot;</td><td>&quot;LOD2 low-poly far away, LOD0 high-poly up close&quot;</td><td>&quot;The same chair: red fabric / leather / damaged&quot;</td></tr><tr><td>What is stored</td><td>A complete, independent set of content (geometry / materials / textures / thumbnail)</td><td>Only the geometry at different detail; the rest is shared from the parent version</td><td><strong>Only geometry</strong>; textures and materials are shared from the asset root</td></tr><tr><td>How it appears in the library</td><td>Each is an independent asset entry</td><td>Rows under the version or main asset</td><td>A row under the asset</td></tr><tr><td>What you pick on import</td><td>The version you want</td><td>The detail level you need</td><td>The form</td></tr><tr><td>Quantity relationships</td><td>Can stack: a version can also hold LODs</td><td>Several under one owner</td><td>Can coexist with versions</td></tr></tbody></table>
+<p><strong>One-line conclusion</strong>: a version swaps the iteration, an LOD swaps the detail, and a variant swaps the form (geometry only, with shared textures and materials).</p>
+<h2 id="h-4">Common operations</h2>
+<h3 id="h-5">Inspect a version&#x27;s content</h3>
+<ol>
+<li>Open the version browser.</li>
+<li>Click an entry on the left; the details card and included formats on the right follow.</li>
+<li>Use the wheel in the middle column to browse that entry&#x27;s thumbnails.</li>
+</ol>
+<h3 id="h-6">Import a version / LOD / variant</h3>
+<ol>
+<li>Select the target entry on the left (select a LOD row for a specific detail level).</li>
+<li>Click <strong>Import this version / Import this LOD / Import this variant</strong> on the right.</li>
+<li>The content is imported into the current Maya scene. You can also drag the middle preview into the viewport.</li>
+</ol>
+<h3 id="h-7">Set the default LOD</h3>
+<ol>
+<li>Select an entry with several LODs on the left so the <strong>LOD management</strong> card appears.</li>
+<li>Click <strong>Set as default LOD</strong> after a non-default row.</li>
+<li>A &quot;default&quot; mark appears after that row, and later imports at default detail use it.</li>
+</ol>
+<h3 id="h-8">Append a LOD</h3>
+<ol>
+<li>Click <strong>Append LOD…</strong> in the LOD management card on the right.</li>
+<li>Go through the append LOD detail window, see <a href="#/en/15.11.4"><code>8.11.4</code></a>.</li>
+</ol>
+<h3 id="h-9">Delete</h3>
+<ul>
+<li>Deleting a <strong>version</strong> deletes all of that version&#x27;s content (geometry / materials / textures / thumbnail) and <strong>cannot be undone</strong>.</li>
+<li>Deleting a <strong>LOD</strong> removes only that detail level and leaves the other LODs and the version alone; every version must keep at least one LOD, so the last one cannot be deleted.</li>
+<li>Deleting a <strong>variant</strong> removes only that variant&#x27;s geometry and thumbnail; shared textures / materials are unaffected.</li>
+</ul>
+<h2 id="h-10">Risks and how to undo</h2>
+<table><thead><tr><th>Operation</th><th>Risk</th><th>Undo</th></tr></thead><tbody><tr><td>Delete this version</td><td>All content of that version is deleted and cannot be undone</td><td>There is no undo; before deleting, use <strong>Import this version</strong> to confirm it is not the only copy, or back up the whole library</td></tr><tr><td>Delete this LOD</td><td>That detail level is lost</td><td>Export / append that LOD again</td></tr><tr><td>Delete this variant</td><td>That variant&#x27;s geometry is lost</td><td>Add the variant again</td></tr><tr><td>Main version</td><td>The main version is the asset itself and <strong>cannot be deleted here</strong></td><td>To delete it, delete the whole asset (through the recycle bin, restorable)</td></tr></tbody></table>
+<h2 id="h-11">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>Double-clicking the preview only opens asset details</td><td>The asset really has no versions / variants</td><td>Create one first with right-click <strong>Update asset → Create new version / Add as new variant</strong></td></tr><tr><td>&quot;Import this version&quot; does nothing</td><td>That version has no importable format, or the standalone mode is not connected to Maya</td><td>Check the Script Editor; confirm Maya is online</td></tr><tr><td>The append LOD button is unavailable</td><td>The current entry is not an owner that can hold LODs, or it has no LOD list</td><td>Try selecting the main version / version row; for variants use the variant&#x27;s own append LOD entry</td></tr><tr><td>The delete button is gray</td><td>Only one LOD remains, or the current entry is the main version</td><td>Add a new LOD first, or delete the whole asset</td></tr></tbody></table>
+<h2 id="h-12">Related</h2>
+<ul>
+<li>Version and LOD concepts: <a href="#/en/4.10.1"><code>4.1.10.1</code></a>; the user-guide version browser: <a href="#/en/4.10.7"><code>4.1.10.7</code></a></li>
+<li>What a variant is: <a href="#/en/4.13.1"><code>4.1.13.1</code></a></li>
+<li>The variant management window (adding / removing variants): <a href="#/en/15.11.3"><code>8.11.3</code></a></li>
+<li>Append LOD / create version dialogs: <a href="#/en/15.11.4"><code>8.11.4</code></a></li>
+<li>The complete description of deleting versions and LODs: <a href="#/en/4.10.6"><code>4.1.10.6</code></a></li>
+</ul>

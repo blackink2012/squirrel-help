@@ -1,0 +1,12 @@
+<p>These problems usually come with an explicit error: model not found, index not built yet, index model differing from what is expected, or an index belonging to another library.</p>
+<h2 id="h-1">Symptoms, causes and fixes</h2>
+<p><strong>Model not found</strong>: the needed model was never pulled, or settings keep a deleted model name. Check with <code>ollama list</code>, pull the model, or choose an available model in the configuration.</p>
+<p><strong>No asset library semantic index yet</strong>: that library never had one. Open the library and wait for the background warm-up, or run <code>python tools\asset_index.py --sync</code>.</p>
+<p><strong>Index model differs from the expected one</strong>: the embedding model changed, or the index came from another configuration. Rebuild as prompted: <code>python tools\asset_index.py --rebuild --model &lt;model name&gt;</code>.</p>
+<p><strong>Index belongs to another library</strong>: the index directory was copied by hand or points at the wrong place. Remove the override variable so the index returns to the in-library directory, or rebuild to take it over once the original library no longer needs it.</p>
+<p><strong>Image retrieval unavailable</strong>: the sidecar venv is missing, numpy / Pillow are absent, or the image index was never built. Rerun the image part of the one-click install and then <code>python tools\asset_vision_encode.py sync --library &quot;&lt;library root&gt;&quot;</code>.</p>
+<p><strong>Documentation semantics unavailable</strong>: the documentation index is missing or the model differs. Run <code>python tools\build_semantic_index.py --model &lt;model name&gt;</code>; lexical retrieval still works without it.</p>
+<h2 id="h-2">Verify the result</h2>
+<p><code>asset_semantic_status</code> reports available with a matching model, and the semantic part of <code>maya_docs(action=&quot;status&quot;)</code> is available too.</p>
+<h2 id="h-3">If it still fails</h2>
+<p>First check whether the index points at the wrong directory and then read the logs; never bypass the ownership check by copying an index directory by hand.</p>

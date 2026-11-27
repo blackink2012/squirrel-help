@@ -1,0 +1,28 @@
+<p>插件通过 Maya 原生的 <code>commandPort</code> 驱动一个<strong>正在运行</strong>的 Maya，连接只走本机回环地址 <code>127.0.0.1</code>，不会把 Maya 暴露到局域网。</p>
+<p><img src="media/shared/menu-maya-target.webp" alt="工具栏「Maya 选择」菜单：列出在线实例、端口与版本" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>Maya 已启动，且目标版本与插件匹配。</li>
+<li>设置中已勾选「允许外部工具连接 Maya（独立版 / 命令行）」。对应配置项为 <code>bridge_auto_port</code>，默认开启，安装时写入各版本 <code>userSetup.py</code> 的启动块。</li>
+</ul>
+<h2 id="h-2">端口规则</h2>
+<p>默认端口按年份倒排：<code>端口 = 7001 + (2026 - 版本年份)</code>。</p>
+<table><thead><tr><th>Maya</th><th>2026</th><th>2025</th><th>2024</th><th>2023</th><th>2022</th></tr></thead><tbody><tr><td>端口</td><td>7001</td><td>7002</td><td>7003</td><td>7004</td><td>7005</td></tr></tbody></table>
+<p>同一版本开第二个实例时，默认端口会被先启动的那台占用，后启动者改用备用段 <code>7110~7129</code>，详见「备用端口与自动发现」。</p>
+<h2 id="h-3">操作步骤</h2>
+<ol>
+<li>启动目标 Maya，确认设置里的上述勾选项处于开启状态。</li>
+<li>在项目根执行 <code>python maya_bridge.py --ping</code>，确认能收到回包。</li>
+<li>需要知道哪几个版本在线时执行 <code>python maya_bridge.py --scan</code>。</li>
+<li>需要临时手动开端口时，在 Maya 的 Script Editor（Python 标签页）执行：</li>
+</ol>
+<pre><code class="language-python">import maya.cmds as cmds
+cmds.commandPort(name="127.0.0.1:7001", sourceType="python")</code></pre>
+<h2 id="h-4">结果验证</h2>
+<p><code>--ping</code> 返回形如 <code>2026 | &lt;untitled&gt;</code> 的字符串，前半是 Maya 版本，后半是当前场景；<code>--scan</code> 会逐端口列出在线状态。</p>
+<h2 id="h-5">提示与警告</h2>
+<ul>
+<li>通道是 <strong>eval 模式</strong>：只求值单行表达式，结果经返回值回传；<code>print</code> 的输出只进 Maya Script Editor，不会回到调用方。</li>
+<li>在 Maya 进程内不要调用桥接客户端，那会连接自己并阻塞主线程，代码里有明确的防死锁拦截。</li>
+<li>需要固定目标时可设环境变量 <code>SQUIRREL_MAYA_PORT</code>，或使用 <code>--maya 2025</code> / <code>--port 7002</code>。</li>
+</ul>

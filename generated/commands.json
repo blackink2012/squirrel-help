@@ -1,0 +1,4623 @@
+{
+  "version": 1,
+  "total": 151,
+  "domains": [
+    {
+      "id": "12.1.1",
+      "title": "资产查询",
+      "count": 17,
+      "page": "12.1.1",
+      "commands": [
+        {
+          "id": "search_assets",
+          "name": "搜索资产",
+          "description": "搜资产库 —— **文本 / 图片 / 音频 / 视频共用同一个入口**。① 文本：query 中文口语直接问（`生锈的金属` / `被风吹日晒的旧木头` / `角色的绑定文件`），默认**本地语义检索**（嵌入向量 + 词法加权融合，查询期不调用大模型，单条 ~30 ms）；也可只给 keywords（精确词/资产名），`mode=keyword` 强制纯词法（离线、最快）。子库为 audio / animation 时自动并入文字搜音乐 / 文字搜视频（与主界面 AI 检索同口径）。② 图片：image_path 给磁盘图片 → 像素级以图搜图（sidecar）；不可用时自动降级为「图转一句描述 → 文本语义」。③ 音频 / 视频：audio_path / video_path 给磁盘文件 → 声音搜声音 / 视频搜视频。②③ 也可用 material_id（media_type 指定或 auto 推断）拿库内资产当查询源；一次只能给一种查询媒体。成功返回资产列表（含 thumbnail_abs_path）；多模态失败返回 {status:error, error, hint}（不静默返回空）。索引/模型缺哪一环用 `asset_semantic_status` 查。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "query": {
+              "type": "string",
+              "description": "文本查询（中文口语直接写；与 keywords 二选一，优先它）"
+            },
+            "keywords": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "精确关键词（可选）"
+            },
+            "sub_library": {
+              "type": "string",
+              "description": "限定子库（materials / textures / hdr / audio / animation …）"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "semantic",
+                "keyword"
+              ],
+              "description": "文本检索模式：auto（默认，语义+词法融合）/ semantic（只语义）/ keyword（只词法；多模态查询不受它影响）"
+            },
+            "limit": {
+              "type": "integer"
+            },
+            "image_path": {
+              "type": "string",
+              "description": "以图搜图：磁盘图片路径（与 audio_path / video_path 三选一）"
+            },
+            "audio_path": {
+              "type": "string",
+              "description": "声音搜声音：磁盘音频路径（wav/mp3/flac/ogg…）"
+            },
+            "video_path": {
+              "type": "string",
+              "description": "视频搜视频：磁盘视频路径（mp4/mov/mkv/webm）"
+            },
+            "material_id": {
+              "type": "string",
+              "description": "用库内资产当查询源（图片=缩略图、音频=源文件、视频=thumb.mp4）；与 *_path 二选一，path 优先"
+            },
+            "media_type": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "image",
+                "audio",
+                "video"
+              ],
+              "description": "查询媒体类型；auto=按扩展名/资产类型推断，也可用它强制走某个模态的文本塔"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "asset_semantic_status",
+          "name": "资产库语义检索状态",
+          "description": "资产库语义检索现在通不通：索引在不在（条数/维度/体积）、用的哪个嵌入模型、**索引目录与库标识**（多库时确认用的是当前这条库的索引）、上次增量同步新增/更新/删除了多少、设置里开关的状态、**切库预热状态**（`warmup`：刚切库时后台正在给当前库备索引，此时搜索先用词法、备好后自动走语义）；不可用时给出**缺哪一环 + 该敲的命令**（没建索引 / Ollama 没起 / 模型没拉 / 期望模型与索引不一致 / 索引属于另一个库）。换库不需要任何手工操作：索引按库分开（库内 `.squirrel_ai_index`，或覆盖根下 `<根>/<库标识>`），切库时自动预热、搜索自动用当前库的索引。排查「为什么资产搜索慢或搜不到」时先问它。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "get_asset_info",
+          "name": "查询资产信息",
+          "description": "按资产 id 返回单个资产的详细信息。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "asset_id": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "list_category",
+          "name": "列出分类资产",
+          "description": "列出某分类（或全部）下的资产列表。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "category_id": {
+              "type": "string"
+            },
+            "sub_library": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "get_library_info",
+          "name": "资产库概览",
+          "description": "返回**当前资产库的根目录**、分类数与资产总数（含各分类资产数）。用户问「资产库在哪 / 库路径是什么 / 有多少资产」时用它。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "ai_analysis",
+          "name": "AI 分析资产",
+          "description": "用视觉模型分析资产缩略图（或指定图片），给出分类/标签/中文名等建议（只读不改库）。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "async",
+          "timeout_hint_secs": 180,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_id": {
+              "type": "string"
+            },
+            "image_path": {
+              "type": "string"
+            },
+            "language": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "asset_contents",
+          "name": "资产内容清单",
+          "description": "列出一个 .zasset 里**实际有什么**：可导入格式（formats）与贴图清单。动手 import / add_reference / import_geometry 之前先查它 —— 那几条都要 format_name，猜错就会导错东西（不填时插件内部会静默挑第一个格式）。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string",
+              "description": "资产目录路径（.zasset 是一个目录）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "list_supported_formats",
+          "name": "支持的格式清单",
+          "description": "本插件能认哪些文件格式（几何 / 贴图 / HDR / 代理 / 体积 / zmetal / zlight，以及可导入成资产的外部扩展名）。用户问「支持哪些格式 / 这个能收进库吗」时用它。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "explain_format",
+          "name": "格式走哪条导入路径",
+          "description": "给一个格式名，说清它落到哪个导入器（geometry / proxy / volume / texture / hdri / zmetal / zlight / unknown）。用户问「这个 fbx 会怎么导 / vdb 支持吗 / 这个后缀行不行」时用它；不给格式名就列出全部认得的格式。list_supported_formats 回答的是「有哪些」，这条回答「这一个会怎样」。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "format_name": {
+              "type": "string",
+              "description": "扩展名（可带点，如 fbx / .fbx）；省略则列全部"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "dsh_status",
+          "name": "集成状态自检",
+          "description": "一条命令回答「这套集成现在是什么状态」：绑定与实例、命令总数、**各功能坐标是否在位**（→ 直接判断插件重载完整没有）、事件桥 / 自动视口图 / 场景切换 / 场景守卫 / 文件守卫各自的自省报告、相关环境变量原始值、Maya 版本与 **commandPort 兜底通道开没开**、关键模块的磁盘时间戳与是否已加载。**只读、无网络 IO、不阻塞**（底座挂了也应当能秒回）—— 排查「为什么某个功能没生效」时先问它，比反复试探省一整轮。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "library_selection",
+          "name": "库面板选中资产",
+          "description": "读取 Squirrel 资产库窗口里**用户当前选中**的资产（支持多选）：返回每条的 id / name（资产名）/ name_cn（易读名）/ 分类 / 子库 / 标签 / 注释 / 节点类型 / 渲染器 / .zasset 路径 / 有没有缩略图；第一条同时给在 primary_id。用户说「现在选中的资产」「给它加标签和注释」「把这个资产…」时**先调这条**，不要反问是哪一个。窗口没开或没选中时如实返回 count=0 加 hint（这不是错）。**只读**：不改库、不改场景、不动选中状态。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "ui_show_search",
+          "name": "搜索并在插件 UI 展示",
+          "description": "跑一次资产检索，**并把结果隔离展示在主 UI 的资产网格里**（`target=\"grid\"`，默认）：网格只铺这批资产、搜索框 ✕ 取消隔离即回到全量列表。`target=\"panel\"` 则渲染进「AI 搜索预览资产」对话框/面板（带缩略图卡片，可右键导入 / 定位 / 找相似，也可直接拖到 Maya 视口）。两条都会返回 ``readable_image_paths``（已复制成 **.png** 的缩略图副本 —— **这一份才能直接读出来看**）与 ``image_paths``（库内原始 ``.sicon`` 落点，内容虽是 PNG，但 ``.sicon`` 扩展名不被通用读图器接受）、以及 ``missing_thumbnails``（哪些结果没有缩略图）；回包里的 ``target`` / ``shown_in_grid`` / ``rendered`` 说清到底上了哪一面、几条。绕过大模型意图分析，纯本地语义检索（与 search_assets 同一套结果）。用户说「搜个资产让我看看」「在插件里展示搜索结果」「给我看缩略图」时用它；**只要数据不要 UI** 用 search_assets。边界：①**需要资产库窗口开着**（上屏落点在 UI 上，无头环境用 search_assets）；②``target=\"panel\"`` 且 ``mode=keyword`` 时不渲染（面板那条路只支持语义融合，硬塞会把模式换掉），此时只回数据 —— ``target=\"grid\"`` 没有这条限制。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "query": {
+              "type": "string",
+              "description": "自然语言描述（中文口语直接写，如「生锈的金属」）"
+            },
+            "sub_library": {
+              "type": "string",
+              "description": "限定子库（materials / textures / models …）"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "最多几条（默认 30；target=grid 就是铺上去的条数，target=panel 时以面板实际渲染为准）"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "semantic",
+                "keyword"
+              ],
+              "description": "keyword = 纯词法（target=panel 时不上屏，见 note）"
+            },
+            "target": {
+              "type": "string",
+              "enum": [
+                "grid",
+                "panel"
+              ],
+              "description": "grid（默认）= 主 UI 资产网格隔离展示；panel = 「AI 搜索预览资产」对话框/面板"
+            },
+            "open_dialog": {
+              "type": "boolean",
+              "description": "target=panel 时：false = 不碰 UI，只回数据"
+            },
+            "render": {
+              "type": "boolean",
+              "description": "target=panel 时：false = 只开对话框，不塞结果"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "search_assets_similar",
+          "name": "以图搜图（找相似）",
+          "description": "按**图**找相似资产（像素级图像向量检索，sidecar）：image_path 给磁盘上的图片，或 material_id 拿某个资产的缩略图当查询图（= UI 里的「找相似」）。与 search_assets（文本语义检索）是两条链路。让用户说「找长得像这张图的材质」时用它。只读；sidecar/索引缺失会如实报原因。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_id": {
+              "type": "string"
+            },
+            "image_path": {
+              "type": "string"
+            },
+            "limit": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "search_assets_by_audio",
+          "name": "声音搜声音",
+          "description": "按**声音**找相似资产（声学特征：log-mel 统计 + 时长/过零率/节奏，零新模型）：audio_path 给磁盘音频，或 material_id 拿该音乐资产的源文件。是「听感/音色相似」，不是语义理解（文字找音乐要用文本检索 search_assets）。只读；sidecar/索引缺失会如实报原因。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_id": {
+              "type": "string"
+            },
+            "audio_path": {
+              "type": "string"
+            },
+            "limit": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "search_assets_by_video",
+          "name": "视频搜视频",
+          "description": "按**画面**找相似动画/动态资产（视频抽帧 → 逐帧图像向量 → max/mean 聚合，复用现有图像模型，不引入新模型）：video_path 给磁盘视频，或 material_id 拿该动画资产的 thumb.mp4。只读；sidecar/索引缺失会如实报原因。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_id": {
+              "type": "string"
+            },
+            "video_path": {
+              "type": "string"
+            },
+            "limit": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "search_videos_by_text",
+          "name": "文字搜视频",
+          "description": "用一句**文字**找相似动画（查询文本与动画逐帧画面向量比对，复用 gemma2，零新模型）：query 写画面/内容描述（如「蓝色小球旋转」「人物走动」）。只覆盖动画/动态资产（带 thumb.mp4 的 .zasset）；精度是粗粒度画面相似，不是 video-CLIP 级语义。只读；索引缺失会如实报原因。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "query": {
+              "type": "string"
+            },
+            "sub_library": {
+              "type": "string"
+            },
+            "limit": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "search_audios_by_text",
+          "name": "文字搜音乐",
+          "description": "用一句**文字**找音频/音乐（embeddinggemma-2 的音频塔与文本塔同在 768 维空间，零新模型）：query 写听感/用途（如「欢快的卡通背景音乐」「低沉的打击音效」）。是粗粒度跨模态匹配；声音搜声音用 search_assets_by_audio。只读。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "query": {
+              "type": "string"
+            },
+            "sub_library": {
+              "type": "string"
+            },
+            "limit": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        }
+      ]
+    },
+    {
+      "id": "12.1.2",
+      "title": "生成、导入与应用",
+      "count": 14,
+      "page": "12.1.2",
+      "commands": [
+        {
+          "id": "create_dome_light",
+          "name": "创建穹顶灯",
+          "description": "按当前渲染器创建穹顶灯并连接 HDR 贴图（aiSkyDomeLight / VRayLightDome 等）。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "hdr_path": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "import",
+          "name": "导入资产",
+          "description": "把资产导入当前 Maya 场景（按格式路由到几何/贴图/HDRI/材质导入器）。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            },
+            "format_name": {
+              "type": "string"
+            },
+            "preserve_source_renderer": {
+              "type": "boolean",
+              "description": "仅 zlight 生效：true = 按各灯光自身的源渲染器原样建出（先建后问，由调用方随后询问是否转换）；省略/false = 建灯时就按当前渲染器转换（老行为）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "add_reference",
+          "name": "引用几何体",
+          "description": "以 Maya Reference 方式把资产中的几何体引用进场景（不复制文件）。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            },
+            "format_name": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "import_geometry",
+          "name": "导入变体几何体",
+          "description": "导入资产中指定版本 / LOD（或指定几何体文件）的几何体到场景。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "lod": {
+              "type": "string"
+            },
+            "geometry": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "import_variant_material",
+          "name": "导入变体材质",
+          "description": "导入资产中指定**版本**的材质（import_geometry 只管几何体；变体材质此前没有入口）。不指定版本时用默认那一套。注意：**材质不区分 LOD**（按版本组织），传 lod 会被忽略并在结果里注明；要按 LOD 取用请用 import_geometry。想先知道有哪些格式/贴图，用 asset_contents。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string"
+            },
+            "lod": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "apply_material",
+          "name": "应用材质",
+          "description": "从资产创建材质节点网络（zmetal → 当前渲染器材质）并返回创建的节点。**只建不赋**；要把材质赋给选中对象用 apply_material_to_selection。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "apply_material_to_selection",
+          "name": "应用材质到选中",
+          "description": "从资产建材质网络并**直接赋给当前选中对象**（复合动作）。需要先在 Maya 里选中对象；未选中时如实报错。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "import_texture",
+          "name": "导入贴图",
+          "description": "把资产内的贴图导入场景（批量共享 place2dTexture）；未指定贴图名时导入全部。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            },
+            "texture_names": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "apply_light",
+          "name": "应用灯光参数",
+          "description": "把灯光资产参数应用到指定灯光节点（不指定 targets 时用当前选中的灯光）。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            },
+            "targets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "apply_material_params",
+          "name": "应用材质参数",
+          "description": "把资产材质参数应用到指定材质节点（不指定 targets 时用当前选中的材质）；同类型直拷、跨类型按映射转换。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            },
+            "targets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "assign_texture",
+          "name": "指定贴图",
+          "description": "把贴图/HDR 资产的贴图指定到选中节点：贴图资产连到材质、HDR 资产连到穹顶灯；kind=auto 按资产类型自动判断。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            },
+            "targets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "kind": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "texture",
+                "hdr"
+              ]
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "create_material",
+          "name": "新建材质",
+          "description": "按贴图资产新建材质节点并连接其贴图；node_type=auto 时按当前渲染器选默认类型；不给 zasset_path 时只建一个空材质节点。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            },
+            "node_type": {
+              "type": "string"
+            },
+            "resolution": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "create_asset",
+          "name": "新建资产",
+          "description": "把当前选中（或指定 targets）导出为新资产 .zasset；已存在同名资产时默认拒绝，需显式 overwrite=true 才覆盖。**可以按次指定导出内容**：formats 给「只要这几种格式」（zmetal/mcm/ma/mb/fbx/obj/usd/abc，先全关再开）、proxy_formats 给代理（arnold/vray/redshift/vrmesh）、textures / collect_associated / material_only / ani_frame_mode 逐项覆盖 —— 这些只影响这一单，**不改全局导出预设**（结果里回 export_overrides 以示生效）。**给已有资产追加 LOD / 新建版本 / 替换**：传 variant_mode=add_lod / new_version / overwrite + variant_target_zasset（+ variant_lod_level / variant_version_id 等），走的是与 UI「更新资产」同一条 ExportConfig 路径。创建后会自动注册进库索引（返回 indexed/indexed_id）；缩略图默认**不出真图**（落盘的是 256×256 灰底占位图，结果里带 thumbnail_kind=placeholder）；传 thumbnail=true 即按 thumb_source 在 Maya 里出真图（独立运行版的「创建资产」走这条），也可接着用 thumbnail_shot。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "asset_name": {
+              "type": "string"
+            },
+            "category_id": {
+              "type": "string"
+            },
+            "targets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "asset_type": {
+              "type": "string"
+            },
+            "name_cn": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "sub_library": {
+              "type": "string"
+            },
+            "overwrite": {
+              "type": "boolean"
+            },
+            "formats": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "只要这几种格式（先全关再开）"
+            },
+            "proxy_formats": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "代理格式：arnold/vray/redshift/vrmesh"
+            },
+            "textures": {
+              "type": "boolean",
+              "description": "是否打包贴图"
+            },
+            "collect_associated": {
+              "type": "boolean",
+              "description": "是否收集关联缓存/代理/引用"
+            },
+            "material_only": {
+              "type": "boolean",
+              "description": "仅导出材质"
+            },
+            "ani_frame_mode": {
+              "type": "string",
+              "enum": [
+                "current",
+                "timeline",
+                "keyframe"
+              ]
+            },
+            "thumb_source": {
+              "type": "string",
+              "enum": [
+                "screenshot",
+                "playblast",
+                "render"
+              ],
+              "description": "缩略图来源；render = 渲染器出图"
+            },
+            "thumb_camera": {
+              "type": "string",
+              "description": "出图相机：留空/current = **当前视口那台**（用户自建相机切到视口就用它）；renderable = 场景可渲相机；或相机名"
+            },
+            "thumb_focal_length": {
+              "type": "number",
+              "description": "缩略图焦距(mm)；**仅当**相机还停在 Maya 默认 35mm 时替换（默认 70，35 拍资产太广会畸变）；0 = 不干预"
+            },
+            "thumbnail": {
+              "type": "boolean",
+              "description": "是否按 thumb_source 出**真**缩略图（默认 false → 灰底占位图）"
+            },
+            "export_overrides": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "按次覆盖导出预设里的**同名键**（只影响这一单，不写全局预设）。用于没有专用入参的预设键，例如 {\"zmetal_merge\": true}（合并材质/合并节点）；有专用入参的键（formats/textures/…）请用那些参数"
+            },
+            "variant_mode": {
+              "type": "string",
+              "enum": [
+                "add_lod",
+                "new_version",
+                "overwrite"
+              ],
+              "description": "给**已有**资产追加 LOD / 新建版本 / 替换"
+            },
+            "variant_target_zasset": {
+              "type": "string",
+              "description": "要更新的既有 .zasset 路径"
+            },
+            "variant_lod_level": {
+              "type": "integer"
+            },
+            "variant_lod_label": {
+              "type": "string"
+            },
+            "variant_version_id": {
+              "type": "string",
+              "description": "如 V2"
+            },
+            "variant_version_tag": {
+              "type": "string",
+              "description": "如 2.0"
+            },
+            "variant_version_label": {
+              "type": "string"
+            },
+            "variant_version_notes": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "export_scene_preset",
+          "name": "导出场景材质预设",
+          "description": "把**当前场景里的材质**导成散装预设文件到任意目录（zmetal；include_ma=true 时另出一份 ma）。`name` 给自定义文件名、`separate_files` 一份一文件、`export_objects` 连物体一起、`export_all` 导场景全部材质、`color_space` / `category` / `tags` / `name_cn` 写进元数据。**与 create_asset 的分工**：这条是「把手上场景的材质整理成预设包给同事」（产物是散装文件）；要**打包成库内资产**用 create_asset。返回本次新建的文件清单（按目录 diff 自证）。支持 dry_run。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "target_dir": {
+              "type": "string",
+              "description": "导出目录（不存在会创建）"
+            },
+            "name": {
+              "type": "string",
+              "description": "自定义文件名"
+            },
+            "include_ma": {
+              "type": "boolean",
+              "description": "是否另出一份 ma（**需选中带材质的物体**：底层 ma 导出按选中物体走）"
+            },
+            "separate_files": {
+              "type": "boolean",
+              "description": "一份材质一个文件"
+            },
+            "export_objects": {
+              "type": "boolean",
+              "description": "连物体一起导出"
+            },
+            "export_all": {
+              "type": "boolean",
+              "description": "导场景全部材质"
+            },
+            "color_space": {
+              "type": "string"
+            },
+            "category": {
+              "type": "string"
+            },
+            "tags": {
+              "type": "string"
+            },
+            "name_cn": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        }
+      ]
+    },
+    {
+      "id": "12.1.3",
+      "title": "转换",
+      "count": 5,
+      "page": "12.1.3",
+      "commands": [
+        {
+          "id": "convert_material",
+          "name": "材质类型转换",
+          "description": "把指定材质（默认当前选中）按映射表转换为目标材质类型；replace=true 时原位替换源材质（保持物体上的材质赋值）。",
+          "category": "convert",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "targets": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "target_type": {
+              "type": "string"
+            },
+            "copy_textures": {
+              "type": "boolean"
+            },
+            "replace": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "convert_import",
+          "name": "转换导入",
+          "description": "导入资产（优先 zmetal）并把新建材质转换为指定目标类型，然后原位替换——即右键「转换导入 ▶」。",
+          "category": "convert",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            },
+            "target_type": {
+              "type": "string"
+            },
+            "copy_textures": {
+              "type": "boolean"
+            },
+            "format_name": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "convert_light_import",
+          "name": "灯光转换导入",
+          "description": "导入灯光资产（.zlight）并按目标灯光类型重建；target_type 为空时按当前渲染器自动选择。",
+          "category": "convert",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            },
+            "target_type": {
+              "type": "string"
+            },
+            "renderer": {
+              "type": "string"
+            },
+            "select": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "convert_image_format",
+          "name": "图像格式转换",
+          "description": "把图像文件（或整个文件夹）批量转换为指定格式；文件夹输入时递归收集（可用 input_formats 限定源格式），format_options 透传给底层转换器（如压缩级别等额外选项）。**只写输出、不改源文件**（底层曾会重命名含非法字符的源文件，命令通道已关闭该行为）；底层依赖（opencv-python / numpy）缺失时会明确报 MISSING_DEPENDENCY 与安装命令，而不是含糊的「转换失败」。",
+          "category": "convert",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "input_path": {
+              "type": "string"
+            },
+            "output_format": {
+              "type": "string"
+            },
+            "output_folder": {
+              "type": "string"
+            },
+            "input_formats": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "format_options": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "底层转换器的额外选项（透传）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "material_conversion_info",
+          "name": "材质转换映射查询",
+          "description": "查**材质类型互转的映射表**：有哪些源/目标类型、有哪些 .mmap、以及 A→B 具体怎么转（直连一步，还是经中间类型多步中转、用哪个映射文件）。不带参数=列可用类型与映射文件；带 source_type+target_type=查这一对。这是查询；真执行转换用 convert_material / convert_import。",
+          "category": "convert",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "source_type": {
+              "type": "string",
+              "description": "源材质类型（如 blinn / lambert / aiStandardSurface）"
+            },
+            "target_type": {
+              "type": "string",
+              "description": "目标材质类型（如 openPBRSurface / aiStandardSurface）"
+            }
+          },
+          "applicable_sub_libraries": []
+        }
+      ]
+    },
+    {
+      "id": "12.1.4",
+      "title": "资产整理",
+      "count": 18,
+      "page": "12.1.4",
+      "commands": [
+        {
+          "id": "move_to",
+          "name": "移动资产",
+          "description": "把资产移动到指定分类（改动资产库结构，需确认）。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_id": {
+              "type": "string"
+            },
+            "category_id": {
+              "type": "string"
+            },
+            "sub_library": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "copy_to",
+          "name": "复制资产",
+          "description": "把资产复制到指定分类（会新增资产，需确认）。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_id": {
+              "type": "string"
+            },
+            "category_id": {
+              "type": "string"
+            },
+            "sub_library": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "delete",
+          "name": "删除资产",
+          "description": "从资产库删除资产（删除前自动备份，可回滚，仍需确认）。**必须显式传 confirm=true 才真删**，否则只回预览。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": true,
+          "params_schema": {
+            "material_id": {
+              "type": "string"
+            },
+            "confirm": {
+              "type": "boolean",
+              "description": "确认执行：不传或 false 只返回预览；确认后传 true 再调一次"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "update_asset",
+          "name": "修改资产字段",
+          "description": "修改资产的字段：可写 name, name_cn, category, tags, node_type, thumbnail_path, thumb_bytes, notes, software, renderer, color_space（改分类/子库请用 move_to / edit）。传了不被接受的键会**显式报在 ignored_fields** 里，不会假装成功。需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_id": {
+              "type": "string"
+            },
+            "updates": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "duplicate",
+          "name": "复制为副本",
+          "description": "在库内复制一份资产副本（同分类或指定分类；自动重命名 + 新 UUID），需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_id": {
+              "type": "string"
+            },
+            "category_id": {
+              "type": "string"
+            },
+            "sub_library": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "edit",
+          "name": "编辑资产",
+          "description": "编辑资产元数据（名称/标签/备注等），并可同时改分类或资产类型（子库）；需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_id": {
+              "type": "string"
+            },
+            "updates": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "category_id": {
+              "type": "string"
+            },
+            "sub_library": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "update_thumbnail",
+          "name": "更新缩略图",
+          "description": "用指定图片文件替换资产缩略图（.zasset 写入 thumb.sicon），需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_id": {
+              "type": "string"
+            },
+            "image_path": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "thumbnail_slot",
+          "name": "附加缩略图槽",
+          "description": "资产的多缩略图槽读写：op=list 列出全部槽（索引 0 是主图，其余是附加槽）；op=add 把一张图片加为**新的附加槽**（自动编号：zasset 用 thumb_N.sicon、文件夹资产用 {name}_N.sicon）；op=remove 按索引删附加槽（**0=主图不可删**，换主图用 update_thumbnail；删除前会把原图备份到临时目录并回你路径，进 undo 栈）。配套：`thumbnail_shot` 拍新图 → 本命令加槽。支持 dry_run。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "op": {
+              "type": "string",
+              "enum": [
+                "list",
+                "add",
+                "remove"
+              ]
+            },
+            "material_id": {
+              "type": "string"
+            },
+            "index": {
+              "type": "integer",
+              "description": "remove 用；0=主图（不可删）"
+            },
+            "image_path": {
+              "type": "string",
+              "description": "add 用的图片文件"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "import_assets",
+          "name": "导入资产",
+          "description": "把文件夹下的 .zasset 资产导入到指定分类（新 UUID + 同名自动去重），需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "src_dir": {
+              "type": "string"
+            },
+            "category_id": {
+              "type": "string"
+            },
+            "sub_library": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "import_external_files",
+          "name": "把外部文件收进库",
+          "description": "把磁盘上的**单个文件**（fbx/obj/abc/ma/png/hdr/exr…）收进资产库指定分类，每个文件成为一个独立 .zasset 资产。与 import_assets 的分工：那条吃『已经是 .zasset』的文件夹；*_to_zasset 那几条是面向整个文件夹的批量转换。需确认：先 dry_run 看 plan（含每个文件的推断子库与拒绝原因）再真跑。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "files": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "要收进库的文件绝对路径列表"
+            },
+            "category_id": {
+              "type": "string"
+            },
+            "sub_library": {
+              "type": "string",
+              "description": "省略时按扩展名推断（models/textures/hdr）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "extract_asset_file",
+          "name": "把资产里的文件拷出来",
+          "description": "把一个 .zasset 里的**某个文件**拷到 output_dir（保留资产内的相对结构）。定位方式二选一：`name`（资产内相对路径或文件名，最准）或 `format_name`（如 fbx/hdr，按导入器的定位规则找）。与 asset_contents 的分工：那条是「看里面有什么」，这条是「把东西取出来」。**会写盘**：必须显式给 output_dir，目标已存在时默认拒绝（要覆盖带 overwrite=true）。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "zasset_path": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string",
+              "description": "资产内相对路径（如 textures/2K/foo.jpg）或文件名"
+            },
+            "format_name": {
+              "type": "string",
+              "description": "按格式定位（如 fbx / hdr）；与 name 二选一"
+            },
+            "output_dir": {
+              "type": "string",
+              "description": "**必填**：拷到哪里（不存在会创建）"
+            },
+            "overwrite": {
+              "type": "boolean",
+              "description": "目标已存在时是否覆盖（默认 false 直接拒绝）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "export_assets",
+          "name": "导出资产",
+          "description": "把一个或多个资产导出（拷贝 .zasset）到目标目录。**目标已有同名资产时默认拒绝**（老实现会直接 rmtree 抹掉，而 undo 删的是本次导出物 → 被覆盖的原文件不可恢复）；确要覆盖请显式 overwrite=true，覆盖前会先备份为 <名字>.zasset.bak-<时间戳>。需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "target_dir": {
+              "type": "string"
+            },
+            "overwrite": {
+              "type": "boolean",
+              "description": "目标同名时是否覆盖（覆盖前先备份）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "mirror_copy",
+          "name": "批量镜像复制",
+          "description": "按扩展名把源文件夹整目录镜像复制到目标目录（保留结构或扁平化）；需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "source_folder": {
+              "type": "string"
+            },
+            "dest_folder": {
+              "type": "string"
+            },
+            "extensions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "keep_structure": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "batch_move_to",
+          "name": "批量移动资产",
+          "description": "把**多个**资产一次移动到同一分类（数组入口；单条用 move_to）。逐条独立成败，返回 moved / failed；支持 dry_run 预览整批去向。回滚：undo_last 一次撤整批。需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "category_id": {
+              "type": "string"
+            },
+            "sub_library": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "batch_copy_to",
+          "name": "批量复制资产",
+          "description": "把**多个**资产一次复制到同一分类（数组入口；单条用 copy_to）。返回 copied / created_ids / failed；支持 dry_run 预览。回滚：undo_last 一次撤整批（删掉本次新建的副本）。需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "category_id": {
+              "type": "string"
+            },
+            "sub_library": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "batch_delete",
+          "name": "批量删除资产",
+          "description": "从资产库一次删除**多个**资产（数组入口；单条用 delete）。删除前逐个备份，可用 undo_last **整批回滚**。**必须显式传 confirm=true 才真删**，否则只回预览。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": true,
+          "params_schema": {
+            "material_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "confirm": {
+              "type": "boolean",
+              "description": "确认执行：不传或 false 只返回预览；确认后传 true 再调一次"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "batch_update_asset",
+          "name": "批量改资产字段",
+          "description": "一次改**多个**资产的字段（数组入口；单条用 update_asset）。tags_mode=replace（默认，整体替换）/ add（并入现有标签，自动去重）/ remove（从现有标签里去掉）—— add/remove 在命令内按各自当前值计算，所以**不会像逐条读改写那样丢标签**。传不被接受的键会显式报在 ignored_fields；支持 dry_run 预览整批前后值。回滚：undo_last 一次撤整批。需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "updates": {
+              "type": "object",
+              "additionalProperties": true
+            },
+            "tags_mode": {
+              "type": "string",
+              "enum": [
+                "replace",
+                "add",
+                "remove"
+              ]
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "batch_rename",
+          "name": "批量重命名资产",
+          "description": "一次重命名**多个**资产的 name_cn（易读名）或 name（资产名/文件名）：mode=prefix（加前缀）/ suffix（加后缀）/ replace（查找替换，需 find）。**改名会连带重命名 .zasset 文件**（name 模式）。批内撞名会提前拦住、一个都不改；支持 dry_run 预览整批新旧名对照。回滚：undo_last 一次撤整批。需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "material_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "prefix",
+                "suffix",
+                "replace"
+              ]
+            },
+            "text": {
+              "type": "string"
+            },
+            "find": {
+              "type": "string"
+            },
+            "replace": {
+              "type": "string"
+            },
+            "target": {
+              "type": "string",
+              "enum": [
+                "name_cn",
+                "name"
+              ]
+            }
+          },
+          "applicable_sub_libraries": []
+        }
+      ]
+    },
+    {
+      "id": "12.1.5",
+      "title": "库、分类与设置",
+      "count": 9,
+      "page": "12.1.5",
+      "commands": [
+        {
+          "id": "favorite",
+          "name": "收藏夹（含收藏集）",
+          "description": "读/改资产库的收藏：op=list 列出**所有收藏集**与指定收藏集的资产；op=add / remove / toggle 对 material_ids 批量改收藏状态。收藏集不存在时会显式报 COLLECTION_NOT_FOUND（manager 对不存在的收藏夹只会静默忽略，不报出来就会变成「看着收藏成功」）。要建/改名/删收藏集用 collection_manage。支持 dry_run 预览。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "op": {
+              "type": "string",
+              "enum": [
+                "list",
+                "add",
+                "remove",
+                "toggle"
+              ]
+            },
+            "material_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "collection_id": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "collection_manage",
+          "name": "收藏集管理",
+          "description": "收藏集的增删改查：op=list 列出全部（含各自条数）；create（需 collection_id，name 可选）；rename（需 name）；clear（清空里面的资产，资产本体不动）；delete（只删容器，default 不可删）。op=delete / clear **必须显式传 confirm=true 才执行**，否则只回预览。AI 改不了收藏集时，用户只能手点收藏夹面板。支持 dry_run 预览。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": true,
+          "params_schema": {
+            "op": {
+              "type": "string",
+              "enum": [
+                "list",
+                "create",
+                "rename",
+                "delete",
+                "clear"
+              ]
+            },
+            "collection_id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "confirm": {
+              "type": "boolean",
+              "description": "确认执行：不传或 false 只返回预览；确认后传 true 再调一次"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "wishlist",
+          "name": "心愿单",
+          "description": "AI 搜索里那份**跨会话**的「待看资产」队列：op=list 列出全部（含名称/路径/标签）；op=add 把 material_ids 加进去（已存在会跳过并如实报出）；op=remove 按 id 移除；op=clear 清空。与 favorite（收藏夹）是两套独立队列——收藏夹按收藏集组织且有星标，心愿单只有一条线性列表。op=clear **必须显式传 confirm=true 才执行**，否则只回预览。支持 dry_run。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": true,
+          "params_schema": {
+            "op": {
+              "type": "string",
+              "enum": [
+                "list",
+                "add",
+                "remove",
+                "clear"
+              ]
+            },
+            "material_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "confirm": {
+              "type": "boolean",
+              "description": "确认执行：不传或 false 只返回预览；确认后传 true 再调一次"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "settings_get",
+          "name": "读设置",
+          "description": "读插件设置（不传 keys 就回全部）。覆盖 AI 运行依赖（ai_provider / ai_model / ai_base_url / 语义与图像索引开关）、外观语言、路径记忆等。**API Key 一律掩码**（只回是否已设置与长度）—— 机密只进不出。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "keys": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "settings_set",
+          "name": "改设置",
+          "description": "改插件设置（白名单键，见 settings_get 的 writable_keys）：换 AI provider / 模型 / 地址、开关语义检索与图像索引、语言与字号、允许/禁止万能通道等。传 API Key 会用 ai_api_key/ai_api_keys 按供应商写；未知键**显式拒绝**（不静默丢弃）。支持 dry_run 预览前后值。部分键要重开窗口才生效。需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "updates": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "category_manage",
+          "name": "分类树管理",
+          "description": "资产库分类树的读与改：op=list 列出全部分类（含路径）与镜像树；create（建目录 + 写 FolderMetadata，parent_id 省略则建在子库根下）；rename（改**易读名** name_cn，目录名不变 —— 与 UI 一致）；move（把整个分类目录挪到 new_parent_id 下）；delete（**整目录 rmtree**：非空时必须显式 force=true，且删除前会整目录备份到临时目录并把路径回给你；子库根与 AAAcustom 受保护不可删）。op=delete **必须显式传 confirm=true 才执行**，否则只回预览。注意 delete/move **不进 undo 栈**（undo_supported=false）。支持 dry_run 预览（删除会先报里面有几个资产）。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": true,
+          "params_schema": {
+            "op": {
+              "type": "string",
+              "enum": [
+                "list",
+                "create",
+                "rename",
+                "delete",
+                "move"
+              ]
+            },
+            "category_id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string",
+              "description": "create/rename 的易读名"
+            },
+            "sub_library": {
+              "type": "string",
+              "description": "在哪个子库下操作（默认 materials）"
+            },
+            "parent_id": {
+              "type": "string",
+              "description": "create 的父分类"
+            },
+            "new_parent_id": {
+              "type": "string",
+              "description": "move 的目标父分类"
+            },
+            "cat_type": {
+              "type": "string",
+              "description": "FolderMetadata.type"
+            },
+            "force": {
+              "type": "boolean",
+              "description": "删除非空分类时必须是 true"
+            },
+            "confirm": {
+              "type": "boolean",
+              "description": "确认执行：不传或 false 只返回预览；确认后传 true 再调一次"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "library_manage",
+          "name": "资产库管理",
+          "description": "资产库级的读与改：op=list 列出所有已登记库（标注当前/默认、路径是否还在）；add 登记一个**已存在**的库目录；create 建一个新标准库（写 library.json + 6 个子库目录与各自的 FolderMetadata）；remove **只注销、不动磁盘文件**（至少保留一个库）；set_default 设默认库；switch **真的换库**（manager.load_library + 写 last_library_path，窗口开着就让 UI 一起切）；sub_list 读当前库的子库清单与顶层资产数（子库增删仍需在设置页做，本命令不写库结构）。需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "op": {
+              "type": "string",
+              "enum": [
+                "list",
+                "add",
+                "create",
+                "remove",
+                "set_default",
+                "switch",
+                "sub_list"
+              ]
+            },
+            "path": {
+              "type": "string",
+              "description": "库根目录（绝对路径）"
+            },
+            "name": {
+              "type": "string",
+              "description": "create/add 的显示名"
+            },
+            "parent_dir": {
+              "type": "string",
+              "description": "create 时用 parent_dir + name 拼库根"
+            },
+            "sub_id": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "version_manage",
+          "name": "版本 / LOD 管理",
+          "description": "资产版本与 LOD 的读与改：op=list 列出该资产的全部版本与 LOD 清单、当前默认版本/默认 LOD（**两套版本模型合并列出**：`model=embedded`（meta.version_assets + `V{n}/`）与 `model=variants`（`variants.json` + `variants/{id}/`），并给 versions_by_model 计数）；remove_version 按所在模型分派删除（embedded→remove_version_asset，variants→remove_variant_version），删除前整目录备份并把路径回给你，删完自动 reload 索引；op=remove_version **必须显式传 confirm=true 才执行**，否则只回预览。set_default_version / set_default_lod 设默认（只写**已存在**的索引文件，绝不凭空造 variants.json/lods.json）。配套：要**导入**指定版本/LOD 用 import_geometry / import_variant_material；要**新建/追加**版本或 LOD 用 create_asset 的 variant 参数。支持 dry_run 预览。需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": true,
+          "params_schema": {
+            "op": {
+              "type": "string",
+              "enum": [
+                "list",
+                "remove_version",
+                "set_default_version",
+                "set_default_lod"
+              ]
+            },
+            "material_id": {
+              "type": "string"
+            },
+            "version": {
+              "type": "string",
+              "description": "版本目录名，如 V1"
+            },
+            "lod": {
+              "type": "string",
+              "description": "LOD id，如 lod0"
+            },
+            "confirm": {
+              "type": "boolean",
+              "description": "确认执行：不传或 false 只返回预览；确认后传 true 再调一次"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "library_health",
+          "name": "库体检与自愈",
+          "description": "资产库的运行期体检与维护：op=status 一次给出库根/是否已加载/资产与分类数/**是否有重复 UUID**/**加载失败的资产清单**（盘上有但没扫进来的，带 reason）；op=reload 重扫磁盘重建索引；op=clear_cache 只清索引缓存；op=reload_config 重读 config.json；op=fix_uuids 把重复 UUID 重写成新 id 并自动重扫（引用旧 id 的地方如收藏夹可能要对一下）。此前这些状态脏了只能「重启插件」。支持 dry_run。需确认。",
+          "category": "organize",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "op": {
+              "type": "string",
+              "enum": [
+                "status",
+                "reload",
+                "clear_cache",
+                "reload_config",
+                "fix_uuids"
+              ]
+            }
+          },
+          "applicable_sub_libraries": []
+        }
+      ]
+    },
+    {
+      "id": "12.1.6",
+      "title": "Maya 场景",
+      "count": 30,
+      "page": "12.1.6",
+      "commands": [
+        {
+          "id": "scene_info",
+          "name": "场景概览",
+          "description": "当前 Maya 场景概览：文件路径、是否未保存、单位、帧范围、对象/网格/材质计数、选择数量。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "agent_context",
+          "name": "智能体上下文快照",
+          "description": "一次派发返回「场景概览 + 当前选择」的一致快照。dsh 每轮装配提示词用它 —— 省掉两次主线程往返，且两段数据取自同一时刻（分开调会有不一致窗口）。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "list_objects",
+          "name": "列出场景对象",
+          "description": "列出场景对象（可按类型、名称通配过滤），返回名称/类型/父级/可见性。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "types": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "name_filter": {
+              "type": "string"
+            },
+            "visible_only": {
+              "type": "boolean"
+            },
+            "limit": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "get_selection",
+          "name": "当前选择",
+          "description": "返回当前选择的对象（名称/类型/父级）。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "get_attr",
+          "name": "读取节点属性",
+          "description": "读取节点的属性值（未指定 attrs 时回读 keyable 属性，最多 30 个）；标注是否锁定/被连接。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            },
+            "attrs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "get_hierarchy",
+          "name": "场景层级",
+          "description": "返回场景层级树（可指定根节点与深度/节点数上限）。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "root": {
+              "type": "string"
+            },
+            "max_depth": {
+              "type": "integer"
+            },
+            "max_nodes": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "select",
+          "name": "选择对象",
+          "description": "设置当前选择：mode=replace/add/toggle/clear；只改选择状态，不动场景数据。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "mode": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "rename",
+          "name": "重命名对象",
+          "description": "重命名场景对象（新名已存在时报错）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            },
+            "new_name": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "move",
+          "name": "平移对象",
+          "description": "平移场景对象（默认相对当前值；可先 dry_run 看前后差异）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "move": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "relative": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "rotate",
+          "name": "旋转对象",
+          "description": "旋转场景对象（默认相对当前值；可先 dry_run 看前后差异）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "rotate": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "relative": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "scale",
+          "name": "缩放对象",
+          "description": "缩放场景对象（默认相对当前值；可先 dry_run 看前后差异）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "scale": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            },
+            "relative": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "duplicate_objects",
+          "name": "复制场景对象",
+          "description": "复制场景对象（每个源对象复制 count 份，可带等间距偏移）；与 organize 组的 duplicate（复制资产库条目）不是一回事。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "count": {
+              "type": "integer"
+            },
+            "offset": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "group",
+          "name": "对象分组",
+          "description": "把若干对象打成一组（可指定组名与父节点）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "name": {
+              "type": "string"
+            },
+            "parent": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "parent",
+          "name": "设置父子",
+          "description": "设置父子关系（parent 传空字符串 = 解除到场景根）；keep_world 默认保持世界位置。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "children": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "parent": {
+              "type": "string"
+            },
+            "keep_world": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "set_visibility",
+          "name": "设置显隐",
+          "description": "显示或隐藏对象。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "visible": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "set_attr",
+          "name": "写节点属性",
+          "description": "写节点属性；锁定 / 被连接 / 不存在的属性会被跳过并如实报告。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            },
+            "attrs": {
+              "type": "object",
+              "additionalProperties": true
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "delete_objects",
+          "name": "删除场景对象",
+          "description": "删除场景对象。**必须显式传 confirm=true 才真删**，否则只回预览；无反向操作可恢复，撤销走 Maya 自身撤销栈。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "confirm": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "assign_material",
+          "name": "指定材质",
+          "description": "把**已有材质**指定给场景对象（按 shape 生效）；dry-run 显示每个对象当前材质与目标材质。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "material": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "freeze_transforms",
+          "name": "归零变换",
+          "description": "归零对象的位移/旋转/缩放（makeIdentity，烘进几何），保持子对象世界位置。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": true,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "nodes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "undo_last",
+          "name": "回滚上一步",
+          "description": "回滚最近一条**带快照**的命令（场景与资产库都覆盖）——这是插件里**唯一的回滚入口**：move/rotate/scale/parent/rename/duplicate_objects/group/set_visibility/set_attr/assign_material/freeze_transforms 走反向操作，delete_objects 走 Maya 自身撤销栈，资产库写命令按快照回到原状态。dry_run=true 只报告将回滚哪几条。多条用 steps=N（从最近往前）。回滚失败的那条快照会放回栈顶以便重试。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "steps": {
+              "type": "integer",
+              "description": "回滚最近几条（默认 1）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "capture_viewport",
+          "name": "抓视口图（playblast 单帧）",
+          "description": "把当前视口（或指定相机 / 面板）抓成一张 PNG，**秒级**返回文件路径。几何 / 结构迭代优先用它 —— Arnold 出图是分钟级，视口图够看清形状、比例、接缝。**相机与显示设置抓完会还原**（不动用户的视口）。拿到 image_path 后用 read_image 直接看图。不指定 image_path 时落到系统临时目录；批处理模式（batch/mayapy）没有视口，会回 code=MAYA_VIEWPORT_UNAVAILABLE；图异常小（疑似纯色）时回包里带 warning。**取消**：playblast 是单次阻塞调用，只能在开始前拦（已取消就不白跑），跑起来之后停不下来。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "async",
+          "timeout_hint_secs": 300,
+          "progress_supported": true,
+          "cancel_supported": true,
+          "confirm_required": false,
+          "params_schema": {
+            "image_path": {
+              "type": "string",
+              "description": "输出 PNG 路径（省略则落到系统临时目录）"
+            },
+            "width": {
+              "type": "integer",
+              "description": "宽（默认 1280）"
+            },
+            "height": {
+              "type": "integer",
+              "description": "高（默认 720）"
+            },
+            "camera": {
+              "type": "string",
+              "description": "用哪个相机（如 persp / SHOT_hero）；省略用当前相机"
+            },
+            "frame": {
+              "type": "number",
+              "description": "抓哪一帧；省略用当前帧"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "shaded",
+                "textured",
+                "wireframe"
+              ],
+              "description": "shaded（默认）/ textured / wireframe"
+            },
+            "wireframe": {
+              "type": "boolean",
+              "description": "在线框上叠加着色（看拓扑时用）"
+            },
+            "panel": {
+              "type": "string",
+              "description": "modelPanel 名；省略用第一个 modelPanel"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "script_editor_insert",
+          "name": "写入脚本编辑器",
+          "description": "把一段 Python / MEL 脚本写进 Maya **脚本编辑器当前标签页**的输入框（dsh 脚本卡片上的「写入脚本编辑器」按钮走这条）。只写文本、**不执行**（要执行用 maya_run_python / maya_run_mel）。会先打开/置前脚本编辑器；当前标签页原内容非空时**先备份到临时文件**并在回包 `backup` 给路径 —— 绝不静默丢掉用户的草稿。`append=true` 时追加到原内容之后。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "code": {
+              "type": "string",
+              "description": "要写入的脚本源码（python 或 MEL）"
+            },
+            "language": {
+              "type": "string",
+              "enum": [
+                "python",
+                "mel"
+              ],
+              "description": "python（默认）/ mel：决定备份文件后缀与回包标注"
+            },
+            "append": {
+              "type": "boolean",
+              "description": "true = 追加到现有内容之后（默认 false：替换当前标签页内容）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "thumbnail_shot",
+          "name": "缩略图取景截图",
+          "description": "给对象拍一张**干净的方形缩略图 PNG**（自动取景 + 关掉取景框遮罩装饰，拍完把相机/面板显示/选中/当前帧/隔离显示全部还原）。objects 省略时用**当前选中**；没选中就报错（不猜）。给 material_id 就**一步写进该资产**的缩略图（等价于 update_thumbnail + 本命令）。典型用法：`create_asset` 建出来的资产只有灰底占位图（结果里会注明），接着用本命令补一张真图。自带自证：格式非 PNG / 画面纯色 / 目标零像素都会在 warnings 里说明并把 status 降为 partial。**场景零改动**。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "objects": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "取景对象；省略用当前选中"
+            },
+            "size": {
+              "type": "integer",
+              "description": "正方形边长像素（省略 = 设置 → 常规 → 缩略图大小，出厂 512）"
+            },
+            "out": {
+              "type": "string",
+              "description": "输出 PNG 路径（省略落临时目录）"
+            },
+            "material_id": {
+              "type": "string",
+              "description": "给了就把这张图写进该资产当缩略图"
+            },
+            "fill": {
+              "type": "number",
+              "description": "物体像素 bbox 较大一边占画面的比例（默认 0.85；0=关闭自动填充）"
+            },
+            "fit_factor": {
+              "type": "number",
+              "description": "viewFit 松紧（默认 1.0）"
+            },
+            "gates": {
+              "type": "boolean",
+              "description": "是否关掉取景框/遮罩装饰（默认 true）"
+            },
+            "wire": {
+              "type": "boolean",
+              "description": "是否保留线框叠着色（默认 false）"
+            },
+            "panel": {
+              "type": "string",
+              "description": "modelPanel 名；省略挑最大的"
+            },
+            "camera": {
+              "type": "string",
+              "description": "出图相机：留空/current = **当前视口那台**；或相机名（transform / shape 都认）"
+            },
+            "focal_length": {
+              "type": "number",
+              "description": "焦距(mm)：**仅当**相机还是 Maya 默认 35mm 时替换（默认 70 —— 35 拍资产太广、边缘会畸变）；0 = 不干预"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "temp_isolation",
+          "name": "临时隔离层状态/清理",
+          "description": "看 / 清批量导出留下的**临时隔离层**（`SQ_TEMP_*`）。批量缩略图与渲染期间用临时层隔离目标物体（视口/拍屏 → 临时显示层，渲染 → 临时渲染层），结束即删；中途失败 / 取消 / 崩溃可能留下一个层，`action=\"clean\"` 一次删掉并把当前渲染层切回默认（物体自身的 visibility 从不被改写，所以删层就能全部恢复）。`action=\"status\"` 还会报告**这个场景该用哪套渲染层**（传统渲染层还是 Render Setup，含判定依据）——这就是批量渲染缩略图时选临时层类型的依据。dry_run 预览删哪些。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "action": {
+              "type": "string",
+              "enum": [
+                "status",
+                "clean"
+              ],
+              "description": "status（默认）看状态 / clean 清理"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "capture_sequence",
+          "name": "抓序列帧（playblast × N）",
+          "description": "按帧抓一组视口图（逐帧 playblast），**带进度与协作式取消**。单帧看细节用它兄弟 `capture_viewport`；序列看**动作 / 变化**。`frames` 支持 \"1-10\" / \"1,3,5\" / \"1-10:2\" / [1,2,3]；一次上限 200 帧（防止把宿主主线程占死）。**进度**：每帧上报 percent + \"frame 12/30 -> shot_0012.png\"，在 squirrel_jobs / /health 上就能看到抓到第几帧。**取消**：每帧一个检查点，取消后立即收手并返回已产出的帧（`status=cancelled` + `stopped_early=true`，**已抓到的图不会删**）。逐帧复用单帧路径，所以空图检测（`blank_frames`）、相机与显示设置还原、批处理模式拒绝都同样生效。`image_path` 可给占位符 `.../shot_{frame:04d}.png`、前缀 `.../shot.png` 或目录。**给 `video=...mp4`（或 .gif）就在抓完后顺手编码成动图/视频** —— 取消时也会把已抓到的帧编出来（那正是想要的中间产物）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "async",
+          "timeout_hint_secs": 900,
+          "progress_supported": true,
+          "cancel_supported": true,
+          "confirm_required": false,
+          "params_schema": {
+            "frames": {
+              "type": "string",
+              "description": "帧描述：\"1-10\" / \"1,3,5\" / \"1-10:2\"；也可给数组"
+            },
+            "image_path": {
+              "type": "string",
+              "description": "输出模板/目录/前缀；省略落到系统临时目录"
+            },
+            "width": {
+              "type": "integer",
+              "description": "宽（默认 1280）"
+            },
+            "height": {
+              "type": "integer",
+              "description": "高（默认 720）"
+            },
+            "camera": {
+              "type": "string",
+              "description": "用哪个相机；省略用当前相机"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "shaded",
+                "textured",
+                "wireframe"
+              ],
+              "description": "shaded（默认）/ textured / wireframe"
+            },
+            "wireframe": {
+              "type": "boolean",
+              "description": "线框叠着色"
+            },
+            "panel": {
+              "type": "string",
+              "description": "modelPanel 名；省略用第一个"
+            },
+            "padding": {
+              "type": "integer",
+              "description": "帧号补零位数（默认 4）"
+            },
+            "max_frames": {
+              "type": "integer",
+              "description": "本次最多几帧（默认 200，硬闸门）"
+            },
+            "video": {
+              "type": "string",
+              "description": "顺手编码：给 .mp4（要 ffmpeg）或 .gif（可回退 Pillow）"
+            },
+            "fps": {
+              "type": "integer",
+              "description": "编码帧率（默认 24）"
+            },
+            "max_width": {
+              "type": "integer",
+              "description": "编码时缩到这个宽度（GIF 体积控制）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "maya_modal_probe",
+          "name": "探测模态对话框（只读）",
+          "description": "探当前有没有**模态对话框**挡着（保存提示 / 许可证 / Arnold 报错 / 崩溃恢复框……）。命令莫名其妙超时、实例却仍在线时用它 —— 模态框会按住 Maya 主线程，是「看不见的超时原因」里最常见的一种。返回 `active_modal`（正在跑模态循环的那个框）与 `modals`（可见的模态窗口）+ 一句可直接转述给用户的 `summary`。**只读**：不点、不关任何框（那个框可能正在问用户要不要保存）。只读 Qt 控件属性 → 必须主线程。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "limit": {
+              "type": "integer",
+              "description": "最多报几个模态窗口（默认 20）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "encode_sequence",
+          "name": "帧序列编码成 GIF / MP4",
+          "description": "把一串帧图（通常是 `capture_sequence` 的产出）编码成**动图 / 视频**。扩展名决定一切：`.mp4`（还有 .mov/.mkv/.webm）走 **ffmpeg**（**插件自带** bin/ffmpeg.exe，自建最小构建；libx264 + yuv420p，体积小、通用）；`.gif` 优先走 ffmpeg，没有 ffmpeg 时退到 **Pillow**。两者都没有就如实报 `NO_ENCODER`（并把已抓好的帧目录给出去），**绝不假装成功**。**不碰 Maya**（纯文件 + 子进程），所以跑在工作线程上；带进度与取消（ffmpeg 会 terminate 并删掉半成品；Pillow 逐帧检查）。帧名必须统一连续（`frame_0001.png` 这种）—— 不连续时 ffmpeg 会编出错帧序，所以直接报 `FRAMES_NOT_SEQUENTIAL` 而不是硬编。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "async",
+          "timeout_hint_secs": 600,
+          "progress_supported": true,
+          "cancel_supported": true,
+          "confirm_required": false,
+          "params_schema": {
+            "image_dir": {
+              "type": "string",
+              "description": "帧所在目录（省略则用 files）"
+            },
+            "output": {
+              "type": "string",
+              "description": "输出文件：.mp4（ffmpeg）/ .gif（可回退 Pillow）"
+            },
+            "files": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "直接给帧文件列表（优先于 image_dir）"
+            },
+            "pattern": {
+              "type": "string",
+              "description": "扫描帧用的通配（默认 frame_*.png）"
+            },
+            "fps": {
+              "type": "integer",
+              "description": "帧率（默认 24）"
+            },
+            "max_width": {
+              "type": "integer",
+              "description": ">0 时把帧缩到这个宽度（GIF 体积控制）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "render_frames",
+          "name": "渲染出图（当前渲染器，逐帧）",
+          "description": "用**当前渲染器**（本机是 arnold/mtoa）逐帧正式出图，**带进度与协作式取消**。与 `capture_sequence` 的分工：那个是秒级 playblast（看形状/动作），这个是正式图（每帧可能几十秒到几分钟）—— 所以跑之前想清楚帧数与采样。`frames` 支持 \"1-3\" / \"1,5,9\" / \"1-10:5\"；一次上限 100 帧。**输出目录**：给 `image_dir` 就临时把 `defaultRenderGlobals.imageFilePrefix` 指过去，**跑完还原**；不给就沿用场景自己的 prefix。**文件名**：帧号会烘进 prefix（`<前缀>.<帧号>`）—— `render` 一张静帧只会写同一个名字（GUI 还会插 `_tmp`），不这么做逐帧会把每帧覆盖成一个文件；同时临时关掉 `animation`（否则一次调用渲整段帧范围），两者跑完都还原。`width`/`height` 直接覆盖分辨率（不动 defaultResolution）；`samples` 只在场景已有 `defaultArnoldRenderOptions` 节点时生效（没有会如实说明）。**每帧一个取消检查点**，取消后已出的图保留。渲染不可撤销；`render -batch` 不是这条路（它一次渲所有相机、且没法逐帧检查）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "async",
+          "timeout_hint_secs": 1800,
+          "progress_supported": true,
+          "cancel_supported": true,
+          "confirm_required": false,
+          "params_schema": {
+            "frames": {
+              "type": "string",
+              "description": "帧描述：\"1-3\" / \"1,5,9\" / \"1-10:5\"；也可给数组"
+            },
+            "image_dir": {
+              "type": "string",
+              "description": "输出目录（省略=工程 images 目录）"
+            },
+            "width": {
+              "type": "integer",
+              "description": "宽（0=用场景设置）"
+            },
+            "height": {
+              "type": "integer",
+              "description": "高（0=用场景设置）"
+            },
+            "camera": {
+              "type": "string",
+              "description": "用哪个相机；省略用活动相机"
+            },
+            "prefix": {
+              "type": "string",
+              "description": "输出文件名前缀（省略=场景名）"
+            },
+            "samples": {
+              "type": "integer",
+              "description": "临时改 Arnold AASamples（0=不改）"
+            },
+            "max_frames": {
+              "type": "integer",
+              "description": "本次最多几帧（默认 100，硬闸门）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "maya_run_python",
+          "name": "执行 Python（高危）",
+          "description": "在 Maya 主线程执行任意 Python。取结果有三种写法（优先级从高到低）：①代码里 `RESULT = ...`（旧行为，永远优先）；②`result_type=VALUE|JSON|REPR` 取**最后一条表达式**的值；③都没有 → result 为 null，回包的 result_source/hint 会说明。`capture_output=true`（默认）把 stdout/stderr 回传进信封（各截断到 8000 字符，Maya Script Editor 照旧显示）；异常回传**完整 traceback**。`file_path` 给一个 .py 文件路径即执行该文件（长脚本不必塞进 code）。**长循环请上报进度**：命名空间里预置了 `progress(percent, message, **extra)` —— 调它之后 `squirrel_jobs(action=get)` 与 `/health` 就能看到\"跑到哪了\"（不调也行，调用即丢弃）。**长循环也请查取消**：`if cancelled(): break`（或 `cancel.raise_if_cancelled()`）—— 作业的 cancel 才能真正停下它；不查检查点的代码停不下来。高危标注，但**没有审批环节**：调用即执行。**可撤销**：真执行时整个调用被包进一个 Maya 撤销块（`dsh: maya_run_python`），本次调用里可入撤销栈的场景改动会合成**一个**撤销步 —— 用户按一次 Ctrl+Z 即撤回；回包的 `undo` 字段说明这次到底有没有开成（Maya 撤销被关掉时开不成，别无条件承诺）。注意插件自己的 `undo_last` **不**覆盖这条通道（它走快照）。通道默认关闭（设 allow_maya_exec=true 才开，环境变量 SQUIRREL_ENABLE_MAYA_EXEC=1 可强制开启）；用 dry_run=true 只预览代码原文、不执行。",
+          "category": "scene",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "async",
+          "timeout_hint_secs": 600,
+          "progress_supported": true,
+          "cancel_supported": true,
+          "confirm_required": false,
+          "params_schema": {
+            "code": {
+              "type": "string",
+              "description": "要执行的 Python 源码"
+            },
+            "file_path": {
+              "type": "string",
+              "description": "改跑一个 .py 文件（与 code 二选一）"
+            },
+            "result_type": {
+              "type": "string",
+              "enum": [
+                "NONE",
+                "VALUE",
+                "JSON",
+                "REPR"
+              ],
+              "description": "NONE（默认，只认 RESULT）/ VALUE / JSON / REPR"
+            },
+            "capture_output": {
+              "type": "boolean",
+              "description": "true（默认）回传 stdout/stderr；false 只回 RESULT"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "maya_run_mel",
+          "name": "执行 MEL（高危）",
+          "description": "在 Maya 主线程执行任意 MEL 脚本。返回值即整段 MEL 的求值结果（最后一条语句的值；MEL 里裸变量表达式不合法，要返回值就让产出该值的命令收尾）。**可撤销**：整个调用被包进一个 Maya 撤销块（`dsh: maya_run_mel`），本次调用里可入撤销栈的场景改动合成**一个**撤销步（Ctrl+Z 一次撤回）；回包的 `undo` 字段说明这次有没有开成，别无条件承诺。`undo_last` **不**覆盖这条通道（它走快照）。高危标注，但**没有审批环节**：调用即执行。与 maya_run_python 共用开关（默认关闭，设 allow_maya_exec=true 才开，环境变量 SQUIRREL_ENABLE_MAYA_EXEC=1 可强制开启）；dry_run=true 只预览、不执行。**取消**：MEL 里没有我们的检查点，只能在开始前拦一次。",
+          "category": "scene",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "async",
+          "timeout_hint_secs": 600,
+          "progress_supported": false,
+          "cancel_supported": true,
+          "confirm_required": false,
+          "params_schema": {
+            "mel": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        }
+      ]
+    },
+    {
+      "id": "12.1.7",
+      "title": "Maya 原生工具",
+      "count": 44,
+      "page": "12.1.7",
+      "commands": [
+        {
+          "id": "scene_new",
+          "name": "新建场景",
+          "description": "新建空场景。当前场景有未保存改动时默认拒绝（返回 needs_confirm），确认丢弃后传 force=true。",
+          "category": "scene",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "force": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "scene_open",
+          "name": "打开场景",
+          "description": "打开 .ma/.mb 场景文件。有未保存改动时默认拒绝；确认丢弃后 force=true。",
+          "category": "scene",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "path": {
+              "type": "string"
+            },
+            "force": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "scene_save",
+          "name": "保存场景",
+          "description": "保存当前场景；传 path 则另存为。没有保存路径时必须给 path。会覆盖目标文件。",
+          "category": "scene",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "path": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "scene_import",
+          "name": "导入场景文件",
+          "description": "把 .ma/.mb 的内容导入当前场景（可指定 namespace）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "path": {
+              "type": "string"
+            },
+            "namespace": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "scene_export",
+          "name": "导出场景",
+          "description": "把当前选择（selection=true）或全部（false）导出为 .ma/.mb。",
+          "category": "scene",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "path": {
+              "type": "string"
+            },
+            "selection": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "create_node",
+          "name": "创建节点",
+          "description": "创建任意 DG/DAG 节点（transform / locator / lambert / shadingEngine …），可指定 name 与 parent。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node_type": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "parent": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "list_connections",
+          "name": "查询节点连接",
+          "description": "列出节点（省略则用当前选择）的输入/输出连接；plugs=true 返回成对插头。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            },
+            "source": {
+              "type": "boolean"
+            },
+            "destination": {
+              "type": "boolean"
+            },
+            "plugs": {
+              "type": "boolean"
+            },
+            "limit": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "connect_attr",
+          "name": "连接属性",
+          "description": "把 source 插头连到 destination 插头（如 pCube1.tx → locator1.tx）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "source": {
+              "type": "string"
+            },
+            "destination": {
+              "type": "string"
+            },
+            "force": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "disconnect_attr",
+          "name": "断开属性连接",
+          "description": "断开 source → destination 的连接。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "source": {
+              "type": "string"
+            },
+            "destination": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "get_connections",
+          "name": "查询插头连接",
+          "description": "查单个插头（node.attribute）的成对连接，返回 {from, to} 列表。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            },
+            "attribute": {
+              "type": "string"
+            },
+            "source": {
+              "type": "boolean"
+            },
+            "destination": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "connection_history",
+          "name": "查询构建历史",
+          "description": "节点的构建历史（默认上游；future=true 看下游），可限制条数。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            },
+            "future": {
+              "type": "boolean"
+            },
+            "limit": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "get_components",
+          "name": "当前选中的组件",
+          "description": "返回当前选择里的组件（vtx/e/f/cv/map）。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "set_components",
+          "name": "选择组件",
+          "description": "按组件名选择（如 pCube1.vtx[0:7]）；mode=replace/add/toggle/clear。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "components": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "replace",
+                "add",
+                "toggle",
+                "clear"
+              ]
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "convert_components",
+          "name": "转换组件类型",
+          "description": "把当前选择转换成 vertex/edge/face/uv 并替换选择。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "to": {
+              "type": "string",
+              "enum": [
+                "vertex",
+                "edge",
+                "face",
+                "uv"
+              ]
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "mesh_info",
+          "name": "网格统计",
+          "description": "网格的顶点/边/面/UV 数。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "mesh_vertices",
+          "name": "网格顶点坐标",
+          "description": "按索引返回顶点世界坐标（默认最多 1000 个）。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            },
+            "limit": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "mesh_topology_check",
+          "name": "网格拓扑检查",
+          "description": "统计非流形边、lamina 面、边界边数量（附前 5 条样例）。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "curve_info",
+          "name": "曲线信息",
+          "description": "NURBS 曲线的 degree / spans / form / CV 数。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "curve_cvs",
+          "name": "曲线 CV 坐标",
+          "description": "返回曲线 CV 的世界坐标（默认最多 1000 个）。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            },
+            "limit": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "extrude_faces",
+          "name": "挤出面",
+          "description": "对当前选中的面做挤出（translateY + 分段）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "distance": {
+              "type": "number"
+            },
+            "divisions": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "bevel_edges",
+          "name": "倒角边",
+          "description": "对当前选中的边倒角。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "offset": {
+              "type": "number"
+            },
+            "segments": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "bridge_edges",
+          "name": "桥接边",
+          "description": "在两组等量边之间建桥。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "divisions": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "insert_edge_loop",
+          "name": "插入循环边",
+          "description": "在当前选中的边环上插入循环边（polySplitRing）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "divisions": {
+              "type": "integer"
+            },
+            "fix_quads": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "combine_meshes",
+          "name": "合并网格",
+          "description": "把选中的多个网格合并成一个。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "separate_mesh",
+          "name": "拆分网格",
+          "description": "把选中的网格按连通块拆开。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "boolean_mesh",
+          "name": "布尔运算",
+          "description": "对选中的两个网格做 union / difference / intersection。",
+          "category": "scene",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "operation": {
+              "type": "string",
+              "enum": [
+                "union",
+                "difference",
+                "intersection"
+              ]
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "merge_vertices",
+          "name": "合并顶点",
+          "description": "按阈值合并选中顶点。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "threshold": {
+              "type": "number"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "delete_faces",
+          "name": "删除面",
+          "description": "删除当前选中的面。**必须显式传 confirm=true 才真删**，否则只回预览。",
+          "category": "scene",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": true,
+          "params_schema": {
+            "confirm": {
+              "type": "boolean",
+              "description": "确认执行：不传或 false 只返回预览；确认后传 true 再调一次"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "move_components",
+          "name": "移动组件",
+          "description": "按偏移移动当前选中的组件（relative=false 时为绝对坐标）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            },
+            "relative": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "delete_history",
+          "name": "删除构建历史",
+          "description": "删除选中对象的构建历史（不可逆，谨慎）。**必须显式传 confirm=true 才真删**，否则只回预览。",
+          "category": "scene",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": true,
+          "params_schema": {
+            "confirm": {
+              "type": "boolean",
+              "description": "确认执行：不传或 false 只返回预览；确认后传 true 再调一次"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "center_pivot",
+          "name": "居中轴心",
+          "description": "把选中对象的轴心移到几何中心。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "set_pivot",
+          "name": "设置轴心",
+          "description": "把选中对象的轴心设到世界坐标 (x,y,z)。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "x": {
+              "type": "number"
+            },
+            "y": {
+              "type": "number"
+            },
+            "z": {
+              "type": "number"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "bind_skin",
+          "name": "绑定蒙皮",
+          "description": "把网格绑定到关节（未给 joints 时用当前选择：网格 + 关节）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "joints": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "max_influences": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "unbind_skin",
+          "name": "解绑蒙皮",
+          "description": "删除网格上的 skinCluster。",
+          "category": "scene",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "mesh": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "list_influences",
+          "name": "蒙皮影响关节",
+          "description": "列出网格 skinCluster 的影响关节。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "mesh": {
+              "type": "string"
+            },
+            "limit": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "get_weights",
+          "name": "读取蒙皮权重",
+          "description": "读取指定顶点（省略则取前 N 个）的蒙皮权重。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "mesh": {
+              "type": "string"
+            },
+            "vertices": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "limit": {
+              "type": "integer"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "set_weights",
+          "name": "写入蒙皮权重",
+          "description": "设置单个顶点的权重：weights=[{\"joint\": ..., \"weight\": ...}]。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "mesh": {
+              "type": "string"
+            },
+            "vertex": {
+              "type": "string"
+            },
+            "weights": {
+              "type": "array"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "copy_weights",
+          "name": "复制蒙皮权重",
+          "description": "把 source 网格的权重复制到 target（closestPoint / oneToOne）。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "source": {
+              "type": "string"
+            },
+            "target": {
+              "type": "string"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "set_time",
+          "name": "设置当前帧",
+          "description": "把当前时间设到指定帧。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "frame": {
+              "type": "number"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "get_time_range",
+          "name": "时间轴范围",
+          "description": "返回播放范围与当前帧。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "set_time_range",
+          "name": "设置时间轴范围",
+          "description": "设置播放起止帧。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "start": {
+              "type": "number"
+            },
+            "end": {
+              "type": "number"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "set_keyframe",
+          "name": "设置关键帧",
+          "description": "给对象（可指定 attrs）在当前帧或指定帧打关键帧。",
+          "category": "scene",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            },
+            "attrs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "frame": {
+              "type": "number"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "get_keyframes",
+          "name": "查询关键帧",
+          "description": "返回对象（可指定 attrs）有关键帧的时间点。",
+          "category": "scene",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            },
+            "attrs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "delete_keyframes",
+          "name": "删除关键帧",
+          "description": "删除对象的关键帧（可限定 attrs / 时间段）。**必须显式传 confirm=true 才真删**，否则只回预览。",
+          "category": "scene",
+          "risk_level": "high",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": true,
+          "params_schema": {
+            "node": {
+              "type": "string"
+            },
+            "attrs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "time": {
+              "type": "string"
+            },
+            "confirm": {
+              "type": "boolean",
+              "description": "确认执行：不传或 false 只返回预览；确认后传 true 再调一次"
+            }
+          },
+          "applicable_sub_libraries": []
+        }
+      ]
+    },
+    {
+      "id": "12.1.8",
+      "title": "Maya 文档",
+      "count": 5,
+      "page": "12.1.8",
+      "commands": [
+        {
+          "id": "maya_plugins",
+          "name": "列出已装插件及其能力",
+          "description": "列出本机已装插件（`cmds.pluginInfo`）：版本、提供的**命令**与**节点类型**数量。传 plugin=\"MASH\" 看该插件的**全部**命令 / 节点名。用途：具名命令清单只覆盖插件自己注册的几十条，**操作 Arnold / Redshift / MASH / Bifrost / USD 等已装插件前，先用它确认有哪些命令与节点**；拿到节点名用 maya_doc_show 查属性，拿到命令名用 maya_live_help 查参数。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "plugin": {
+              "type": "string",
+              "description": "插件名（如 MASH / mtoa / redshift4maya / bifrostGraph / mayaUsdPlugin）；省略则列出全部"
+            },
+            "loaded_only": {
+              "type": "boolean",
+              "description": "只要已加载的插件（默认 false：列出全部已注册插件）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "maya_live_help",
+          "name": "实时命令帮助（本机）",
+          "description": "在**活着的 Maya 里**取一条命令的帮助：版本精确（不受知识库版本限制）、覆盖**已装插件**（Arnold / Bifrost / Redshift / MASH / USD / FBX…）、flag 长短名与类型与本机完全一致、随 Maya UI 语言本地化。**写 maya_run_python / maya_run_mel 代码前优先用它核对命令名与参数名**；flags_only=true 只回参数行（省 token）。边界：`cmds.help` **不认识节点类型** —— 节点属性 / API / 开发指南请用 maya_doc_show（知识库）。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "name": {
+              "type": "string",
+              "description": "命令名（如 polyReduce / bifrostGraph / AbcExport）"
+            },
+            "flags_only": {
+              "type": "boolean",
+              "description": "只回参数（flag）行"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "maya_doc_search",
+          "name": "查 Maya 文档（搜索）",
+          "description": "在包内知识库做检索：**词法 + 语义混合**。**中文 / 口语直接问**（`减面` / `骨骼` / `循环边` / `怎么让物体沿曲线排列` / `渲染太吵了怎么去噪`）——词法接不住的说法由**语义一路**兜底（本机 Ollama 嵌入模型，向量索引在 `kb/semantic/`，Ollama 不在或没建索引时自动退回纯词法，不报错）。词法侧：名称命中优先、多词按 AND、同义词表 711 键；排序 = 原生命令 / 节点 / API → Run Time Command（`DeleteHistory` / `InsertEdgeLoopTool` 这类 MEL 命令）→ 中文说明页。每条结果带 `match` 字段（keyword / semantic / both）说明来自哪一路；返回体里的 `semantic` 字段给出语义是否可用、用的哪个模型。**注意**：语义不可用时是**静默降级**（只剩词法，查询照常有结果），所以返回体会多一个 `advisory` 与 `semantic.hint` 说明原因与安装步骤 —— 照实转述给用户，别把降级读成\"这插件没有语义检索\"。mode=keyword 强制纯词法（最快、完全离线）；mode=semantic 只看语义（排查用）。拿到名字后用 maya_doc_show 看细节；**命令的 flag 细节优先用 maya_live_help**。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "query": {
+              "type": "string",
+              "description": "关键词或自然语言问题（中英文都可以）"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "command",
+                "node",
+                "api",
+                "devguide"
+              ],
+              "description": "只看某类：command / node / api / devguide"
+            },
+            "lang": {
+              "type": "string",
+              "enum": [
+                "mel",
+                "python",
+                "cpp",
+                "ufe"
+              ],
+              "description": "只看某语言：mel / python / cpp / ufe"
+            },
+            "mode": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "keyword",
+                "hybrid",
+                "semantic"
+              ],
+              "description": "检索方式：auto（默认，能用语义就用）/ keyword / hybrid / semantic"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "最多回几条（默认 8，上限 20）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "maya_doc_show",
+          "name": "查 Maya 文档（详情）",
+          "description": "按**精确名字**取详情。命令条目：synopsis 与 flags（长短名 / 类型取**本机当前 Maya**的运行时值，说明文字与 examples / return_value 从官方文档继承）；节点条目：**运行时属性表**（含 Arnold / Bifrost / Redshift 等插件节点）+ 文档属性；另有 C++·Python·UFE API 与开发指南（Maya 2025 文档）。默认体裁剪（长说明截断、列表超上限时**逐条点名**剩余项）；要看某参数的**完整**说明用 flag=\"参数名\"；要看整条不截断正文用 full=true。**命令类核对优先用 maya_live_help**（本机版本 + 已装插件）。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "name": {
+              "type": "string",
+              "description": "精确名字（区分大小写），来自 maya_doc_search"
+            },
+            "type": {
+              "type": "string",
+              "enum": [
+                "command",
+                "node",
+                "api",
+                "devguide"
+              ],
+              "description": "同名跨类型时用于消歧"
+            },
+            "lang": {
+              "type": "string",
+              "enum": [
+                "mel",
+                "python",
+                "cpp",
+                "ufe"
+              ],
+              "description": "同名跨语言时用于消歧（如 polySphere 有 mel 与 python 两版）"
+            },
+            "flag": {
+              "type": "string",
+              "description": "只看这一个 flag / 属性的**完整**说明（长名或短名，如 percentage / p）"
+            },
+            "full": {
+              "type": "boolean",
+              "description": "true = 整条正文不截断（devguide 可能几万字，慎用）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "maya_doc_status",
+          "name": "知识库地图与状态",
+          "description": "查**知识库本身**：条目数（命令 / 节点 / API / 指南 / 文档）、各文件体积、**各来源的构建时间**（多久没重建了）、语义检索现在能不能用（模型 / 维度 / 条数 / 不可用原因）、以及**谁权威**（命令参数以 maya_live_help 为准，节点属性用 maya_doc_show，正文用 maya_doc_search）。不确定库里有没有某类东西、或怀疑语义检索掉线时先问它。probe=true 会真发一次嵌入请求自检（约 0.1 秒）。`semantic.diagnose` 逐环报出**缺哪一环**（没装 Ollama / 服务没起 / 模型没拉 / 索引没建 / 模型不匹配）并给出可直接粘贴的修复命令；本机一条龙装好：`python tools/setup_semantic_env.py --all`。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "probe": {
+              "type": "boolean",
+              "description": "true = 额外真发一次语义嵌入请求自检"
+            }
+          },
+          "applicable_sub_libraries": []
+        }
+      ]
+    },
+    {
+      "id": "12.1.9",
+      "title": "运行期",
+      "count": 3,
+      "page": "12.1.9",
+      "commands": [
+        {
+          "id": "quicktool_run",
+          "name": "运行快捷工具",
+          "description": "把 `quicktools/` 下的脚本跑起来 —— 与插件「快捷工具」菜单**同一条路**（同样把主窗口引用递进去）。不传 name 就列出全部脚本（含 `entry`＝会走哪个入口、以及「是否已被一等公民命令覆盖」，优先用后者）。**入口解析**：main() → run() → 源码里有 `if __name__ == \"__main__\"` 就**以 __main__ 身份执行一次**（与在脚本编辑器里直接运行等价）（判定在源码上做，同一份模块体不会被跑两遍）。多数快捷工具是 **GUI 工具**：会打开窗口等用户操作，命令立即返回、不代表操作完成。只允许 quicktools 下的纯文件名（拒绝路径与 ..）。典型用途：跑那些还没有一等公民命令覆盖的工具（如「批量处理 maya 文件」）。",
+          "category": "organize",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "name": {
+              "type": "string",
+              "description": "脚本文件名（带不带 .py 都行）；省略=只列清单"
+            },
+            "params": {
+              "type": "object",
+              "additionalProperties": true,
+              "description": "传给脚本 run(params) 的参数（可选）"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "refresh_commands",
+          "name": "重报命令清单",
+          "description": "重建命令执行器并让连接器重连 → broker 上的命令清单立即更新。插件里**新加了命令 / 改了参数 schema** 之后用它，不必重启 Maya。重连瞬间在飞的命令会失败，别在长任务执行中调用。",
+          "category": "query",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {},
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "web_assistant",
+          "name": "AI 助手开关 / 底座",
+          "description": "AI 助手（dsh Web 端）与底座的运行期状态与开关：op=status 看 web_state（off/starting/open，含面板是否内嵌、服务进程是否在跑）与底座实例；op=open / close 开关面板与服务（走 ai_service.toggle_web，和 Maya 里「AI 工具 → AI 助手」同一个入口）；op=reopen 把**已经在跑**的对话面重新摆出来（用户在系统浏览器里关掉了标签页、或面板被单独关掉时用它，复用服务、不重启不杀进程）；op=stop_broker **停掉共享底座进程**（其它 Maya/会话也会断连，慎重）。需确认。",
+          "category": "query",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "op": {
+              "type": "string",
+              "enum": [
+                "status",
+                "open",
+                "close",
+                "reopen",
+                "stop_broker"
+              ]
+            }
+          },
+          "applicable_sub_libraries": []
+        }
+      ]
+    },
+    {
+      "id": "12.1.10",
+      "title": "AI 环境与索引",
+      "count": 3,
+      "page": "12.1.10",
+      "commands": [
+        {
+          "id": "ai_deps_status",
+          "name": "AI 依赖体检",
+          "description": "AI 功能现在能用哪些、缺哪一环、该敲什么命令。逐项覆盖：Ollama 本体与服务、嵌入模型、**文档向量索引**（语义查命令）、**资产库语义索引**（中文口语搜资产）、**图像检索 sidecar**（以图搜图）、**视觉对话模型**（AI 分析）、dsh 运行时、云端 provider 的 Key。每项带 `missing`（缺什么）与 `fix`（可粘贴的补救步骤）。用户问「AI 用不了 / 语义搜索没反应 / 图像搜索不可用 / 要装什么」时先跑它。`probe=false` 只查本地文件（更快，但不校验服务与已拉模型）。",
+          "category": "query",
+          "risk_level": "readonly",
+          "dry_run_supported": false,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "probe": {
+              "type": "boolean",
+              "description": "true（默认）连一次 Ollama 取已装模型；false 只查本地文件"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "ai_deps_install",
+          "name": "一键安装 AI 依赖",
+          "description": "按步骤表把 AI 依赖装齐（**用户说「帮我安装 AI 依赖 / 把 AI 功能装齐」就调它**）：Ollama → 起服务 → 嵌入模型 → 文档向量索引 → 资产库语义索引 →（`include_vision` 时）图像检索 sidecar → 视觉对话模型。**动手前先问用户选哪个后端**：`backend=ollama`（默认推荐，轻量约 1.7 GB、分钟级）或 `backend=official`（官方管线，GPU 约 9.1 GB / CPU 约 2.5 GB、10–30 分钟）；用户没明确选就按 ollama。**每步先判据、已具备就跳过**，所以中途失败后再跑一次只会补失败/未装的那几步。`dry_run=true` 只回计划与体积（不下载）；不带则**真装**（分钟级、GB 级下载）。装完会写设置 `ai_embed_backend` 并返回 `verify`（解析出的后端、各功能 ok/missing、索引条数）—— **以 `verify.ok` 为准汇报安装是否成功**，不要只看 `status=ok`。**这是长命令**：dsh 侧请走 `squirrel_ai_deps`（它用异步作业 + 进度），别用同步路径撞 30 秒超时。可取消（协作式：会在下一个检查点停下，已装好的部分**保留**）。返回里 `failed` 逐条给出失败原因、`log_tail` 是日志尾巴。装的是**插件环境**（与当前 Maya 场景、资产库内容都无关）。",
+          "category": "query",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "async",
+          "timeout_hint_secs": 10800.0,
+          "progress_supported": true,
+          "cancel_supported": true,
+          "confirm_required": false,
+          "params_schema": {
+            "force": {
+              "type": "boolean",
+              "description": "true = 覆盖重装（venv 重建、模型重拉）；默认 false（只补缺的）"
+            },
+            "include_vision": {
+              "type": "boolean",
+              "description": "是否带图像检索那两步（轻量 sidecar ~30 MB + 视觉对话模型 5–6 GB；嵌入模型 embeddinggemma-2:740m 已在基础步骤里）；默认 true（「装齐所有 AI 依赖」）"
+            },
+            "vision_model": {
+              "type": "string",
+              "description": "要拉的视觉对话模型名；省略用推荐档"
+            },
+            "model": {
+              "type": "string",
+              "description": "嵌入模型名；省略用默认档（索引随它走）"
+            },
+            "library_root": {
+              "type": "string",
+              "description": "资产库根目录；省略取插件设置里的当前库"
+            },
+            "backend": {
+              "type": "string",
+              "enum": [
+                "ollama",
+                "official"
+              ],
+              "description": "选哪个向量后端：ollama（**默认推荐**，轻量约 1.7 GB、分钟级）/ official（官方管线，GPU 约 9.1 GB / CPU 约 2.5 GB、10–30 分钟）。用户没明确选就别传（按 ollama）；装了 official 之后两套索引分家、切换不重建"
+            },
+            "official": {
+              "type": "boolean",
+              "description": "兼容旧参数：等价 backend=official。优先用 backend；默认 false（Ollama 方案）"
+            },
+            "region": {
+              "type": "string",
+              "enum": [
+                "auto",
+                "cn",
+                "global"
+              ],
+              "description": "下载源：auto（默认，按网络自动选）/ cn（国内镜像）/ global（官方源）。省略则用插件设置；传了只影响本次安装"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "index_sync",
+          "name": "同步/重建资产库索引",
+          "description": "把资产库的索引补上/重建：kind=materials（文本语义索引，增量 sync）、kind=images（图像向量索引）、kind=media（音频 / 视频媒体索引）、kind=both（文本+图像）、kind=all（文本+图像+媒体）；rebuild=true 对图像 / 媒体做全量重建。用途：`asset_semantic_status` 报「索引落后 / 缺失 / 换过模型 / 媒体索引不可用」时由 AI **直接修**（此前只能让用户自己敲 tools 脚本）。返回前后 status 摘要作自证。图像 / 媒体索引要 sidecar + 视觉 / 音频模型，缺依赖会如实报错并提示 ai_deps_install。**长命令**（可能几分钟）→ 走异步作业。",
+          "category": "query",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "any",
+          "execution": "async",
+          "timeout_hint_secs": 1800,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "kind": {
+              "type": "string",
+              "enum": [
+                "materials",
+                "images",
+                "media",
+                "both",
+                "all"
+              ]
+            },
+            "rebuild": {
+              "type": "boolean",
+              "description": "图像 / 媒体索引是否全量重建（文本索引本就是增量）"
+            },
+            "library_root": {
+              "type": "string",
+              "description": "资产库根目录；省略取设置里的当前库"
+            }
+          },
+          "applicable_sub_libraries": []
+        }
+      ]
+    },
+    {
+      "id": "12.1.11",
+      "title": "快捷工具转换",
+      "count": 3,
+      "page": "12.1.11",
+      "commands": [
+        {
+          "id": "hdr_to_zasset",
+          "name": "HDR 转资产",
+          "description": "把 HDR/EXR 文件（或文件夹）打包成 .zasset 资产；给 category_id 时直接落到该分类目录。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "input_path": {
+              "type": "string"
+            },
+            "output_folder": {
+              "type": "string"
+            },
+            "asset_name": {
+              "type": "string"
+            },
+            "generate_thumb": {
+              "type": "boolean"
+            },
+            "category_id": {
+              "type": "string"
+            },
+            "recursive": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "model_to_zasset",
+          "name": "模型转资产",
+          "description": "把模型文件夹（每个模型一个资产）打包成 .zasset；默认复用源目录里已有的缩略图/元数据。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "input_path": {
+              "type": "string"
+            },
+            "output_folder": {
+              "type": "string"
+            },
+            "recursive": {
+              "type": "boolean"
+            },
+            "category_id": {
+              "type": "string"
+            },
+            "reuse_existing_metadata": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        },
+        {
+          "id": "pbr_to_zasset",
+          "name": "PBR贴图转资产",
+          "description": "把 PBR 贴图文件夹按材质分组打包成 .zasset（自动识别贴图类型，支持多精度子目录）；不打包精度的用 pack_all_resolutions=true。",
+          "category": "generate",
+          "risk_level": "low",
+          "dry_run_supported": true,
+          "undo_supported": false,
+          "affinity": "main",
+          "execution": "sync",
+          "timeout_hint_secs": 0.0,
+          "progress_supported": false,
+          "cancel_supported": false,
+          "confirm_required": false,
+          "params_schema": {
+            "input_path": {
+              "type": "string"
+            },
+            "output_folder": {
+              "type": "string"
+            },
+            "category_id": {
+              "type": "string"
+            },
+            "recursive_dirs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "exclude_dirs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "pack_all_resolutions": {
+              "type": "boolean"
+            }
+          },
+          "applicable_sub_libraries": []
+        }
+      ]
+    }
+  ]
+}

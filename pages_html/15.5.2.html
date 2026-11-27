@@ -1,0 +1,33 @@
+<blockquote><p>一句话定位：<strong>在资产网格里右键一张材质资产卡片时，弹出的就是这个菜单。</strong> 材质是唯一同时有「赋给物体」「写参数」「跨渲染器转换」三个入口的子库。</p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>左侧「分类」页签 → 点「材质」或它下面的任一分类（金属 / 石材 / 皮肤…）；</li>
+<li>中间资产网格里<strong>右键任意材质卡片</strong>（也可以先单击选中再右键）。</li>
+</ol>
+<p>在「全部资产」「项目」「收藏」页签里右键材质卡片，弹出的是同一张菜单。</p>
+<p><img src="media/shared/menu-sublib-materials.webp" alt="材质资产右键菜单" loading="lazy" decoding="async"></p>
+<h2 id="h-2">菜单从上到下的顺序</h2>
+<table><thead><tr><th>段</th><th>条目</th></tr></thead><tbody><tr><td>① 子库专属</td><td>导入 ▶（zmetal / ma）、添加引用、为当前选择指定材质、应用材质参数、转换导入 ▶</td></tr><tr><td>② 收藏与选择</td><td>添加到收藏夹 ▶、全选、复制、打开文件夹</td></tr><tr><td>③ 整理</td><td>移动到 ▶、复制到 ▶</td></tr><tr><td>④ 维护</td><td>编辑、更新缩略图 ▶、更新资产 ▶、删除 ▶</td></tr><tr><td>⑤ 查看与 AI</td><td>预览节点 ▶、AI 分析缩略图</td></tr><tr><td>⑥ 最后一条</td><td>资产详情</td></tr></tbody></table>
+<h2 id="h-3">菜单逐项详解</h2>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>导入 ▶</td><td>把材质导入当前 Maya 场景</td><td>Maya 已连接；资产里有 zmetal / ma</td><td>子菜单列可用格式，点一种直接导入；导入后场景里选中新建的材质节点</td><td>当前渲染器与材质不同源时，会再弹窗问要不要转成当前渲染器</td></tr><tr><td>添加引用</td><td>以 Maya Reference 方式引入材质所在文件</td><td>资产里含 .ma / .mb 等可引用格式（材质的 ma 满足）</td><td>场景里多一个引用节点，材质以引用形式存在</td><td>引用的是资产包里的文件；资产包被移动或删除后引用会断</td></tr><tr><td>为当前选择指定材质</td><td>把该材质赋给场景里选中的物体</td><td>场景里已经选中物体（网格 / 组）</td><td>选中物体整体换上该材质，原来的材质被顶掉</td><td><strong>会覆盖</strong>物体原有材质；不满意按一次 Ctrl+Z 撤销</td></tr><tr><td>应用材质参数</td><td>把资产里的参数值写到场景中<strong>已有的</strong>材质节点上（不是赋材质）</td><td>场景里选中了材质节点</td><td>同类型直接写值、不同类型按映射表转换后写；写完自动选中被改的材质</td><td>跨类型映射可能丢参数，见 <a href="#/5.5.4"><code>4.2.5.4</code></a></td></tr><tr><td>转换导入 ▶</td><td>导入的同时把材质转成指定材质类型</td><td>资产是 .zasset（否则弹警告）；映射表里有到目标类型的路径</td><td>先导入，再按目标类型转换；完成后选中转换后的材质</td><td>只改场景里的材质，<strong>不会</strong>改资产本身</td></tr><tr><td>添加到收藏夹 ▶</td><td>把资产加入某个收藏夹</td><td>资产库已加载</td><td>子菜单列「默认收藏夹」+ 你自建的收藏夹；点一下加入，再点一下移出</td><td>已收藏的夹是实心金星</td></tr><tr><td>全选</td><td>选中网格里当前<strong>可见</strong>的全部卡片</td><td>资产区里有卡片</td><td>全部卡片高亮</td><td>只选筛选/搜索结果里的，不是整库</td></tr><tr><td>复制</td><td>把资产放进剪贴板</td><td>无</td><td>内部剪贴板记录该资产；同时把资产文件夹写进系统剪贴板</td><td>想真正复制一份，要在目标分类空白处右键「粘贴」</td></tr><tr><td>打开文件夹</td><td>打开资产在磁盘上的位置</td><td>资产是 .zasset 目录</td><td>系统文件管理器定位到该资产文件夹</td><td>只打开文件夹，不动内容</td></tr><tr><td>移动到 ▶</td><td>把资产移到别的分类</td><td>资产库已加载</td><td>级联到目标分类后，资产从当前分类消失、出现在目标分类</td><td>跨子库也可移动，见 <a href="#/15.5.15"><code>8.5.15</code></a></td></tr><tr><td>复制到 ▶</td><td>把资产复制一份到别的分类</td><td>资产库已加载</td><td>目标分类里多出同一资产（原分类保留）</td><td>复制的是资产包副本，占双份磁盘空间</td></tr><tr><td>编辑</td><td>改资产的中文名、分类、标签、注释</td><td>无</td><td>弹「编辑资产」对话框，保存后卡片与属性面板同步更新</td><td>见 <a href="#/15.5.16"><code>8.5.16</code></a></td></tr><tr><td>更新缩略图 ▶</td><td>换掉或新增缩略图</td><td>无（「后台渲染」需本机有 mayapy）</td><td>子菜单 7 项：截取 / 导入 / Maya拍屏 / 渲染图 / 添加 / 截取添加 / 后台渲染</td><td>截取类会先弹截图覆盖层；拍屏与渲染图会先问帧模式</td></tr><tr><td>更新资产 ▶</td><td>把资产内容换成 / 扩成新的</td><td>「替换资产」等需要场景里有选中物体</td><td>子菜单：替换资产 / 追加格式 / 追加为 LOD / 创建新版本 / 添加新变体… / 批量添加变体… / 变体管理…</td><td>每一项都会写磁盘，做前先看清目标资产</td></tr><tr><td>删除 ▶</td><td>删掉这个资产</td><td>无</td><td>子菜单两项：移到回收站 / 彻底删除</td><td>「彻底删除」<strong>不可还原</strong>，见 <a href="#/15.5.16"><code>8.5.16</code></a></td></tr><tr><td>预览节点 ▶</td><td>看材质内部的节点连接</td><td>资产里有 .zmetal 或具名 .ma 节点文件</td><td>子菜单列出节点文件（样本资产：<code>aiStandardSurface1.ma</code>、<code>aiStandardSurface1.zmetal</code>），点一项开节点编辑器预览窗口</td><td>只读预览，不会把节点导入场景</td></tr><tr><td>AI 分析缩略图</td><td>让 AI 读缩略图给建议</td><td>AI 依赖已装好（本机 Ollama + 模型）</td><td>打开 AI 分析窗口，给出建议分类 / 标签 / 中文名 / 注释，确认后写回资产</td><td>见 <a href="#/15.5.17"><code>8.5.17</code></a></td></tr><tr><td>资产详情</td><td>单独看这个资产的详情</td><td>无</td><td>有版本或变体的资产打开版本浏览器，其余打开资产观察窗口</td><td>与双击右侧预览图是同一条链路</td></tr></tbody></table>
+<h2 id="h-4">子菜单：导入 ▶（zmetal / ma）</h2>
+<p>材质资产通常同时带两份内容，所以「导入」是一个子菜单而不是单条：</p>
+<table><thead><tr><th>子项</th><th>说明</th></tr></thead><tbody><tr><td>zmetal</td><td>用资产自带的材质网络文件重建节点网络（材质资产的首选）</td></tr><tr><td>ma</td><td>用 Maya ASCII 场景文件导入（常用于需要保留完整节点 / 层级的情况）</td></tr></tbody></table>
+<p>只有一种可用格式时，菜单里就直接显示成一行「导入 ma」或「导入 zmetal」，没有子菜单。</p>
+<h2 id="h-5">子菜单：转换导入 ▶（18 种目标类型）</h2>
+<p>这一行是材质<strong>独有</strong>的：导入后立刻把材质转成另一种类型，省掉「先导入再开转换工具」两步。子菜单由映射表动态生成，样本资产上出现的是这 18 种：</p>
+<table><thead><tr><th>目标类型</th><th>渲染器族</th><th>说明</th></tr></thead><tbody><tr><td>RedshiftArchitectural</td><td>RS</td><td>Redshift 建筑材质</td></tr><tr><td>RedshiftCarPaint</td><td>RS</td><td>Redshift 车漆</td></tr><tr><td>RedshiftHair</td><td>RS</td><td>Redshift 毛发</td></tr><tr><td>RedshiftMaterial</td><td>RS</td><td>Redshift 通用材质</td></tr><tr><td>RedshiftOpenPBRMaterial</td><td>RS</td><td>Redshift 的 OpenPBR 材质</td></tr><tr><td>RedshiftStandardMaterial</td><td>RS</td><td>Redshift 标准材质</td></tr><tr><td>VRayCarPaintMtl</td><td>VR</td><td>V-Ray 车漆</td></tr><tr><td>VRayMtl</td><td>VR</td><td>V-Ray 通用材质</td></tr><tr><td>aiCarPaint</td><td>AI</td><td>Arnold 车漆</td></tr><tr><td>aiStandardHair</td><td>AI</td><td>Arnold 毛发</td></tr><tr><td>anisotropic</td><td>—</td><td>Maya 原生各向异性材质</td></tr><tr><td>blinn</td><td>—</td><td>Maya 原生 Blinn</td></tr><tr><td>lambert</td><td>—</td><td>Maya 原生 Lambert</td></tr><tr><td>openPBRSurface</td><td>—</td><td>Maya 原生 OpenPBR 材质</td></tr><tr><td>phong</td><td>—</td><td>Maya 原生 Phong</td></tr><tr><td>phongE</td><td>—</td><td>Maya 原生 PhongE</td></tr><tr><td>standardSurface</td><td>—</td><td>Maya 原生 Standard Surface</td></tr><tr><td>usdPreviewSurface</td><td>—</td><td>USD 预览材质</td></tr></tbody></table>
+<p>读法：括号里的 <strong>AI / RS / VR</strong> 是渲染器族标注，Maya 原生材质不标注。列表长短取决于「源材质类型 → 目标类型」在映射表里有没有路（可直连，也可经一次中转），所以换一个源材质，这 18 条会变短或变长。</p>
+<h2 id="h-6">这个子库特有的注意点</h2>
+<ul>
+<li><strong>「赋材质」和「写参数」是两件事</strong>：「为当前选择指定材质」动的是物体上的材质槽（换材质）；「应用材质参数」动的是场景里已存在的材质节点（换数值）。前者用于铺材质，后者用于把一个库里的材质调好参数后刷到场景里已有的材质上。</li>
+<li><strong>转换导入只影响场景</strong>：它不会回写资产库。要让库里也多出一种格式，用「更新资产 → 追加格式」。</li>
+<li><strong>转换导入要求资产是 .zasset</strong>：散文件资产点它会弹警告，这是设计如此，不是坏了。</li>
+</ul>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>公共条目详解：<a href="#/15.5.13"><code>8.5.13</code></a>（导入与引用）、<a href="#/15.5.14"><code>8.5.14</code></a>（收藏 / 全选 / 复制 / 打开文件夹）、<a href="#/15.5.15"><code>8.5.15</code></a>（移动到 / 复制到）、<a href="#/15.5.16"><code>8.5.16</code></a>（编辑 / 更新 / 删除）、<a href="#/15.5.17"><code>8.5.17</code></a>（预览节点 / AI / 详情）</li>
+<li>应用材质到选中的完整流程：<a href="#/5.5.3"><code>4.2.5.3</code></a>；应用材质参数：<a href="#/5.5.4"><code>4.2.5.4</code></a></li>
+<li>跨渲染器映射表与转换路径：<a href="#/7.2.1"><code>4.4.2.1</code></a>、<a href="#/7.2.2"><code>4.4.2.2</code></a></li>
+<li>子库差异总表：<a href="#/15.5.1"><code>8.5.1</code></a></li>
+</ul>

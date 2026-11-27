@@ -1,0 +1,28 @@
+<p>Maya 的自动保存出厂是关闭的，必须开启并写入首选项；它只保护已经存过盘的场景。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>崩溃后找不到自动保存文件，<code>autosave</code> 目录为空。</li>
+<li>重启 Maya 没有出现崩溃恢复提示。</li>
+<li>新场景崩溃后完全无法恢复。</li>
+<li>自动保存开启过，但崩溃后设置又变回关闭。</li>
+</ul>
+<h2 id="h-2">可能原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>自动保存没有开启</td><td><code>autoSaveEnable</code> 为 0</td><td>开启并保存首选项</td></tr><tr><td>只在会话里开启</td><td>崩溃后设置丢失</td><td>写入 <code>prefs\userPrefs.mel</code></td></tr><tr><td>新场景从未保存</td><td>场景没有文件名，无法派生自动保存名</td><td>先按 <code>Ctrl+S</code> 给一个落点</td></tr><tr><td>间隔太长</td><td>默认约 10 分钟</td><td>缩短间隔，重要操作前手动保存</td></tr><tr><td>备份数量达到上限</td><td><code>autoSaveMaxBackups</code> 约 10，旧文件被轮换</td><td>及时另存重要版本</td></tr><tr><td>程序驱动、无人工交互</td><td>未观测到自动保存落盘（未验证）</td><td>人工使用场景时复核目录</td></tr></tbody></table>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>在 Maya 首选项中开启自动保存，间隔设为 10 分钟或更短，并保存首选项。</li>
+<li>确认设置写入 <code>prefs\userPrefs.mel</code>，而不只是当前会话；改文件前先备份。</li>
+<li>新建场景后先按 <code>Ctrl+S</code> 保存一次，让自动保存有文件名可用。</li>
+<li>崩溃后到 <code>Documents\maya\projects\default\autosave</code> 查找自动保存文件。</li>
+<li>找到后先把文件复制到其他目录，再打开副本，避免恢复过程中覆盖原始文件。</li>
+<li>渲染缩略图前的备份在 <code>%TEMP%\squirrel_pre_render\</code>，默认保留 3 份；不想用时可用 <code>SQUIRREL_PRE_RENDER_BACKUP=0</code> 关闭。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p><code>autosave</code> 目录出现带时间戳的文件，打开后场景内容与崩溃前一致；<code>userPrefs.mel</code> 中能看到自动保存设置。</p>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>把自动保存间隔临时调到 1 分钟，正常操作一段时间后复核目录是否落盘。</li>
+<li>确认场景确实存过盘；无标题新场景不会产生自动保存。</li>
+<li>自动保存文件也可能被覆盖或轮换，重要节点前手动另存版本。</li>
+<li>崩溃本身的原因按 6.7.2「崩溃恢复三步」或 6.7.3「渲染器崩溃」排查。</li>
+</ul>

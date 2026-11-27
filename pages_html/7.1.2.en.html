@@ -1,0 +1,23 @@
+<p>A material asset records a concrete node type, and whether it can be rebuilt directly depends on the current Maya having the matching renderer plug-in loaded.</p>
+<p><img src="media_en/shared/area-icon-view.webp" alt="The sphere preview on a material card differs per renderer" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Common mappings</h2>
+<table><thead><tr><th>Renderer</th><th>Common material nodes</th><th>Default material created by double-click</th><th>Required plug-in</th></tr></thead><tbody><tr><td>Arnold</td><td><code>aiStandardSurface</code>, <code>aiStandardHair</code>, <code>aiVolume</code></td><td><code>aiStandardSurface</code></td><td><code>mtoa</code></td></tr><tr><td>V-Ray</td><td><code>VRayMtl</code></td><td><code>VRayMtl</code></td><td><code>vrayformaya</code></td></tr><tr><td>Redshift</td><td><code>RedshiftStandardMaterial</code>, <code>RedshiftOpenPBRMaterial</code>, <code>RedshiftMaterial</code></td><td><code>RedshiftStandardMaterial</code></td><td><code>redshift4maya</code></td></tr><tr><td>Native Maya</td><td><code>standardSurface</code>, <code>openPBRSurface</code>, <code>lambert</code>, <code>phong</code>, <code>blinn</code></td><td>Not switched automatically per renderer</td><td>None</td></tr></tbody></table>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>In Maya confirm the current renderer (<code>defaultRenderGlobals.currentRenderer</code>) and that the matching plug-in is loaded.</li>
+<li>In the library check the material asset&#x27;s <code>node_type</code> and <code>renderer</code> and use the table above to judge whether the target machine can create it directly.</li>
+<li>Double-click to import, or right-click <code>「转换导入」 (Convert import)</code> and choose a material type common for the current renderer.</li>
+<li>If the plug-in is not loaded or this version has no such node type, deleting that material node fails; load the plug-in and retry.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>After import the matching type appears in the Hypershade and the attribute editor title shows the correct node type; the material created by a double-click matches the current renderer.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li><strong>Whether import converts automatically depends on the entry</strong>:<ul>
+<li><strong>Double-clicking a <code>zmetal</code></strong>: converts straight to the current renderer&#x27;s default material, <strong>without a confirmation</strong>;</li>
+<li><strong>Right-click <code>「导入」 (Import)</code></strong>: builds the asset&#x27;s original material first and then asks <strong>once</strong> for the whole batch (all materials in one asset are asked once, never per material), converting only after confirmation;</li>
+<li>Other formats (such as <code>ma</code>) ask before converting whether double-clicked or right-clicked.</li>
+</ul></li>
+<li>Automatic conversion only recognizes Arnold, V-Ray and Redshift; native Maya materials and the current renderer&#x27;s materials are not converted, so use the material conversion tools manually when needed.</li>
+<li>Importing the same asset on machines with different renderers may yield different node types; that is the result of conversion, not a damaged asset.</li>
+</ul>

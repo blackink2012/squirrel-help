@@ -1,0 +1,26 @@
+<p>Categories decide where a script sits in the left column, while favorites and recently run are two cross-category shortcuts.</p>
+<p><img src="media_en/shared/quicktool-script-browser.webp" alt="Script browser" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Purpose</h2>
+<p>Once scripts multiply, use categories to organize them, favorites to pin the ones used often and recently run to return to what you just used.</p>
+<h2 id="h-2">The three entries</h2>
+<table><thead><tr><th>Entry</th><th>Contents</th><th>Source</th></tr></thead><tbody><tr><td>Categories</td><td>The script asset category directories; first-level sub-directories of extra script roots also count as categories</td><td>The category table in <code>script_assets/scripts.json</code> plus disk directories</td></tr><tr><td>★ Favorites</td><td>Scripts favorited by hand, with the count in parentheses</td><td>The favorites path list in plug-in settings</td></tr><tr><td>🕘 Recently run</td><td>Scripts run recently, newest first, at most 15</td><td>Recorded automatically after each run</td></tr><tr><td>Unregistered</td><td>Scripts whose file exists but whose metadata is missing from the registry</td><td>Scan results</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Right-click a script in the right column and choose <code>「★ 收藏」 (Favorite)</code> or <code>「取消收藏」 (Remove favorite)</code>.</li>
+<li>Click <code>「★ 收藏」 (Favorites)</code> or <code>「🕘 最近运行」 (Recently run)</code> in the left column to see those lists.</li>
+<li>Right-click a category node on the left for <code>「新建分类…」 (New category…)</code>, <code>「新建脚本…」 (New script…)</code>, <code>「重命名分类…」 (Rename category…)</code>, <code>「删除分类（含内容）…」 (Delete category with contents…)</code> and <code>「打开该分类文件夹」 (Open that category folder)</code>.</li>
+<li>Drag a script from the right column onto a category on the left to move it and update its category.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The counts in parentheses for favorites and recently run change with your actions.</li>
+<li>After a move, the paths in favorites and recently run update instead of disappearing.</li>
+<li>After a drag the script appears in the target category and no longer in the original one.</li>
+</ul>
+<h2 id="h-5">Notes</h2>
+<ul>
+<li>Dropping onto the virtual nodes <code>「全部」 (All)</code>, <code>「★ 收藏」 (Favorites)</code>, <code>「🕘 最近运行」 (Recently run)</code> and <code>「未登记」 (Unregistered)</code> is refused and the status bar explains why.</li>
+<li>Dragging across script roots, or onto a category that already has a same-named script, does not move anything.</li>
+<li><code>「删除分类（含内容）…」 (Delete category with contents…)</code> permanently deletes the scripts inside the directory, and the confirmation defaults to <code>「否」 (No)</code>.</li>
+<li>Recently run keeps at most 15 entries; older ones drop out.</li>
+</ul>

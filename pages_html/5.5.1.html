@@ -1,0 +1,27 @@
+<p>「转换导入」把材质资产导入场景后立即转成指定材质类型，用一份资产适配不同渲染器。</p>
+<p><img src="media/shared/menu-context-convert.webp" alt="材质资产右键：转换导入" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>材质资产是 <code>.zasset</code>，并含可导入的材质格式（优先 <code>zmetal</code>）。</li>
+<li>目标材质类型在映射表中有可用转换路径。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>右键材质资产，展开「转换导入」。</li>
+<li>子菜单只列出有转换路径的目标类型，并标注渲染器（如 <code>VRayMtl（VR）</code>）。</li>
+<li>点击目标类型，插件先导入材质网络，再逐个转换并原位替换源材质。</li>
+<li>转换完成后，插件选中转换后的材质。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>Hypershade 中材质节点类型等于所选目标类型。</li>
+<li>原材质的贴图连接已迁移到新材质，视口外观基本保持。</li>
+<li>脚本编辑器输出转换数量与目标类型。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>自动转换只认 Arnold、V-Ray、Redshift；Maya 原生材质不参与。</li>
+<li>右键「导入」也会触发转换：zmetal 不弹确认，其他格式整批询问一次是否转成当前渲染器默认材质。</li>
+<li>当前渲染器默认材质对应关系：Arnold → <code>aiStandardSurface</code>，Redshift → <code>RedshiftStandardMaterial</code>，V-Ray → <code>VRayMtl</code>。</li>
+<li>没有映射路径时保留原材质，日志输出「无 … 映射路径」，这不算失败。</li>
+</ul>

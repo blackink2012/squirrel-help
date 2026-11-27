@@ -1,0 +1,29 @@
+<p>The script browser&#x27;s search box splits on spaces and requires every term to match (AND), and supports four prefix filters: <code>tag:</code>, <code>risk:</code>, <code>cat:</code> and <code>unverified</code>.</p>
+<h2 id="h-1">Purpose</h2>
+<p>Narrow down quickly when there are many scripts, for example to see one category, one tag or only unverified scripts.</p>
+<h2 id="h-2">Syntax</h2>
+<table><thead><tr><th>Form</th><th>Meaning</th></tr></thead><tbody><tr><td><code>keyword</code></td><td>Case-insensitive substring match across the name, file base name, purpose, category, script root name, path, tags and trigger scenario</td></tr><tr><td><code>tag:texture</code></td><td>The tag must equal that value (case-insensitive)</td></tr><tr><td><code>risk:high</code></td><td>The risk level must be exactly <code>high</code></td></tr><tr><td><code>cat:qa</code></td><td>The category or script root name contains that value</td></tr><tr><td><code>unverified</code></td><td>Shows only scripts without a live-verification record</td></tr></tbody></table>
+<h2 id="h-3">Examples</h2>
+<ul>
+<li><code>tag:texture risk:high</code>: scripts tagged <code>texture</code> with risk high.</li>
+<li><code>cat:qa unverified</code>: unverified scripts in the qa category.</li>
+<li><code>brick</code>: scripts whose name, purpose, tags or path contain <code>brick</code>.</li>
+</ul>
+<h2 id="h-4">Steps</h2>
+<ol>
+<li>Open the script browser.</li>
+<li>Type one or more terms in the search box, separated by spaces.</li>
+<li>Keep appending prefix conditions to narrow the results; clearing the box restores every script in the current category.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>The list shrinks or grows live as you type.</li>
+<li>The status bar reports no error; mutually exclusive conditions simply yield an empty list.</li>
+</ul>
+<h2 id="h-6">Notes</h2>
+<ul>
+<li>Multiple terms are ANDed; OR and negation are not supported.</li>
+<li><code>risk:</code> is an exact match, while <code>cat:</code> and <code>tag:</code> match different scopes, since <code>cat:</code> also looks at the script root name.</li>
+<li>Chinese keywords work directly without quotes.</li>
+<li>Search only filters the current scan result and never triggers a rescan; press <code>F5</code> to refresh after files change.</li>
+</ul>

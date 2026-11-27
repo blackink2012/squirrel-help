@@ -1,0 +1,50 @@
+<blockquote><p>One-line summary: <strong>the settings window that opens first when you right-click Background render. It decides which renderer, which model, which light, what size and what quality, and renders the thumbnail in a separate mayapy process.</strong></p></blockquote>
+<p>The window is titled <strong>Background render</strong> and its first line reads: &quot;Headless rendering: starts a separate mayapy process, which does not occupy the current viewport and does not change the current scene.&quot;</p>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Select the assets needing thumbnails (several are fine).</li>
+<li>Right-click → <strong>Update thumbnail ▶</strong> → <strong>Background render</strong>.<ul>
+<li>Do not pick <strong>Capture</strong> (a screen rectangle) or <strong>Import</strong> (an image from disk) by mistake.</li>
+</ul></li>
+<li>The <strong>Background render</strong> options window opens.</li>
+</ol>
+<p>With a multi-selection: a single selection processes only the right-clicked asset, while a multi-selection processes all selected assets.</p>
+<p><img src="media_en/shared/dialog-headless-thumb.webp" alt="Background render options" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Block one: renderer</h2>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Suggested value</th><th>What filling it in wrongly does</th></tr></thead><tbody><tr><td>Renderer radio list</td><td>Radios ×N</td><td>Which renderer renders this time</td><td>The one shown as available on this machine (Arnold / Redshift / V-Ray / Maya software / Hardware 2.0 and so on)</td><td>Unavailable entries are disabled with the reason on the right (missing kick.exe / missing mayapy and so on)</td></tr></tbody></table>
+<p>Common reasons an entry is unavailable: Arnold needs <code>kick.exe</code> / <code>oiiotool.exe</code> (installed with Arnold), while Maya software / Hardware 2.0 need a <code>mayapy.exe</code> of the same version as the current Maya. When none is available, <strong>Start generating</strong> reports &quot;this machine has no usable headless renderer…&quot;.</p>
+<h2 id="h-3">Block two: preset model (only shown when needed)</h2>
+<p>Materials, textures and lights <strong>have no mesh of their own</strong>, so a demo model must be built and the material applied before rendering.</p>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Suggested value</th><th>What filling it in wrongly does</th></tr></thead><tbody><tr><td>Preset model dropdown</td><td>Button plus a popup list (with large previews on hover)</td><td>Chooses a model from the plug-in&#x27;s <code>Assets/Meshes</code></td><td>A sphere / box / cloth example matching the asset type</td><td>When the directory has no usable model it reports &quot;no usable model files in the preset model directory&quot;</td></tr></tbody></table>
+<ul>
+<li>Model and scene assets <strong>come with geometry</strong>, so this block is not shown at all.</li>
+<li>Light assets do show this block: the model is what gets lit.</li>
+</ul>
+<h2 id="h-4">Block three: environment light (HDRI)</h2>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Suggested value</th><th>What filling it in wrongly does</th></tr></thead><tbody><tr><td>Use HDRI environment light</td><td>Checkbox (ticked by default)</td><td>Whether HDRI lighting is used</td><td>Usually ticked; untick for pure studio lighting</td><td>Unticked means plain studio lights, which look much worse on metal / reflective materials</td></tr><tr><td>HDRI dropdown</td><td>Button showing the current choice plus a 2:1 preview on the left</td><td>Chooses an HDRI from <code>Assets/IBL</code>; hover a list item for a large preview</td><td>An environment close to the asset&#x27;s intended use</td><td>With none chosen it shows &quot;(none)&quot;</td></tr><tr><td>Description text</td><td>Read-only</td><td>&quot;The HDRI is only environment lighting (spherical projection, no deformation) and does not become the background — the thumbnail has a transparent background.&quot;</td><td>—</td><td>—</td></tr></tbody></table>
+<blockquote><p><strong>Light assets do not show this block</strong>: the light is the source itself and adding environment light would wash it out.</p></blockquote>
+<h2 id="h-5">Block four: size and quality</h2>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Suggested value</th><th>What filling it in wrongly does</th></tr></thead><tbody><tr><td>Size</td><td>Dropdown (256×256 / 384 / 512 / 768 / 1024)</td><td>Output thumbnail side length (square)</td><td>The default 512×512 is enough</td><td>Too large is clearly slower; too small looks blurry on cards</td></tr><tr><td>Quality</td><td>Dropdown (fast / standard / high)</td><td>Maps to each renderer&#x27;s own sampling level</td><td><strong>Fast</strong> for small images, <strong>standard</strong> for finals</td><td><strong>High</strong> is very slow on complex materials; <strong>fast</strong> is noisy</td></tr><tr><td>Description text</td><td>Read-only</td><td>&quot;The quality level maps to the current renderer&#x27;s own sampling settings (higher is cleaner and slower).&quot;</td><td>—</td><td>—</td></tr></tbody></table>
+<h2 id="h-6">Bottom buttons</h2>
+<table><thead><tr><th>Button</th><th>Effect</th><th>Description</th></tr></thead><tbody><tr><td>Restore defaults</td><td>Returns renderer / preset model / environment light / size / quality to factory values</td><td>It <strong>only changes this dialog</strong>; the values are written back when you click <strong>Start generating</strong></td></tr><tr><td>Cancel</td><td>Closes without doing anything</td><td>—</td></tr><tr><td>Start generating</td><td>Starts the headless job with the current settings</td><td>Opens the <strong>Background render · progress</strong> window (<a href="#/en/15.12.7"><code>8.12.7</code></a>) and begins rendering</td></tr></tbody></table>
+<h2 id="h-7">A complete example</h2>
+<ol>
+<li>Select one asset or a batch → right-click → <strong>Update thumbnail ▶</strong> → <strong>Background render</strong>.</li>
+<li>Under <strong>renderer</strong> choose an <strong>available</strong> one (unavailable entries state the reason on the right).</li>
+<li>For material / texture / light assets: pick a model under <strong>preset model</strong> (hover for a large preview).</li>
+<li>Environment light: decide whether to use HDRI, and pick one if so.</li>
+<li>Size 512×512, quality <strong>standard</strong>.</li>
+<li>Click <strong>Start generating</strong>; the progress window appears showing progress and finished images (see 8.12.7).</li>
+<li>When finished the window closes and the grid refreshes with the newly rendered images.</li>
+</ol>
+<h2 id="h-8">Risks and how to undo</h2>
+<table><thead><tr><th>Operation</th><th>Risk</th><th>Undo</th></tr></thead><tbody><tr><td>Start generating</td><td>It <strong>overwrites</strong> those assets&#x27; existing thumbnails</td><td>Render again (the old image has no backup); save important images first with <strong>Update thumbnail → Import</strong></td></tr><tr><td>Cancel the job</td><td>Cooperative cancellation: it stops after the current asset finishes</td><td>Finished images are kept, so you can fill in the rest next time</td></tr><tr><td>Restore defaults</td><td>Only affects this dialog</td><td>Change the values back by hand</td></tr></tbody></table>
+<h2 id="h-9">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>&quot;No usable headless renderer&quot;</td><td>kick / oiiotool is missing, or no mayapy of the same version</td><td>Install Arnold, or confirm a same-version mayapy exists</td></tr><tr><td>It reports the preset model is missing</td><td>There are no model files in <code>Assets/Meshes</code></td><td>Add .fbx/.obj/.ma model files and retry</td></tr><tr><td>Images come out transparent / black</td><td>HDRI is unticked, or renderer sampling is too low</td><td>Tick HDRI and raise quality to <strong>standard</strong></td></tr><tr><td>The job hangs</td><td>The mayapy process is stuck on a step</td><td>Click <strong>Cancel</strong> in the progress window and retry</td></tr><tr><td>The <strong>Background render</strong> item is missing</td><td><strong>Update thumbnail</strong> or <strong>Background render</strong> is switched off in the context menu</td><td>Enable it on the Settings → <strong>Context menu</strong> page</td></tr></tbody></table>
+<h2 id="h-10">Related</h2>
+<ul>
+<li>The headless job progress window: <a href="#/en/15.12.7"><code>8.12.7</code></a></li>
+<li>The user-guide version of thumbnail generation (local and headless): <a href="#/en/4.7.1"><code>4.1.7.1</code></a></li>
+<li>Thumbnail sources in the export dialog: <a href="#/en/15.10.4"><code>8.10.4</code></a></li>
+<li>Batch headless rendering and cancelling jobs: <a href="#/en/10.6.2"><code>4.7.6.2</code></a></li>
+</ul>

@@ -1,0 +1,24 @@
+<p>A viewport screenshot grabs one PNG frame of the current viewport with Maya&#x27;s playblast and returns the file path within seconds; it is good for checking shape, proportions and seams.</p>
+<p><img src="media_en/shared/menu-thumbnail.webp" alt="Context menu → update thumbnail → capture (quick viewport image)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>Maya is in a GUI session; <code>mayapy</code> or <code>-batch</code> has no viewport and cannot capture.</li>
+<li>The target panel is open and the viewport has refreshed.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Call <code>capture_viewport</code>; without <code>image_path</code> the output goes to the system temp directory.</li>
+<li>Set the size with <code>width</code> / <code>height</code>, 1280×720 by default.</li>
+<li>Choose the viewpoint by passing a camera name to <code>camera</code> or a <code>modelPanel</code> name to <code>panel</code>; otherwise the current camera and first panel are used.</li>
+<li>Choose the display mode: <code>mode</code> is <code>shaded</code> (default), <code>textured</code> or <code>wireframe</code>; add <code>wireframe=true</code> to overlay wireframe on shaded.</li>
+<li>Choose the frame: <code>frame</code> defaults to the current frame.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The return value contains <code>image_path</code>; open the PNG and confirm the image is neither a flat color nor empty. When the image is suspiciously small or looks flat, the reply carries a warning.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>Before capturing it runs <code>dgdirty</code> and forces a refresh; otherwise a newly created or rebuilt scene easily captures an empty image.</li>
+<li>Camera, display mode, wireframe and current frame are all restored afterwards, so your viewport is never left in a temporary state.</li>
+<li>A playblast is a single blocking call: you can cancel before it starts, but not once it runs; a large scene can take from a dozen seconds to several minutes, so prefer an async job.</li>
+<li><code>panel</code> and <code>camera</code> must refer to the same viewport; playblast captures the active panel by default, so a mismatched camera captures something else.</li>
+</ul>

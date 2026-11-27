@@ -1,0 +1,28 @@
+<p>After a crash, follow three steps — diagnose, then clean hung instances or dismiss modal dialogs, then launch and prove it answers. Do not reopen repeatedly or kill processes outright.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>Maya suddenly disappears, goes white, or stops responding for a long time.</li>
+<li>The tool reports a disconnect, and reopening Maya still cannot connect.</li>
+<li>After a new Maya starts, the client reports a port already in use or a refused connection.</li>
+<li>The unsaved scene from before the crash cannot be found.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>The Maya process already crashed</td><td>The process is gone and <code>%TEMP%</code> has a new crash dump</td><td>Recover with the three steps</td></tr><tr><td>The main thread is hung</td><td>The process exists and the port listens, but nothing answers</td><td>Confirm, then clean the hung instance</td></tr><tr><td>A modal dialog blocks it</td><td>The Maya window shows a recovery, error or unsaved prompt</td><td>Dismiss the dialog first</td></tr><tr><td>An old instance holds the default port</td><td>The new instance fell back to 7110–7129</td><td>Scan the fallback range and connect to the actual port</td></tr><tr><td>The renderer or a plug-in took Maya down</td><td>The event log points at a renderer DLL</td><td>See 6.7.3 &quot;Renderer crash&quot;</td></tr><tr><td>The unsaved scene is lost</td><td>The autosave directory is empty or autosave was off</td><td>See 6.7.4 &quot;Autosave and recovery&quot;</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Diagnose: run <code>python maya_bridge.py --doctor</code>. It only reports who is online, who is hung and what should be cleaned.</li>
+<li>Look at the Maya window first; dismiss any modal dialog and run <code>--doctor</code> again. Once you confirm it is hung rather than a dialog, run <code>python maya_bridge.py --doctor --kill-hung</code>.</li>
+<li>Launch: run <code>python maya_bridge.py --doctor --launch</code>, which waits until Maya really answers instead of just checking that the process started.</li>
+<li>Confirm at the end: run <code>python maya_bridge.py --ping</code> or <code>--scan</code> to confirm the version, scene and actual port.</li>
+<li>If a task must be resubmitted, only use <code>--retry-if-crashed</code> for idempotent or read-only tasks; when the task file declares <code>SQ_DESTRUCTIVE = True</code>, the tool refuses to resubmit automatically.</li>
+<li>To recover unsaved content, check the autosave directory and <code>%TEMP%\squirrel_pre_render\</code>; copy the files out before opening them.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p><code>--doctor</code> reports a usable <code>healthy_port</code>, <code>--ping</code> returns the Maya version and current scene, and new tasks run normally.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Do not keep launching more Maya instances; first check whether the old instance still holds the port.</li>
+<li>Check <code>~\.squirrel_asset_manager\bridge_port.log</code> and <code>bridge_recover.log</code> for port changes and self-heal records.</li>
+<li>For crash forensics, check the Windows event log (module name + offset) and <code>%TEMP%\MayaCrashLog*.dmp</code>.</li>
+<li>Never rerun destructive tasks just because of one disconnect; check late results and job history first.</li>
+</ul>

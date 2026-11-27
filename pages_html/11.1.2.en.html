@@ -1,0 +1,39 @@
+<p><code>「恢复默认设置」 (Restore default settings)</code> puts most editable items in the Settings window back to factory values, but it writes nothing immediately and never deletes library files.</p>
+<p><img src="media_en/shared/settings-restore-default.webp" alt="Restore default settings" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The Settings window is open and no unsaved change needs keeping.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Click <code>「恢复默认设置」 (Restore default settings)</code> at the bottom left of the window.</li>
+<li>Click <code>「是」 (Yes)</code> in the confirmation <code>「确定要恢复所有设置到默认值吗？（config.json 将被重置）」 (restore all settings to defaults? config.json will be reset)</code>.</li>
+<li>Check the reset items and re-apply whatever must be kept.</li>
+<li>Click <code>「应用」 (Apply)</code> or <code>「确定」 (OK)</code> to write to disk.</li>
+</ol>
+<h2 id="h-3">Items that are reset</h2>
+<table><thead><tr><th>Item</th><th>Restored to</th></tr></thead><tbody><tr><td>Font size</td><td>13</td></tr><tr><td>Interface scaling</td><td>Automatic</td></tr><tr><td>Scaling anchor</td><td>Follow system scaling</td></tr><tr><td>Default view</td><td>Icon grid</td></tr><tr><td>Duplicate name handling</td><td>Auto rename</td></tr><tr><td>Texture suffixes</td><td>Reread <code>pbr_mapping.json</code></td></tr><tr><td>Other configuration</td><td>Factory geometry / image extensions and material node type list</td></tr><tr><td>Export defaults</td><td>Reread <code>export_preset.json</code></td></tr><tr><td>Context menu</td><td>Reread <code>context_menu_preset.json</code></td></tr></tbody></table>
+<h2 id="h-4">Items that are not reset</h2>
+<ul>
+<li>The library list, default library and library paths.</li>
+<li>Texture import policy and dependency file import policy.</li>
+<li>The supported format list <code>asset_file_extensions</code>.</li>
+<li>The global model, API keys, AI chat surface, external connection and external AI tools.</li>
+<li>Interface language, appearance theme, drag-and-drop snapping and thumbnail output size.</li>
+<li>License state.</li>
+</ul>
+<h2 id="h-5">Want a &quot;factory reset&quot;? Use &quot;restore preset&quot;</h2>
+<p>The button above only resets some controls and writes nothing until you apply. To restore <strong>the whole set of interface preferences</strong> to a freshly installed state, use:</p>
+<p><code>Settings → 常规 (General) → 设置预设 (Settings preset) → 还原预设 (Restore preset)</code></p>
+<p><img src="media_en/shared/settings-preset.webp" alt="Settings preset" loading="lazy" decoding="async"></p>
+<table><thead><tr><th>Item</th><th>Behavior</th></tr></thead><tbody><tr><td>Scope</td><td>Every interface preference in <code>app_settings.json</code>: font size, scaling, language, theme, default view, thumbnail size, AI model configuration, all toggles</td></tr><tr><td>When it takes effect</td><td><strong>Writes to disk and applies immediately</strong> after confirmation; the Settings window closes itself afterwards</td></tr><tr><td>Kept</td><td>API keys, the library list / default library, license state</td></tr><tr><td>Not reset</td><td><code>Assets\preset\*.json</code> (export defaults / context menu / double-click commands / texture suffixes / sub-libraries and categories) — restore those on their own tabs</td></tr><tr><td>Preset file</td><td>The local <code>settings_preset.json</code> is not deleted and can still be restored later with <code>「导入预设」 (Import preset)</code></td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Importing or restoring a preset <strong>rewrites settings on disk directly and closes the Settings window</strong>. That prevents stale control values from overwriting the result when you click OK — reopen Settings to see the new values.</p></div>
+<h2 id="h-6">Verify the result</h2>
+<ul>
+<li>After clicking Apply and reopening Settings, the values in the table above are factory values.</li>
+<li>The asset library is still in place and the main window browses normally.</li>
+<li>After <code>「还原预设」 (Restore preset)</code> the language, theme and font size change immediately; a few items such as the language need a plug-in restart to apply fully.</li>
+</ul>
+<h2 id="h-7">Tips</h2>
+<blockquote><p><strong>Warning</strong>: the confirmation says <code>config.json</code> will be reset, but in practice only the items collected by the current dialog are written back; preset files such as <code>export_preset.json</code> are not rewritten with factory values.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: to also bring <code>Assets\preset\*.json</code> back to a clean state, back them up first and then delete the matching keys, as described in &quot;Reset&quot;; for interface preferences themselves <code>「还原预设」 (Restore preset)</code> is enough.</p></blockquote>

@@ -1,0 +1,28 @@
+<p>The plug-in shows the window first and loads the asset library in the background, so slow startup is usually slow library scanning, index cache or disk reads, not UI construction.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>The window appears quickly, but a loading indicator stays in the middle while the category tree and thumbnails take a long time.</li>
+<li>The first launch is clearly slower than the second.</li>
+<li>One particular library is very slow while the others are fine.</li>
+<li>The asset count in the status bar does not update for a long time, but Maya itself is not frozen.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>The asset library is very large</td><td>Thousands of assets; scan time grows with the count</td><td>Split into several libraries, or reduce the asset count per library</td></tr><tr><td>No index cache on the first launch</td><td><code>.squirrel_index_cache.json</code> does not exist under the library root yet</td><td>Wait for the first scan; the second launch hits the cache</td></tr><tr><td>The library is on a network or sync drive</td><td>The directory is on a NAS, cloud drive or auto-sync folder</td><td>Move the library to a local disk</td></tr><tr><td>Index cache incompatible with the current version</td><td>The log says &quot;index cache incompatible, falling back to a full scan&quot;</td><td>Clear the cache and let it rebuild once</td></tr><tr><td>The first read of many asset descriptions</td><td>The first sync after a restart reads many <code>meta.json</code> files</td><td>Wait for it to finish in the background; the description cache is used afterwards</td></tr><tr><td>Many thumbnails loading at once</td><td>The first screen decodes many images simultaneously</td><td>Wait for async loading, or reduce the number on the first screen</td></tr><tr><td>The AI index warms up in the background</td><td>The status shows warming up</td><td>Warm-up does not block search; just wait for it</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Check whether the window has appeared, then decide whether the UI or the data loading is slow.</li>
+<li>Look at the <code>[MaterialManager]</code> log in the Script Editor to see whether it hit the cache or is doing a full scan.</li>
+<li>Move the asset library to a local disk; avoid network drives and real-time sync folders.</li>
+<li>On the first launch wait for the scan to finish, confirm <code>.squirrel_index_cache.json</code> was created, then restart and compare the second run.</li>
+<li>For a broken cache, clear it with <code>library_health</code> <code>op=clear_cache</code> and let it rebuild once.</li>
+<li>When there are too many assets, split by sub-library or project to reduce the scale of each load.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>The second launch is clearly faster than the first, the category tree and first-screen thumbnails appear shortly after the window opens, and the status bar count is correct.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Record the library&#x27;s asset count, disk type (local/network), and cold and warm startup times.</li>
+<li>Compare with an empty library; if an empty library is also slow, the bottleneck is not asset scanning.</li>
+<li>Check whether several Maya instances load the same library at once, or sync software is scanning the library directory.</li>
+<li>Continue with 6.6.2 &quot;Stuttering and memory&quot; and 4.1.12.2 &quot;Index rebuild&quot;.</li>
+</ul>

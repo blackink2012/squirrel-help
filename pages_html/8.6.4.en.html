@@ -1,0 +1,26 @@
+<p>Day to day only incremental syncing is needed: only added, changed and deleted rows are re-embedded. A full rebuild is reserved for a model change, a damaged index or a format upgrade.</p>
+<p><img src="media_en/shared/settings-index.webp" alt="Vector index maintenance" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Syncs that happen automatically</h2>
+<ul>
+<li>Opening or switching an asset library warms up its text index in the background, and search never waits for it.</li>
+<li>A search performs one incremental sync first; repeated syncing of the same state never touches the model.</li>
+<li>The image index refreshes only when the library is newer than the index; it is created cold on the first search by image.</li>
+</ul>
+<h2 id="h-2">Manual syncing</h2>
+<p><code>Settings → AI 设置 (AI settings) → 向量索引维护 (Vector index maintenance)</code> has two buttons: <strong><code>「更新向量」 (Update vectors)</code></strong> for incremental and <strong><code>「重建全部向量索引」 (Rebuild all vector indexes)</code></strong> for full rebuilds; the group&#x27;s description states that it covers the help library, the Maya documentation library and the current asset library&#x27;s text / image / audio / video vector indexes.</p>
+<p>The command line works too:</p>
+<ol>
+<li>Text index (incremental): <code>python tools\asset_index.py --sync</code>.</li>
+<li>Text index (full): <code>python tools\asset_index.py --rebuild</code>.</li>
+<li>Image index (incremental): <code>python tools\asset_vision_encode.py sync --library &quot;&lt;library root&gt;&quot;</code>.</li>
+<li>Image index (full): add <code>--rebuild</code> to the command above.</li>
+<li>The <code>index_sync</code> command also works, with <code>kind</code> set to <code>materials</code>, <code>images</code> or <code>both</code>; <code>rebuild</code> only affects the image index.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>After syncing, check the entry count and update time with <code>asset_semantic_status</code> or <code>python tools\asset_index.py --status</code>; <code>--verify</code> checks consistency.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>The <code>rebuild</code> flag of <code>index_sync</code> only applies to the image index; to rebuild text fully use <code>python tools\asset_index.py --rebuild</code>.</li>
+<li>Never use <code>--limit</code> on the image sync as sampling, because it trims the index to the first N entries.</li>
+<li>With a fresh lock on the index directory, search skips syncing to avoid blocking; retry once the other side finishes.</li>
+</ul>

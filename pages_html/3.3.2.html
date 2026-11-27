@@ -1,0 +1,22 @@
+<p>多选遵循 Windows 资源管理器习惯：<code>Ctrl</code> 点选切换单项，<code>Shift</code> 点选连续范围，空白拖动框选。</p>
+<p><img src="media/shared/area-multi-select.webp" alt="多选：多张卡片同时选中（蓝框）；批量操作栏出现在网格下方（见下一节）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">鼠标多选</h2>
+<table><thead><tr><th>操作</th><th>结果</th></tr></thead><tbody><tr><td><code>Ctrl + 单击</code></td><td>切换这一张的选中状态，其余选中保留</td></tr><tr><td><code>Shift + 单击</code></td><td>从锚点到这一张的范围加入选中，锚点不动</td></tr><tr><td><code>Ctrl + Shift + 单击</code></td><td>同上，范围加入已有选中</td></tr><tr><td>空白处拖动</td><td>框选；无修饰键 = 替换选中，<code>Ctrl</code> / <code>Shift</code> = 加选</td></tr><tr><td>空白处单击</td><td>无修饰键 = 清空；<code>Ctrl</code> / <code>Shift</code> = 保留已有选中</td></tr></tbody></table>
+<p>锚点是上一次普通点击或 <code>Ctrl</code> 点击落在的卡片；连续 <code>Shift</code> 点击会在同一段上伸缩，不会从头重新量。</p>
+<h2 id="h-2">键盘多选</h2>
+<ol>
+<li>点进资产网格，把键盘焦点交给网格。</li>
+<li>方向键移动焦点并选中；<code>Shift + 方向键</code> 扩展范围；<code>Ctrl + 方向键</code> 只移动焦点、不改选中。</li>
+<li><code>Ctrl + A</code> 全选；<code>Ctrl + F</code> 把当前选中滚到视口中央。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>多选后工具栏出现批量操作栏，状态栏显示已选数量。</li>
+<li>在空白处拖动出现框选矩形，框到的卡片实时高亮。</li>
+<li><code>Ctrl</code> 点击已选卡片可以取消它，其余选中不会被清掉。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>列表视图同样支持 <code>ExtendedSelection</code>，<code>Ctrl</code> / <code>Shift</code> 语义与图标视图一致。</li>
+<li>多选后拖动其中任意一张，会整批拖入 Maya（见 3.3.5）。</li>
+</ul>

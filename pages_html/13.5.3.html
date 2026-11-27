@@ -1,0 +1,28 @@
+<p>结果不相关通常不是模型坏了，而是资产缺少可检索文本、索引落后，或词法强命中把名字锁在了第一位。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>用口语描述搜不到目标资产，前几条明显不相关。</li>
+<li>直接输入资产名，目标却排在第二位。</li>
+<li>刚新增或改过标签的资产搜不到。</li>
+<li>在某个分类内搜索时结果很少，切回全部资产又正常。</li>
+</ul>
+<h2 id="h-2">可能原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>资产缺少可检索文本</td><td>没有中文名、标签、备注或 AI 描述</td><td>补充元数据后再同步</td></tr><tr><td>索引落后于资产库</td><td><code>index_lag</code> 大于 5 秒或提示 stale</td><td>执行增量同步</td></tr><tr><td>词法强命中锁第一</td><td>查询词正好命中另一个资产名</td><td>用更精确的名字或加分类筛选</td></tr><tr><td>分类范围限制</td><td>只在当前分类内搜索</td><td>切到全部资产再搜</td></tr><tr><td>索引模型与查询模型不一致</td><td>状态提示模型不匹配</td><td>统一模型或重建索引</td></tr><tr><td>查询太泛或多义词</td><td>同一句话可能指多种资产</td><td>补充材质、风格、用途等限定词</td></tr></tbody></table>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>先输入资产的精确名称，确认目标资产本身能被搜到。</li>
+<li>查看结果里的 <code>match</code> 字段：<code>keyword</code> 表示词法命中，<code>semantic</code> 表示语义命中，<code>both</code> 表示两者都命中。</li>
+<li>给目标资产补充中文名、标签、备注或 AI 描述；这些字段都会进入索引文本。</li>
+<li>执行 <code>asset_semantic_status</code> 查看 <code>index_lag</code>；索引落后时执行 <code>python tools/asset_index.py --sync</code>。</li>
+<li>把搜索范围切回全部资产，排除当前分类过滤造成的结果缺失。</li>
+<li>需要纯字面匹配时用 <code>mode=keyword</code>；排查语义召回时用 <code>mode=semantic</code>。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p>目标资产进入前三条，<code>match</code> 显示 <code>semantic</code> 或 <code>both</code>，刚补充的标签和中文名能被搜到。</p>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>记录查询词、目标资产名和实际前五条结果，确认是召回问题还是排序问题。</li>
+<li>如果索引刚重建仍不准，确认模型与索引一致，且没有混用旧的索引目录。</li>
+<li>多义词查询加上材质、颜色、用途等限定词，再比较结果。</li>
+<li>按 4.5.9.3「搜索结果不相关」和 4.5.6.4「增量与全量同步」继续排查。</li>
+</ul>

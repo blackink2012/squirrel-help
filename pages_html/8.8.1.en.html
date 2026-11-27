@@ -1,0 +1,10 @@
+<p>MCP is the standard channel through which external AI tools call the plug-in&#x27;s capabilities; installing the skills alone is not enough — the tools the skill text refers to must really exist.</p>
+<h2 id="h-1">Two servers</h2>
+<table><thead><tr><th>Name</th><th>Purpose</th><th>Depends on Maya</th></tr></thead><tbody><tr><td><code>squirrel-assets</code></td><td>Search assets and drive Maya / Blender scenes, imports and exports</td><td>Needs a live instance</td></tr><tr><td><code>maya-kb</code></td><td>Search the offline Maya knowledge base</td><td>No, works without Maya running</td></tr></tbody></table>
+<p>Both start over stdio: in source form <code>python mcp\squirrel_mcp_server.py</code>, and packaged builds are launched by the main program with sentinel arguments. <code>squirrel-assets</code> also writes <code>--broker-url</code> and <code>--instance-id</code>, with the backend at <code>http://127.0.0.1:39002</code> by default.</p>
+<h2 id="h-2">Which tools are exposed</h2>
+<p>Not every command is exposed, only a high-frequency allowlist covering scene, assets, rendering and execution; the command list is always fetched live from the backend&#x27;s <code>/commands</code> and never hard-coded. High-risk commands (such as running Python) are in the allowlist too, and callers should preview before running.</p>
+<h2 id="h-3">How to attach it</h2>
+<p>In <code>Settings → AI 设置 (AI settings) → 外部 AI 工具 (External AI tools) group → 外部 AI 工具… (External AI tools…)</code> check MCP for the target tool and the plug-in writes the entry into that tool&#x27;s configuration file; when there is no configuration it can safely write, copy the snippet and paste it by hand.</p>
+<h2 id="h-4">Boundaries</h2>
+<p>The MCP entry never connects to Maya directly and never imports maya; it only talks to the local backend. Before writing another tool&#x27;s configuration it backs it up, refuses to write when parsing fails and only adds or removes its own entries.</p>

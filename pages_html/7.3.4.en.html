@@ -1,0 +1,25 @@
+<p>The node editor can open a <code>.ma</code> or <code>.zmetal</code> and draw the <code>createNode</code> / <code>connectAttr</code> data or the JSON node network as a readable node graph.</p>
+<p><img src="media_en/shared/dialog-mapping-preview.webp" alt="Material attribute mapping" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>A Maya ASCII <code>.ma</code> or a <code>.zmetal</code> from an asset is available.</li>
+<li>The file is not a binary <code>.mb</code>.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>In the library right-click the asset, point at <code>「预览节点」 (Preview nodes)</code> and choose the <code>.zmetal</code> or a <code>.ma</code> other than <code>node.ma</code>.</li>
+<li>You can also click <code>「打开文件」 (Open file)</code> in the editor, or drop a <code>.ma</code> / <code>.zmetal</code> into the window.</li>
+<li>Pan with the middle mouse button or <code>Ctrl</code>+left drag, zoom with the wheel; <code>「层级布局」 (Hierarchical layout)</code> rearranges left to right.</li>
+<li>To connect, click the orange output port on the right of a node and then the grey input port on the left of the target node; the direction cannot be reversed.</li>
+<li>Select a node or link and press Delete to remove it; <code>Ctrl+Z</code> / <code>Ctrl+Y</code> undo and redo.</li>
+<li>Click <code>「保存文件」 (Save file)</code> to overwrite the original; <code>「另存为...」 (Save as...)</code> lets you save as <code>.ma</code> or <code>.zmetal</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The node count on the canvas matches the file, and the connections match <code>connectAttr</code> (or <code>source_node</code> / <code>source_attr</code>); after saving and reopening, the changes are still there.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Saving a <code>.ma</code> keeps the original file as the base and only removes the nodes you deleted, preserving geometry, cameras and other data; saving a <code>.zmetal</code> keeps the original JSON as the base and only updates changed nodes and connections.</li>
+<li>The current version does not support adding new nodes by hand; to add nodes, create them in Maya first, save as <code>.ma</code> and then edit.</li>
+</ul>
+<h2 id="h-5">Warnings</h2>
+<p>Saving overwrites the original file. Back up the whole <code>.zasset</code> before editing a <code>.zmetal</code> inside an asset.</p>

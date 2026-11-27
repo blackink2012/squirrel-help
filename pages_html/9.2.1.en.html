@@ -1,0 +1,34 @@
+<p>Package <code>.hdr</code> / <code>.exr</code> environment textures into <code>.zasset</code> files one per file, optionally generating tone-mapped thumbnails as well.</p>
+<p><img src="media_en/shared/quicktool-hdr.webp" alt="HDR to asset" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Purpose</h2>
+<p>Turn scattered environment textures into assets the library can recognize and preview, either one file at a time or a whole folder.</p>
+<blockquote><p><strong>The menu shows the script name</strong>: the quick tools menu scans the scripts in <code>quicktools/</code> directly, and an entry name is the file name without <code>.py</code> with underscores replaced by spaces, so the menu shows <code>hdr to zasset</code> rather than a Chinese title. The three conversion tools map as follows: <code>hdr to zasset</code> = HDR to asset, <code>model to zasset</code> = model to asset, <code>pbr to zasset</code> = PBR texture to asset.</p></blockquote>
+<h2 id="h-2">Input and output</h2>
+<ul>
+<li>Input: one or more <code>.hdr</code> / <code>.exr</code> files, or a folder (recursive, filterable by format).</li>
+<li>Output: one <code>&lt;file name&gt;.zasset</code> per source file, written to <code>「输出位置」 (Output location)</code>; in folder mode with <code>「保持层级结构」 (Keep hierarchy)</code> checked it follows the source directory structure.</li>
+<li>Inside the asset: <code>meta.json</code> and <code>textures/&lt;original file name&gt;</code>, plus <code>thumb.sicon</code> when a thumbnail is generated. <code>meta.json</code> records <code>asset_type: hdr</code>, <code>node_type: environmentMap</code>, the resolution and <code>tags</code> (<code>hdr</code>, <code>environment</code>, the extension).</li>
+</ul>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open <code>快捷工具 (Quick tools) → hdr to zasset</code>.</li>
+<li>Choose <code>「选择文件」 (Choose files)</code> or <code>「选择文件夹」 (Choose folder)</code> and click <code>「浏览...」 (Browse...)</code> to set the input.</li>
+<li>In folder mode click <code>「扫描HDR文件」 (Scan HDR files)</code>; with <code>「递归扫描子文件夹」 (Scan sub-folders recursively)</code> checked it searches recursively.</li>
+<li>Set <code>「输出位置」 (Output location)</code>; empty means the directory of the input files.</li>
+<li>Adjust the options under <code>「转换选项」 (Conversion options)</code> as needed.</li>
+<li>Click <code>「转换」 (Convert)</code> and wait for the progress to finish.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The status bar shows <code>「完成: x 成功, y 失败」 (finished: x succeeded, y failed)</code> and a <code>「转换完成」 (conversion finished)</code> dialog appears.</li>
+<li>The matching <code>.zasset</code> files appear in the output directory.</li>
+<li>After refreshing the library the assets show thumbnails and resolution information.</li>
+</ul>
+<h2 id="h-5">Options and notes</h2>
+<table><thead><tr><th>Option</th><th>Default</th><th>Notes</th></tr></thead><tbody><tr><td>Generate thumbnail preview</td><td>On</td><td>Generates a tone-mapped PNG thumbnail from the HDR/EXR</td></tr><tr><td>Prefer an existing thumbnail</td><td>On</td><td>Searches for a same-named PNG/JPG next to the source file, with the search formats <code>png, jpg</code> by default</td></tr><tr><td>Scan sub-folders recursively</td><td>On</td><td>Folder mode only; when off only the current directory is scanned</td></tr><tr><td>Keep hierarchy</td><td>On</td><td>Folder mode only; when off all assets go into one directory</td></tr><tr><td>Import into the current category after conversion</td><td>Off</td><td>Copies the <code>.zasset</code> into the current library category afterwards (without the directory structure)</td></tr><tr><td>Format filter</td><td>Empty</td><td>Empty converts <code>.hdr</code> and <code>.exr</code>; may be set to <code>hdr</code> or <code>exr</code></td></tr></tbody></table>
+<ul>
+<li>Thumbnails need <code>cv2</code> / <code>numpy</code> and Pillow, and <code>imageio</code> improves EXR compatibility; when dependencies are missing it asks whether to skip thumbnails and keep converting.</li>
+<li>The thumbnail edge length follows <code>「默认缩略图大小」 (Default thumbnail size)</code> in settings (512 by default) and only shrinks, never enlarges.</li>
+<li>Conversion needs a valid <code>convert</code> license.</li>
+<li>Older help recorded that Chinese file names could break conversion and recommended letters, digits and underscores (whether this still applies is to be confirmed).</li>
+</ul>

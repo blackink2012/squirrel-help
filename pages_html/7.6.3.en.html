@@ -1,0 +1,28 @@
+<p>When some attributes fall back to defaults or clearly wrong values after conversion, it is usually a missing mapping row, a target attribute that does not exist, or differing units / semantics on the two sides.</p>
+<p><img src="media_en/shared/dialog-mapping-preview.webp" alt="Parameter mismatch: check source attribute / target attribute and transform function row by row" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Symptoms</h2>
+<p>The new material&#x27;s color, roughness or metalness differs from the source; a light&#x27;s color is right but its intensity is far off; the Script Editor prints <code>「目标属性不存在」 (target attribute does not exist)</code>, <code>「使用默认值」 (using the default value)</code> or <code>「属性写入未生效」 (attribute write had no effect)</code>.</p>
+<h2 id="h-2">Common causes</h2>
+<ol>
+<li>The <code>.mmap</code> has no row for that source attribute, or the row has no <code>target_attribute</code>.</li>
+<li>The source attribute does not exist on the current source node, so the tool falls back to <code>default_value</code>.</li>
+<li>The target node does not have that attribute (different renderer version or plug-in).</li>
+<li>The semantics differ: glossiness versus roughness, transparency versus transmission and light intensity units are not equivalent.</li>
+<li>The attribute is read-only: <code>setAttr</code> reports no error but the value never changes.</li>
+</ol>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>In the Maya Script Editor read the exact attribute names and messages to tell &quot;missing mapping&quot; from &quot;target attribute missing&quot;.</li>
+<li>Add rows with the material node attribute mapping tool: source attribute on the left, target attribute on the right; pick a transform function and fill parameters when a conversion is needed.</li>
+<li>Save the <code>.mmap</code> into <code>Assets/material_mapper_presets</code> and run the conversion again.</li>
+<li>For lights across renderers note that only intensity is copied directly by default; when conversion is needed use <code>light_intensity_scale</code> in the mapping with a scale factor.</li>
+<li>Read-only attributes can only be replaced by attributes the target supports, or by writable attributes on the renderer side.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>After converting again the succeeded attribute count grows and default-value rows shrink; the target values match the source material or the conversion rules.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Use <code>「属性映射预览」 (Attribute mapping preview)</code> in the material conversion tool to check every row.</li>
+<li>Same-named attributes do not imply the same semantics; never rely on name-only copying.</li>
+<li>When the target attribute really does not exist, change the target material type or add a mapping to a similar attribute.</li>
+</ul>

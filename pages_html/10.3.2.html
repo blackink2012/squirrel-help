@@ -1,0 +1,22 @@
+<p>指定贴图把贴图或 HDR 资产接到已有节点：贴图连到材质，HDR 连到选中的穹顶灯。</p>
+<p><img src="media/shared/menu-context-assign-texture.webp" alt="贴图资产右键 →「指定贴图到材质」" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>目标材质节点或穹顶灯已在场景中，并在 Maya 里选中。</li>
+<li>资产类型与操作匹配：贴图资产对应「指定贴图到材质」，HDR 资产对应「指定贴图」。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>选中目标材质节点或灯光节点。</li>
+<li>在资产库右键点击贴图资产，选择「指定贴图到材质」；对 HDR 资产选择「指定贴图」。</li>
+<li>也可调用 <code>assign_texture</code>，<code>kind</code> 取 <code>auto</code> 时按资产 <code>meta.asset_type</code> 自动判断，<code>texture</code> 强制连材质，<code>hdr</code> 强制连穹顶灯。</li>
+<li>需要把资产内的贴图先导入场景时，调用 <code>import_texture</code>；不指定贴图名会导入全部图片贴图，并共享一个 <code>place2dTexture</code>。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>返回 <code>status=ok</code> 并给出 <code>assigned</code> 列表；贴图资产的 <code>kind</code> 为 <code>texture</code>，HDR 资产为 <code>hdr</code>。贴图分支可在 Hypershade 中看到新接上的 <code>file</code> 节点，HDR 分支则更新穹顶灯的贴图路径。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>HDR 分支要求场景里已有穹顶灯并处于选中状态；没有目标时会返回错误而不是自动建灯。建灯请用「创建穹顶灯」。</li>
+<li><code>auto</code> 判断依据是资产元数据，类型识别不准时请显式传 <code>kind</code>。</li>
+<li>分配失败会返回 <code>reason</code>；先确认目标节点类型与当前渲染器匹配，再重试。</li>
+</ul>

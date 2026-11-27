@@ -1,0 +1,29 @@
+<p>「导入 .zasset 资产」把外部文件夹里的 <code>.zasset</code> 资产批量复制进当前分类，并生成新的资产 ID。</p>
+<p><img src="media/shared/menu-import-zasset.webp" alt="从外部导入 → 导入 .zasset 资产" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已在左侧选中<strong>具体分类</strong>。「全部资产」下「从外部导入」整条菜单被禁用，只显示灰字「当前分类不支持从外部导入」。</li>
+<li>当前子库不是图片或音频：这两个子库只有散文件导入入口，没有「导入 .zasset 资产」。</li>
+<li>外部文件夹中直接包含一个或多个 <code>.zasset</code> 子文件夹。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>点击资产区上方工具条的「从外部导入」按钮。</li>
+<li>选择「导入 .zasset 资产」。</li>
+<li>在目录对话框中选择包含 <code>.zasset</code> 的文件夹。</li>
+<li>插件只扫描该文件夹<strong>下一层</strong>的 <code>.zasset</code> 子目录，逐个复制到当前分类。</li>
+<li>复制完成后，插件重写资产 ID，并把 <code>meta.json</code> 中指向源目录的路径重定向到新目录。</li>
+<li>目标分类已有同名资产时，新资产名自动加 <code>_001</code>、<code>_002</code> 后缀。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>弹出「导入完成」，提示「成功导入 N 个 .zasset 资产」。</li>
+<li>有复制失败的条目时，同一提示追加「跳过 N 个（复制失败）」。</li>
+<li>网格中出现新资产，分类树自动定位到导入目标分类。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>找不到任何 <code>.zasset</code> 时提示「在选定文件夹中未找到 .zasset 资产」，检查所选目录层级。</li>
+<li>资产迁移请优先使用本入口，不要手动复制 <code>.zasset</code> 文件夹；手动复制会让资产不在库索引中。</li>
+<li>源资产中的 <code>texture_map</code>、<code>formats</code> 等元数据会保留，只替换身份与归属字段。</li>
+</ul>

@@ -1,0 +1,26 @@
+<p>Quick tools have no registry: dropping a <code>.py</code> into <code>quicktools/</code> completes the UI registration; only the command channel or a special run location needs an extra edit.</p>
+<p><img src="media_en/shared/quicktool-script-browser.webp" alt="Script browser" loading="lazy" decoding="async"></p>
+<h2 id="h-1">The fastest path</h2>
+<ol>
+<li>Create a <code>.py</code> file in <code>&lt;plug-in root&gt;/quicktools/</code>.</li>
+<li>Provide a <code>main()</code>, <code>run()</code> or <code>if __name__ == &quot;__main__&quot;:</code> entry.</li>
+<li>Open the <code>「快捷工具」 (Quick tools)</code> menu, confirm the file name appears and click to run it.</li>
+</ol>
+<p>The menu rescans the directory every time it opens, so <strong>no Maya restart is needed</strong>. Calling <code>quicktool_run</code> without <code>name</code> also lists the new file and its <code>entry</code>.</p>
+<h2 id="h-2">When extra registration is needed</h2>
+<table><thead><tr><th>Need</th><th>What to change</th></tr></thead><tbody><tr><td>Have the command channel suggest &quot;prefer this first-class command&quot;</td><td>The <code>_QUICKTOOL_COVERAGE</code> map in <code>squirrel_asset_manager/ai/runtime_commands.py</code></td></tr><tr><td>Have a dedicated command (parameter schema, dry_run, structured result)</td><td><code>squirrel_asset_manager/ai/quicktools_commands.py</code>, registering a <code>CommandDescriptor</code> like the existing three commands</td></tr><tr><td>A pure file tool that should run locally in the standalone edition instead of being dispatched to Maya</td><td>The <code>local_only</code> set in <code>_run_quick_tool</code> in <code>squirrel_asset_manager/ui/main_window.py</code></td></tr><tr><td>A dedicated help page inside the tool</td><td>Place <code>help.html</code> in <code>Assets/help/&lt;tool name&gt;/</code></td></tr></tbody></table>
+<p>After registering a command, call <code>refresh_commands</code> if the plug-in is running to rebuild the executor and reconnect; commands in flight at that moment fail, so never call it during a long job.</p>
+<h2 id="h-3">Verify the result</h2>
+<ol>
+<li>The menu shows the new entry instead of <code>「暂无快捷工具」 (no quick tools yet)</code>.</li>
+<li>Clicking it opens the window or runs the script without <code>ImportError</code> / <code>SyntaxError</code> in the Script Editor.</li>
+<li>Calling the command channel without <code>name</code> lists the file and its <code>entry</code>; passing <code>name</code> returns <code>status: ok</code>.</li>
+<li>For a pure file tool that should run locally, confirm in the standalone edition that it is not dispatched to Maya.</li>
+</ol>
+<h2 id="h-4">Notes</h2>
+<ul>
+<li>If it does not appear, first confirm the file is in the root of <code>quicktools/</code>, ends in <code>.py</code> and is not in a sub-directory.</li>
+<li>Clicking with no effect usually means no recognizable entry; the menu prints <code>「没有可执行的入口」 (no executable entry)</code>.</li>
+<li>After adding a command or changing a parameter schema, refresh the command list so external AI tools do not keep seeing the old schema.</li>
+<li>Registration changes are plug-in source changes; verify them in a test environment before distributing.</li>
+</ul>

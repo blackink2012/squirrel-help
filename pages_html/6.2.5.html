@@ -1,0 +1,17 @@
+<p>节点格式保存材质或灯光的连接网络，几何格式保存可再次导入的模型文件；两者可以同时勾选，互不替代。</p>
+<h2 id="h-1">节点格式</h2>
+<table><thead><tr><th>格式</th><th>内容</th><th>说明</th></tr></thead><tbody><tr><td><code>材质预设 .zmetal</code></td><td>Maya 材质节点网络（JSON）</td><td>材质资产通常勾选；勾「全部材质写入一个 .zmetal」时合并为一个文件，不勾且选中的是材质节点时按材质分别写文件</td></tr><tr><td><code>灯光预设 .zlight</code></td><td>渲染器无关的灯光参数，加上游贴图、IES、HDR 节点</td><td>灯光子库显示此项；不显示「合并」子选项</td></tr><tr><td><code>材质映射 .mcm</code></td><td>材质 → 模型映射：顶点/面/边数、物体列表、面级材质指派</td><td>独立选项，不依赖 <code>.zmetal</code>；导入时按拓扑特征匹配模型并赋材质</td></tr></tbody></table>
+<p><code>.mcm</code> 的匹配前提是目标模型的顶点、面、边数与导出时完全一致；三角化、合点或改拓扑都会导致匹配失败。</p>
+<h2 id="h-2">几何体格式</h2>
+<table><thead><tr><th>格式</th><th>扩展名</th><th>说明</th></tr></thead><tbody><tr><td>Maya ASCII</td><td><code>.ma</code></td><td>文本格式，<code>preserveReferences</code> 保持引用关系不烘焙；导出失败且未勾 <code>.mb</code> 时会自动改导 <code>.mb</code></td></tr><tr><td>Maya Binary</td><td><code>.mb</code></td><td>二进制格式，同样保持引用关系；不触发文件格式转换</td></tr><tr><td>FBX</td><td><code>.fbx</code></td><td>通用交换格式，需要 FBX 插件</td></tr><tr><td>OBJ</td><td><code>.obj</code></td><td>经典多边形格式</td></tr><tr><td>USD</td><td><code>.usd</code></td><td>通过 <code>mayaUSDExport</code> 导出，带 UV、显示颜色、材质和可见性；时间轴或关键帧时写入帧范围</td></tr></tbody></table>
+<h2 id="h-3">通过 Maya 原生导出</h2>
+<p>几何体文件统一命名为 <code>node.&lt;扩展名&gt;</code>，放在 <code>.zasset</code> 根目录；多种格式可以并存。<code>.ma</code>/<code>.mb</code> 导出时会把材质关联的 <code>shadingEngine</code> 一并纳入选择集，避免置换等网络丢失。</p>
+<h2 id="h-4">为什么有些格式是灰的</h2>
+<p>几何体与代理格式会按<strong>当前分类</strong>锁定：不适用于该分类的格式变灰、勾不上，悬停提示「该格式不适用于当前分类，已锁定（可在 设置 → 导出默认值 中调整）」。默认规则：</p>
+<table><thead><tr><th>分类</th><th>默认锁掉的格式</th></tr></thead><tbody><tr><td>材质 / 灯光</td><td>FBX、OBJ、USD、Alembic，以及全部代理格式（这类资产没有几何）</td></tr><tr><td>贴图 / HDR / 图片 / 音乐 / 动画数据</td><td>几乎所有节点与几何格式（它们本身就是文件或纯变换数据）</td></tr></tbody></table>
+<p>要改锁定项：设置 →「导出默认值」页，把该格式的锁定关掉（见 <a href="#/6.4.1"><code>4.3.4.1</code></a>）。</p>
+<h2 id="h-5">与“仅导出材质”的关系</h2>
+<p>勾选「仅导出材质（跳过几何体/代理）」后，<code>fbx</code>、<code>obj</code>、<code>usd</code>、<code>abc</code> 和所有代理格式都会被跳过；<code>ma</code>/<code>mb</code> 仍可导出，但内容只有材质节点，不包含模型网格。</p>
+<h2 id="h-6">提示</h2>
+<blockquote><p><strong>提示</strong>：只需要材质时优先勾 <code>.zmetal</code> + <code>贴图 textures/</code>；需要模型和材质一起走时再补几何格式。</p></blockquote>
+<blockquote><p><strong>提示</strong>：代理格式（<code>.ass</code>/<code>.rs</code>/<code>.vrscene</code>/<code>.vrmesh</code>）属于渲染器产物，不在本页的几何体格式里，见「动画、缓存与代理」。</p></blockquote>

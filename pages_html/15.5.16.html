@@ -1,0 +1,47 @@
+<blockquote><p>一句话定位：<strong>这五条都会动到资产本身（字段 / 缩略图 / 内容 / 存亡 / 格式），是右键菜单里最需要看清再用的一段。</strong></p></blockquote>
+<h2 id="h-1">菜单逐项详解</h2>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>编辑</td><td>改资产的中文名、分类、标签、注释</td><td>无</td><td>弹「编辑资产」对话框，保存后卡片、标题与属性面板一起更新</td><td>只改元数据，不动几何 / 贴图</td></tr><tr><td>更新缩略图 ▶</td><td>换掉或新增缩略图</td><td>「后台渲染」需本机有 mayapy</td><td>子菜单 7 项，见下节</td><td>缩略图是资产的展示门面，改之前先备份原图也行——旧图会被覆盖</td></tr><tr><td>更新资产 ▶</td><td>把资产内容换成 / 扩成新的</td><td>「替换资产」等需要场景里有选中物体</td><td>子菜单 7 项，见下节</td><td>每一项都<strong>写磁盘</strong>，做前确认目标资产对不对</td></tr><tr><td>删除 ▶</td><td>删掉这个资产</td><td>无</td><td>子菜单两项：移到回收站 / 彻底删除</td><td>「彻底删除」不可还原</td></tr><tr><td>格式转换</td><td>把资产里的几何体转成其它格式并追加进资产包</td><td>本机有 mayapy（无头执行）</td><td>弹「格式转换」对话框，勾选目标格式后开始</td><td>原有格式保留；转换在库外临时目录完成并验证后才写回</td></tr></tbody></table>
+<p><img src="media/shared/menu-update-thumb.webp" alt="「更新缩略图 ▶」子菜单" loading="lazy" decoding="async"></p>
+<p><img src="media/shared/menu-update-asset.webp" alt="「更新资产 ▶」子菜单" loading="lazy" decoding="async"></p>
+<h2 id="h-2">子菜单：更新缩略图 ▶（7 项）</h2>
+<table><thead><tr><th>子项</th><th>来源</th><th>结果</th><th>前提</th></tr></thead><tbody><tr><td>截取</td><td>弹出截图覆盖层，框选一张</td><td><strong>覆盖</strong>当前主缩略图</td><td>有屏幕可截</td></tr><tr><td>导入</td><td>选一个本地图片文件</td><td><strong>覆盖</strong>当前主缩略图</td><td>有本地图片</td></tr><tr><td>Maya拍屏</td><td>先问帧模式（当前帧 / 时间轴范围），再拍屏出图</td><td>覆盖主缩略图</td><td>Maya 已连接、有可拍视口</td></tr><tr><td>渲染图</td><td>先问帧模式，再用当前渲染器出图</td><td>覆盖主缩略图</td><td>Maya 已连接、渲染器可用</td></tr><tr><td>添加</td><td>选一个本地图片文件</td><td>存到<strong>新槽位</strong>（多缩略图）</td><td>有本地图片</td></tr><tr><td>截取添加</td><td>弹出截图覆盖层，截一张</td><td>存到<strong>新槽位</strong></td><td>有屏幕可截</td></tr><tr><td>后台渲染</td><td>起独立 mayapy 进程做无头离屏渲染</td><td>生成新缩略图</td><td>本机装了 Maya / mayapy；不碰当前视口与场景</td></tr></tbody></table>
+<p>要点：</p>
+<ul>
+<li><strong>「截取 / 添加」和「截取添加」的差别是覆盖还是新增</strong>：带「添加」二字的进新槽位，不覆盖原来的主缩略图。</li>
+<li><strong>「后台渲染」是唯一不依赖当前视口的</strong>：它在另一个进程里渲染，所以你可以继续在 Maya 里干活；多选时会批量处理全部选中资产。</li>
+<li><strong>拍屏与渲染图会先弹帧模式选择</strong>：动画类资产要选「时间轴范围」，静帧选「当前帧」。</li>
+</ul>
+<h2 id="h-3">子菜单：更新资产 ▶（7 项）</h2>
+<table><thead><tr><th>子项</th><th>作用</th><th>前提</th></tr></thead><tbody><tr><td>替换资产</td><td>用场景里当前选中的东西<strong>重新导出并覆盖</strong>这个资产的内容</td><td>场景里选中了物体</td></tr><tr><td>追加格式</td><td>给同一资产再追加一种几何格式（原格式保留）</td><td>场景里选中了物体</td></tr><tr><td>追加为 LOD</td><td>把当前选择导出成这个资产的<strong>一条新 LOD</strong></td><td>场景里选中了物体</td></tr><tr><td>创建新版本</td><td>把当前选择导出成这个资产的<strong>新版本</strong>（V1/V2…）</td><td>场景里选中了物体</td></tr><tr><td>添加新变体…</td><td>把当前选择导出成这个资产的<strong>一个变体</strong></td><td>场景里选中了物体</td></tr><tr><td>批量添加变体…（每个选中物体一个）</td><td>场景里<strong>每个选中物体</strong>各出一个变体</td><td>场景里选了多个物体</td></tr><tr><td>变体管理…</td><td>打开变体管理窗口，成批改名 / 删除 / 排序</td><td>资产已有变体</td></tr></tbody></table>
+<p>补充说明：</p>
+<ul>
+<li>每一项点下去都会先打开<strong>导出配置对话框</strong>（预填当前资产），确认格式与选项后才真正写入——不是点一下就覆盖。</li>
+<li>资产已经有变体时，这个子菜单里还会多一层<strong>「更新变体 ▶」</strong>：每个变体下面可以单独更新缩略图、用当前选中「覆盖」、追加 LOD、删除变体。</li>
+<li>动画数据子库是精简版：只有替换资产 / 创建新版本 / 添加新变体… / 变体管理…。</li>
+</ul>
+<h3 id="h-4">怎么反悔</h3>
+<table><thead><tr><th>做了</th><th>怎么回去</th></tr></thead><tbody><tr><td>替换资产</td><td>没有撤销按钮；靠「版本」——之前如果建过版本，可以从版本浏览器切回旧版本</td></tr><tr><td>追加格式 / 追加为 LOD</td><td>到版本浏览器 / LOD 管理里删掉刚追加的那一条</td></tr><tr><td>创建新版本 / 添加变体</td><td>在版本浏览器 / 变体管理里删掉新建的那个</td></tr><tr><td>更新缩略图</td><td>重新截一张 / 导一张覆盖即可</td></tr></tbody></table>
+<h2 id="h-5">子菜单：删除 ▶（2 项）</h2>
+<table><thead><tr><th>子项</th><th>行为</th><th>能反悔吗</th></tr></thead><tbody><tr><td>移到回收站</td><td>资产进回收站，网格里消失</td><td><strong>能</strong>：回「回收站」页签可还原，见 <a href="#/15.8.3"><code>8.8.3</code></a></td></tr><tr><td>彻底删除</td><td>直接删文件，不进回收站</td><td><strong>不能</strong>：文件从磁盘消失，无法还原</td></tr></tbody></table>
+<p>多选时两项都<strong>对全部选中资产生效</strong>，删之前一定先看底部状态栏的「已选中 N 个资产」。</p>
+<h2 id="h-6">格式转换对话框</h2>
+<p>点「格式转换」后弹出一个小窗口：</p>
+<table><thead><tr><th>区域 / 控件</th><th>说明</th></tr></thead><tbody><tr><td>顶部说明</td><td>显示「将对 N 个资产执行」以及资产名</td></tr><tr><td>勾选项</td><td>Maya ASCII .ma / Maya Binary .mb / FBX .fbx / Wavefront OBJ .obj / USD .usd / Alembic .abc</td></tr><tr><td>底部说明</td><td>转换全部在库外临时目录完成并验证后才写进资产包，原有格式不会被删除</td></tr><tr><td>按钮</td><td>取消 / 开始转换</td></tr></tbody></table>
+<ul>
+<li>只能<strong>追加</strong>格式，做不到「转成别的格式并删掉原来的」；</li>
+<li>转换是无头执行，期间别关 Maya（插件版）或别退出程序（独立版）；</li>
+<li>多选资产时一次批量转换，结果写回各自的资产包。</li>
+</ul>
+<h2 id="h-7">这段菜单的风险提示</h2>
+<ul>
+<li><strong>删除 ▶ 的「彻底删除」是整张菜单里唯一不可逆的操作</strong>，它没有回收站兜底。</li>
+<li><strong>更新资产会覆盖内容</strong>：替换资产是「用当前场景覆盖旧内容」，旧内容只有存在于某个版本里才救得回来。</li>
+<li><strong>格式转换只加不减</strong>：资产会变大，不会变小。</li>
+</ul>
+<h2 id="h-8">相关</h2>
+<ul>
+<li>导入与引用：<a href="#/15.5.13"><code>8.5.13</code></a>；预览节点 / AI / 详情：<a href="#/15.5.17"><code>8.5.17</code></a>；版本 / 变体 / LOD：<a href="#/15.5.18"><code>8.5.18</code></a></li>
+<li>生成缩略图（本地与无头）：<a href="#/4.7.1"><code>4.1.7.1</code></a>；多缩略图槽：<a href="#/4.7.5"><code>4.1.7.5</code></a></li>
+<li>资产详情窗口：<a href="#/15.11.1"><code>8.11.1</code></a>；版本浏览器：<a href="#/15.11.2"><code>8.11.2</code></a>；同名冲突：<a href="#/15.12.5"><code>8.12.5</code></a></li>
+<li>子库差异总表：<a href="#/15.5.1"><code>8.5.1</code></a></li>
+</ul>

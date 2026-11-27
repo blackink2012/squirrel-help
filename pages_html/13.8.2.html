@@ -1,0 +1,28 @@
+<p>按「现象 → 脚本编辑器 → 专项状态 → 桥接体检 → 崩溃取证」的顺序排查，先确定问题在哪一层，再深入。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>问题表现模糊，不知道是界面、资产库、AI、桥接还是渲染器。</li>
+<li>同一现象可能由多个原因造成，逐个试错成本高。</li>
+<li>需要给维护者提供信息，但不知道应该先收集什么。</li>
+</ul>
+<h2 id="h-2">可能原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>没有先看完整报错</td><td>只看到界面提示</td><td>先复现并抓 traceback</td></tr><tr><td>排查顺序跳跃</td><td>一会儿重装、一会儿重建索引</td><td>按层排查，每层只做一个判断</td></tr><tr><td>状态接口没用上</td><td>不知道库/索引/AI 的当前状态</td><td>先查专项状态</td></tr><tr><td>桥接与 Maya 状态混淆</td><td>分不清 Maya 卡死还是客户端问题</td><td>用 <code>--doctor</code> 和 <code>--ping</code> 判活</td></tr><tr><td>崩溃证据没保留</td><td>日志和转储被覆盖</td><td>复现后立即复制</td></tr></tbody></table>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>记录现象：发生时间、正在做什么、能否稳定复现、影响范围。</li>
+<li>打开脚本编辑器，清空后复现一次，复制完整 traceback 的首尾。</li>
+<li>按问题类型查专项状态：资产库用 <code>library_health</code> 的 <code>op=status</code>；搜索与 AI 用 <code>asset_semantic_status</code>；AI 依赖用设置里的依赖检查。</li>
+<li>涉及 Maya 连接、卡死或断连时，运行 <code>python maya_bridge.py --doctor</code>，再用 <code>--ping</code> 与 <code>--scan</code> 确认实例和端口。</li>
+<li>涉及崩溃时，记录 Windows 事件日志中的模块名与偏移，保留 <code>%TEMP%\MayaCrashLog*.dmp</code>。</li>
+<li>涉及渲染时，确认是否崩在渲染器 DLL；按 6.7.3「渲染器崩溃」判断是否需要进程外渲染。</li>
+<li>仍然无法定位时，按 6.8.3「反馈模板」整理信息后提交。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p>能明确说出失败发生在哪一层（界面、资产库、索引、桥接、渲染器或授权），并拿到对应日志或状态返回。</p>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>做最小复现：空场景、单个资产、单个操作，排除场景与批量因素。</li>
+<li>保留复现前后的日志副本，不要只留最后一次启动的记录。</li>
+<li>不确定日志位置时按 6.8.1「日志位置」逐项查找。</li>
+<li>提交时附上已尝试的步骤，避免维护者重复排查。</li>
+</ul>

@@ -1,0 +1,46 @@
+<p>An asset library is an ordinary folder: assets are <code>.zasset</code> folders, metadata is JSON, and copying the library directory is a complete backup.</p>
+<h2 id="h-1">Library root</h2>
+<p>The root contains 11 built-in sub-library directories; any missing one is created when the library loads:</p>
+<pre><code class="language-text">your asset library/
+├── library.json            # library metadata
+├── favorites.json          # favorites
+├── materials/              # materials
+├── models/                 # models
+├── lights/                 # lights
+├── textures/               # textures
+├── scenes/                 # scenes
+├── hdr/                    # HDR
+├── ani/                    # dynamics
+├── images/                 # images
+├── audio/                  # audio
+├── animation/              # animation data
+├── nodetree/               # node trees
+└── .squirrel_ai_index/     # semantic index (derived data, rebuildable; official/ and ollama/ per backend)</code></pre>
+<p>Two rules that are easy to mix up, so keep them apart:</p>
+<ul>
+<li><strong>The <code>「创建资产库」 (Create asset library)</code> button in settings creates only 6 base directories</strong>: <code>materials</code>, <code>models</code>, <code>lights</code>, <code>textures</code>, <code>scenes</code>, <code>hdr</code>;</li>
+<li><strong>Every time a library is loaded or switched to, the plug-in completes the directories for all 11 built-in sub-libraries</strong> (creating whatever is missing, plus <code>FolderMetadata.fdata</code>); if the library root has no <code>library.json</code> yet (first run), <strong>or a sub-library has no sub-categories</strong>, it also creates sub-categories from the default configuration.</li>
+</ul>
+<p>Each sub-library and category directory also holds a <code>FolderMetadata.fdata</code> recording its display name and type; top-level categories cannot hold assets directly, assets go into their sub-categories.</p>
+<h2 id="h-2">A single asset</h2>
+<pre><code class="language-text">MyAsset.zasset/
+├── meta.json               # name, category, tags, formats and so on
+├── node.zmetal             # material node (optional)
+├── node.ma / .fbx / ...    # geometry (optional)
+├── thumb.sicon             # static thumbnail (optional)
+├── thumb.aicon / .mp4      # animated thumbnail (optional)
+├── textures/               # textures (optional)
+└── deps/                  # collected caches, proxies, references (optional; called associated/ in older versions)</code></pre>
+<h2 id="h-3">Settings and logs</h2>
+<ul>
+<li>Application settings: <code>~/.squirrel_asset_manager/app_settings.json</code>.</li>
+<li>Bridge and recovery logs: <code>bridge_port.log</code>, <code>bridge_recover.log</code>, <code>broker_boot.log</code> and others in the same directory.</li>
+<li>Semantic index: by default under the library root, <code>.squirrel_ai_index/&lt;official|ollama&gt;/</code> (split by backend); a local index root can also be set in settings.</li>
+</ul>
+<h2 id="h-4">Data safety</h2>
+<ul>
+<li><strong>Backup</strong>: close Maya and copy the whole library directory together with <code>app_settings.json</code>; assets are not a database, so a single <code>.zasset</code> can also be copied on its own.</li>
+<li><strong>Settings writes</strong>: settings are written atomically by replacing a temporary file; a corrupt settings file is first backed up as <code>.bak</code> and then reset to defaults.</li>
+<li><strong>Index</strong>: derived data that can be rebuilt; do not put it on a shared or synced drive, because multiple writers are not coordinated across machines and can overwrite each other.</li>
+<li><strong>Concurrency</strong>: the library itself has no cross-machine file lock; when several people share it, avoid renaming or moving the same asset at the same time (the exact lock strategy is to be confirmed).</li>
+</ul>

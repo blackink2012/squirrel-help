@@ -1,0 +1,26 @@
+<p>导出 <code>.zlight</code> 时提示「不支持的灯光类型」，或导入后灯光数量变少、类型被换成近似灯。</p>
+<p><img src="media/shared/menu-sublib-lights.webp" alt="灯光类型不支持：先确认灯光资产的类型与目标渲染器" loading="lazy" decoding="async"></p>
+<h2 id="h-1">症状</h2>
+<p>脚本编辑器打印 <code>不支持的灯光类型: &lt;节点类型&gt;</code>；资产里灯光数量少于场景；导入后 dome 灯变成平行光，或 spot 灯变成点光源。</p>
+<h2 id="h-2">常见原因</h2>
+<ol>
+<li>灯光类型没有登记为通用类型，例如 <code>ambientLight</code>、<code>volumeLight</code>、<code>aiLightBlocker</code>、<code>VRaySunTarget</code>、<code>RedshiftPortalLight</code>、<code>RedshiftNightSky</code>。</li>
+<li>目标渲染器没有等价类型：Arnold 没有原生 spot 和并行光，Maya 原生没有 dome。</li>
+<li>当前渲染器不是 Arnold、V-Ray、Redshift，导入后的自动转换不会触发。</li>
+<li>灯光被嵌套在其它节点下，导出时没有作为灯光 shape 被收集。</li>
+</ol>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>选中灯光，确认它的节点类型；对照 4.4.4.2 的灯光类型表判断是否受支持。</li>
+<li>换成受支持的灯：<code>area</code>、<code>point</code>、<code>spot</code>、<code>directional</code>、<code>dome</code>、<code>disk</code>、<code>cylinder</code>、<code>ies</code>。</li>
+<li>必须保留近似效果时，按目标渲染器选替代类型：Arnold spot 用 <code>aiPhotometricLight</code>，Arnold 平行光用 <code>aiSkyDomeLight</code>。</li>
+<li>确认渲染器插件已加载，再重新导出或导入。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p>重新导出时日志显示「找到 N 个灯光 shape」，N 与场景中受支持的灯数一致；导入后 Outliner 中灯光数与资产一致，没有「不支持的灯光类型」提示。</p>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>辅助灯（portal、blocker、night sky）本身不进入 <code>.zlight</code>，需要单独用 <code>.ma</code> 资产保存。</li>
+<li>近似类型不会保留原灯的全部物理特性，必要时在目标渲染器里手动补参数。</li>
+<li>跨渲染器转换需要对应 <code>.mmap</code>；没有映射时保留原灯并打印提示。</li>
+</ul>

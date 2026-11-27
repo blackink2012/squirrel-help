@@ -1,0 +1,38 @@
+<blockquote><p>In one line: <strong>with a cloud provider selected, data may only be sent after you consent separately once — the record is stored locally, can be withdrawn at any time, and withdrawal stops sending immediately.</strong></p></blockquote>
+<h2 id="h-1">Why it is needed</h2>
+<p>Local services (Ollama / LM Studio) never send data off the machine, so they need no consent; a cloud service sends <strong>asset thumbnails, prompts or query text, and metadata such as asset names and categories</strong> to the provider, which is why this uses &quot;separate consent plus withdrawal&quot; instead of hiding inside a master switch.</p>
+<h2 id="h-2">Interface</h2>
+<p>Settings window → AI settings page → the <code>「云端服务同意（单独同意 · 可撤回）」 (Cloud service consent: separate, withdrawable)</code> group:</p>
+<p><img src="media_en/shared/settings-ai-cloud-consent.webp" alt="AI settings → Cloud service consent: while not consented it shows the state and a &quot;review and agree&quot; button" loading="lazy" decoding="async"></p>
+<table><thead><tr><th>Element</th><th>Notes</th></tr></thead><tbody><tr><td>Status text</td><td><code>「未同意（不会发送数据）」 (not consented, no data is sent)</code> or <code>「已同意（时间）」 (consented at …)</code></td></tr><tr><td>Review and agree</td><td>Opens the consent dialog; without consent, cloud calls are blocked with a prompt to consent first</td></tr><tr><td>Withdraw</td><td>Shown only when consented; withdrawing returns the state to not consented and immediately stops sending data to that provider</td></tr></tbody></table>
+<p>Consent is recorded <strong>per provider</strong>: consenting for provider A does not mean B is consented.</p>
+<h2 id="h-3">What the consent dialog lists</h2>
+<p>It states every fact and requires checking the box at the bottom before <code>「同意并启用」 (Agree and enable)</code> becomes available:</p>
+<p><img src="media_en/shared/dialog-cloud-consent.webp" alt="Cloud service separate consent: recipient / data categories / purpose / retention / cross-border risk" loading="lazy" decoding="async"></p>
+<ul>
+<li>Recipient: the provider name and API endpoint;</li>
+<li>Data categories: thumbnails, prompts or query text, and metadata such as asset names and categories;</li>
+<li>Purpose: generating thumbnail descriptions and tags, and intent analysis for semantic retrieval;</li>
+<li>Retention: decided by that provider&#x27;s privacy policy; this software stores none of this data locally;</li>
+<li>Cross-border risk: the server may be abroad and subject to local law; cloud services are not recommended for sensitive assets;</li>
+<li>Privacy policy: available on the provider&#x27;s website (this software does not reproduce it).</li>
+</ul>
+<h2 id="h-4">After withdrawing</h2>
+<ul>
+<li>The state returns to <code>「未同意（不会发送数据）」 (not consented, no data is sent)</code> and the next cloud call is blocked again;</li>
+<li>Data already sent cannot be recalled (that is governed by the provider&#x27;s privacy policy);</li>
+<li>To use it again, simply go through consent once more.</li>
+</ul>
+<h2 id="h-5">Recommendations</h2>
+<ul>
+<li>Prefer local services (Ollama / LM Studio) for sensitive or managed assets;</li>
+<li>Consent only when you clearly understand that data leaves the machine and accept that risk;</li>
+<li>After a project ends or when moving machines, remember to withdraw or confirm the state.</li>
+</ul>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>Global model (provider / model / thinking mode) → <a href="#/en/11.4.2">11.4.2</a></li>
+<li>AI / MCP channel (high-risk permission switches) → <a href="#/en/11.4.6">11.4.6</a></li>
+<li>Item-by-item description of the AI settings page → <a href="#/en/15.9.3">15.9.3</a></li>
+<li>License and machine code → <a href="#/en/11.10.1">11.10.1</a></li>
+</ul>

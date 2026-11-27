@@ -1,0 +1,33 @@
+<blockquote><p>一句话定位：<strong>预览区下方一排四颗按钮，管的就是「这个资产的缩略图换成什么、要不要多存几张」。</strong></p></blockquote>
+<p>记住一条分界线就不会用错：<strong>「截取」「导入」换的是封面（主图）；「添加」「截取添加」是往后面加新图，不动封面。</strong></p>
+<h2 id="h-1">什么时候能用</h2>
+<p>四颗按钮统一受一个条件控制，不满足时全部置灰：</p>
+<table><thead><tr><th>条件</th><th>说明</th></tr></thead><tbody><tr><td>选中了一个正常资产</td><td>没选中资产时全灰</td></tr><tr><td>不是回收站条目</td><td>回收站里只读，四颗全灰</td></tr><tr><td>不是版本 / 变体虚拟条目</td><td>虚拟条目没有自己的缩略图，四颗全灰</td></tr></tbody></table>
+<p><img src="media/15.7.3-1.webp" alt="预览面板底部的四颗按钮" loading="lazy" decoding="async"></p>
+<h2 id="h-2">按钮逐项详解</h2>
+<table><thead><tr><th>按钮</th><th>作用</th><th>是否覆盖主图</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>截取</td><td><strong>框选屏幕区域</strong>，框完即取，直接当封面</td><td>是（覆盖）</td><td>屏幕变暗进入框选，拖一个框，松手就写入 <code>thumb.sicon</code>（文件夹资产写 <code>资产名.sicon</code>）</td><td>不弹工具栏、不录屏；截出来的图按「设置 → 常规 → 默认缩略图大小」等比缩放到长边（出厂 512）</td></tr><tr><td>导入</td><td>选一张本地图片当封面</td><td>是（覆盖）</td><td>弹文件选择框，选完立刻替换主图，卡片封面同步刷新</td><td>过滤器 <code>*.sicon *.jpg *.jpeg *.aicon *.bmp</code>（可切「所有文件」选 png 等）；旧封面直接没了</td></tr><tr><td>添加</td><td>把本地图片存成<strong>新的缩略图槽</strong></td><td>否（新增）</td><td>弹文件选择框（可多选），逐张复制成 <code>thumb_2.sicon</code>、<code>thumb_3.sicon</code>…，预览跳到新图</td><td>主图不动；多张会按顺序占满空槽</td></tr><tr><td>截取添加</td><td>打开<strong>完整截图工具</strong>，截的图存成新槽</td><td>否（新增）</td><td>出现截图覆盖层（带工具栏），每截一张自动推进到下一个空槽，可以连着截多张</td><td>与右键菜单里的「截取添加」同一行为（<a href="#/15.7.2"><code>8.7.2</code></a>）</td></tr></tbody></table>
+<h2 id="h-3">四颗按钮速查对照</h2>
+<table><thead><tr><th></th><th>截取</th><th>导入</th><th>添加</th><th>截取添加</th></tr></thead><tbody><tr><td>结果</td><td>覆盖主图</td><td>覆盖主图</td><td>新增槽位</td><td>新增槽位</td></tr><tr><td>取图方式</td><td>鼠标框选（即取）</td><td>选本地图片</td><td>选本地图片（可多选）</td><td>完整截图工具（可连截）</td></tr><tr><td>会弹工具栏吗</td><td>不会</td><td>不会</td><td>不会</td><td>会</td></tr><tr><td>适合</td><td>快速抓一张当封面</td><td>有现成图当封面</td><td>攒几张备选图</td><td>需要精细框选 / 连续截多张</td></tr></tbody></table>
+<h2 id="h-4">一次典型操作</h2>
+<p><strong>换封面（最常用）</strong></p>
+<ol>
+<li>选中资产，预览区出图；</li>
+<li>点「截取」，框住要当封面的画面区域，松手；</li>
+<li>预览与卡片封面立刻变成新图（会按默认缩略图大小缩放）。</li>
+</ol>
+<p><strong>补一张备选图</strong></p>
+<ol>
+<li>点「添加」，挑一张本地图片（可多选）；</li>
+<li>预览下方出现计数（如 <code>2/3</code>），点 ▶ 或滚轮查看；</li>
+<li>不想要了切到那一张点「删除」。</li>
+</ol>
+<h2 id="h-5">反悔与风险</h2>
+<table><thead><tr><th>操作</th><th>能撤吗</th><th>怎么反悔</th></tr></thead><tbody><tr><td>截取 / 导入（覆盖主图）</td><td>不能</td><td>重新截一张或再导入一张；旧封面没有备份</td></tr><tr><td>添加 / 截取添加（新增槽位）</td><td>能（删掉新图即可）</td><td>切到新图点「删除」；删除本身不可恢复</td></tr><tr><td>删除附加图</td><td>不能</td><td>没有二次确认，也没有回收站（见 <a href="#/4.7.5"><code>4.1.7.5</code></a>）</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>「截取」「导入」会直接覆盖主图，而且插件没有提供「撤销上一步缩略图」；如果旧封面很重要，先在资源管理器里把资产目录中的 <code>thumb.sicon</code> 复制一份再操作。</p></div>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>预览区与缩略图槽的完整规则 → <a href="#/15.7.1"><code>8.7.1</code></a></li>
+<li>预览图右键里的「更新缩略图」菜单 → <a href="#/15.7.2"><code>8.7.2</code></a></li>
+<li>输出尺寸在哪里改（默认缩略图大小）→ <a href="#/15.9.2"><code>8.9.2</code></a></li>
+<li>多缩略图槽与删除的通用说明 → <a href="#/4.7.5"><code>4.1.7.5</code></a></li>
+</ul>

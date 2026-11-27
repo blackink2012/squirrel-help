@@ -1,0 +1,21 @@
+<p>状态页回答四个问题：库里有什么、有多大、多久没重建、语义检索现在通不通；它还会告诉你哪类查询该信谁。</p>
+<p><img src="media/shared/menu-ai-tools.webp" alt="「AI 工具」菜单：知识库状态在「AI 助手」里用 maya_docs(action=&quot;status&quot;) 查询" loading="lazy" decoding="async"></p>
+<blockquote><p>图只用来指路：状态是让助手执行 <code>maya_docs(action=&quot;status&quot;)</code> 得到的，菜单里没有单独的「知识库状态」项。</p></blockquote>
+<h2 id="h-1">前置条件</h2>
+<p>能在 AI 助手里调用 <code>maya_docs</code>，或能执行命令面的同名命令。</p>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>让助手执行 <code>maya_docs(action=&quot;status&quot;)</code>。</li>
+<li>查看条目数与按类型的分布（command / node / api / devguide / doc）、各文件体积、别名数量。</li>
+<li>查看 <code>rebuilt</code> 里的重建时间与各来源，判断知识库是否过期。</li>
+<li>查看 <code>semantic</code>：模型、维度、条数、是否可用及原因；需要端到端验证时加 <code>probe=true</code>，它会真发一次嵌入请求。</li>
+<li>想看本机装了哪些插件，执行 <code>maya_docs(action=&quot;plugins&quot;)</code>，可按插件名过滤。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>返回 <code>status=ok</code> 且有 <code>entries</code>、<code>by_type</code>、<code>semantic</code> 与 <code>authority</code>；<code>probe=true</code> 时多出一次真实嵌入的结果。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>本地库缺席时会明确显示当前是在线模式，不要误以为本地有数据。</li>
+<li><code>authority</code> 写明权威口径：命令参数用实时帮助，节点属性用详情，正文用检索。</li>
+<li>知识库过期或内容缺失时，用 <code>tools\rebuild_maya_doc_kb.py</code> 重建；构建期间不要同时跑大量 Maya 操作。</li>
+</ul>

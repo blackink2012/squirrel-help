@@ -1,0 +1,30 @@
+<p>Common tags are a shortcut tag library maintained per asset type; a tag typed in the properties panel is added automatically and can then be picked with one click in properties, batch tagging and the right-click editor.</p>
+<p><img src="media_en/shared/dialog-batch-tag.webp" alt="The Common tags area of the batch tag window: click to select / deselect, or add one at the bottom" loading="lazy" decoding="async"></p>
+<h2 id="h-1">What it is</h2>
+<ul>
+<li>Common tags are not a field on an asset but a table of candidate tags stored separately per sub-library.</li>
+<li>They are stored per sub-library: materials, models, textures, lights, scenes, HDR and dynamics each have their own list; images, audio, animation data and node trees currently have no preset common tags (tags used there are collected automatically as you type).</li>
+<li>They serve <code>「+ 添加标签」 (+ Add tag)</code> in the properties panel, the batch tag dialog and the right-click edit dialog.</li>
+</ul>
+<h2 id="h-2">Automatic collection</h2>
+<ol>
+<li>Select an asset and enter property editing.</li>
+<li>Click <code>「+ 添加标签」 (+ Add tag)</code>, type a tag that is not in the common tag library yet and add it.</li>
+<li>The plug-in writes it into the common tags of the current asset type and saves it to the configuration.</li>
+<li>The next time you tag an asset of the same type, the tag can be picked directly in the common tags area.</li>
+</ol>
+<h2 id="h-3">Manual management</h2>
+<ol>
+<li>Click <code>「编辑标签」 (Edit tags)</code> in the toolbar to open the tag window for the current asset type.</li>
+<li>The top of the window lists every common tag of that type; clicking a chip toggles the filter.</li>
+<li>Type a new tag in the box at the bottom and click <code>「添加」 (Add)</code> to add it to the common tag library.</li>
+<li>Right-click a tag chip and choose <code>「删除」 (Delete)</code> to remove it from the common tag library.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>Reopening the tag window still lists the newly added tag.</li>
+<li>The <code>「+ 添加标签」 (+ Add tag)</code> dialog in the properties panel shows the new tag.</li>
+<li>After deleting a common tag it no longer appears among the candidates.</li>
+</ul>
+<div class="admonition note"><div class="admonition-title">注意</div><p>Removing a tag from the common tag library does not remove it from assets that already carry it; remove those in the properties panel or with batch tagging.</p></div>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>The batch tag dialog reads the common tags of the current sub-library, so maintaining common tags first makes organizing assets of the same kind much easier.</p></div>

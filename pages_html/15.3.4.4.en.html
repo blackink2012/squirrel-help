@@ -1,0 +1,33 @@
+<blockquote><p>One-line summary: <strong>the &quot;Scripts&quot; row at the end of the category tree is not a disk category but the entry to the script browser; the recycle bin at the bottom left is not a tree node either but a separate button. Both menus are short.</strong></p></blockquote>
+<h2 id="h-1">How to open them</h2>
+<ul>
+<li><strong>Scripts node</strong>: left navigation → <strong>Category</strong> tab → the last row <strong>Scripts</strong> in the tree → <strong>right-click</strong> it.</li>
+<li><strong>Recycle bin</strong>: left navigation → <strong>Category</strong> tab → the <strong>Recycle bin N</strong> button at the <strong>bottom left</strong> of the tree → left-click to enter the recycle bin view.</li>
+<li><strong>Blank tree space</strong>: right-click an area of the tree with no node.</li>
+</ul>
+<h2 id="h-2">Item-by-item details</h2>
+<h3 id="h-3">Scripts node (1 item)</h3>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Open scripts directory</td><td>Opens the folder holding script assets in Explorer</td><td>You are on the <strong>Category</strong> tab</td><td>Opens the system file manager at the scripts directory</td><td>The Scripts node has no add sub-category / move to / edit / delete — it is not a disk category, so those operations make no sense</td></tr></tbody></table>
+<blockquote><p>Left-clicking (not right-clicking) the <strong>Scripts</strong> node switches the main area view: the center changes from the asset grid to the <strong>script browser</strong>, see <a href="#/en/15.14.10"><code>8.14.10</code></a>.</p></blockquote>
+<p><img src="media_en/shared/menu-cat-scripts.webp" alt="Right-click on the Scripts node: only &quot;Open scripts directory&quot;" loading="lazy" decoding="async"></p>
+<h3 id="h-4">Recycle bin entry (no context menu)</h3>
+<table><thead><tr><th>Action</th><th>Effect</th><th>Description</th></tr></thead><tbody><tr><td>Left-click <strong>Recycle bin N</strong></td><td>The main area switches to the recycle bin view</td><td>N is the current number of entries; the button stays highlighted blue while you are in the recycle bin</td></tr><tr><td>Right-click <strong>Recycle bin N</strong></td><td><strong>No menu appears</strong> (zero items measured)</td><td>Restore / delete permanently are not done here; right-click a <strong>specific entry</strong> inside the recycle bin view</td></tr><tr><td>Right-click an entry inside the recycle bin view</td><td>Opens <strong>Restore / Delete permanently</strong> and similar</td><td>See <a href="#/en/15.8.3"><code>8.8.3</code></a></td></tr></tbody></table>
+<h3 id="h-5">Blank tree space</h3>
+<table><thead><tr><th>Action</th><th>Effect</th><th>Description</th></tr></thead><tbody><tr><td>Right-click blank space</td><td>Opens one item, <strong>Add top-level category</strong></td><td>Exactly the same menu as right-clicking the <strong>All assets</strong> node, see <a href="#/en/15.3.4.1"><code>8.3.4.1</code></a></td></tr></tbody></table>
+<h2 id="h-6">Submenus</h2>
+<p>None of these three entries has <strong>a second level</strong> (nothing with ▶).</p>
+<h2 id="h-7">What goes into the recycle bin and what does not</h2>
+<table><thead><tr><th>Goes into the recycle bin</th><th>Does not</th></tr></thead><tbody><tr><td>Assets deleted with <strong>Move to recycle bin</strong></td><td>Things deleted with <strong>Delete permanently</strong> (files removed directly)</td></tr><tr><td>Deleted categories together with their sub-categories and assets</td><td>The main library and project library each have their <strong>own independent</strong> recycle bin</td></tr><tr><td>Replaced / deleted versions and LODs (per the prompt of the specific operation)</td><td>Files deleted by hand in Explorer</td></tr></tbody></table>
+<h2 id="h-8">Beginner pitfalls</h2>
+<ul>
+<li><strong>Right-clicking Scripts to create a sub-category</strong>: not possible; it is not a disk category, and scripts themselves are managed in settings / the script browser.</li>
+<li><strong>Right-clicking the recycle bin does nothing and seems broken</strong>: by design, there is no menu there. Enter it and right-click an <strong>entry</strong> to get actions.</li>
+<li><strong>Deleted items from the main library are missing from the recycle bin</strong>: check whether the current tab is Category or Project — the two libraries have separate recycle bins.</li>
+<li><strong>Expecting a one-click empty recycle bin</strong>: there is no such button. Entries can only be deleted one by one via <strong>Delete permanently</strong>, which is irreversible, so read the confirmation text before acting.</li>
+</ul>
+<h2 id="h-9">Related</h2>
+<ul>
+<li>Category tree node types and click behavior: <a href="#/en/15.3.3"><code>8.3.3</code></a>.</li>
+<li>The recycle bin view and its context menu: <a href="#/en/15.8.3"><code>8.8.3</code></a>.</li>
+<li>The script browser: <a href="#/en/15.14.10"><code>8.14.10</code></a>.</li>
+</ul>

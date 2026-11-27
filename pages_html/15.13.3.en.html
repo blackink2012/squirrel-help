@@ -1,0 +1,50 @@
+<blockquote><p>One-line summary: <strong>let AI look at an asset thumbnail and suggest a name, category, tags and notes; you tick what you accept and write it into the asset metadata.</strong></p></blockquote>
+<p>It is &quot;describe what you see&quot;: the input is the thumbnail and the output is four metadata suggestions. That is why <strong>assets without a thumbnail cannot be analyzed</strong> (they are skipped with a message). AI only suggests; <strong>nothing is written until you tick fields and click Apply to metadata</strong> — that review step is your chance to fix mistakes.</p>
+<h2 id="h-1">How to open it</h2>
+<p>There are two entries, differing in how many assets are analyzed and whether the configuration window comes first:</p>
+<table><thead><tr><th>Entry</th><th>Location</th><th>Behavior</th></tr></thead><tbody><tr><td>Single asset (straight to results)</td><td>In the asset grid <strong>right-click one asset → AI thumbnail analysis</strong></td><td>Analyzes directly with the analysis configuration in <strong>Settings → AI settings</strong> and then shows the results window described here</td></tr><tr><td>One or more assets (configure first)</td><td>Top toolbar <strong>AI tools</strong> → the first menu item &quot;AI thumbnail analysis (N selected assets)&quot;</td><td>First shows the <strong>AI analysis configuration</strong> window to confirm provider / model / language, then runs a progress bar after <strong>Start analysis</strong>; with &quot;show a window for review and editing when done&quot; ticked, results windows follow per count</td></tr></tbody></table>
+<ul>
+<li>One selected: the <strong>AI analysis results</strong> window described here appears afterwards.</li>
+<li>Several selected: the batch results window appears, see <a href="#/en/15.13.4"><code>8.13.4</code></a>.</li>
+</ul>
+<h2 id="h-2">Step one: the AI analysis configuration window (multi-select entry only)</h2>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td>Title &quot;choose AI analysis parameters&quot;</td><td>Says this step selects parameters rather than starting the run</td><td>—</td></tr><tr><td>AI provider</td><td>Which vendor&#x27;s model analyzes images</td><td>Use local Ollama first if available; enter a key for cloud</td></tr><tr><td>API key</td><td>Cloud key, password field; gray for local services</td><td>Fill in only your own provider&#x27;s key (the tool stores keys per provider and never mixes them)</td></tr><tr><td>API address</td><td>The endpoint; when still at a default value it switches to that provider&#x27;s default on switching providers</td><td>Usually unchanged</td></tr><tr><td>AI model</td><td>A live-fetched dropdown that also accepts a typed model name</td><td><strong>Must be a vision-capable model</strong>; text-only models cannot analyze thumbnails</td></tr><tr><td>Output language</td><td>Chinese / English, deciding the language of the generated names, tags and notes</td><td>Follow the team&#x27;s convention</td></tr><tr><td>Yellow hint line</td><td>Per-provider reminder about which models cannot handle images; it changes with the provider</td><td>If you see it, change the model</td></tr><tr><td>Checkbox &quot;show a window for review and editing when done&quot;</td><td>Ticked = review before writing (recommended); unticked = write results straight to the library</td><td>Keep it ticked on the first use</td></tr><tr><td>Checkbox &quot;translate existing tags into the target language&quot;</td><td>Ticked = existing asset tags are translated into the target language before merging</td><td>Useful when the library mixes Chinese and English tags</td></tr><tr><td><strong>Cancel</strong> button</td><td>Closes without analyzing</td><td>—</td></tr><tr><td><strong>Start analysis</strong> button</td><td>Analyzes asset by asset with a progress bar (cancellable; finished assets are kept)</td><td>—</td></tr></tbody></table>
+<h2 id="h-3">Step two: the AI analysis results window</h2>
+<p><img src="media_en/shared/dialog-ai-analysis.webp" alt="AI analysis results window" loading="lazy" decoding="async"></p>
+<h3 id="h-4">Asset information (read-only)</h3>
+<table><thead><tr><th>Control</th><th>Effect</th></tr></thead><tbody><tr><td>Original name</td><td>The asset&#x27;s current name, to compare against the suggested name below</td></tr><tr><td>Top-level category</td><td>Which sub-library the asset belongs to (such as materials)</td></tr></tbody></table>
+<h3 id="h-5">AI analysis results (tick field by field)</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Suggested value</th></tr></thead><tbody><tr><td><strong>Name</strong> checkbox plus input</td><td>The AI-suggested readable name</td><td>Tick only what you accept; unticked keeps the original name</td></tr><tr><td><strong>Category</strong> checkbox plus input</td><td>The AI-suggested sub-category</td><td>Tick only what you accept; unticked leaves the category alone</td></tr><tr><td><strong>Tags</strong> checkbox plus input (placeholder &quot;comma-separated tags&quot;)</td><td>The AI-suggested tags</td><td>Add or remove manually before applying</td></tr><tr><td><strong>Notes</strong> checkbox plus multi-line input</td><td>A description generated by the AI</td><td>Good as searchable explanatory text</td></tr><tr><td>Bottom checkbox &quot;move into the analyzed category&quot;</td><td>Ticked = <strong>moves the asset files into the AI-suggested category directory</strong> when applying; unticked = only the category field in metadata changes</td><td>Leave it unticked the first time and consider it once the categories prove reliable</td></tr></tbody></table>
+<h3 id="h-6">Bottom buttons</h3>
+<table><thead><tr><th>Button</th><th>Effect</th></tr></thead><tbody><tr><td><strong>Cancel</strong></td><td>Writes nothing and closes (results are discarded)</td></tr><tr><td><strong>Apply to metadata</strong></td><td>Writes the <strong>ticked</strong> fields into asset metadata; unticked fields are untouched</td></tr></tbody></table>
+<h2 id="h-7">A complete flow</h2>
+<ol>
+<li>Select one or more assets in the grid (multi-select goes through the <strong>AI tools</strong> menu);</li>
+<li>(Multi-select) choose provider / model / output language in <strong>AI analysis configuration</strong>, keep &quot;show a window for review and editing when done&quot; ticked and click <strong>Start analysis</strong>;</li>
+<li>Wait for the progress bar (one asset goes straight to the results window);</li>
+<li>Review each suggestion: untick the name if it is wrong, untick the category if it is wrong, edit tags before ticking;</li>
+<li>Decide whether to tick &quot;move into the analyzed category&quot; if the asset should really change category;</li>
+<li>Click <strong>Apply to metadata</strong>;</li>
+<li>Check in the grid that name / tags / notes updated (moved assets appear under the new category).</li>
+</ol>
+<h2 id="h-8">What you see afterwards</h2>
+<ul>
+<li>The asset&#x27;s name, category, tags and notes update per the fields you ticked.</li>
+<li>Assets with &quot;move into the analyzed category&quot; ticked move into the matching category directory and are visible there after a refresh.</li>
+<li>With several selected it applies asset by asset; the batch interface is in <a href="#/en/15.13.4"><code>8.13.4</code></a>.</li>
+</ul>
+<h2 id="h-9">Risks and how to undo</h2>
+<ul>
+<li><strong>Applying is overwrite-style</strong>: a ticked field is replaced entirely by the AI suggestion, and merging does not happen here. There is no one-click undo for a mistake — change the fields back (with a multi-selection, try a single asset first).</li>
+<li><strong>&quot;Move into the analyzed category&quot; moves asset files</strong>, the only operation here that changes disk location. If it moves wrongly, right-click the asset → <strong>Move to</strong> and move it back (see <a href="#/en/15.5.15"><code>8.5.15</code></a>).</li>
+<li>To take no risk at all, keep the review window and apply only the low-risk <strong>tags + notes</strong> fields first.</li>
+</ul>
+<h2 id="h-10">Common questions</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>A dialog says AI is unavailable / analysis failed</td><td>The service is unreachable, or the current model does not support images</td><td>Switch to local Ollama or to a vision model</td></tr><tr><td>Some assets were skipped</td><td>They have no thumbnail</td><td>Add one with right-click <strong>Update thumbnail</strong> and analyze again</td></tr><tr><td>Analysis is slow</td><td>A cloud model is called per image, or a local model is cold-starting</td><td>Select fewer assets, or warm up the local model first</td></tr></tbody></table>
+<h2 id="h-11">Related</h2>
+<ul>
+<li>Reviewing results for several assets: <a href="#/en/15.13.4"><code>8.13.4</code></a></li>
+<li>The entry in the <strong>AI tools</strong> menu: <a href="#/en/15.2.7"><code>8.2.7</code></a></li>
+<li>AI analysis from the asset context menu: <a href="#/en/15.5.17"><code>8.5.17</code></a></li>
+<li>Where the global model / AI dependencies are configured: <a href="#/en/15.9.3"><code>8.9.3</code></a></li>
+</ul>

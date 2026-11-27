@@ -1,0 +1,25 @@
+<p>Connecting the plug-in&#x27;s skills and MCP channel to external AI tools such as Claude Code, Codex or Trae requires both skill landing and MCP to be done.</p>
+<p><img src="media_en/shared/settings-ext-agents.webp" alt="External AI tools" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The target AI tool is installed; with a custom directory, its skill root is known.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open <code>Settings → AI 设置 (AI settings) → 外部 AI 工具 (External AI tools)</code> and click <code>「外部 AI 工具…」 (External AI tools…)</code>.</li>
+<li>Each row in the panel is one tool; read the two statuses first: whether the skills are in place and whether the MCP channel is mounted.</li>
+<li>When a tool is unrecognized or installed elsewhere, click <code>「选择路径…」 (Choose path…)</code> to set the skill directory.</li>
+<li>Click <code>「安装技能」 (Install skills)</code> to copy the <code>squirrel-*</code> skills into the other tool&#x27;s directory; <code>「移除技能」 (Remove skills)</code> undoes it.</li>
+<li>For tools supporting MCP check <code>「MCP 通道」 (MCP channel)</code> to write into the other tool&#x27;s configuration; for unsupported tools or unconfirmed paths click <code>「复制配置片段」 (Copy the configuration snippet)</code> and paste it by hand.</li>
+<li>Click <code>「重新探测」 (Detect again)</code> to refresh the status; the settings status line shows how many directories are selected and how many MCP clients are mounted.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The panel shows <code>「技能已就位（n 个）」 (skills in place, n)</code> and <code>「MCP 通道：已挂上」 (MCP channel: mounted)</code>.</li>
+<li>The other tool lists skills such as <code>squirrel-assets</code> and the <code>squirrel_*</code> tools.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<blockquote><p><strong>Tip</strong>: with skills installed but MCP unmounted, the model knows an asset library exists yet cannot call the tools.</p></blockquote>
+<blockquote><p><strong>Warning</strong>: operations in the panel write into the other tool&#x27;s directory immediately and are unrelated to the Settings window&#x27;s Cancel; the original configuration is backed up before writing.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: tools marked &quot;to be verified&quot; have paths not yet verified on this machine, so installing them may not take effect; the dsh desktop app needs a restart to read the new configuration.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: for tools whose MCP format is not covered, use <code>「手工配置说明」 (Manual configuration instructions)</code> to get the full paths and snippet.</p></blockquote>

@@ -1,0 +1,8 @@
+<p>本页由命令注册表自动生成，共 <strong>3</strong> 条命令。命令 ID 可直接用于 AI / MCP 调用；通用字段见 <a href="#/12.2.1">参数与返回结构</a>。</p>
+<div class="table-scroll"><table>
+<thead><tr><th>命令</th><th>说明</th><th>参数</th><th>风险</th><th>执行</th></tr></thead>
+<tbody>
+<tr id="cmd-hdr_to_zasset"><td><code>hdr_to_zasset</code><br><strong>HDR 转资产</strong></td><td>把 HDR/EXR 文件（或文件夹）打包成 .zasset 资产；给 category_id 时直接落到该分类目录。</td><td><code>input_path</code> / <code>output_folder</code> / <code>asset_name</code> / <code>generate_thumb</code> / <code>category_id</code> / <code>recursive</code></td><td title="dry_run=是；undo=否">低危</td><td>同步</td></tr>
+<tr id="cmd-model_to_zasset"><td><code>model_to_zasset</code><br><strong>模型转资产</strong></td><td>把模型文件夹（每个模型一个资产）打包成 .zasset；默认复用源目录里已有的缩略图/元数据。</td><td><code>input_path</code> / <code>output_folder</code> / <code>recursive</code> / <code>category_id</code> / <code>reuse_existing_metadata</code></td><td title="dry_run=是；undo=否">低危</td><td>同步</td></tr>
+<tr id="cmd-pbr_to_zasset"><td><code>pbr_to_zasset</code><br><strong>PBR贴图转资产</strong></td><td>把 PBR 贴图文件夹按材质分组打包成 .zasset（自动识别贴图类型，支持多精度子目录）；不打包精度的用 pack_all_resolutions=true。</td><td><code>input_path</code> / <code>output_folder</code> / <code>category_id</code> / <code>recursive_dirs</code> / <code>exclude_dirs</code> / <code>pack_all_resolutions</code></td><td title="dry_run=是；undo=否">低危</td><td>同步</td></tr>
+</tbody></table></div>

@@ -1,0 +1,25 @@
+<p>Maya 插件版把整套界面与功能装在 Maya 进程内，直接读写当前场景，是功能最完整、操作最顺的形态。</p>
+<h2 id="h-1">运行方式</h2>
+<ul>
+<li>插件代码装在本机 EXE 安装目录（默认 <code>%LOCALAPPDATA%\SquirrelAM</code>，安装时可改）的 <code>squirrel_asset_manager</code> 文件夹里，<strong>一份安装供所有已装 Maya 版本共用</strong>。</li>
+<li>核心模块按 Python ABI 提供多份 <code>.pyd</code>，Maya 启动时自动加载匹配的那份。</li>
+<li>安装器勾选「Maya 集成」后，会往本机检测到（或你在向导里勾选）的各版本 <code>userSetup.py</code> 写入带标记的启动段：导入路径、MCP 启动注册、状态行按钮、桥接端口；工具架按钮只在安装时创建一次。</li>
+</ul>
+<h2 id="h-2">入口</h2>
+<ul>
+<li>Maya 工具架的「自定义」分类中的「松鼠资产管家」按钮。</li>
+<li>Maya 状态行右侧的松鼠图标。</li>
+<li>脚本编辑器执行 <code>MaterialLibraryWindow.show_window()</code>（没有单独注册 Maya 菜单项）。</li>
+</ul>
+<h2 id="h-3">优势</h2>
+<ul>
+<li>直接使用当前场景与视口，拖放、吸附、缩略图截取、材质应用都在同一进程完成。</li>
+<li>不需要另装 Python 或 PySide6，使用 Maya 自带的 Qt 绑定。</li>
+<li>与 AI 底座、MCP、无头批处理共用同一套命令与数据。</li>
+</ul>
+<h2 id="h-4">前提与边界</h2>
+<ul>
+<li>需要 Maya 2022–2027 之一；更早版本（2021 及以前）没有对应的 <code>.pyd</code>，无法使用。</li>
+<li>安装或覆盖 <code>.pyd</code> 前建议关闭所有 Maya，避免文件被占用。</li>
+<li>Maya 不运行时，插件版无法单独使用；此时改用独立版 / EXE 浏览资产。</li>
+</ul>

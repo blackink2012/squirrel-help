@@ -1,0 +1,33 @@
+<p>One export goes from selected objects to an asset in the grid through five groups of settings: category, mode, format, naming and capture.</p>
+<p><img src="media_en/shared/dialog-export-left.webp" alt="Left column of the export dialog: export mode / naming information / thumbnail source / tags" loading="lazy" decoding="async"></p>
+<p><img src="media_en/shared/dialog-export-right.webp" alt="Right column of the export dialog: formats, animation and caches / proxies / version and LOD options" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>Maya has the scene to export open and the plug-in main window is connected to the library.</li>
+<li>A writable category is selected in the left tree. <code>「全部」 (All)</code> and sub-library roots cannot hold assets directly, and a top-level category redirects to its <code>「自定义」 (Custom)</code> sub-category automatically.</li>
+<li>The DAG objects or material nodes to export are selected in the Maya viewport.</li>
+<li>At least one content source is checked (material preset, geometry, cache, proxy, or <code>贴图 textures/ (textures)</code>); with none checked the result is only <code>meta.json</code> and a thumbnail.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select the target sub-library and category in the left tree.</li>
+<li>Select objects in the Maya viewport; export reads the current selection live rather than the selection captured when the dialog opened.</li>
+<li>Click <code>「创建资产」 (Create asset)</code> in the toolbar to open the export dialog. It is non-modal, so the rest of the interface stays usable during the export.</li>
+<li>Choose the export mode in the left column: single asset, full-auto or semi-auto; full-auto also lets you set <code>「截图延迟」 (Capture delay)</code>.</li>
+<li>Choose the thumbnail source in the left column: screenshot tool, Maya playblast or render.</li>
+<li>Check the export content in the right column. Check <code>「收集场景中已挂载的缓存/代理/引用文件」 (collect caches / proxies / references attached in the scene)</code> when those files are needed, and keep <code>「贴图 textures/」 (textures)</code> when material textures are needed.</li>
+<li>When animation is needed, choose current frame, timeline or keyframes under <code>「动画导出」 (Animation export)</code>.</li>
+<li>In <code>「命名信息」 (Naming information)</code> fill in the name (English, used in the file name) and the display name (Chinese, optional); pick or type tags in the tag area.</li>
+<li>Click <code>「创建资产」 (Create asset)</code>.</li>
+<li>In screenshot-tool mode marquee a region on the screen overlay and confirm; in batch mode wait for the progress window. When it finishes the asset appears in the grid and is selected automatically.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>A <code>&lt;name&gt;.zasset</code> folder appears in the category directory and the grid shows the matching card and thumbnail.</li>
+<li>Opening <code>.zasset/meta.json</code> shows <code>formats</code> matching the formats actually checked.</li>
+<li>After a batch export a result dialog appears: on full success it shows the count; with failures it lists the asset names and reasons plus a <code>「重试」 (Retry)</code> button that reruns only the failed items.</li>
+</ul>
+<h2 id="h-4">Tips and warnings</h2>
+<blockquote><p><strong>Tip</strong>: the screenshot tool is fastest; playblast and render generate thumbnails after the whole batch finishes, without blocking the geometry export.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: a same-named asset opens a conflict dialog where you can auto-rename or type a new name, and optionally remember the choice for this run.</p></blockquote>
+<blockquote><p><strong>Warning</strong>: timeline plus render renders frame by frame, so Maya becomes unresponsive for a while; this is normal, just wait for it to finish.</p></blockquote>

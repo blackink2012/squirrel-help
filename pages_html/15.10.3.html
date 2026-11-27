@@ -1,0 +1,25 @@
+<blockquote><p>一句话定位：<strong>右栏管「导出包里放什么」——关联文件要不要一起收、材质和几何各存成什么格式、动画/缓存/代理怎么带。</strong></p></blockquote>
+<h2 id="h-1">分区总览</h2>
+<table><thead><tr><th>分区（从上到下）</th><th>控件</th><th>管什么</th><th>详见</th></tr></thead><tbody><tr><td>收集关联文件</td><td>收集场景中已挂载的缓存/代理/引用文件、贴图 textures/</td><td>资产包里要不要连贴图和场景依赖一起拷</td><td><a href="#/15.10.5"><code>8.10.5</code></a></td></tr><tr><td>导出选项</td><td>仅导出材质（跳过几何体/代理）</td><td>只存材质网络，不存几何</td><td><a href="#/15.10.6"><code>8.10.6</code></a></td></tr><tr><td>材质格式 / 灯光格式 / 节点格式</td><td>.zmetal（灯光为 .zlight）、全部写入一个、材质映射 .mcm</td><td>材质/节点预设怎么存</td><td><a href="#/15.10.6"><code>8.10.6</code></a></td></tr><tr><td>几何体格式（通过 Maya 原生导出）</td><td>Maya ASCII .ma、Maya Binary .mb、FBX .fbx、OBJ .obj、USD .usd</td><td>几何存成哪些格式</td><td><a href="#/15.10.6"><code>8.10.6</code></a></td></tr><tr><td>动画导出</td><td>当前帧 / 时间轴 / 关键帧</td><td>带不带动画、带哪一段</td><td><a href="#/15.10.7"><code>8.10.7</code></a></td></tr><tr><td>缓存格式</td><td>Alembic .abc</td><td>存不存点缓存</td><td><a href="#/15.10.7"><code>8.10.7</code></a></td></tr><tr><td>代理格式</td><td>Arnold .ass、Redshift .rs、V-Ray .vrscene、.vrmesh</td><td>存不存渲染代理</td><td><a href="#/15.10.7"><code>8.10.7</code></a></td></tr></tbody></table>
+<blockquote><p>分区标题随分类变：材质分类是「材质格式」，灯光分类是「灯光格式」，模型/场景/节点树等是「节点格式」。灯光资产不显示「仅导出材质」以外的材质映射（.mcm）那一行。</p></blockquote>
+<p><img src="media/shared/dialog-export-right.webp" alt="导出对话框右栏：导出配置区" loading="lazy" decoding="async"></p>
+<h2 id="h-2">三条先记住的规则</h2>
+<ol>
+<li><strong>没有勾任何可用格式 = 空壳资产</strong>。插件在导出末段会检查「该导的格式一个文件都没产出」，直接报错中止；但如果你把格式全取消勾选，仍然会做出只剩 meta + 缩略图的空壳，所以至少勾一种。</li>
+<li><strong>灰掉的格式不是坏了</strong>，是当前分类不支持。悬停会提示「该格式不适用于当前分类，已锁定（可在 设置 → 导出默认值 中调整）」。锁定规则：材质/灯光锁掉几何与代理格式（它们本来没有几何），贴图/HDR/图片/音乐/动画数据几乎全锁。</li>
+<li><strong>格式后面的小字是插件状态</strong>：「已就绪」= 能导；「未加载」= 装了插件但没 load，导出时可能自动加载或失败；「不可用」= 缺插件，复选框直接变灰。状态文案不是格式说明。</li>
+</ol>
+<h2 id="h-3">格式后面的插件状态怎么读</h2>
+<table><thead><tr><th>状态</th><th>含义</th><th>会怎样</th></tr></thead><tbody><tr><td>已就绪（绿）</td><td>该格式需要的插件已加载，或本身就是 Maya 内置（.ma/.mb）</td><td>正常导出</td></tr><tr><td>未加载（黄）</td><td>插件装了但当前没 load（如 fbxmaya、mtoa、vrayformaya）</td><td>多数情况导出时会自动 load；仍失败就看脚本编辑器</td></tr><tr><td>不可用（红）</td><td>没装对应插件</td><td>复选框被禁用，不会进导出配置</td></tr></tbody></table>
+<h2 id="h-4">追加格式模式的提示条</h2>
+<p>从「更新资产 → 追加格式」进来时，右栏最上方多一条黄色提示：「追加格式：默认不勾选任何格式，请勾选本次要写入的格式；已有格式（标注「已存在」）勾选后直接用本次导出结果替换，未勾选的格式保持原样。」这时右栏所有格式默认<strong>全不勾</strong>，与正常创建资产（按导出预设默认勾选）不同。</p>
+<h2 id="h-5">建议的最小配置</h2>
+<table><thead><tr><th>资产类型</th><th>建议勾选</th></tr></thead><tbody><tr><td>材质</td><td>材质预设 .zmetal（+ 材质映射 .mcm，若资产含模型且要多材质识别）</td></tr><tr><td>模型</td><td>Maya ASCII .ma；要跨软件就加 FBX .fbx</td></tr><tr><td>场景</td><td>Maya ASCII .ma + 贴图 textures/</td></tr><tr><td>灯光</td><td>灯光预设 .zlight</td></tr><tr><td>贴图 / HDR</td><td>不用勾格式（这类资产本身就是文件，只需贴图收集）</td></tr></tbody></table>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>收集关联文件与贴图：<a href="#/15.10.5"><code>8.10.5</code></a></li>
+<li>材质节点与几何格式：<a href="#/15.10.6"><code>8.10.6</code></a></li>
+<li>动画、缓存与代理：<a href="#/15.10.7"><code>8.10.7</code></a></li>
+<li>默认勾选从哪来（导出默认值页）：<a href="#/15.9.4"><code>8.9.4</code></a>、<a href="#/6.4.1"><code>4.3.4.1</code></a></li>
+<li>用户指南版右栏说明：<a href="#/6.2.2"><code>4.3.2.2</code></a></li>
+</ul>

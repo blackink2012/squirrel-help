@@ -1,0 +1,15 @@
+<p>插件有三条驱动 Maya 的路径，差别只在<strong>动谁的场景</strong>与<strong>迭代方式</strong>：无头 mayapy、桥接命令通道、Maya 内的脚本编辑器。</p>
+<h2 id="h-1">三条路径</h2>
+<table><thead><tr><th>路径</th><th>形态</th><th>是否影响当前场景</th><th>适合</th></tr></thead><tbody><tr><td>mayapy standalone</td><td>独立进程，完整 Maya 内核，无界面</td><td>完全不碰</td><td>从零重算、批量出图、批量转换</td></tr><tr><td>桥接命令通道</td><td>通过 commandPort 驱动正在运行的 Maya</td><td>会改当前场景</td><td>读写用户手上的这一份场景</td></tr><tr><td>Maya 脚本编辑器</td><td>用户手动执行</td><td>会改当前场景</td><td>一次性脚本、交付给用户自己跑</td></tr></tbody></table>
+<h2 id="h-2">怎么选</h2>
+<ul>
+<li>要「从头算一遍」→ mayapy。它在自己的空场景里工作，看不到用户打开的窗口与视口。</li>
+<li>要「改用户手上这一份」→ 桥接命令通道。需要读当前选择、当前帧、当前视口时只能走这条。</li>
+<li>长任务（渲染、导出、大批量导入）→ 走异步命令并观察进度，不要塞进主线程空转。</li>
+</ul>
+<h2 id="h-3">边界与注意</h2>
+<ul>
+<li>独立运行版做场景操作时<strong>必须有在线的 Maya</strong>；只浏览资产、搜索、文件层操作可以离线完成。</li>
+<li><code>core/</code>、<code>integration/</code> 里不少函数用模块级 <code>_IN_MAYA</code> 自我降级，在独立进程里直接调用会<strong>不报错但什么都不做</strong>。凡会进早退分支的调用，都必须走远程通道。</li>
+<li>两条通道是独立进程，互不可见；用 mayapy 时看不到界面动静是正常的。</li>
+</ul>

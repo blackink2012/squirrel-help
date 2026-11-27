@@ -1,0 +1,23 @@
+<p>The material node preview draws the asset&#x27;s <code>.zmetal</code> or <code>.ma</code> in a node editor so you can confirm that nodes and connections are complete.</p>
+<p><img src="media_en/shared/area-icon-view.webp" alt="Material node preview: the card thumbnail is the rendered result of the shading network" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The asset is a <code>.zasset</code> folder containing a <code>.zmetal</code> or <code>.ma</code> node file.</li>
+<li>The plug-in is installed and its window can be opened in Maya.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>In the library right-click the material asset and point at <code>「预览节点」 (Preview nodes)</code>.</li>
+<li>The submenu lists the <code>.zmetal</code> and <code>.ma</code> files in the asset root (<code>node.ma</code> as geometry is not listed) plus node files under <code>variants/...</code>.</li>
+<li>Choose one; the node editor opens and lays the graph out hierarchically.</li>
+<li>Pan with the middle mouse button or <code>Ctrl</code>+left drag, zoom with the wheel (10%–1000%); <code>「层级布局」 (Hierarchical layout)</code> in the toolbar rearranges the graph.</li>
+<li>To compare, click <code>「打开文件」 (Open file)</code> and pick another <code>.ma</code> / <code>.zmetal</code>, or drop a file straight into the window.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>Node cards and connection lines appear; the node names shown for a <code>.zmetal</code> match the asset&#x27;s <code>root_materials</code> and <code>nodes</code>; green lines are single-attribute connections and yellow lines mean several connections between the same pair of nodes.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Viewing the structure read-only in the node editor is safest; saving overwrites the original file, so back up the asset before editing.</li>
+<li>The current version does not support adding new nodes by hand; to add nodes, create them in Maya first, save as <code>.ma</code> and then open it.</li>
+<li>If nothing appears after opening, first confirm the file really contains <code>createNode</code> / <code>connectAttr</code> (<code>.ma</code>) or <code>nodes</code> (<code>.zmetal</code>).</li>
+</ul>

@@ -1,0 +1,40 @@
+<p>The menu only calls <code>main()</code> / <code>run()</code> without arguments; when parameters or structured results are needed, use the <code>PARAMS</code> / <code>RESULT</code> convention of the command channel or the script browser.</p>
+<h2 id="h-1">Entries and parameters</h2>
+<ul>
+<li>The menu and the command channel resolve entries the same way: <code>main()</code> → <code>run()</code> → run once as <code>__main__</code> when the source contains <code>if __name__ == &quot;__main__&quot;</code>.</li>
+<li>The menu calls <code>main()</code> / <code>run()</code> without arguments.</li>
+<li>The <code>quicktool_run</code> command tries <code>fn(params)</code> when <code>params</code> is given; when the entry does not accept arguments (raising <code>TypeError</code>) it falls back to <code>fn()</code>.</li>
+<li>When only <code>main</code> / <code>run</code> exists the module body is not executed again, so top-level side effects never run twice.</li>
+</ul>
+<h2 id="h-2">The PARAMS / RESULT convention</h2>
+<p>A script-style entry can read and write two conventional variables:</p>
+<pre><code class="language-python">PARAMS = globals().get("PARAMS") or {}
+DRY_RUN = bool(PARAMS.get("dry_run", False))
+
+def main():
+    # do the work here; for writes prefer dry_run first and return before / after values
+    return {"status": "ok", "updated": 0}
+
+RESULT = main() if not globals().get("SKIP_RUN") else None</code></pre>
+<ul>
+<li><code>PARAMS</code>: the JSON object passed by the script browser&#x27;s &quot;run with parameters…&quot; or by the command channel.</li>
+<li><code>RESULT</code>: the script result; the script browser prints a summary and the command channel puts it into its return value.</li>
+<li>MEL has no <code>PARAMS</code> / <code>RESULT</code> convention, so <code>print</code> the important results.</li>
+</ul>
+<h2 id="h-3">Return value shape</h2>
+<ul>
+<li>The command channel can safely return <code>None</code>, booleans, numbers, strings, lists and dictionaries.</li>
+<li>Nested dictionaries / lists keep only the first 30 items; other objects are turned into <code>repr</code> and truncated to 300 characters, so never return unserializable objects such as Qt widgets.</li>
+<li>GUI tools normally have no meaningful return value; the command channel only reports <code>opened: true</code>, meaning the window opened and the work is not finished.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<ol>
+<li>Call <code>quicktool_run</code> with <code>dry_run=true</code> first to confirm the entry is resolved correctly.</li>
+<li>After a real run check <code>status</code>, <code>entry</code> and <code>result</code> in the return value.</li>
+<li>Run the same script in the script browser; the status bar should show the elapsed time and the Script Editor should show the <code>RESULT</code> summary.</li>
+</ol>
+<h2 id="h-5">Notes</h2>
+<ul>
+<li>The menu path never injects <code>PARAMS</code>, so logic that depends on parameters must also run safely with defaults.</li>
+<li>For long-running or cancellable work, provide your own progress and cancel mechanism inside the script.</li>
+</ul>

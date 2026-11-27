@@ -1,0 +1,30 @@
+<p>The status bar at the bottom of the window shows counts and the current action; when minimized, the window collapses into a floating bubble on the desktop, and a single click opens the asset library again (the pure standalone edition keeps its taskbar button).</p>
+<p><img src="media_en/shared/ui-status-left.webp" alt="Left side of the status bar: visible / total count and the current selection" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Status bar</h2>
+<p>The status bar is pinned to the bottom of the window; the asset count (<code>材料: 可见数/总数</code>, materials: visible / total) is on the left and the information area on the right changes with what you do, for example:</p>
+<ul>
+<li>When an asset is selected it shows the asset name.</li>
+<li>During AI search it shows <code>「正在思考」 (Thinking)</code> or a description of the results.</li>
+<li>During image / audio-video search it shows the matching result, for example <code>「图片搜索：按关键词「…」找到 N 个资产」 (Image search: N assets found for the keyword &quot;...&quot;)</code>, <code>「音视频搜索：命中 N 个资产」 (Audio-video search: N assets matched)</code> or <code>「文字搜音乐：命中 N 个音频」 (Text search for music: N audio files matched)</code>; cancelling shows <code>「已取消以图搜图 / 音视频搜索，恢复当前分类的全部资产」 (Image / audio-video search cancelled; restoring all assets of the current category)</code>.</li>
+<li>While recording audio or the screen it shows the recording duration and the limit; when finished the recording becomes a search.</li>
+<li>During <code>「后台渲染」 (Background render)</code>, the headless thumbnail render, it shows render progress.</li>
+<li>Messages such as repairing UUIDs or an image search with no results also appear here.</li>
+</ul>
+<h2 id="h-2">Floating bubble</h2>
+<p>With the floating bubble enabled, minimizing the main window collapses it into a draggable squirrel icon:</p>
+<ol>
+<li>A single click restores the main window, which is the &quot;quick open&quot; of the asset library.</li>
+<li>Hold and drag the bubble anywhere on screen; its position is remembered.</li>
+<li>While the AI assistant is running the bubble shows the running state (a glow).</li>
+<li>Right-clicking the bubble opens a menu that differs by form: both include <code>「打开资产库」 (Open asset library)</code> and <code>「打开AI助手」 (Open AI assistant)</code>; the in-Maya version adds <code>「关闭窗口」 (Close window)</code>, which closes only the plug-in window, and the standalone edition adds <code>「退出」 (Exit)</code>, which ends the whole process. In the standalone edition, choosing Exit while the AI assistant is running asks for confirmation first.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>Minimizing the window shows the squirrel bubble; clicking it restores the main window with the layout it had before minimizing.</li>
+<li>After selecting an asset the status bar shows that asset&#x27;s name.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>The in-Maya version and an attached standalone edition have no taskbar button, so restore the window by clicking the floating bubble; the pure standalone edition can still be restored from the system taskbar.</li>
+<li>A restored window brings back the previous layout, side-column widths and maximized state from the last save (see 3.2.5).</li>
+</ul>

@@ -1,0 +1,30 @@
+<p>核心模块按 Python ABI 编译成多份 <code>.pyd</code> 共存；Maya 的 Python 版本与 <code>.pyd</code> 的 <code>cp</code> 标签对不上时，导入会失败。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>打开插件或导入核心模块时报 <code>ImportError</code>、<code>DLL load failed while importing ...</code> 一类的扩展模块错误。</li>
+<li>同一份安装在某几个 Maya 版本正常，在另一个版本打不开。</li>
+<li>更新后只有部分功能报错，界面能开但导入、导出或材质相关操作失败。</li>
+<li>源码目录里同时有 <code>.py</code> 和 <code>.pyd</code> 时，本机优先加载 <code>.py</code>，问题可能只在发布版出现。</li>
+</ul>
+<h2 id="h-2">可能原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>缺少当前 Maya 的 ABI 版本</td><td>核心目录里没有对应 <code>cp</code> 标签的 <code>.pyd</code></td><td>换含该 ABI 的安装包，或用源码运行</td></tr><tr><td>安装包与 Maya 版本不配套</td><td><code>cmds.about(version=True)</code> 与 <code>.pyd</code> 标签不一致</td><td>按下表确认对应关系</td></tr><tr><td>混入了别的 Maya 的编译产物</td><td>目录里出现来源不明的 <code>.pyd</code></td><td>重新安装完整包，不要手工改名</td></tr><tr><td>只含 <code>.pyd</code> 的发布版缺文件</td><td>核心模块只有部分 <code>.pyd</code></td><td>重新获取完整发布包</td></tr><tr><td>热重载后仍用旧模块</td><td>改了源码但行为没变</td><td>完全重启 Maya，而不是只刷新界面</td></tr></tbody></table>
+<h2 id="h-3">ABI 对应关系</h2>
+<table><thead><tr><th><code>.pyd</code> 标签</th><th>Maya 版本</th><th>Python</th></tr></thead><tbody><tr><td><code>cp37</code></td><td>Maya 2022</td><td>3.7</td></tr><tr><td><code>cp39</code></td><td>Maya 2023</td><td>3.9</td></tr><tr><td><code>cp310</code></td><td>Maya 2024</td><td>3.10</td></tr><tr><td><code>cp311</code></td><td>Maya 2025 / 2026</td><td>3.11</td></tr><tr><td><code>cp313</code></td><td>Maya 2027</td><td>3.13</td></tr></tbody></table>
+<h2 id="h-4">解决步骤</h2>
+<ol>
+<li>在 Maya 脚本编辑器执行 <code>import maya.cmds as cmds; print(cmds.about(version=True))</code>，确认 Maya 年份。</li>
+<li>执行 <code>import sys; print(sys.version_info)</code>，确认 Python 主次版本。</li>
+<li>查看核心模块目录，确认存在与 Python 版本对应的 <code>.pyd</code>（例如 Maya 2026 需要 <code>cp311</code>）。</li>
+<li>标签不匹配时，换用匹配的安装包；不要跨版本重命名 <code>.pyd</code>。</li>
+<li>本机调试可保留 <code>.py</code> 源码，包入口会优先加载 <code>.py</code>；发布版只带 <code>.pyd</code> 时则必须匹配 ABI。</li>
+<li>替换文件后完全退出并重启 Maya。</li>
+</ol>
+<h2 id="h-5">结果验证</h2>
+<p>插件能打开，<code>import squirrel_asset_manager.core.manager</code> 等核心模块不再报扩展模块错误。</p>
+<h2 id="h-6">仍不行怎么办</h2>
+<ul>
+<li>把 <code>cmds.about(version=True)</code>、<code>sys.version_info</code> 和报错模块名一起记录下来。</li>
+<li>确认安装目录里没有被旧版本残留的 <code>.pyd</code> 覆盖。</li>
+<li>如果只有某个核心模块失败，检查该模块是否在安装包中缺失，而不是继续改环境。</li>
+<li>仍无法判断时，按 6.1.3「启动报错」抓取完整 traceback 后反馈。</li>
+</ul>

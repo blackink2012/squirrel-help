@@ -1,0 +1,55 @@
+<blockquote><p>一句话定位：<strong>把一批图片从一种格式换成另一种格式（png / jpg / exr / hdr / tga / tif / bmp / webp），可以顺带改分辨率。</strong></p></blockquote>
+<p>它只做&quot;格式与尺寸&quot;的转换，<strong>不入库、不碰 Maya 场景</strong>。跟资产库里的「图像格式转换」（<a href="#/15.12.4"><code>8.12.4</code></a>）不是同一个东西：那个是针对库内资产的，这个是针对磁盘目录的。</p>
+<h2 id="h-1">从哪打开</h2>
+<table><thead><tr><th>入口</th><th>具体怎么做</th></tr></thead><tbody><tr><td>顶部工具栏「快捷工具」菜单</td><td>「快捷工具」→「图像格式转换工具」</td></tr><tr><td>脚本浏览器</td><td>「脚本浏览器」→ 添加插件目录下的 <code>quicktools</code> 目录 → <code>图像格式转换工具.py</code> 双击运行</td></tr></tbody></table>
+<p>窗口标题是「图像格式批量转换」。三种快捷工具入口是同一套窗口。</p>
+<p><img src="media/shared/quicktool-image-format.webp" alt="图像格式转换工具窗口" loading="lazy" decoding="async"></p>
+<h2 id="h-2">界面上每个控件做什么</h2>
+<h3 id="h-3">卡片「输入模式」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>单选「选择文件」</td><td>手工挑若干个图片</td><td>只转几个时用</td></tr><tr><td>单选「选择文件夹」</td><td>整个目录转</td><td>批量用这个</td></tr></tbody></table>
+<h3 id="h-4">卡片「输入」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>路径输入框（占位「选择要转换的图像文件...」/「选择要转换的文件夹...」）</td><td>源文件或源目录</td><td>—</td></tr><tr><td>「浏览...」</td><td>选文件 / 选目录</td><td>—</td></tr></tbody></table>
+<h3 id="h-5">卡片「输入格式过滤」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>输入框（占位「例如: png, jpg, exr」）</td><td>只转这些扩展名；留空 = 转换所有支持格式</td><td>目录里混着别的文件时填上</td></tr><tr><td>「支持格式: .bmp, .exr, .hdr, .jpeg, .jpg, .png, .tga, .tif, .tiff, .webp」</td><td>能被读进来的格式清单</td><td>不在清单里的会读不出来</td></tr></tbody></table>
+<h3 id="h-6">卡片「输出位置」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>路径输入框（占位「选择输出文件夹...」）</td><td>转换结果放哪</td><td><strong>务必指向一个空目录或专门的输出目录</strong>，见&quot;风险&quot;</td></tr><tr><td>「浏览...」</td><td>选目录</td><td>—</td></tr></tbody></table>
+<h3 id="h-7">卡片「输出格式」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「目标格式:」下拉</td><td>.exr (OpenEXR) / .hdr (Radiance HDR) / .png (PNG) / .jpg (JPEG) / .jpeg (JPEG) / .tif (TIFF) / .tiff (TIFF) / .bmp (BMP) / .webp (WebP) / .tga (TGA)</td><td>要带透明通道别选 jpg；要 HDR 数据选 exr / hdr</td></tr></tbody></table>
+<h3 id="h-8">卡片「输出分辨率（留空保持原尺寸）」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「宽:」输入框（占位「不限」）</td><td>目标宽度（像素）</td><td>留空 = 保持原宽</td></tr><tr><td>「高:」输入框（占位「不限」）</td><td>目标高度（像素）</td><td>留空 = 保持原高</td></tr><tr><td>勾选「保持宽高比」</td><td>勾 = 缩放时不变形；不勾 = 拉伸到指定宽高</td><td>一般都要勾</td></tr></tbody></table>
+<h3 id="h-9">卡片「输出结构」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>勾选「保持层级结构」</td><td>勾 = 输出保留源目录层级；不勾 = 全部平铺到输出目录</td><td>源目录分层时建议勾</td></tr></tbody></table>
+<h3 id="h-10">日志区与底部</h3>
+<table><thead><tr><th>控件</th><th>作用</th></tr></thead><tbody><tr><td>「转换日志」区</td><td>实时打印：输出到哪个目录、要转几个文件、每个文件的处理、「源文件已重命名」、每个失败原因</td></tr><tr><td>状态文字「就绪」/「正在处理 (i/n): 文件名」</td><td>当前进度</td></tr><tr><td>「已选择 N 个文件」</td><td>当前输入里有多少个待转文件</td></tr><tr><td>图标按钮「使用帮助」</td><td>打开详细帮助</td></tr><tr><td>「取消」</td><td>关窗口</td></tr><tr><td>「开始转换」</td><td>开跑；跑起来后它会变成「中止」，点一下在下一个文件前停下</td></tr></tbody></table>
+<h2 id="h-11">一次完整的操作流程</h2>
+<ol>
+<li>快捷工具 →「图像格式转换工具」；</li>
+<li>输入模式选「选择文件夹」，浏览选源目录；</li>
+<li>「输入格式过滤」填上要转的格式（例如 <code>exr</code>），不填则转所有支持的；</li>
+<li>「输出位置」选一个<strong>空目录</strong>；</li>
+<li>「目标格式」选要的输出格式；</li>
+<li>需要改尺寸时填宽 / 高，并勾「保持宽高比」；不需要就都留空；</li>
+<li>源目录分层且想保留结构 → 勾「保持层级结构」；</li>
+<li>点「开始转换」，盯一眼日志：确认&quot;转换 N 个文件 -&gt; .xxx&quot;的数字和「输出到」路径都对；</li>
+<li>转完弹「转换完成！成功 X, 失败 Y」，失败原因在日志里，一条一行；</li>
+<li>去输出目录确认文件（同名文件在对应子目录里）。</li>
+</ol>
+<h2 id="h-12">输出结果在哪</h2>
+<ul>
+<li>输出文件在「输出位置」下，文件名 = 源文件名（扩展名换成目标格式）；</li>
+<li>勾了「保持层级结构」时，子目录结构和源目录一致；</li>
+<li>转换完<strong>不会自动打开文件夹</strong>，需要自己去输出目录看；日志里每一行都写了处理路径。</li>
+</ul>
+<h2 id="h-13">风险与反悔（两个真会咬人的点）</h2>
+<ul>
+<li><strong>同名输出会被直接覆盖，没有任何提示。</strong> 输出目录里已经有同名文件（比如上次转过的结果），这次会静默盖掉。想保住旧结果：换一个空输出目录，或先把旧结果改名/移走。</li>
+<li><strong>源文件名含 Windows 非法字符时，工具会把源文件改名。</strong> 日志里会出现「源文件已重命名: 旧名 -&gt; 新名」。这是它对源目录的<strong>唯一写操作</strong>，而且不可逆（改名后原文件路径就没了）。不想让它动源文件：先把源目录复制一份再转。</li>
+<li>中止是安全的：点「中止」会在当前文件处理完后停下，已转好的文件保留，日志会写「用户中止转换」。</li>
+<li>反悔：删掉输出目录里转出来的文件即可；源文件除了上面那种改名之外不会被改动或删除。</li>
+</ul>
+<h2 id="h-14">相关</h2>
+<ul>
+<li>它在「快捷工具」菜单里的位置：<a href="#/15.2.6"><code>8.2.6</code></a></li>
+<li>资产库里的「图像格式转换」（对象是库内资产）：<a href="#/15.12.4"><code>8.12.4</code></a></li>
+<li>HDR 转资产（要入库时用那个）：<a href="#/15.14.1"><code>8.14.1</code></a></li>
+</ul>

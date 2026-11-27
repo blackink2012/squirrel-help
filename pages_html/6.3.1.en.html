@@ -1,0 +1,44 @@
+<p><code>「追加为 LOD」 (Append as LOD)</code> writes the model currently selected in Maya as one detail level (LOD0–LOD4) of an existing asset without touching the other levels or the materials.</p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The target <code>.zasset</code> already exists and its card is visible in the grid.</li>
+<li>The asset already has a geometry format that can be reused (<code>ma</code>/<code>mb</code>/<code>fbx</code>/<code>obj</code>/<code>usd</code>/<code>abc</code>); appending a LOD <strong>reuses the asset&#x27;s existing format</strong>, so no format needs choosing.</li>
+<li>The model to use for that level can be selected in Maya. <strong>You do not need to select everything before opening the window</strong> — the level window is non-modal, so you can select as you bind.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select the model to use for a LOD level in the Maya viewport.</li>
+<li>Right-click the asset card → <code>「更新资产 ▶」 (Update asset ▶)</code> → <code>「追加为 LOD」 (Append as LOD)</code>.</li>
+<li>The append LOD level window opens; its subtitle names the target asset / version and a line below shows <code>「当前选择：&lt;model name&gt;」 (current selection: &lt;model name&gt;)</code> live.</li>
+<li>Click the matching level card (<strong>LOD0</strong>–<strong>LOD4</strong>) to bind it: the card becomes ☑ and shows <code>→ &lt;model name&gt;</code>.</li>
+<li>In Maya select another model → click another level card to bind several levels at once; clicking a bound card unbinds it, and <code>「清空绑定」 (Clear bindings)</code> starts over.</li>
+<li>Read the warning lines at the bottom of the window and confirm:<ul>
+<li><code>「「LODn」已存在：将覆盖它的几何体，其它 LOD 不受影响。」 (LODn already exists: its geometry will be overwritten, other LODs are unaffected.)</code></li>
+<li><code>「LOD0 是版本默认几何体，覆盖后双击卡片导入的就是新模型。」 (LOD0 is the version&#x27;s default geometry; after overwriting, double-clicking the card imports the new model.)</code></li>
+<li><code>「将一次写入 N 条 LOD。」 (N LODs will be written in one go.)</code></li>
+</ul></li>
+<li>Click <code>「导出并追加（N 档）」 (Export and append, N levels)</code> to export and write each level. It then reports <code>「已追加 N 档 LOD。」 (appended N LOD levels.)</code>; failed levels are noted in parentheses after the message.</li>
+</ol>
+<blockquote><p>The current version <strong>no longer opens the create-asset export configuration window</strong>: appending a LOD reuses the target asset&#x27;s existing format, exporting to a temporary directory outside the library → verifying → writing the LOD (<code>lods.json</code> or the older <code>variants.json</code>). When the asset has no reusable geometry format it reports <code>「该资产没有可沿用的几何体格式（ma/mb/fbx/obj/usd/abc），无法追加 LOD。」 (this asset has no reusable geometry format (ma/mb/fbx/obj/usd/abc), so a LOD cannot be appended.)</code></p></blockquote>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The message <code>「已追加 N 档 LOD。」 (appended N LOD levels.)</code> appears.</li>
+<li>Right-click the asset → <code>「资产详情」 (Asset details)</code> (the version browser when versions or variants exist) → the new LOD row can be selected on the left and the <code>「LOD 管理」 (LOD management)</code> card on the right lists that level.</li>
+<li><code>lod{n}/node.&lt;ext&gt;</code> is added inside the <code>.zasset</code> and the <code>lods</code> list in <code>lods.json</code> gains the entry (<code>lod0</code> is always the root geometry).</li>
+</ul>
+<h2 id="h-4">Tips and warnings</h2>
+<blockquote><p><strong>Tip</strong>: the level is <strong>chosen by you</strong> on the level cards (LOD0–LOD4), not computed as the current maximum plus one; several levels can be written at once.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: appending a LOD writes geometry only and never replaces materials or textures; for new materials use <code>Create new version</code>.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: while the level window is open you can switch back to Maya and change the selection, and the window follows with <code>「当前选择」 (current selection)</code>; with several objects selected it binds the <strong>last</strong> one (the active object).</p></blockquote>
+<blockquote><p><strong>Warning</strong>: writing into an existing level <strong>overwrites that level&#x27;s geometry</strong> (other LODs and versions are unaffected); overwriting LOD0 changes &quot;the model that a double-click imports by default&quot;.</p></blockquote>
+<blockquote><p><strong>Current version</strong>: appending a LOD acts directly on the main asset you right-clicked; the &quot;choose target version&quot; dialog no longer appears, and sub-versions are independent <code>V{n}</code> assets. Appending a LOD for a <strong>variant</strong> uses a separate small input box (<code>「为变体「X」追加 LOD 级别（1-9）」 (append a LOD level to variant &quot;X&quot;, 1-9)</code>), not this level window.</p></blockquote>
+<h2 id="h-5">Related interface (historical screenshot)</h2>
+<p><img src="media_en/shared/dialog-export-right.webp" alt="Right side of the export dialog: version and LOD append options" loading="lazy" decoding="async"></p>
+<blockquote><p>The image above is a historical screenshot of the export interface; appending a LOD now happens in the separate append LOD level window, and the screenshot is to be recaptured.</p></blockquote>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>Create a new version: <a href="#/en/6.3.2">6.3.2</a></li>
+<li>Delete versions and LODs: <a href="#/en/6.3.4">6.3.4</a></li>
+<li><code>lods.json</code> and <code>variants.json</code> in the export output: <a href="#/en/6.1.3">6.1.3</a></li>
+<li>Item-by-item description of the append LOD level window: <a href="#/en/15.11.4">15.11.4</a></li>
+</ul>

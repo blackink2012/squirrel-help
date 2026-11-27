@@ -1,0 +1,50 @@
+<blockquote><p>一句话定位：<strong>插件里所有可复用脚本的&quot;应用商店&quot; —— 搜一下、看说明、双击运行；好用的收藏起来，之后还能一键放进工具架。</strong></p></blockquote>
+<p>它本身不写脚本，是&quot;脚本库的浏览器 + 启动器&quot;。里面既有随插件分发的脚本，也能把你自己指定目录里的脚本加进来。</p>
+<h2 id="h-1">从哪打开</h2>
+<table><thead><tr><th>入口</th><th>具体怎么做</th></tr></thead><tbody><tr><td>顶部工具栏「快捷工具」菜单</td><td>「快捷工具」→「脚本浏览器」</td></tr><tr><td>变成主界面面板</td><td>「面板与布局」→「新建面板」→「脚本浏览器」</td></tr></tbody></table>
+<p>两种方式打开的是同一份界面，数据也一致。</p>
+<p><img src="media/shared/quicktool-script-browser.webp" alt="脚本浏览器窗口" loading="lazy" decoding="async"></p>
+<h2 id="h-2">界面上每个控件做什么</h2>
+<h3 id="h-3">顶部一行</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>搜索框（占位「搜索：名称 / 用途 / 标签（空格分词，可 tag: / risk: / cat: / unverified）」）</td><td>边打边过滤右侧列表。<strong>空格分词 = 多个词同时满足</strong>；支持 <code>tag:xxx</code>、<code>risk:high</code>、<code>cat:qa</code>、<code>unverified</code> 这类前缀过滤</td><td>找高危脚本直接搜 <code>risk:high</code></td></tr><tr><td>按钮「▶ 运行」</td><td>运行当前选中的脚本</td><td>双击列表条目等价</td></tr><tr><td>按钮「添加目录」</td><td>把你自己的脚本目录加成一个&quot;脚本根&quot;（文件不动，只是登记）</td><td>有自己的脚本仓库时加一次即可</td></tr><tr><td>按钮「刷新」</td><td>重扫所有脚本根（快捷键 F5）</td><td>刚往目录里丢脚本后点</td></tr></tbody></table>
+<h3 id="h-4">左侧树（分类与来源）</h3>
+<table><thead><tr><th>节点</th><th>是什么</th><th>怎么用</th></tr></thead><tbody><tr><td>「🕘 最近运行 (N)」</td><td>最近跑过的脚本</td><td>反复用的脚本在这里最快</td></tr><tr><td>「★ 收藏」</td><td>你收藏的脚本</td><td>常用的放这里</td></tr><tr><td>「SquirrelScripts (N)」</td><td>用户脚本根；下面按分类分组（空的分类也会显示）</td><td>主体入口</td></tr><tr><td>分类节点</td><td>某个分类下的脚本</td><td>例如按&quot;建模 / 清理 / 导出&quot;分好</td></tr><tr><td>「未登记 (N)」</td><td>磁盘上有脚本，但登记表里没有它的说明 / 风险 / 验证记录</td><td>不影响运行；右键可用 AI 补登记</td></tr><tr><td>额外脚本根</td><td>你用「添加目录」加进来的目录</td><td>按同样方式分分类</td></tr></tbody></table>
+<h3 id="h-5">右侧列表</h3>
+<table><thead><tr><th>操作</th><th>效果</th></tr></thead><tbody><tr><td>单击</td><td>选中脚本（底部状态行会更新）</td></tr><tr><td><strong>双击</strong> / 点「▶ 运行」</td><td>运行该脚本</td></tr><tr><td>悬停</td><td>显示提示：说明、<code>风险 xxx · 验证 xxx</code> 等元信息</td></tr><tr><td>拖动条目到左侧分类上</td><td>改变它所属的分类</td></tr></tbody></table>
+<h3 id="h-6">右键菜单（列表里）</h3>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>注意</th></tr></thead><tbody><tr><td>运行</td><td>运行脚本</td><td>等价双击</td></tr><tr><td>带参数运行…</td><td>填参数后再运行</td><td>脚本声明了参数时才有用</td></tr><tr><td>导入（加载为模块）</td><td>把脚本当模块加载，不立即执行</td><td>想在脚本编辑器里调它的函数时用</td></tr><tr><td>加载到脚本编辑器</td><td>把源码贴进 Maya 的脚本编辑器</td><td>想改着跑时用</td></tr><tr><td>生成执行命令（放工具架）…</td><td>生成一条可直接放工具架的命令</td><td>常用脚本做成按钮</td></tr><tr><td>查看说明（docstring）</td><td>显示脚本自带的使用说明</td><td>跑之前先看这个</td></tr><tr><td>复制路径 / 复制代码</td><td>拷路径或拷源码</td><td>—</td></tr><tr><td>打开所在文件夹（选中） / 用 txt 打开</td><td>定位文件 / 外部编辑</td><td>—</td></tr><tr><td>AI 重新分析并登记…</td><td>让 AI 重新读脚本并补登记信息</td><td>未登记脚本也能用</td></tr><tr><td>移至 _internal（仅供 AI 调用）</td><td>把脚本挪到内部目录，不再在界面上当&quot;工具&quot;露出</td><td>只给 AI 用的脚本这么做</td></tr><tr><td>删除脚本…</td><td>从磁盘删除该脚本文件</td><td><strong>不可逆</strong>，先确认</td></tr><tr><td>★ 收藏 / 取消收藏</td><td>切换收藏状态</td><td>—</td></tr></tbody></table>
+<h3 id="h-7">右键菜单（左侧树里）</h3>
+<table><thead><tr><th>菜单项</th><th>作用</th></tr></thead><tbody><tr><td>新建分类… / 新建脚本…</td><td>建一个新分类 / 直接在库里新建脚本</td></tr><tr><td>AI 分析并登记全部…</td><td>批量给&quot;未登记&quot;脚本补说明与风险信息</td></tr><tr><td>什么是「未登记」？</td><td>解释这个概念</td></tr><tr><td>重命名分类… / 删除分类（含内容）… / 打开该分类文件夹</td><td>分类维护（删分类会连内容一起删，危险）</td></tr><tr><td>添加脚本目录… / 移除这个脚本根（文件不动）</td><td>管理额外脚本根；移除只取消登记，不删文件</td></tr><tr><td>展开全部 / 折叠全部 / 刷新 (F5)</td><td>视图操作</td></tr></tbody></table>
+<h3 id="h-8">底部状态行</h3>
+<p>显示「共 N 个脚本 · 当前显示 N 个 · 额外脚本根 N 个 · 双击 / ▶ 运行，右键更多」，用它确认过滤后的数量。</p>
+<h2 id="h-9">一次完整的使用流程</h2>
+<ol>
+<li>快捷工具 →「脚本浏览器」；</li>
+<li>搜索框输入关键词（比如&quot;缩略图&quot;），或从左树点进分类；</li>
+<li>悬停看一下脚本的说明和风险标记；</li>
+<li>双击运行（或选中后点「▶ 运行」）；</li>
+<li>运行结果显示在 Maya 的<strong>脚本编辑器</strong>里，脚本对场景的影响直接发生在当前场景；</li>
+<li>好用的脚本右键 →「★ 收藏」；要反复点就用「生成执行命令（放工具架）…」做成工具架按钮。</li>
+</ol>
+<h2 id="h-10">输出结果在哪</h2>
+<ul>
+<li>脚本的执行输出在 <strong>Maya 脚本编辑器</strong>（History / Output）；</li>
+<li>脚本对场景的改动直接落在当前场景（能不能撤销取决于脚本本身，见下面的风险标记）；</li>
+<li>收藏、最近运行、额外脚本根这些偏好记在本机，下次打开还在；</li>
+<li>用「生成执行命令」得到的是命令字符串，粘到工具架或放进 shelf。</li>
+</ul>
+<h2 id="h-11">风险与反悔</h2>
+<ul>
+<li><strong>风险标记先看</strong>：列表条目上会标 <code>[readonly]</code> / <code>[low]</code> / <code>[high]</code> 之类的风险级别，悬停提示里还有「怎么撤销」的说明。</li>
+<li><strong><code>risk=high</code> 的脚本运行前会二次确认</strong>（弹窗），确认框里可以勾&quot;本次不再提醒&quot;—— 建议别勾，保持提醒。</li>
+<li><strong>运行脚本可能改场景</strong>：跑之前先保存场景（Ctrl+S）。只读脚本不会改东西。</li>
+<li><strong>删除脚本 / 删除分类（含内容）是真的删磁盘文件，不可逆</strong>。删之前确认那是不是你唯一一份。</li>
+<li>「移至 _internal」只是挪位置（不再在列表里当工具露出），文件还在。</li>
+<li>反悔：删错了只能从备份 / 版本控制恢复；场景改错了用 Maya 撤销或不保存重开。</li>
+</ul>
+<h2 id="h-12">相关</h2>
+<ul>
+<li>它在「快捷工具」菜单里的位置：<a href="#/15.2.6"><code>8.2.6</code></a></li>
+<li>脚本库的浏览、搜索与运行（用户手册版）：<a href="#/9.6.1"><code>4.6.6.1</code></a></li>
+<li>把脚本跟 Maya 文件批量跑：别混淆，那是一批文件跑同一段脚本：<a href="#/15.14.5"><code>8.14.5</code></a></li>
+</ul>

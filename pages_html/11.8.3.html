@@ -1,0 +1,26 @@
+<p>这三项是「其它配置」页的高级兜底项，分别控制整文件夹入库时的文件分类和导出时的材质节点判定。</p>
+<p><img src="media/shared/settings-other.webp" alt="设置 → 其它配置：左侧选扩展名类别，右侧每行一个值" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>「设置 → 其它配置」左侧有三项，右侧每行一个值：</p>
+<table><thead><tr><th>配置项</th><th>JSON 键</th><th>作用</th></tr></thead><tbody><tr><td>几何体扩展名</td><td><code>geometry_extensions</code></td><td>整文件夹收进资产库时，根级文件按它识别为几何体，分成 <code>node.{ext}</code></td></tr><tr><td>图像 / 贴图扩展名</td><td><code>image_extensions</code></td><td>同一路径下命中的文件归入 <code>textures/</code></td></tr><tr><td>材质节点类型</td><td><code>material_node_types</code></td><td>导出资产、右键「更新资产」、批量导出时判断场景里哪些节点是材质节点</td></tr></tbody></table>
+<h2 id="h-2">可选值与默认值</h2>
+<ul>
+<li>几何体：<code>.ma .mb .fbx .obj .abc .usd .usda .usdc .glb .gltf .dae .ass .proxy .vrmesh .vdb</code></li>
+<li>图像：<code>.png .jpg .jpeg .exr .hdr .tga .tiff .tif .bmp .psd</code></li>
+<li>材质节点：<code>aiStandardSurface</code>、<code>standardSurface</code>、<code>lambert</code>、<code>blinn</code>、<code>phong</code>、<code>openPBRSurface</code>、<code>pxrSurface</code>、<code>aiHair</code>、<code>aiSkin</code>、<code>aiVolume</code>、<code>VRayMtl</code>、<code>RedshiftMaterial</code></li>
+</ul>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>前两项只对「整个文件夹收进资产库」生效；单文件收库、贴图扫描走内置扩展名表，改这里不影响。</li>
+<li>材质节点类型是三条导出路径的唯一判断来源；漏掉某个节点类型会导致导出时识别不到该材质。</li>
+</ul>
+<h2 id="h-4">操作步骤</h2>
+<ol>
+<li>打开「设置 → 其它配置」，勾选解锁。</li>
+<li>左侧选配置项，右侧按行编辑。</li>
+<li>点「应用」或「确定」写回 <code>config.json</code>。</li>
+</ol>
+<h2 id="h-5">结果验证</h2>
+<p>用整文件夹入库验证几何/图像分类；用包含目标材质的场景执行一次导出，确认材质被识别。</p>
+<h2 id="h-6">提示</h2>
+<p>这三项直接参与资产库读写，配置错误会造成导入导出异常；修改前备份 <code>config.json</code>。</p>

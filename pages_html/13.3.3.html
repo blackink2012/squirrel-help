@@ -1,0 +1,28 @@
+<p>库体检异常时，先看 <code>library_health</code> 的四个判据：是否已加载、资产与分类数量、重复 UUID、加载失败清单。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>资产总数与磁盘上的 <code>.zasset</code> 数量不一致。</li>
+<li>资产明明在库目录里，插件网格中却找不到。</li>
+<li>收藏夹、版本或分类引用错乱，重扫后仍不恢复。</li>
+<li><code>library_health</code> 返回 <code>is_loaded</code> 为假、<code>has_duplicate_uuids</code> 为真，或 <code>load_failure_count</code> 大于 0。</li>
+</ul>
+<h2 id="h-2">可能原因</h2>
+<table><thead><tr><th>原因</th><th>判断方法</th><th>处理</th></tr></thead><tbody><tr><td>库没有成功加载</td><td><code>is_loaded</code> 为假，资产数为 0</td><td>检查库路径与权限，再重扫</td></tr><tr><td>索引缓存过期</td><td>分类树或资产数与磁盘不一致</td><td>清缓存后重新加载</td></tr><tr><td>重复 UUID</td><td><code>has_duplicate_uuids</code> 为真</td><td>预览后修复重复 ID，并重扫</td></tr><tr><td>资产元数据损坏</td><td><code>load_failures</code> 中某条带 <code>reason</code></td><td>从备份恢复，或重新导入该资产</td></tr><tr><td>配置与磁盘不一致</td><td>子库或分类数量对不上</td><td>重新读取配置</td></tr><tr><td>多人/多机同时改库</td><td>索引落后或互相覆盖</td><td>让索引放本地目录，必要时重建</td></tr></tbody></table>
+<h2 id="h-3">解决步骤</h2>
+<ol>
+<li>执行 <code>library_health</code>，<code>op=status</code>，记录库根、是否加载、资产数、分类数、重复 ID 与加载失败数。</li>
+<li>查看 <code>load_failures</code> 中每条资产的 <code>reason</code>，确认是缺文件、元数据损坏还是版本不兼容。</li>
+<li>缓存问题先执行 <code>op=clear_cache</code>，再执行 <code>op=reload</code>，让插件按磁盘重建索引。</li>
+<li>配置问题执行 <code>op=reload_config</code>，重新读取子库与分类配置。</li>
+<li>有重复 UUID 时，先用 <code>op=fix_uuids</code> 配合 <code>dry_run=True</code> 预览，再正式执行；修复后会自动重扫。</li>
+<li>单个资产元数据损坏时，先备份该 <code>.zasset</code>，再从备份恢复或删除后重新导入。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p>再次执行 <code>op=status</code> 时，<code>is_loaded</code> 为真，<code>has_duplicate_uuids</code> 为假，<code>load_failure_count</code> 为 0，资产数与磁盘一致。</p>
+<h2 id="h-5">仍不行怎么办</h2>
+<ul>
+<li>修复重复 UUID 后，收藏夹等保存了旧 ID 的地方可能需要重新核对。</li>
+<li>先备份整个资产库，再逐个排查加载失败的资产；不要直接批量删除库目录。</li>
+<li>多机共用库时，把语义索引放到本机本地目录，避免索引文件互相覆盖。</li>
+<li>反馈时附 <code>library_health</code> 的 <code>status</code> 返回、加载失败清单和最近一次重扫日志。</li>
+</ul>

@@ -1,0 +1,50 @@
+<blockquote><p>一句话定位：<strong>右键「后台渲染」时先弹的这个设置窗。它决定用哪个渲染器、拿什么模型、什么光、多大尺寸、什么质量，在一个独立 mayapy 进程里出缩略图。</strong></p></blockquote>
+<p>窗口标题「后台渲染」，第一行说明：「无头出图：起独立 mayapy 进程渲染，不占用当前视口、不改当前场景。」</p>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>选中要补缩略图的资产（多个也行）。</li>
+<li>右键 →「更新缩略图 ▶」→「后台渲染」。<ul>
+<li>注意别点成「截取」（那是屏幕框选）或「导入」（那是从文件选图）。</li>
+</ul></li>
+<li>弹出「后台渲染」选项窗。</li>
+</ol>
+<p>多选时：单选=只处理右键那个；多选=批量处理全部选中。</p>
+<p><img src="media/shared/dialog-headless-thumb.webp" alt="后台渲染选项" loading="lazy" decoding="async"></p>
+<h2 id="h-2">分区一：渲染器</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>渲染器单选列表</td><td>单选 ×N</td><td>选这次用哪家渲染器出图</td><td>选这台机器上状态为可用的那家（Arnold / Redshift / V-Ray / Maya 软件 / 硬件 2.0 等）</td><td>不可用的项会被禁用并在右侧写明原因（缺 kick.exe / 缺 mayapy 等）</td></tr></tbody></table>
+<p>不可用项常见原因：Arnold 需要 <code>kick.exe</code> / <code>oiiotool.exe</code>（随 Arnold 安装）；Maya 软件 / 硬件 2.0 需要与当前 Maya 同版本的 <code>mayapy.exe</code>。全都不可用时点「开始生成」会提示「这台机器没有可用的无头渲染器…」。</p>
+<h2 id="h-3">分区二：预设模型（只在需要时出现）</h2>
+<p>材质、贴图、灯光这类资产<strong>自己没有网格</strong>，出图前要先建一个演示模型，再把材质贴上去渲。</p>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>预设模型下拉</td><td>按钮 + 弹出列表（带悬停大图）</td><td>从插件自带 <code>Assets/Meshes</code> 里挑模型</td><td>与资产类型匹配的球/盒/布料示例</td><td>目录里没有可用模型时会提示「预设模型目录里没有可用的模型文件」</td></tr></tbody></table>
+<ul>
+<li>模型资产、场景资产<strong>自带几何</strong>，这块直接不显示。</li>
+<li>灯光资产也会显示这块：模型是被照亮的对象。</li>
+</ul>
+<h2 id="h-4">分区三：环境光（HDRI）</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>使用 HDRI 环境光</td><td>复选框（默认勾）</td><td>决定要不要 HDRI 照明</td><td>一般勾；想纯棚拍就取消</td><td>不勾 = 用纯棚拍灯光，金属/反射类材质效果差很多</td></tr><tr><td>HDRI 下拉</td><td>按钮（显示当前选择）+ 左侧 2:1 预览图</td><td>选 <code>Assets/IBL</code> 里的 HDRI；悬停列表项看大图</td><td>挑与资产用途接近的环境</td><td>不选时显示「（未选）」</td></tr><tr><td>说明文字</td><td>只读</td><td>「HDRI 只作环境照明（球形投射，无形变），不进背景 —— 缩略图是透明背景。」</td><td>—</td><td>—</td></tr></tbody></table>
+<blockquote><p><strong>灯光资产不显示这一块</strong>：灯自己就是光源，再叠环境光会冲淡它。</p></blockquote>
+<h2 id="h-5">分区四：尺寸与质量</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>尺寸</td><td>下拉（256×256 / 384 / 512 / 768 / 1024）</td><td>输出缩略图边长（方形）</td><td>默认 512×512 够用</td><td>设太大会明显变慢；设太小卡片上会糊</td></tr><tr><td>质量</td><td>下拉（快速 / 标准 / 高）</td><td>映射到各渲染器自己的采样档</td><td>小图「快速」、正式图「标准」</td><td>「高」在复杂材质上很慢；「快速」噪点多</td></tr><tr><td>说明文字</td><td>只读</td><td>「质量档映射到当前渲染器自己的采样设置（越高越干净、越慢）。」</td><td>—</td><td>—</td></tr></tbody></table>
+<h2 id="h-6">底部按钮</h2>
+<table><thead><tr><th>按钮</th><th>作用</th><th>说明</th></tr></thead><tbody><tr><td>恢复默认</td><td>把渲染器 / 预设模型 / 环境光勾选 / 尺寸 / 质量恢复出厂值</td><td><strong>只改这次对话框</strong>；点「开始生成」后才写回设置</td></tr><tr><td>取消</td><td>关窗，什么都不做</td><td>—</td></tr><tr><td>开始生成</td><td>按当前设置启动无头作业</td><td>会弹出「后台渲染 · 观察窗」（<a href="#/15.12.7"><code>8.12.7</code></a>）并开始出图</td></tr></tbody></table>
+<h2 id="h-7">一次完整操作</h2>
+<ol>
+<li>选中 1 个或一批资产 → 右键 →「更新缩略图 ▶」→「后台渲染」。</li>
+<li>「渲染器」里选一个<strong>可用</strong>的（不可用的右侧会写原因）。</li>
+<li>材质/贴图/灯光资产：在「预设模型」里挑模型（悬停能看大图）。</li>
+<li>环境光：确定勾不勾 HDRI，勾了就选一张。</li>
+<li>尺寸 512×512、质量「标准」。</li>
+<li>点「开始生成」，观察窗出现；看进度与刚出图（见 8.12.7）。</li>
+<li>出完自动关窗，网格刷新后卡片图变成新渲的图。</li>
+</ol>
+<h2 id="h-8">风险与反悔</h2>
+<table><thead><tr><th>操作</th><th>风险</th><th>反悔</th></tr></thead><tbody><tr><td>开始生成</td><td>会<strong>覆盖</strong>这些资产现有的缩略图</td><td>重出一次即可（旧图无备份）；重要图先用「更新缩略图 → 导入」另存</td></tr><tr><td>取消作业</td><td>协作式取消：当前资产收尾后才停</td><td>已出的图保留，下次可以只补剩下的</td></tr><tr><td>恢复默认</td><td>只影响本次对话框</td><td>再手动改回来即可</td></tr></tbody></table>
+<h2 id="h-9">出问题怎么办</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>处理</th></tr></thead><tbody><tr><td>提示「没有可用的无头渲染器」</td><td>缺 kick/oiiotool，或没有同版本 mayapy</td><td>装 Arnold，或确认同版本 mayapy 存在</td></tr><tr><td>提示预设模型缺失</td><td><code>Assets/Meshes</code> 里没有模型文件</td><td>放入 .fbx/.obj/.ma 等模型文件后重试</td></tr><tr><td>出图是透明/黑图</td><td>HDRI 没勾、或渲染器采样太少</td><td>勾 HDRI、质量升到「标准」</td></tr><tr><td>作业卡住</td><td>mayapy 进程卡在某一步</td><td>在观察窗点「取消」，然后重试</td></tr><tr><td>找不到「后台渲染」菜单项</td><td>右键菜单里「更新缩略图」或「后台渲染」被关掉了</td><td>设置 →「右键菜单」页打开对应项</td></tr></tbody></table>
+<h2 id="h-10">相关</h2>
+<ul>
+<li>无头作业进度窗口：<a href="#/15.12.7"><code>8.12.7</code></a></li>
+<li>用户指南版生成缩略图（本地与无头）：<a href="#/4.7.1"><code>4.1.7.1</code></a></li>
+<li>导出对话框里的缩略图来源：<a href="#/15.10.4"><code>8.10.4</code></a></li>
+<li>批量出图（无头）与作业取消：<a href="#/10.6.2"><code>4.7.6.2</code></a></li>
+</ul>

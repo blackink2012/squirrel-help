@@ -1,0 +1,33 @@
+<blockquote><p>One-line summary: <strong>the AI assistant area holds a single toggle button: click once to start the dsh chat panel, click again to close it completely.</strong></p></blockquote>
+<p>It is not a chat window itself — what actually talks to you is <strong>the dsh web chat panel</strong>, and this area is responsible for starting that panel, showing it and closing it.</p>
+<p><img src="media_en/shared/ui-ai-assistant.webp" alt="The AI assistant area holds only this toggle button" loading="lazy" decoding="async"></p>
+<h2 id="h-1">What the area contains</h2>
+<table><thead><tr><th>Part</th><th>Description</th></tr></thead><tbody><tr><td>The <strong>AI assistant</strong> label in the area header</td><td>The area name; the area can be dragged / split / torn off (see <a href="#/en/3.2.1"><code>3.2.1</code></a>)</td></tr><tr><td>Area function button (tooltip &quot;AI assistant&quot;)</td><td>The shared area menu: dock / split / tear off / maximize / merge into / close</td></tr><tr><td>Toggle button</td><td>The entire feature of this area: turn the dsh chat panel on / off</td></tr></tbody></table>
+<h2 id="h-2">The three button states</h2>
+<table><thead><tr><th>Button text</th><th>Color</th><th>Meaning</th></tr></thead><tbody><tr><td>AI assistant</td><td>Neutral secondary</td><td>dsh is not running (off)</td></tr><tr><td>Starting AI assistant…</td><td>Neutral secondary</td><td>The dsh process is starting (usually a few seconds)</td></tr><tr><td>Close AI assistant</td><td>Blue accent</td><td>dsh is running and the chat panel is open</td></tr></tbody></table>
+<h2 id="h-3">What a click does</h2>
+<table><thead><tr><th>Current state</th><th>Result</th></tr></thead><tbody><tr><td>Off</td><td>Starts the dsh web end: depending on settings it <strong>docks the chat panel inside Maya</strong> (default) or <strong>opens it in the system browser</strong>; when done the button becomes &quot;Close AI assistant&quot;</td></tr><tr><td>Starting</td><td>Wait for it; do not click repeatedly (extra clicks do not start another process)</td></tr><tr><td>Already on</td><td><strong>Closes the panel and ends the dsh process</strong> (a real close, not a minimize); clicking again starts it fresh</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>&quot;Close AI assistant&quot; <strong>really kills the dsh process</strong>; it does not just hide the panel. Opening it again is a fresh start, and the conversation context depends on the sessions dsh saved itself.</p></div>
+<h2 id="h-4">Embedded panel or system browser</h2>
+<p>This is decided by <strong>Settings → AI → AI chat panel → Embed the AI chat panel in Maya</strong> (ticked by default), see <a href="#/en/15.9.3"><code>8.9.3</code></a>:</p>
+<table><thead><tr><th>Option</th><th>Behavior</th></tr></thead><tbody><tr><td>Ticked (default)</td><td>The chat panel docks inside Maya and is available whenever it is open; its title automatically carries the current scene name so it is distinguishable from your other dsh windows</td></tr><tr><td>Unticked</td><td>The same dsh chat panel opens in the system browser; sessions and tools are identical, only the window lives outside</td></tr></tbody></table>
+<p>After changing this option, <strong>the next</strong> click on <strong>AI assistant</strong> uses the new mode; Maya does not need a restart.</p>
+<h2 id="h-5">The panel is gone / the browser tab was closed</h2>
+<p>This is the most common way to get stuck: dsh is still running but the chat panel is not visible.</p>
+<ul>
+<li>Open the top <strong>AI tools</strong> menu → <strong>Recall AI panel</strong>: it only brings the already running chat panel back, <strong>without restarting or killing the process</strong>;</li>
+<li>In browser mode, closing the tab manually is invisible to the plug-in (tabs belong to the browser), so <strong>AI assistant</strong> then reads &quot;close&quot;; use <strong>Recall AI panel</strong> to get it back;</li>
+<li>The floating bubble inside the window does the same: while AI is running it breathes slowly, and clicking it recalls the panel.</li>
+</ul>
+<h2 id="h-6">When dsh is not installed</h2>
+<p>The first click on <strong>AI assistant</strong> opens the install guide (see <a href="#/en/15.13.6"><code>8.13.6</code></a>) with four actions: copy the install command / one-click install the dsh runtime / open the install help / open the website or repository. Click again once it is installed.</p>
+<h2 id="h-7">Common questions</h2>
+<table><thead><tr><th>Symptom</th><th>Cause / what to do</th></tr></thead><tbody><tr><td>The button stays on &quot;Starting&quot;</td><td>The first start has to launch the process and the web service, usually a few seconds; if nothing changes after a minute or two, check the Maya Script Editor output</td></tr><tr><td>The button is gray and unclickable</td><td>Rare; usually an abnormal window / panel state. Reopen the panel or restart the plug-in</td></tr><tr><td>The chat panel opened in the browser and cannot be found</td><td>Click <strong>AI tools</strong> → <strong>Recall AI panel</strong></td></tr><tr><td>The previous conversation is gone after closing and reopening</td><td>Whether dsh keeps a session is up to dsh itself; the plug-in only toggles the process and the panel</td></tr></tbody></table>
+<h2 id="h-8">Related</h2>
+<ul>
+<li>The dsh chat panel and tool calls → <a href="#/en/8.3.1"><code>4.5.3.1</code></a></li>
+<li>Embedded vs browser mode → <a href="#/en/8.3.2"><code>4.5.3.2</code></a></li>
+<li>Opening, recalling and stopping → <a href="#/en/8.3.3"><code>4.5.3.3</code></a></li>
+<li>Switching embedded / browser in settings → <a href="#/en/15.9.3"><code>8.9.3</code></a></li>
+<li>The install guide when dsh is missing → <a href="#/en/15.13.6"><code>8.13.6</code></a></li>
+</ul>

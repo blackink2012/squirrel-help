@@ -1,0 +1,36 @@
+<p>A single click selects, a double-click runs the sub-library preset, and a right-click opens the full asset menu.</p>
+<p><img src="media/3.3.1-2.webp" alt="Asset card: single-click selects (blue frame), double-click runs the sub-library preset, right-click opens the menu" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Single-click</h2>
+<ul>
+<li>Clicking a card selects only that card, and the properties and preview on the right update.</li>
+<li>Clicking empty space clears the selection and the right panels return to the unselected state.</li>
+<li>Clicking a row in list view selects that row&#x27;s asset.</li>
+</ul>
+<h2 id="h-2">Double-click</h2>
+<p>A double-click runs the current sub-library&#x27;s <code>「双击命令」 (Double-click command)</code> preset. The factory defaults are:</p>
+<table><thead><tr><th>Sub-library</th><th>Double-click action</th></tr></thead><tbody><tr><td>Materials</td><td>Import <code>.zmetal</code> and rebuild the shading network</td></tr><tr><td>Models / Scenes / Dynamics / Node trees</td><td>Import <code>ma</code> (node trees select the newly created nodes after import)</td></tr><tr><td>Lights</td><td>Import <code>.zlight</code></td></tr><tr><td>Textures</td><td>Create a PBR material (<code>openPBRSurface</code>)</td></tr><tr><td>HDR</td><td>Create a dome light (template picked by the current renderer)</td></tr><tr><td>Images</td><td>Create a file node (wire the image into a texture node)</td></tr><tr><td>Audio</td><td>Import to the Maya timeline (current frame = first frame of the audio)</td></tr><tr><td>Animation data</td><td>Run hierarchy mapping and channel selection to write keyframes onto the scene hierarchy</td></tr><tr><td>Unregistered categories</td><td>Import the first available format</td></tr></tbody></table>
+<p>The double-click behavior can be changed per sub-library in <code>Settings → 右键菜单 (Context menu) → 双击命令 (Double-click command)</code>.</p>
+<h2 id="h-3">Right-click</h2>
+<p><img src="media_en/shared/menu-asset-context.webp" alt="Asset context menu: varies by sub-library, with common items in the lower part" loading="lazy" decoding="async"></p>
+<ol>
+<li>Right-click a card; if the card is already part of a multi-selection the whole selection is kept, otherwise it is selected first.</li>
+<li>The top of the menu holds <strong>items specific to that sub-library</strong>, which differ between sub-libraries:<ul>
+<li>Materials / models / lights / textures / scenes / HDR / dynamics: import (executed directly for a single format, a submenu for several), add reference, import geometry and so on, each with its own items such as apply material, assign texture, apply light or create dome light;</li>
+<li>Images: import as a file node, create an imagePlane, assign to a selected material slot, open the image;</li>
+<li>Audio: import to the timeline, import to the Time Editor, import to the Trax Editor, import to the camera sequencer;</li>
+<li>Animation data: import animation, import animation (hierarchy mapping)…, import to selected attributes;</li>
+<li>Node trees: import ma, add reference, preview nodes.</li>
+</ul></li>
+<li>The lower part holds common items: favorites, select all, copy, open folder, move / copy to, edit, update thumbnail (capture / import / Maya playblast / render / add / capture and add, and for some sub-libraries <code>「后台渲染」 (Background render)</code>), update asset, delete, preview nodes, analyze thumbnail with AI, asset details and so on.</li>
+<li>Right-clicking empty space in the grid gives a menu that also changes with the category: create asset, paste, import from files and more; under <code>「全部资产」 (All assets)</code> the <code>「从外部导入」 (Import from Files)</code> submenu shows a grey line: <code>「当前分类不支持从外部导入」 (this category does not support importing from files)</code>.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>Double-clicking a model asset adds a new object to the Maya viewport and Outliner; double-clicking an image asset adds a file node in the Hypershade; double-clicking an audio asset shows the waveform on the timeline.</li>
+<li>Right-clicking a material asset shows <code>「导入」 (Import)</code> and <code>「应用材质」 (Apply material)</code>; right-clicking an HDR shows <code>「创建穹顶灯」 (Create dome light)</code>; right-clicking animation data shows <code>「导入动画」 (Import animation)</code>.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>The complete context menu differs per sub-library and can be toggled in <code>Settings → 右键菜单 (Context menu)</code>, see 4.1.4.6.</li>
+<li>If a double-click does nothing, first confirm that sub-library&#x27;s double-click command is not set to <code>「无」 (None)</code>.</li>
+</ul>

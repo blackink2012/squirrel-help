@@ -1,0 +1,13 @@
+<p>技能束是给 AI 看的说明书：每个技能一个目录、一个 <code>SKILL.md</code>，写清什么时候用、怎么做、有哪些坑。</p>
+<h2 id="h-1">来源与落点</h2>
+<p>源目录是 <code>&lt;插件目录&gt;\dsh_plugins\skills</code>，当前随包 13 个技能，覆盖资产库、资产转换、Maya 帮助、无头建模、Bifrost、插件内部、脚本资产等主题。</p>
+<ul>
+<li><strong>内置 dsh</strong>：每次拉起 Web 端前，插件把技能幂等落到 <code>&lt;dshHome&gt;\skills</code>，并把用户级规矩写到 <code>&lt;dshHome&gt;\AGENTS.md</code>，用户无需操作。</li>
+<li><strong>外部工具</strong>：同一份源，落到对方的技能根；除 dsh 外目录名与 frontmatter 的 <code>name</code> 都加 <code>squirrel-</code> 前缀，避免与用户已有技能撞名。</li>
+</ul>
+<h2 id="h-2">为什么还要常驻规矩</h2>
+<p>技能是按需加载的，模型可能不读就直接动手；<code>AGENTS.md</code> 里的受管区段每次会话都会注入，负责「先查帮助、再动场景」这类底线。落位只动自己的区段，用户写的内容保留。</p>
+<h2 id="h-3">落位时会自检</h2>
+<p>对方对技能文件的问题通常静默忽略，所以落位时会顺手修围栏行、检查 <code>name</code> 与目录名是否一致、是否带 UTF-8 BOM、是否覆盖了别人的同名目录。</p>
+<h2 id="h-4">更新与卸载</h2>
+<p>重复安装会先确认覆盖名单；卸载按账本只删我们落的技能，不碰同目录下别人的技能。</p>

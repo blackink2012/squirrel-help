@@ -1,0 +1,22 @@
+<p>Assigning textures connects a texture or HDR asset to an existing node: a texture to a material, or an HDR to the selected dome light.</p>
+<p><img src="media_en/shared/menu-context-assign-texture.webp" alt="Texture asset context menu → assign texture to material" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The target material node or dome light exists in the scene and is selected in Maya.</li>
+<li>The asset type matches the action: a texture asset uses <code>「指定贴图到材质」 (Assign texture to material)</code>, an HDR asset uses <code>「指定贴图」 (Assign texture)</code>.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select the target material or light node.</li>
+<li>Right-click the texture asset in the library and choose <code>「指定贴图到材质」 (Assign texture to material)</code>; for an HDR asset choose <code>「指定贴图」 (Assign texture)</code>.</li>
+<li>You can also call <code>assign_texture</code>: <code>kind=auto</code> decides from the asset&#x27;s <code>meta.asset_type</code>, <code>texture</code> forces a material connection and <code>hdr</code> forces a dome-light connection.</li>
+<li>To import the asset&#x27;s textures into the scene first, call <code>import_texture</code>; without a texture name it imports every image texture and shares one <code>place2dTexture</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>It returns <code>status=ok</code> with an <code>assigned</code> list; a texture asset reports <code>kind</code> as <code>texture</code> and an HDR asset as <code>hdr</code>. For textures a newly connected <code>file</code> node appears in the Hypershade, while the HDR branch updates the dome light&#x27;s texture path.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>The HDR branch needs an existing selected dome light; without a target it returns an error instead of creating one. Use &quot;create a dome light&quot; for that.</li>
+<li><code>auto</code> relies on asset metadata, so pass <code>kind</code> explicitly when type detection is unreliable.</li>
+<li>A failed assignment returns <code>reason</code>; confirm the target node type matches the current renderer and retry.</li>
+</ul>

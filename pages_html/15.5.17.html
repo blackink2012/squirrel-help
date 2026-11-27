@@ -1,0 +1,41 @@
+<blockquote><p>一句话定位：<strong>这是菜单最下面的三条「看一眼」的条目</strong>：看节点连接、看 AI 怎么理解这张缩略图、看资产详情。</p></blockquote>
+<h2 id="h-1">菜单逐项详解</h2>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>预览节点 ▶</td><td>只读查看资产里节点文件的连接关系</td><td>资产里找到 <strong>.zmetal</strong> 或<strong>具名 .ma</strong> 节点文件</td><td>子菜单列出节点文件（如 <code>aiStandardSurface1.ma</code>、<code>aiStandardSurface1.zmetal</code>），点一项打开节点编辑器预览窗口</td><td>不会把节点导入场景；想真导入用「导入」</td></tr><tr><td>AI 分析缩略图</td><td>让 AI 读缩略图，给出分类 / 标签 / 中文名 / 注释建议</td><td>AI 依赖齐全（本机 Ollama + 嵌入模型）</td><td>打开 AI 分析窗口，显示识别结果与建议，确认后写回资产</td><td>没装 AI 依赖时该功能会先引导安装</td></tr><tr><td>资产详情</td><td>单独看这个资产的详情</td><td>无</td><td>有版本或变体的资产打开<strong>版本浏览器</strong>；其余打开<strong>资产观察窗口</strong></td><td>与双击右侧预览图走同一条链路</td></tr></tbody></table>
+<p><img src="media/shared/menu-preview-node.webp" alt="「预览节点 ▶」子菜单" loading="lazy" decoding="async"></p>
+<h2 id="h-2">「预览节点」具体看什么</h2>
+<p>它把资产里的节点文件读出来，在节点编辑器里画出节点与连接，用来回答「这个材质 / 场景内部的网络是怎么连的」。</p>
+<table><thead><tr><th>会被列出来的文件</th><th>不会被列出来的文件</th></tr></thead><tbody><tr><td><code>.zmetal</code>（材质网络）</td><td>通用文件名 <code>node.ma</code>（导出时的默认节点文件）</td></tr><tr><td>有具体名字的 <code>.ma</code>（如 <code>aiStandardSurface1.ma</code>、<code>place2dTexture1.ma</code>）</td><td>不是节点文件的贴图、缓存、缩略图</td></tr><tr><td>变体 / LOD 目录里的 .zmetal、具名 .ma（显示为 <code>variants/&lt;版本&gt;/&lt;文件&gt;</code>）</td><td>资产里根本没有节点文件的情况（那一行不会出现）</td></tr></tbody></table>
+<p>所以「我的菜单里没有预览节点」通常意味着：<strong>这个资产里没有具名节点文件</strong>，不是菜单出了问题。对照 <a href="#/15.5.1"><code>8.5.1</code></a> 的「条件」那一行。</p>
+<p>相关阅读：材质节点预览 <a href="#/7.1.4"><code>4.4.1.4</code></a>、预览 .ma 节点连接 <a href="#/7.3.4"><code>4.4.3.4</code></a>。</p>
+<h2 id="h-3">「AI 分析缩略图」会做什么、写回什么</h2>
+<ol>
+<li>打开 AI 分析窗口，把你的缩略图交给视觉模型读；</li>
+<li>给出建议：<strong>分类</strong>、<strong>标签</strong>、<strong>中文名（易读名）</strong>、<strong>注释</strong>；</li>
+<li>你在窗口里逐项确认 / 修改后点应用，结果<strong>写回资产元数据</strong>（卡片上的名字、标签、分类随之变化）。</li>
+</ol>
+<p>前提与边界：</p>
+<ul>
+<li>需要 AI 依赖齐全（Ollama + 嵌入模型等）。缺依赖时插件会提示去「设置 → AI」一键安装。</li>
+<li>它分析的是<strong>缩略图</strong>，不是场景数据；缩略图拍得好，建议才准。</li>
+<li>分析过程不改几何体、不动贴图，只建议元数据。写回后想反悔就手动改回去（编辑对话框）。</li>
+</ul>
+<h2 id="h-4">「资产详情」打开的是哪个窗口</h2>
+<table><thead><tr><th>资产情况</th><th>打开什么</th></tr></thead><tbody><tr><td>有版本（V1/V2…）或变体</td><td>版本浏览器：列出所有版本 / 变体 / LOD，可导入、可管理</td></tr><tr><td>普通单版本资产</td><td>资产观察窗口：大图预览 + 详情信息</td></tr></tbody></table>
+<p>两个补充：</p>
+<ul>
+<li>这条<strong>永远在菜单最下方</strong>，前面有一条分隔线，是菜单的收尾项。</li>
+<li>在资产观察窗口内部右键时，这张菜单会复用，但<strong>不再显示「资产详情」</strong>（否则只会再开一个一模一样的窗口）。</li>
+</ul>
+<h2 id="h-5">注意点</h2>
+<ul>
+<li><strong>预览节点是只读的</strong>：它读文件、画连接，不会在你场景里建任何节点；要导入请回到「导入」。</li>
+<li><strong>AI 建议不一定对</strong>：模型只看到缩略图，分类 / 标签建议按你的规范再核一遍再应用。</li>
+<li><strong>资产详情和双击预览图等价</strong>：两个入口同一个结果，用哪个方便用哪个。</li>
+</ul>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>导入与引用：<a href="#/15.5.13"><code>8.5.13</code></a>；编辑 / 更新 / 删除：<a href="#/15.5.16"><code>8.5.16</code></a>；内部条目右键：<a href="#/15.5.18"><code>8.5.18</code></a></li>
+<li>AI 分析窗口：<a href="#/15.13.3"><code>8.13.3</code></a>；批量分析与结果应用：<a href="#/8.4.3"><code>4.5.4.3</code></a></li>
+<li>资产详情窗口：<a href="#/15.11.1"><code>8.11.1</code></a>；版本浏览器：<a href="#/15.11.2"><code>8.11.2</code></a></li>
+<li>子库差异总表：<a href="#/15.5.1"><code>8.5.1</code></a></li>
+</ul>

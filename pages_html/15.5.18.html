@@ -1,0 +1,29 @@
+<blockquote><p>一句话定位：<strong>「版本 / 变体 / LOD」不是独立资产，是主资产内部的条目；右键它们得到的是两张精简菜单，只做「这一份」的事。</strong></p></blockquote>
+<h2 id="h-1">怎么走到这一步</h2>
+<ol>
+<li>右键主资产卡片 → 展开「导入 ▶」子菜单；</li>
+<li>点其中的 <strong>查看版本</strong> / <strong>查看变体</strong> / <strong>查看 LOD 管理</strong>；</li>
+<li>资产区切换成内部视图，卡片变成版本 / 变体 / LOD 条目；</li>
+<li>在内部条目卡片上<strong>右键</strong>。</li>
+</ol>
+<h2 id="h-2">版本 / 变体条目的右键菜单</h2>
+<table><thead><tr><th>段</th><th>条目</th><th>说明</th></tr></thead><tbody><tr><td>①</td><td>导入 &lt;格式&gt;</td><td>只把<strong>这一份</strong>（这个版本 / 变体）导进场景；格式唯一时直接显示格式名</td></tr><tr><td>①</td><td>添加引用</td><td>把这一份以 Reference 方式引入场景</td></tr><tr><td>①</td><td>查看 LOD 管理</td><td>该条目下有多条 LOD 时出现，切到它的 LOD 列表</td></tr><tr><td>①</td><td>追加 LOD…</td><td>给这一份追加一条新 LOD</td></tr><tr><td>②</td><td>添加到收藏夹 ▶</td><td>收藏的是<strong>主资产</strong>（内部条目本身不能收藏）</td></tr><tr><td>②</td><td>全选 / 复制 / 打开文件夹</td><td>复制与打开文件夹都作用于<strong>主资产</strong>；内部条目不会被复制</td></tr><tr><td>③</td><td>编辑</td><td>主版本上不可用（置灰，提示「（主版本）」）</td></tr><tr><td>③</td><td>更新缩略图 ▶</td><td>截取 / 导入；变体还多 Maya拍屏 / 渲染图；添加 / 截取添加。<strong>没有「后台渲染」</strong></td></tr><tr><td>③</td><td>更新资产 ▶</td><td>版本条目给的是：替换资产 / 追加格式 / 追加为 LOD / 创建新版本（子版本上置灰）/ 添加新变体… / 批量添加变体…；变体条目只有一行「更新资产」</td></tr><tr><td>③</td><td>删除</td><td>主版本不可删（置灰，提示主版本不可删除）</td></tr><tr><td>④</td><td>资产详情</td><td>打开版本浏览器 / 资产观察窗口</td></tr></tbody></table>
+<h2 id="h-3">LOD 条目的右键菜单（更精简）</h2>
+<table><thead><tr><th>段</th><th>条目</th><th>说明</th></tr></thead><tbody><tr><td>①</td><td>导入 &lt;格式&gt;</td><td>只导入这一条 LOD</td></tr><tr><td>①</td><td>打开文件夹</td><td>打开<strong>主资产</strong>的文件夹</td></tr><tr><td>②</td><td>设为默认 LOD</td><td>只在「当前不是默认」时出现；点它把这条设为默认</td></tr><tr><td>②</td><td>重命名 LOD…</td><td>改名（只改这一条 LOD 的显示名）</td></tr><tr><td>③</td><td>追加 LOD…</td><td>再给这个版本加一条 LOD</td></tr><tr><td>③</td><td>删除此 LOD</td><td>资产只剩一条 LOD 时置灰（必须保留至少一条）</td></tr><tr><td>④</td><td>资产详情</td><td>打开版本浏览器 / 资产观察窗口</td></tr></tbody></table>
+<h2 id="h-4">为什么这些菜单这么短</h2>
+<p>内部条目（版本 / 变体 / LOD）<strong>不是真实资产</strong>，只是主资产里的一个切片。所以：</p>
+<table><thead><tr><th>普通资产能做</th><th>内部条目为什么不能</th></tr></thead><tbody><tr><td>移动到 / 复制到分类</td><td>它没有独立目录，搬不动；要搬就搬主资产</td></tr><tr><td>编辑名称 / 分类 / 标签</td><td>元数据挂在主资产上</td></tr><tr><td>删除整个资产</td><td>只能删「这一份」（LOD 有最小值限制），整包删除要在主资产上做</td></tr><tr><td>后台渲染缩略图</td><td>后台渲染按整个资产包出图，单份条目没有独立包</td></tr></tbody></table>
+<p>好处也很实在：<strong>在这张菜单里点错，最多改到这一份，不会动到主资产的内容与位置。</strong></p>
+<h2 id="h-5">注意点</h2>
+<ul>
+<li><strong>收藏的是主资产</strong>：在内部条目上点收藏，收藏夹里出现的是主资产，不是这一个版本。</li>
+<li><strong>「设为默认 LOD」会改主资产的行为</strong>：默认 LOD 是导入 / 拖入时默认用的那一条，改之前想清楚。</li>
+<li><strong>删除变体只删它自己的几何与缩略图</strong>：资产共享的贴图 / 材质不受影响（删除时会有确认框写明）。</li>
+<li><strong>内部视图里「粘贴」不能用来复制内部条目</strong>：复制条目不会进剪贴板。</li>
+</ul>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>主资产菜单：<a href="#/15.5.1"><code>8.5.1</code></a>；更新资产 / 更新缩略图：<a href="#/15.5.16"><code>8.5.16</code></a>；导入与引用：<a href="#/15.5.13"><code>8.5.13</code></a></li>
+<li>版本与 LOD 概念：<a href="#/4.10.1"><code>4.1.10.1</code></a>；变体是什么：<a href="#/4.13.1"><code>4.1.13.1</code></a></li>
+<li>版本浏览器：<a href="#/15.11.2"><code>8.11.2</code></a>；变体管理窗口：<a href="#/15.11.3"><code>8.11.3</code></a>；导入变体与版本选择：<a href="#/15.11.5"><code>8.11.5</code></a></li>
+</ul>

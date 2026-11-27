@@ -1,0 +1,30 @@
+<p><code>「应用材质参数」 (Apply material parameters)</code> only writes the asset&#x27;s attribute values into the selected material nodes in the scene; it never creates or replaces a material.</p>
+<p><img src="media_en/shared/menu-context-apply-params.webp" alt="Material asset context menu: apply material parameters" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>One or more material nodes (shaders) are selected in Maya.</li>
+<li>The material asset contains <code>.zmetal</code>; otherwise it falls back to the material network in <code>.ma/.mb</code>.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select the target material node in the Hypershade or the viewport.</li>
+<li>Right-click the material asset and choose <code>「应用材质参数」 (Apply material parameters)</code>.</li>
+<li>The plug-in writes depending on the case:<ul>
+<li>Same type as the source material: the serialized attributes are copied directly.</li>
+<li>Different type: values are mapped through the <code>.mmap</code> files in <code>Assets/material_mapper_presets/</code> before writing.</li>
+</ul></li>
+<li>Afterwards the modified material nodes are selected.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The target material&#x27;s attribute values are updated.</li>
+<li>Textures and upstream nodes are reconnected per the mapping.</li>
+<li>The Script Editor reports <code>「已应用材质参数到 N 个材质」 (applied material parameters to N materials)</code>.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>With no material node selected it reports <code>「请先在场景中选中要应用参数的材质节点」 (select the material nodes to receive parameters first)</code>.</li>
+<li>When the asset holds no material data it reports <code>「该资产不含材质数据（.zmetal）」 (this asset contains no material data (.zmetal))</code>.</li>
+<li>With no usable mapping path it reports <code>「未应用任何参数（目标材质类型缺少对应的映射文件）」 (nothing applied; the target material type has no mapping file)</code>.</li>
+<li>This keeps the target material&#x27;s node type and name and only changes attributes and connections.</li>
+</ul>

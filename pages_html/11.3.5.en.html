@@ -1,0 +1,28 @@
+<p><strong>Import namespace</strong> decides <strong>which namespace freshly imported nodes land in</strong>. It is the isolation layer that stops an import from clashing with nodes already in the scene.</p>
+<h2 id="h-1">Where it lives, and the default</h2>
+<ul>
+<li>Location: <strong>Settings → General → Import namespace</strong> (the checkbox &quot;Create a namespace automatically on direct import (named after the asset)&quot;);</li>
+<li>Default: <strong>ticked</strong> (<code>import_namespace</code> is <code>true</code> in <code>config.json</code>; a missing key is treated as on).</li>
+</ul>
+<h2 id="h-2">When it is on (default)</h2>
+<ul>
+<li>The namespace name comes from the <strong>asset name</strong>: characters other than letters / digits / CJK / underscore become <code>_</code>, and leading or trailing underscores are trimmed;</li>
+<li>If the name starts with a digit it is prefixed with <code>ns_</code> (Maya does not allow namespaces starting with a digit);</li>
+<li>If the scene already has that namespace, <code>_1</code>, <code>_2</code>… is appended;</li>
+<li>Result: the whole asset forms one group of nodes you can select, hide or delete by namespace, and it never fights with same-named objects already in the scene.</li>
+</ul>
+<h2 id="h-3">When it is off</h2>
+<ul>
+<li>New nodes go straight into the <strong>root namespace <code>:</code></strong>;</li>
+<li>Nodes that clash with existing ones are renamed by Maya (<code>pCube1</code>, <code>pCube2</code>…), so you can no longer tell which nodes came from this import.</li>
+</ul>
+<h2 id="h-4">Scope</h2>
+<ul>
+<li>It only affects <strong>later</strong> imports: save, and the next import follows the new rule; nodes already imported are not moved into or out of a namespace;</li>
+<li>It applies to direct imports (geometry / scenes / animation / caches and proxies); the right-click <strong>Add reference</strong> has its own namespace rule (asset name plus <code>_1</code> / <code>_2</code>) and is not controlled by this switch;</li>
+<li>It changes node placement only — not the asset package, texture paths or dependency paths;</li>
+<li>Stored as <code>import_namespace</code> in <code>config.json</code>.</li>
+</ul>
+<h2 id="h-5">Notes</h2>
+<blockquote><p><strong>Tip</strong>: To get rid of that prefix, untick the option and click <strong>Apply / OK</strong>; no plug-in restart is needed.</p></blockquote>
+<blockquote><p><strong>Warning</strong>: With it off, clashing nodes are silently renamed by Maya, so finding &quot;what this import brought in&quot; by name becomes much harder; keep it on when importing a batch of assets.</p></blockquote>

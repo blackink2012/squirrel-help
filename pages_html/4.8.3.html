@@ -1,0 +1,31 @@
+<p>批量重命名用前缀追加、后缀追加或查找替换，一次性修改多个资产的显示名或文件名。</p>
+<p><img src="media/shared/dialog-batch-rename.webp" alt="批量重命名" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已选中至少两个资产，批量操作栏可见。</li>
+<li>已想好重命名目标和规则；操作会直接写入资产元数据。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>多选资产，点击批量操作栏的「批量重命名」。</li>
+<li>在「重命名」下拉选择目标：<ul>
+<li>显示名（<code>name_cn</code>）：只改界面上看到的名称。</li>
+<li>文件名（<code>name</code>）：同时改 <code>.zasset</code> 资产目录名。</li>
+</ul></li>
+<li>选择模式：<ul>
+<li>前缀追加：在原名前加上输入文本。</li>
+<li>后缀追加：在原名后加上输入文本。</li>
+<li>查找替换：填写查找文本和替换文本。</li>
+</ul></li>
+<li>在预览列表核对每一条「旧名 → 新名」；没有变化的条目标注「不变」。</li>
+<li>主按钮显示可改数量与总数，例如「执行重命名 (8/10)」；可改数量为 0 时按钮不可用。</li>
+<li>点「执行重命名」，完成后提示成功数量，失败数量会追加在提示中。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>网格卡片名称立即更新。</li>
+<li>状态提示显示成功与失败数量。</li>
+<li>选择「文件名」时，资产目录名同步改变；再次打开资产库仍能看到改名后的资产。</li>
+</ul>
+<div class="admonition note"><div class="admonition-title">注意</div><p>查找替换按字面文本替换，区分大小写；前缀和后缀不会自动添加分隔符，需要时请自己输入空格或下划线。</p></div>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>不要绕过插件直接重命名 <code>.zasset</code> 目录。文件名模式请始终通过本对话框执行。</p></div>

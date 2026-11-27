@@ -1,0 +1,24 @@
+<p>A modal dialog holds the Maya main thread and makes every remote command wait as well; it looks much like a hang, but dismissing the dialog restores everything.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>Commands time out for no clear reason while the Maya process is alive and the port still connects.</li>
+<li><code>--ping</code> takes very long, or the next command times out right after a reply.</li>
+<li>The Maya window shows a pending dialog: save prompt, license notice, Arnold error, crash-recovery box and so on.</li>
+</ul>
+<h2 id="h-2">Cause</h2>
+<p>A modal dialog enters its own event loop and occupies the main thread, so remote code only runs once it closes; this is not a bridge or port failure.</p>
+<h2 id="h-3">Fixes</h2>
+<ol>
+<li>Call <code>maya_modal_probe</code> (read-only), which returns <code>active_modal</code>, <code>modals</code> and a <code>summary</code> you can relay directly.</li>
+<li>Switch to the Maya window based on the reply and decide by hand, then dismiss the dialog.</li>
+<li>After dismissing it, run a read-only query again to confirm the main thread recovered.</li>
+<li>When the dialog asks whether to save, decide to save or discard before continuing.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p><code>maya_modal_probe</code> no longer reports an active modal, <code>--ping</code> replies normally and later commands return within the expected time.</p>
+<h2 id="h-5">Tips and warnings</h2>
+<ul>
+<li>The probe is read-only: it never clicks or closes anything, because whether to save is the user&#x27;s decision.</li>
+<li>Never force-close dialogs with a script; read the content first so no data is lost.</li>
+<li>If it still times out after dismissing the dialog, continue with &quot;Main thread hangs&quot;.</li>
+</ul>

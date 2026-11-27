@@ -1,0 +1,30 @@
+<p>「应用材质参数」只把资产里的属性值写入场景中选中的材质节点，不新建、不替换材质。</p>
+<p><img src="media/shared/menu-context-apply-params.webp" alt="材质资产右键：应用材质参数" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已在 Maya 中选中一个或多个材质节点（shader）。</li>
+<li>材质资产含 <code>.zmetal</code>；没有时回退到 <code>.ma/.mb</code> 中的材质网络。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在 Hypershade 或视口中选择目标材质节点。</li>
+<li>右键材质资产，选择「应用材质参数」。</li>
+<li>插件按情况写入：<ul>
+<li>目标与源材质同类型：直接复制序列化属性。</li>
+<li>类型不同：按 <code>Assets/material_mapper_presets/</code> 中的 <code>.mmap</code> 映射后写入。</li>
+</ul></li>
+<li>写完后插件选中被修改的材质节点。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>目标材质的属性面板数值已更新。</li>
+<li>贴图与上游节点按映射重新连接。</li>
+<li>脚本编辑器输出「已应用材质参数到 N 个材质」。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>未选中材质节点时提示「请先在场景中选中要应用参数的材质节点」。</li>
+<li>资产不含材质数据时提示「该资产不含材质数据（.zmetal）」。</li>
+<li>没有可用映射路径时提示「未应用任何参数（目标材质类型缺少对应的映射文件）」。</li>
+<li>本操作保留目标材质的节点类型与名称，只改属性与连接。</li>
+</ul>

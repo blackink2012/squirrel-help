@@ -1,0 +1,25 @@
+<p>The batch operation bar offers batch entries for tags, names and categories; fields such as notes, renderer and color space have no shared batch form yet.</p>
+<p><img src="media_en/shared/dialog-batch-tag.webp" alt="Batch tags" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Fields that can be batch edited</h2>
+<table><thead><tr><th>Field</th><th>Entry</th><th>Notes</th></tr></thead><tbody><tr><td>Tags</td><td>Batch operation bar → batch tags</td><td>Add tags or remove tags</td></tr><tr><td>Display name, file name</td><td>Batch operation bar → batch rename</td><td>Prefix, suffix or find and replace</td></tr><tr><td>Category</td><td>Batch operation bar → batch move</td><td>Change category within the same sub-library</td></tr><tr><td>Name, tags, notes, category</td><td>Applying AI batch analysis results</td><td>Written in bulk from AI suggestions, see the AI tools chapter</td></tr></tbody></table>
+<h2 id="h-2">Batch adding or removing tags</h2>
+<ol>
+<li>Multi-select assets and click <code>「批量标签」 (Batch tags)</code> in the batch operation bar.</li>
+<li>Choose <code>「添加标签」 (Add tags)</code>: type tags (comma separated) or click common tags, then click <code>「应用」 (Apply)</code>.</li>
+<li>Choose <code>「删除标签」 (Remove tags)</code>: click existing tags so they turn red, then click <code>「应用」 (Apply)</code>.</li>
+<li>Check <code>「操作预览」 (Operation preview)</code> for the asset and tag counts before running.</li>
+</ol>
+<h2 id="h-3">Batch changing names and categories</h2>
+<ol>
+<li>Rename: use <code>「批量重命名」 (Batch rename)</code>, choose display name or file name, then prefix, suffix or find and replace.</li>
+<li>Change category: use <code>「批量移动」 (Batch move)</code> and pick the target category from the current sub-library&#x27;s list.</li>
+<li>Both operations reload the grid when they finish.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>The properties panel shows the updated tags, name and category.</li>
+<li>Searching by the new tag or name finds these assets.</li>
+<li>The asset count of the target category grows in the category tree.</li>
+</ul>
+<div class="admonition note"><div class="admonition-title">注意</div><p>Notes, material type, software, renderer and color space have no batch edit dialog; change them per asset in the properties panel, or write them one by one through the <code>edit</code> command.</p></div>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Batch writes overwrite the matching fields on the selected assets directly. Confirm the selection and check the operation preview first.</p></div>

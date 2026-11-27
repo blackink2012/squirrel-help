@@ -1,0 +1,29 @@
+<p>「显示在主 UI」控制某个子库或顶级分类是否出现在主界面左栏，默认全部显示。</p>
+<p><img src="media/shared/settings-sublibraries.webp" alt="设置 → 子库与分类" loading="lazy" decoding="async"></p>
+<p><img src="media/shared/settings-show-in-ui.webp" alt="显示在主 UI" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>「设置 → 子库与分类」右侧顶部是该复选框。左侧选中一个子库后，勾选表示它显示在主界面分类树里，取消表示隐藏该入口。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<ul>
+<li>可选值：勾选 = 显示，取消 = 隐藏。</li>
+<li>默认值：全部勾选。设置文件用黑名单保存隐藏项 <code>hidden_top_categories</code>，所以以后在库里新增的顶级分类会自动显示。</li>
+<li>该状态写入 <code>~/.squirrel_asset_manager/app_settings.json</code>，不写入 <code>config.json</code>。</li>
+</ul>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>只影响主界面左栏的入口，包括分类树和收起状态下的图标条。</li>
+<li>「全部资产」始终显示，不受勾选影响；隐藏后仍可通过「全部资产」看到其内容并搜索到。</li>
+<li>项目库的分类树不受影响。</li>
+<li>该复选框不参与「解锁全部配置」锁定，锁定状态下也能直接修改。</li>
+</ul>
+<h2 id="h-4">操作步骤</h2>
+<ol>
+<li>打开「设置 → 子库与分类」。</li>
+<li>左侧选中要处理的子库/顶级分类。</li>
+<li>勾选或取消「显示在主 UI」。</li>
+<li>点「应用」或「确定」。</li>
+</ol>
+<h2 id="h-5">结果验证</h2>
+<p>应用后回到主界面，左栏应按新设置显示或隐藏该入口。</p>
+<h2 id="h-6">何时修改</h2>
+<p>子库很多、左栏太长，或某个子库当前项目用不到时。不要用它来「删除」分类，磁盘数据不会被删除。</p>

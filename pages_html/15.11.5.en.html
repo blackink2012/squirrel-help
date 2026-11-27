@@ -1,0 +1,39 @@
+<blockquote><p>One-line summary: <strong>for an asset with versions / variants / LODs, importing is not &quot;import the asset&quot; but &quot;pick one first and import it&quot; — this page covers where that choice happens and how.</strong></p></blockquote>
+<h2 id="h-1">Two entries, remember the conclusion first</h2>
+<table><thead><tr><th>Scenario</th><th>Which entry to use</th></tr></thead><tbody><tr><td>Just drop a variant / version / LOD into the scene quickly</td><td>Right-click the asset → the <strong>Import variant / version</strong> submenu and click that row (fastest)</td></tr><tr><td>Look at the images and information before importing</td><td>Double-click the preview to open the <strong>version browser</strong>, select the entry on the left and click <strong>Import this version / Import this LOD / Import this variant</strong> on the right</td></tr></tbody></table>
+<h3 id="h-2">Entry one: the right-click submenu</h3>
+<p>Right-click an asset with versions / variants → the <strong>Import…</strong> submenu, whose title follows the asset content:</p>
+<table><thead><tr><th>Submenu title</th><th>When it appears</th></tr></thead><tbody><tr><td>Import variant</td><td>The asset has only variants (no multiple versions)</td></tr><tr><td>Import version / LOD</td><td>The asset has only versions / LODs (no variants)</td></tr><tr><td>Import variant / version</td><td>Both variants and versions exist (or older version records exist)</td></tr></tbody></table>
+<p>The submenu lists variants / versions one by one:</p>
+<ul>
+<li>A variant with several LODs → another submenu level (LOD detail);</li>
+<li>A variant with several geometry formats → another format submenu (<code>ma</code>, <code>fbx</code>…, distinguished by file name when several files share an extension);</li>
+<li>Hovering an entry pops up that entry&#x27;s large thumbnail.</li>
+</ul>
+<p>Clicking the last level imports directly.</p>
+<h3 id="h-3">Entry two: the version browser</h3>
+<p>In the version browser (<a href="#/en/15.11.2"><code>8.11.2</code></a>): select an entry on the left and use the button on the right. The button text becomes <strong>Import this version / Import this LOD / Import this variant</strong> to match the selection.</p>
+<p><img src="media_en/shared/dialog-version-browser-variant.webp" alt="Variants in the version browser" loading="lazy" decoding="async"></p>
+<h2 id="h-4">The source also holds a standalone selection dialog</h2>
+<p>The plug-in source retains a standalone &quot;Import variant geometry&quot; dialog (the older selection method): it lists the asset&#x27;s <strong>versions</strong> as radios plus the matching <strong>LOD detail</strong> radios and imports on OK. <strong>The current version does not attach it to any menu</strong>, so it cannot be reached through normal operation — use the two entries above. Its structure is described here so old documents and screenshots are recognizable:</p>
+<table><thead><tr><th>Control</th><th>Content</th></tr></thead><tbody><tr><td>Title</td><td>Import variant geometry</td></tr><tr><td>Top</td><td>The asset name to import</td></tr><tr><td>Version</td><td>A radio list, each row <code>tag - display name (creation date)</code>, with notes on their own line when present</td></tr><tr><td>LOD detail</td><td>A radio list, each row <code>display name (LODx)</code> plus triangle / vertex counts and available formats; a version without LODs shows &quot;this version has no available LOD&quot;</td></tr><tr><td>With no variants</td><td>Shows only &quot;this asset contains no variant data&quot; and Cancel</td></tr><tr><td>Buttons</td><td>Cancel / OK</td></tr></tbody></table>
+<blockquote><p>In short: <strong>seeing this window means you are using the old entry</strong>; with the current version use right-click <strong>Import variant / version</strong> or the version browser.</p></blockquote>
+<h2 id="h-5">A complete example (importing a variant&#x27;s LOD1 in ma format)</h2>
+<ol>
+<li>Find the asset with a variant badge in the grid.</li>
+<li>Right-click → expand the <strong>Import variant / version</strong> submenu.</li>
+<li>Find the target variant row and hover to check the popup thumbnail so you click the right one.</li>
+<li>If there is a LOD level, expand it and choose <strong>LOD1</strong>.</li>
+<li>If there is a format level, choose <code>ma</code>.</li>
+<li>Releasing imports the geometry into the current Maya scene.</li>
+<li>To verify which version came in, read the <code>[VariantImport]</code> log in the Script Editor, which states version/lod/geom.</li>
+</ol>
+<h2 id="h-6">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>No import variant / version submenu in the context menu</td><td>The asset has no variants / multiple versions, or only one usable format so no submenu appears</td><td>Use plain <strong>Import</strong>, or create variants / versions first</td></tr><tr><td>Nothing happens after choosing</td><td>That entry&#x27;s geometry file is missing, or the standalone mode is not connected to Maya</td><td>Check the <code>[VariantImport]</code> log; confirm Maya is online</td></tr><tr><td>The imported model is wrong</td><td>The wrong LOD or format was chosen</td><td>Import the right entry again and undo the previous one with Ctrl+Z</td></tr><tr><td>Importing an animation asset errors out</td><td>Animation versions use ATOM mapping import rather than geometry import</td><td>Use the asset&#x27;s animation import path, or the matching import button in the version browser</td></tr></tbody></table>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>The version browser (selection with previews): <a href="#/en/15.11.2"><code>8.11.2</code></a></li>
+<li>The variant management window: <a href="#/en/15.11.3"><code>8.11.3</code></a></li>
+<li>Switching versions and LODs (user guide): <a href="#/en/4.10.4"><code>4.1.10.4</code></a></li>
+<li>Batch adding variants: <a href="#/en/4.13.3"><code>4.1.13.3</code></a></li>
+</ul>

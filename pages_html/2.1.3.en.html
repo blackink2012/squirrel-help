@@ -1,0 +1,40 @@
+<p>Run the installer, check the Maya integration and the offline dsh as needed, and you get a standalone edition you can start with a double-click.</p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>64-bit Windows; installs per user, so no administrator rights are needed.</li>
+<li>The installer has passed SHA256 verification.</li>
+<li>For the Maya integration, confirm Maya is installed first; without Maya the installer unchecks that component.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Double-click <code>SquirrelAssetManager-Setup-1.0.0.exe</code> (the test build is <code>...-test.exe</code>).</li>
+<li>Choose the installer language: it follows the system language by default (English on an English system, as shown) and can be changed here; the whole wizard then uses that language. <img src="media_en/shared/installer-language.webp" alt="Installer wizard: language selection (follows the system language by default)" loading="lazy" decoding="async"></li>
+<li>On the welcome page click Next. <img src="media_en/shared/installer-welcome.webp" alt="Installer wizard: welcome page" loading="lazy" decoding="async"></li>
+<li>Read the EULA summary on the license page and tick <strong>both</strong> confirmations (&quot;I have read the summary above&quot; and &quot;I have read and agree to the End User License Agreement&quot;); Next becomes available only then. <img src="media_en/shared/installer-agree.webp" alt="Installer wizard: license agreement (both boxes must be ticked)" loading="lazy" decoding="async"></li>
+<li>On the components page tick what you need (see the table below). <img src="media_en/shared/installer-components.webp" alt="Installer wizard: component selection" loading="lazy" decoding="async"></li>
+<li>Choose the install directory, <code>%LOCALAPPDATA%\SquirrelAM</code> by default. <img src="media_en/shared/installer-directory.webp" alt="Installer wizard: install location" loading="lazy" decoding="async"></li>
+<li>When it finishes, keep <code>「启动 Squirrel Asset Manager」 (Launch Squirrel Asset Manager)</code> checked, or open it later from the Start menu or the desktop shortcut.</li>
+</ol>
+<h2 id="h-3">Components</h2>
+<table><thead><tr><th>Component</th><th>Description</th></tr></thead><tbody><tr><td><strong>Core program (required)</strong></td><td>Main program, bundled Python, PySide6, licence and third-party notices</td></tr><tr><td><strong>Maya integration (optional)</strong></td><td>Writes the import path, status-line button and bridge port into each version&#x27;s <code>userSetup.py</code> and creates the shelf button (created only once, during installation)</td></tr><tr><td><strong>AI assistant dsh (offline)</strong></td><td>Unpacks the bundled dsh and portable Node</td></tr><tr><td><strong>Desktop shortcut (optional)</strong></td><td>Creates a launch shortcut on the desktop</td></tr></tbody></table>
+<h2 id="h-4">Silent installation</h2>
+<pre><code class="language-powershell">.\SquirrelAssetManager-Setup-1.0.0.exe /S /COMPONENTS=core,maya,aidsh</code></pre>
+<p>Optional components not listed in <code>/COMPONENTS</code> are unchecked; the core component is always installed.</p>
+<p>A silent install shows no language dialog; it also follows the system language. Add <code>/LANG=</code> to override (<code>2052</code> Simplified Chinese / <code>1033</code> English):</p>
+<pre><code class="language-powershell">.\SquirrelAssetManager-Setup-1.0.0.exe /S /LANG=1033 /COMPONENTS=core,maya,aidsh</code></pre>
+<p>The chosen language is stored in <code>HKCU\Software\SquirrelAssetManager\Language</code>, and the uninstaller reuses it instead of asking again.</p>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>With the Maya integration checked, entry points appear in the Maya shelf and status line after restarting Maya. The shelf button is created only at install time and is not restored automatically after manual deletion.</li>
+<li>Double-clicking the main program opens the asset interface.</li>
+</ul>
+<h2 id="h-6">Common failures</h2>
+<ul>
+<li><strong>SmartScreen warns about an unknown publisher</strong>: the current version is unsigned; once you trust the source, choose &quot;More info → Run anyway&quot;.</li>
+<li><strong>Maya integration checked without Maya</strong>: no entry point appears after installation; run the installer again and uncheck that component.</li>
+<li><strong>Startup says the bundled Python is missing</strong>: the installation is incomplete; reinstall and check whether antivirus software blocked it.</li>
+<li><strong>The standalone edition cannot reach Maya</strong>: confirm Maya is running and the bridge port is open, see &quot;Multiple Maya versions&quot;.</li>
+<li><strong>Wrong installer language</strong>: the installer asks only once; after installation change the UI language in Settings → General → UI language (the uninstaller keeps the language chosen at install time).</li>
+</ul>
+<h2 id="h-7">Run the standalone edition from source</h2>
+<p>In the source package you can double-click <code>启动独立预览.bat</code> (Start standalone preview), or run <code>python squirrel_asset_manager\standalone_preview.py</code>, provided the system Python has PySide6 installed.</p>

@@ -1,0 +1,27 @@
+<p>在资产网格中右键模型资产，选择「导入」下的几何格式，即可把模型放进当前 Maya 场景。</p>
+<p><img src="media/shared/menu-context-model.webp" alt="模型资产右键：导入几何体" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>Maya 场景已打开，且已保存需要保留的内容。</li>
+<li>模型资产包含 ma、mb、fbx、obj、usd、abc、glb、gltf 或 dae 等几何文件。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在资产网格中右键目标模型资产。</li>
+<li>只有一种可用格式时，菜单直接显示「导入 &lt;格式&gt;」；有多种格式时，展开「导入」子菜单。</li>
+<li>选择要使用的几何格式。</li>
+<li>等待脚本编辑器输出导入日志。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>Outliner 中出现新的 transform；部分格式导入后插件会选中新根节点。</li>
+<li>脚本编辑器出现「导入成功」或对应格式的导入日志。</li>
+<li>ma/mb 的贴图路径已重写，视口中材质正常；abc、usd 已复制到工程缓存。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>导入统一进根命名空间 <code>:</code>；场景中已有同名节点时由 Maya 自动改名。</li>
+<li>ma/mb 会按导入依赖策略重写贴图路径并重定向 <code>deps/</code> 关联文件。</li>
+<li>abc、usd 这类需要持久路径的格式，会先复制到工程缓存再导入。</li>
+<li>fbx 导入没有反应时，先在 Maya 插件管理器中确认 <code>fbxmaya</code> 已加载。</li>
+</ul>

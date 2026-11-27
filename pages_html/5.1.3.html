@@ -1,0 +1,30 @@
+<p>导入完成后，用选中集、Outliner、Hypershade 与脚本编辑器日志四处对照，就能确认资产是否真的进入场景。</p>
+<p><img src="media/shared/dialog-asset-details.webp" alt="资产详情：核对导入结果与元数据" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已完成一次库内资产导入，并知道本次使用的格式。</li>
+<li>Maya 的 Script Editor 可用（用于查看插件日志）。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>查看当前选择：导入材质格式后会选中新建材质；导入 zlight 后会选中新建灯光；部分几何导入会选中新根节点。</li>
+<li>打开 Outliner，确认出现新的 transform 或 shape。导入统一进根命名空间 <code>:</code>，同名节点由 Maya 自动改名。</li>
+<li>打开 Hypershade（Window &gt; Rendering Editors &gt; Hypershade），确认材质网络与 file 节点存在。</li>
+<li>选中 file 节点，在属性面板查看 <code>fileTextureName</code>，确认贴图指向 <code>sourceimages/</code>、工程缓存或 <code>.zasset/textures/</code>。</li>
+<li>打开 Script Editor，检查 <code>[ImportExecutor]</code>、<code>[FileImporter]</code>、<code>[Import]</code> 开头的日志。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>日志出现「导入成功」或「已创建 N 个节点」，且没有「导入失败」「未知格式」。</li>
+<li>场景中出现预期数量的新节点，材质或灯光能在 Hypershade、Outliner 中找到。</li>
+<li>视口中模型、贴图或灯光表现正常；贴图不黑、不丢。</li>
+</ul>
+<h2 id="h-4">四类资产的验证点</h2>
+<p>图片、音频、动画数据、节点树 不产生几何体，验证方式与上面的 Outliner / Hypershade 不同：</p>
+<table><thead><tr><th>子库</th><th>导入后到哪看</th></tr></thead><tbody><tr><td>图片</td><td>Hypershade 里出现 file 节点（带 place2dTexture），看 <code>fileTextureName</code> 是否指向库内文件；imagePlane 则在 Outliner 里按 <code>imagePlane</code> 找</td></tr><tr><td>音频</td><td>时间轴出现声音波形（sound 节点）；时间编辑器里多一个 audio clip；Trax 里多一条声音轨；摄像机序列器的 shot 上挂声音</td></tr><tr><td>动画数据</td><td>目标节点的属性被写入关键帧：在 Graph Editor / 时间轴看曲线；导入前场景里要先有对应层级</td></tr><tr><td>节点树</td><td>视图里可能<strong>看不到</strong>新东西——它不是几何；看 Hypershade / 节点编辑器，或直接看当前选择（导入后会自动选中新建节点）</td></tr></tbody></table>
+<p>这四类资产导入后如果「什么都没看到」，先按下表确认是不是正常现象，再按 <a href="#/5.7.1"><code>4.2.7.1</code></a> 排查。</p>
+<h2 id="h-5">提示</h2>
+<ul>
+<li>日志里的「无 … 映射路径，保留原材质/原灯光」不是失败，表示该条目没有跨渲染器转换路径，资产按原类型保留。</li>
+<li>只看到「材质已创建（无选中物体，未赋予）」说明材质建出来了，但导入前没有选中物体可赋值。</li>
+</ul>

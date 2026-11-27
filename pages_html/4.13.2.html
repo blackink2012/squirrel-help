@@ -1,0 +1,29 @@
+<p>把视口里选中的物体导出成该资产的一个新变体。新变体只写几何体，贴图与材质继续用资产根目录那一套。</p>
+<p><img src="media/shared/menu-update-asset-variant.webp" alt="右键 →「更新资产」→「添加新变体…」" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>在 <strong>Maya 插件版</strong>里操作（变体导出需要本机 Maya；独立版会提示「当前为独立运行模式」）。</li>
+<li>已在视口中选中要作为变体的物体；框选时只会取最上层的根物体。</li>
+<li>资产是 <code>.zasset</code> 资产。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在资产网格里右键目标资产，展开「更新资产」。</li>
+<li>点「添加新变体…」。</li>
+<li>在弹出的导出配置里：<ul>
+<li>输入<strong>变体名</strong>（同时作为目录名，可用中文）；</li>
+<li>至少勾选一种几何格式（<code>ma</code> / <code>mb</code> / <code>fbx</code> / <code>obj</code> / <code>usd</code>）；</li>
+<li>缩略图来源沿用「创建资产」里的设置（截图 / 拍屏 / 渲染 / 预览图）。</li>
+</ul></li>
+<li>确认导出。完成后提示「已添加变体 …（共享资产贴图与材质）」。</li>
+</ol>
+<h2 id="h-3">缩略图如何生成</h2>
+<table><thead><tr><th>创建资产里的缩略图来源</th><th>添加变体后的行为</th></tr></thead><tbody><tr><td>Maya 拍屏 / 渲染图</td><td>自动生成该变体的缩略图</td></tr><tr><td>截图</td><td>打开截图窗口，由人工取景确认</td></tr><tr><td>预览图 / 导入图片</td><td>沿用该设置，不额外取图</td></tr></tbody></table>
+<p>变体的缩略图入口与「更新缩略图」完全一致（截取、导入、Maya 拍屏、渲染图、添加、截取添加），也可以事后用「更新资产 → 更新变体 ▶ → 该变体」重新出图。</p>
+<h2 id="h-4">结果验证</h2>
+<ul>
+<li>脚本编辑器出现变体导出日志；资产目录下新增 <code>variants/&lt;变体名&gt;.&lt;ext&gt;</code>（有缩略图时同时有 <code>variants/&lt;变体名&gt;.sicon</code>）。</li>
+<li>右键菜单的「导入变体 / 版本」里能选到这个新变体。</li>
+<li>资产网格不会多出一条卡片，变体挂在原资产下。</li>
+</ul>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>变体只保存几何体。若只勾选了「仅导出材质」而没有几何格式，会提示「变体只保存几何体」并中止。</p></div>

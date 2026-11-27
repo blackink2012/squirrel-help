@@ -1,0 +1,29 @@
+<p>收集关联文件为每种资产类型预设导出时是否默认打包缓存、代理、引用与贴图。</p>
+<p><img src="media/shared/settings-collect.webp" alt="收集关联文件" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>新建导出对话框或创建资产时，预勾「收集场景中已挂载的缓存 / 代理 / 引用文件」与「贴图 textures/」。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<ul>
+<li>两个复选框：<ul>
+<li>「收集场景中已挂载的缓存/代理/引用文件」，对应 <code>collect_associated</code>。</li>
+<li>「贴图 textures/」，对应 <code>textures</code>。</li>
+</ul></li>
+<li>各资产类型的默认值：</li>
+</ul>
+<table><thead><tr><th>资产类型</th><th>收集关联文件</th><th>贴图 textures/</th></tr></thead><tbody><tr><td><code>materials</code></td><td>勾选</td><td>勾选</td></tr><tr><td><code>models</code></td><td>勾选</td><td>勾选</td></tr><tr><td><code>lights</code></td><td>不勾</td><td>勾选</td></tr><tr><td><code>textures</code></td><td>不勾</td><td>勾选</td></tr><tr><td><code>scenes</code></td><td>勾选</td><td>勾选</td></tr><tr><td><code>hdr</code></td><td>不勾</td><td>勾选</td></tr><tr><td><code>ani</code></td><td>勾选</td><td>勾选</td></tr></tbody></table>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>只决定导出界面里复选框的初始状态，单次导出仍可修改。</li>
+<li>勾选「收集关联文件」才会把关联文件复制进资产的 <code>deps/</code>；不勾时仍会扫描并记录缺失依赖，只是不复制。</li>
+<li>「贴图 textures/」控制贴图是否进入资产的 <code>textures/</code>。</li>
+<li>保存到 <code>Assets/preset/export_preset.json</code> 对应资产类型的键。</li>
+</ul>
+<h2 id="h-4">何时修改</h2>
+<ul>
+<li>资产要交付到其他机器：为对应类型打开收集，避免缺贴图与缓存。</li>
+<li>库只在本机使用、希望减小体积：关闭收集，按需临时勾选。</li>
+<li>只关心材质、不需要场景引用：保持 <code>materials</code> 的贴图收集，关闭关联文件。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<blockquote><p><strong>提示</strong>：不勾收集也能在导出日志与 <code>meta.json</code> 里看到缺失依赖，便于先排查再决定是否打包。</p></blockquote>
+<blockquote><p><strong>提示</strong>：已作为贴图进入 <code>textures/</code> 的文件不会在 <code>deps/</code> 里重复存一份。</p></blockquote>

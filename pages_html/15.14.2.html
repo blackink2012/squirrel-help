@@ -1,0 +1,59 @@
+<blockquote><p>一句话定位：<strong>把磁盘上的模型文件夹（ma / mb / fbx / obj / usd…）批量打包成 <code>.zasset</code> 资产，并尽量把贴图、材质和说明一起带走。</strong></p></blockquote>
+<p>它是快捷工具里配置项最多的一个 —— 因为&quot;模型资产&quot;不只是模型文件：贴图要不要带走、哪些子文件夹算依赖、名字和标签从哪个文件读，都得你告诉它。这个窗口把这些规则分成了六个卡片。</p>
+<h2 id="h-1">从哪打开</h2>
+<table><thead><tr><th>入口</th><th>具体怎么做</th></tr></thead><tbody><tr><td>顶部工具栏「快捷工具」菜单</td><td>「快捷工具」→「model to zasset」</td></tr><tr><td>命令</td><td>命令面上叫 <code>model_to_zasset</code>（参数见 <a href="#/12.1.11"><code>5.1.11</code></a>）</td></tr><tr><td>脚本浏览器</td><td>「脚本浏览器」→ 添加插件目录下的 <code>quicktools</code> 目录 → <code>model_to_zasset.py</code> 双击运行</td></tr></tbody></table>
+<p>窗口标题是「模型资产转zasset」。</p>
+<p><img src="media/shared/quicktool-model.webp" alt="模型转资产窗口" loading="lazy" decoding="async"></p>
+<h2 id="h-2">界面上每个控件做什么</h2>
+<h3 id="h-3">卡片「识别到的模型资产」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>按钮「扫描模型」</td><td>按「模型文件夹」+ 递归设置扫一遍，认出哪些是模型资产</td><td><strong>先扫描再转换</strong>，不扫会提示「没有检测到模型资产，请先扫描」</td></tr><tr><td>状态「就绪」/「发现 N 个模型资产」</td><td>扫描结果</td><td>数量不对就检查模型文件夹与递归</td></tr><tr><td>结果列表</td><td>逐条列出「模型文件和格式」「大小」，子文件夹会折叠成「子文件夹内容 (N 个文件)」</td><td>用它核对要入库的到底是哪些</td></tr><tr><td>列表标题行「.zasset 结构预览」</td><td>右侧/下方的结构预览，让你先看会打包成什么样</td><td>一眼确认贴图有没有带进来</td></tr></tbody></table>
+<h3 id="h-4">卡片「AI 目录解析」（可跳过）</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「解析路径:」输入框 + 「浏览...」</td><td>让 AI 先看一眼某个目录的文件结构</td><td>目录命名混乱时有用</td></tr><tr><td>按钮「AI 解析资产结构」</td><td>分析该目录，<strong>自动生成文件路由与元数据源配置</strong>（追加到下面两张卡里，不会覆盖你已有的行）</td><td>第一次接一个陌生素材包时点它</td></tr><tr><td>「AI 服务:」下拉</td><td>用哪家模型做解析：Ollama（本地）/ DeepSeek / 通义千问 / 智谱 / OpenAI / 自定义</td><td>本地有 Ollama 就先用它</td></tr><tr><td>「AI 模型:」下拉</td><td>具体模型（实时拉取，可输入）</td><td>—</td></tr><tr><td>「API Key:」输入框</td><td>云端密钥；本地服务留空（占位写「本地服务无需填写」）</td><td>—</td></tr></tbody></table>
+<p>AI 解析只是<strong>帮你填配置</strong>，不解析也能手工填下面两张卡。</p>
+<h3 id="h-5">卡片「模型文件夹」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>路径输入框（占位「选择包含模型文件的文件夹...」）</td><td>要入库的模型在哪</td><td>选&quot;每个子文件夹是一套资产&quot;的父目录</td></tr><tr><td>「浏览...」</td><td>选目录</td><td>—</td></tr></tbody></table>
+<h3 id="h-6">卡片「输出位置」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>路径输入框（占位「选择资产输出文件夹...」）</td><td><code>.zasset</code> 生成到哪</td><td>先输出到空目录（库外）核对，再拷进库</td></tr><tr><td>「浏览...」</td><td>选目录</td><td>—</td></tr></tbody></table>
+<h3 id="h-7">卡片「转换选项」</h3>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「目标格式 (逗号分隔，留空则打包全部):」输入框（占位「例如: ma,usd,abc」）</td><td>只打包指定格式的模型文件</td><td><strong>留空 = 全部打包</strong>，最保险</td></tr><tr><td>勾选「包含子文件夹」+ 「子文件夹:」输入框（默认 <code>ass, textures, sourceimages</code>）</td><td>这些名字的子文件夹会被一起打包</td><td>素材包用了别的名字（如 <code>tex</code>）时补上</td></tr><tr><td>勾选「递归搜索子文件夹（扫描深层目录中的模型文件）」</td><td>深层目录里的模型也算资产</td><td>结构很深时勾</td></tr><tr><td>勾选「包含依赖文件（贴图、材质等）」</td><td>把贴图 / 材质等依赖一起带走</td><td><strong>建议勾</strong>，否则资产会缺贴图</td></tr><tr><td>勾选「使用现有元数据和缩略图」</td><td>目录里已经有说明 / 缩略图就直接用，不重新生成</td><td>素材包自带 zooInfo / thumbnail 时勾</td></tr><tr><td>勾选「转换后导入当前分类」</td><td>转完把 <code>.zasset</code> 文件夹拷到主界面当前分类目录</td><td>输出就在库内分类时可勾</td></tr></tbody></table>
+<h3 id="h-8">卡片「文件路由配置」</h3>
+<p>决定&quot;哪些扩展名归到 <code>.zasset</code> 里的哪个子文件夹&quot;。</p>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「+ 添加路由」</td><td>加一行</td><td>只有特殊目录结构才需要加</td></tr><tr><td>「保存路由」</td><td>把当前路由存下来，下次打开还在</td><td>改完就点</td></tr><tr><td>每行「文件夹:」输入框</td><td>资产包内部的相对目录名（<code>root</code> 表示根）</td><td>与源目录对应</td></tr><tr><td>每行「扩展名:」输入框</td><td>归到该目录的扩展名列表</td><td>默认已有：模型 / 贴图 / ass</td></tr><tr><td>每行「×」</td><td>删掉这一行</td><td>删错再「+ 添加路由」补回</td></tr></tbody></table>
+<h3 id="h-9">卡片「元数据源配置」</h3>
+<p>决定&quot;资产的名字 / 标签 / 作者 / 版本这些信息从哪读&quot;。</p>
+<table><thead><tr><th>控件</th><th>作用</th><th>取值建议</th></tr></thead><tbody><tr><td>「缩略图搜索路径:」列表 + 「+ 添加路径」</td><td>按模板去找缩略图，例如 <code>{assetName}_fileDependencies/thumbnail.jpg</code></td><td>素材包自带缩略图时保留默认几条即可</td></tr><tr><td>「元数据源:」每组「源 N」+「删除」</td><td>一个来源 = 一个说明文件（如 <code>.zooInfo</code>、<code>.json</code>）</td><td>没说明文件时这条可以全删</td></tr><tr><td>「文件路径模板:」输入框</td><td>说明文件相对路径模板，支持 <code>{assetName}</code> / <code>{folderName}</code></td><td>与素材包实际文件名对齐</td></tr><tr><td>「文件格式:」下拉（json / txt）</td><td>说明文件是 JSON 还是纯文本</td><td>—</td></tr><tr><td>「字段映射:」每行 <code>源字段 → 目标字段</code> + 处理方式下拉</td><td>把说明里的字段映射到资产字段（如 <code>tags → tags</code>、<code>creators → author</code>）</td><td>—</td></tr><tr><td>处理方式：<code>none</code> / <code>split_comma</code> / <code>first_line</code></td><td><code>none</code> 原样用；<code>split_comma</code> 按逗号拆成列表（标签常用）；<code>first_line</code> 只取第一行</td><td>标签用 <code>split_comma</code>，多行简介用 <code>first_line</code></td></tr><tr><td>「+ 添加字段映射」/「+ 添加源」</td><td>加一行 / 加一组来源</td><td>—</td></tr><tr><td>「保存配置」</td><td>把元数据源配置存下来</td><td>改完就点</td></tr></tbody></table>
+<h3 id="h-10">底部按钮</h3>
+<table><thead><tr><th>按钮</th><th>作用</th></tr></thead><tbody><tr><td>图标按钮「使用帮助」</td><td>打开本工具详细帮助</td></tr><tr><td>「取消」</td><td>关窗不转换</td></tr><tr><td>「转换」</td><td>开始批量转换，弹进度；可中止</td></tr></tbody></table>
+<h2 id="h-11">一次完整的操作流程</h2>
+<ol>
+<li>快捷工具 →「model to zasset」；</li>
+<li>「模型文件夹」选到素材包父目录；「输出位置」选一个空目录；</li>
+<li>需要时勾「递归搜索子文件夹」；</li>
+<li>点「扫描模型」，确认「发现 N 个模型资产」与预期一致；</li>
+<li>勾「包含依赖文件（贴图、材质等）」；子文件夹名单按素材包实际目录名补全；</li>
+<li>「目标格式」留空（打包全部）；</li>
+<li>素材包命名很乱时：AI 目录解析 → 选服务商/模型 → 「AI 解析资产结构」，再检查它追加的路由 / 元数据源，点「保存路由」「保存配置」持久化；</li>
+<li>点「转换」，等「转换完成！成功 X, 失败 Y」；</li>
+<li>去输出目录看每个资产一个 <code>.zasset</code> 文件夹，重点抽查：贴图在不在、<code>meta.json</code> 里名称/标签对不对；</li>
+<li>确认后拷进资产库分类，回主界面刷新。</li>
+</ol>
+<h2 id="h-12">输出结果在哪</h2>
+<ul>
+<li>每个模型资产生成一个 <code>.zasset</code> <strong>文件夹</strong>，位于「输出位置」下；</li>
+<li>文件夹里按路由分好子目录（模型、<code>textures/</code>、<code>ass/</code> 等）+ 缩略图 + <code>meta.json</code>；</li>
+<li>勾了「转换后导入当前分类」时会再拷一份到当前分类，完成提示里写「已导入 N 个到当前分类」；回主界面刷新才看得到。</li>
+</ul>
+<h2 id="h-13">风险与反悔</h2>
+<ul>
+<li><strong>同名 <code>.zasset</code> 会被整个替换</strong>（先删旧的再建新的）。批量转换前请把输出放在空目录，核对后再入库。</li>
+<li><strong>路由 / 子文件夹配错 = 资产缺文件</strong>：最常见的坏结果是&quot;模型进来了、贴图没进来&quot;。抓重点抽查 1–2 个资产，而不是只看&quot;成功 X 个&quot;。</li>
+<li><strong>字段映射配错 = 标签写错字段</strong>：转换前建议先用 2–3 个资产试跑，确认 <code>meta.json</code> 里的内容对了再放量。</li>
+<li>AI 解析只是追加配置，<strong>不会删你已有的行</strong>；但它可能加重复行，点「保存」前先扫一眼。</li>
+<li>反悔：删输出目录里新生成的 <code>.zasset</code>；已经拷进库的用主界面删到回收站（<a href="#/15.5.16"><code>8.5.16</code></a>）。</li>
+</ul>
+<h2 id="h-14">相关</h2>
+<ul>
+<li>它在「快捷工具」菜单里的位置：<a href="#/15.2.6"><code>8.2.6</code></a></li>
+<li>PBR 贴图转资产（贴图那一类）：<a href="#/15.14.3"><code>8.14.3</code></a></li>
+<li>模型资产右键菜单：<a href="#/15.5.3"><code>8.5.3</code></a></li>
+</ul>

@@ -1,0 +1,29 @@
+<p><code>.mcm</code> records the original model&#x27;s vertex, face and edge counts plus the material assignments; on import those 3D signatures decide which material goes to the selected objects.</p>
+<p><img src="media_en/shared/menu-context-material-mcm.webp" alt="Material asset context menu: import (MCM matching)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>One or more meshes to receive the material are selected in Maya.</li>
+<li>The asset contains <code>.mcm</code>; having <code>.zmetal</code> as well is recommended, otherwise it falls back to the material network in <code>.ma/.mb</code>.</li>
+<li>The imported model&#x27;s topology matches the export: no triangulation, point merging or added / removed faces.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select the target model in the scene.</li>
+<li>Right-click the mcm asset, expand <code>「导入」 (Import)</code> and choose <code>mcm</code>.</li>
+<li>The plug-in imports the material network first: <code>.zmetal</code> gives the node network, and with only <code>.ma/.mb</code> the materials are extracted from it while the imported geometry is deleted.</li>
+<li>The plug-in counts the selected object&#x27;s vertices, faces and edges and compares them item by item with <code>match_info</code> in the <code>.mcm</code>.</li>
+<li>Objects that match receive the material; when the <code>.mcm</code> records per-face assignments they are applied per face as well.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The selected object shows the connected material in its Hypershade material attributes.</li>
+<li>The Script Editor reports <code>[MCMImport] MCM 匹配: N/M</code>.</li>
+<li>With per-face materials different faces of the model show different materials.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>With nothing selected it reports <code>「请先选择要赋予材质的物体」 (select the objects to receive the material first)</code>; when none of the selected objects is a mesh it reports <code>「选中物体均无 mesh 数据」 (the selected objects contain no mesh data)</code>.</li>
+<li>Objects that fail to match log <code>「选择物中无匹配 …，跳过」 (no match among the selected objects for …, skipping)</code> and never receive the wrong material.</li>
+<li>Topology must match exactly; a model whose vertices, edges or faces changed after export cannot match.</li>
+<li>When <code>mcm</code> is missing from the context menu&#x27;s import list, the asset&#x27;s <code>meta.json</code> has no such entry under <code>formats</code>; scanning files never infers mcm.</li>
+</ul>

@@ -1,0 +1,41 @@
+<blockquote><p><strong>First, a common misunderstanding</strong>: the window behind this page is titled <strong>Format conversion</strong>, and it converts the asset&#x27;s <strong>geometry formats</strong> (.ma / .mb / .fbx / .obj / .usd / .abc), <strong>not image formats</strong>.</p>
+<p>Real <strong>image format conversion</strong> is a different window (the <strong>Image format conversion tool</strong> in quick tools), see <a href="#/en/15.14.4"><code>8.14.4</code></a>. This page keeps the directory title &quot;image format conversion&quot; but documents the actual window.</p></blockquote>
+<blockquote><p>One-line summary: <strong>take the geometry already inside an asset, convert it to the formats you tick and append them to the package; existing formats are never deleted.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Select the assets to convert in the grid (multi-select allowed).</li>
+<li>Right-click → <strong>Format conversion</strong>.</li>
+<li>A window opens (titled <strong>Format conversion</strong>) whose first line reads &quot;will run on N assets: &lt;names…&gt;&quot;.</li>
+</ol>
+<p>Prerequisite: the asset holds <strong>usable geometry files</strong> (ma/mb/fbx/abc/usd/obj). Pure material or pure texture assets have no geometry and report &quot;no processable assets&quot; first.</p>
+<p><img src="media_en/shared/dialog-format-convert.webp" alt="Format conversion" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Suggested value</th><th>What filling it in wrongly does</th></tr></thead><tbody><tr><td>Maya ASCII .ma</td><td>Checkbox</td><td>Converts the asset geometry to .ma</td><td>Tick it to inspect text / debug</td><td>—</td></tr><tr><td>Maya Binary .mb</td><td>Checkbox</td><td>Converts to .mb</td><td>Tick it when size matters</td><td>—</td></tr><tr><td>FBX .fbx</td><td>Checkbox</td><td>Converts to FBX (engines / other DCCs)</td><td>Tick it when handing off to UE / Unity / Blender</td><td>Materials / lights are not guaranteed</td></tr><tr><td>Wavefront OBJ .obj</td><td>Checkbox</td><td>Converts to OBJ</td><td>Tick it for universal meshes only</td><td>No animation</td></tr><tr><td>USD .usd</td><td>Checkbox</td><td>Converts to USD</td><td>For USD pipelines</td><td>Needs Maya&#x27;s USD plug-in</td></tr><tr><td>Alembic .abc</td><td>Checkbox</td><td>Converts to an Alembic cache</td><td>When delivering point caches</td><td>Large and slow</td></tr><tr><td>Exists marker</td><td>Small read-only text</td><td>Shown when the format <strong>already exists</strong> in the asset: &quot;(exists: ticking will replace it with this conversion)&quot;</td><td>—</td><td>Ticking <strong>replaces</strong> that format file rather than adding one</td></tr><tr><td>Partially exists</td><td>Small read-only text</td><td>With a multi-selection, some assets have the format and others do not</td><td>—</td><td>As above; each asset is replaced according to its own case</td></tr><tr><td>Cancel</td><td>Secondary button</td><td>Closes without converting</td><td>—</td><td>—</td></tr><tr><td>Start conversion</td><td>Main button</td><td>Enabled only with at least one format ticked</td><td>Click after confirming</td><td>Conversion runs in a background headless process, see below</td></tr></tbody></table>
+<blockquote><p>The footer line &quot;all conversion happens in a temporary directory outside the library and is verified before writing into the package; existing formats are not deleted&quot; is key: <strong>unticked formats stay as they are</strong>, while a ticked same-named format is replaced by this result.</p></blockquote>
+<h2 id="h-3">How the conversion runs</h2>
+<ol>
+<li>Clicking <strong>Start conversion</strong> opens a progress window (titled <strong>Format conversion</strong>) showing which asset of how many is running, with a cancel button.</li>
+<li>The plug-in starts a separate headless <code>mayapy</code> process: output goes to a <strong>temporary directory outside the library</strong> → files are verified → written into the <code>.zasset</code> in one go.</li>
+<li>After writing it reloads the index and refreshes the grid; the included formats gain what you ticked.</li>
+<li>When finished a summary appears: &quot;Format conversion finished. N succeeded, M failed.&quot; Failures come with reasons.</li>
+</ol>
+<h2 id="h-4">A complete example (adding FBX to a model asset)</h2>
+<ol>
+<li>Select one (or several) model assets.</li>
+<li>Right-click → <strong>Format conversion</strong>.</li>
+<li>Tick only <strong>FBX .fbx</strong>; if the asset already has fbx the small text says &quot;exists&quot; — confirm you want a replacement before ticking.</li>
+<li>Click <strong>Start conversion</strong>.</li>
+<li>Wait for the progress window and read the summary.</li>
+<li>Verify: right-click the asset → <strong>Asset details</strong> → <code>fbx</code> should appear under included formats.</li>
+</ol>
+<h2 id="h-5">Risks and how to undo</h2>
+<table><thead><tr><th>Operation</th><th>Risk</th><th>Undo</th></tr></thead><tbody><tr><td>Ticking a format the asset <strong>already has</strong></td><td>The old file of that format is <strong>replaced</strong> by this conversion</td><td>Export again from the original source; the old format is not kept automatically</td></tr><tr><td>Converting many assets</td><td>The headless process runs them one by one and takes a while</td><td>The progress window can be cancelled and finished assets keep their results</td></tr><tr><td>Unticked formats</td><td>All other formats are preserved</td><td>—</td></tr></tbody></table>
+<h2 id="h-6">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td>&quot;No processable assets&quot;</td><td>The asset holds no geometry files (pure material / texture)</td><td>Such assets cannot convert geometry formats; for images use 8.14.4</td></tr><tr><td>One item failed in the summary</td><td>The target format failed to export (plug-in not loaded, format not convertible)</td><td>Expand the error details and load the matching plug-in before retrying</td></tr><tr><td>The grid did not change afterwards</td><td>The index has not refreshed</td><td>Refresh manually or rebuild the index</td></tr><tr><td>The conversion takes very long</td><td>The headless process is running on a large asset</td><td>Wait, or cancel from the progress window</td></tr><tr><td>I wanted to convert image formats</td><td>Wrong window</td><td>Use <strong>Quick tools → Image format conversion tool</strong> <a href="#/en/15.14.4"><code>8.14.4</code></a></td></tr></tbody></table>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>The real image format conversion tool: <a href="#/en/15.14.4"><code>8.14.4</code></a></li>
+<li>Choosing geometry formats on export: <a href="#/en/15.10.6"><code>8.10.6</code></a></li>
+<li>Supported formats master table: <a href="#/en/11.8.1"><code>4.8.8.1</code></a></li>
+<li>How headless batch format conversion works: <a href="#/en/10.6.3"><code>4.7.6.3</code></a></li>
+</ul>

@@ -1,0 +1,46 @@
+<div class="admonition note"><div class="admonition-title">注意</div><p>This item is called <strong><code>「后台渲染」 (Background render)</code></strong> in both the menu and the dialog title (older versions called it <code>「生成缩略图」 (Generate thumbnail)</code>). It renders offscreen in a separate mayapy process, <strong>without occupying the current viewport or modifying the current scene</strong>, so you can keep working in Maya.</p></div>
+<p><img src="media_en/shared/dialog-headless-thumb.webp" alt="Background render options dialog" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Which sub-libraries have it</h2>
+<table><thead><tr><th>Sub-library</th><th>Background render inside the context menu&#x27;s update thumbnail ▶</th></tr></thead><tbody><tr><td>Materials, models, lights, textures, scenes, dynamics, node trees</td><td><strong>Yes</strong></td></tr><tr><td>HDR, animation data</td><td>No (update thumbnail has only 6 items)</td></tr><tr><td>Images, audio</td><td>Not even the whole update thumbnail row</td></tr></tbody></table>
+<p>If you cannot find the item, check two things: <strong>whether the current sub-library is in the &quot;Yes&quot; row above</strong>, and <strong>whether background render for that sub-library is switched off in <code>Settings → 右键菜单 (Context menu)</code></strong>.</p>
+<h2 id="h-2">Two ways to run it</h2>
+<table><thead><tr><th>Mode</th><th>Where</th><th>Notes</th></tr></thead><tbody><tr><td>Background (headless)</td><td>Context menu → update thumbnail → background render</td><td>Starts a separate mayapy process to render; good for filling in many thumbnails without interrupting your work</td></tr><tr><td>Local</td><td>Capture, Maya playblast, render, render on export</td><td>Runs inside the Maya process and occupies the current viewport; see the following pages</td></tr></tbody></table>
+<h2 id="h-3">Prerequisites</h2>
+<ul>
+<li>An asset is selected in the grid; <strong>a multi-selection processes every selected item</strong> (a single selection processes the one you right-clicked).</li>
+<li>mayapy must be findable on the machine; otherwise the plug-in says so and stops.</li>
+<li>Material, texture and light assets have no geometry of their own, so a <strong>preset model</strong> must be chosen in the dialog as the subject to shoot.</li>
+</ul>
+<h2 id="h-4">Steps</h2>
+<ol>
+<li>Right-click an asset card (or select several first and then right-click) and open <code>「更新缩略图 → 后台渲染」 (Update thumbnail → Background render)</code>.</li>
+<li>Choose the options in the background render dialog in order (each is described in the table below).</li>
+<li>Click <code>「开始生成」 (Start)</code>.</li>
+<li>While rendering, watch the <strong>headless job progress window</strong> (see below): it shows which asset is being processed, the percentage and the image that was just produced.</li>
+<li>When everything finishes a report appears: successes / failures, failure reasons, and which renderer, environment light and quality this batch used — for materials / textures / lights it also names the preset model.</li>
+<li>Successful items are written back as thumbnails, and grid cards and the right-hand preview refresh immediately.</li>
+</ol>
+<h2 id="h-5">What the dialog contains</h2>
+<table><thead><tr><th>Area / control</th><th>Purpose</th><th>Notes</th></tr></thead><tbody><tr><td>Title and description</td><td>&quot;Background render&quot; plus &quot;Headless render: starts a separate mayapy process; does not occupy the current viewport or change the current scene.&quot;</td><td>—</td></tr><tr><td>Renderer</td><td>Which renderer produces this batch</td><td>Renderers unavailable on this machine are greyed out with the reason</td></tr><tr><td>Preset model</td><td>The subject to shoot for assets <strong>without geometry of their own</strong>, such as materials, textures and lights</td><td>Models and scenes have their own geometry, so this block is hidden entirely; the list comes from the same source as <code>Create asset → Create model</code></td></tr><tr><td>Environment light (HDRI)</td><td>Check &quot;use HDRI environment light&quot; and pick one, or choose &quot;no IBL&quot;</td><td><strong>Not shown for light assets</strong> (a light is its own source); the description says HDRI only provides environment lighting with spherical projection and never enters the background, so the render has a transparent background</td></tr><tr><td>Size</td><td>256 / 384 / 512 / 768 / 1024 square</td><td>Defaults to <code>Settings → 常规 → 默认缩略图大小 (General → Default thumbnail size)</code></td></tr><tr><td>Quality</td><td>Fast / Standard / High</td><td>Maps to the current renderer&#x27;s own sampling settings: higher is cleaner and slower</td></tr><tr><td>Restore defaults</td><td>Restores the renderer / preset model / environment light selection / size / quality to factory values</td><td><strong>Only affects this dialog</strong>; values are written back to settings after clicking Start</td></tr><tr><td>Cancel / Start</td><td>Abandon / start rendering</td><td>—</td></tr></tbody></table>
+<h2 id="h-6">During rendering: the headless job progress window</h2>
+<p>Clicking <code>「开始生成」 (Start)</code> opens a <strong>non-modal</strong> progress window (it does not block your work) with three things:</p>
+<ul>
+<li>A status line (preparing / which asset is rendering / current stage);</li>
+<li>A progress bar (advancing by the number of assets in the batch);</li>
+<li>A preview of the most recent image (showing &quot;(no image yet)&quot; before the first one);</li>
+<li><code>「取消」 (Cancel)</code> and <code>「关闭」 (Close)</code>: Cancel really stops this batch (images already produced are kept).</li>
+</ul>
+<h2 id="h-7">Verify the result</h2>
+<ul>
+<li>The card and the right-hand preview show the new thumbnail.</li>
+<li>The report lists successes and failures, with reasons for failures.</li>
+<li>For material, texture and light assets the report names the preset model, renderer, environment light and quality used.</li>
+</ul>
+<h2 id="h-8">Notes</h2>
+<ul>
+<li><strong>The original main thumbnail is overwritten</strong>: to keep the old main image, do not use background render; use <code>「更新缩略图 → 添加 / 截取添加」 (Update thumbnail → Add / Capture and add)</code> to write the new image into an extra slot.</li>
+<li><strong>How to undo a bad result</strong>: capture or import another image over it. Background render only produces thumbnails and never touches the asset&#x27;s geometry, materials or textures, so it cannot break the asset.</li>
+<li><strong>The size only affects future renders</strong>: old thumbnails are not redone automatically; only a new render uses the new size (see <a href="#/en/4.7.6">4.7.6</a>).</li>
+<li><strong>Options are remembered</strong>: the dialog preselects the last renderer, model, environment light, size and quality, so next time you can just click Start.</li>
+</ul>
+<div class="admonition tip"><div class="admonition-title">提示</div><p><code>「恢复默认」 (Restore defaults)</code> only changes the options in this dialog; the values are written back to settings after clicking Start, so the new defaults appear next time.</p></div>

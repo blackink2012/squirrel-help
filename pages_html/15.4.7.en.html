@@ -1,0 +1,29 @@
+<blockquote><p>One-line summary: <strong>the sort button on the asset area toolbar: its text is the current sort key and its arrow is the direction; click it to change the sort.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Find the sort button on the right of the asset area toolbar (its text is the current key, such as &quot;Name&quot;);</li>
+<li>Click it to open the sort menu;</li>
+<li>Click a sort key, or click <strong>Ascending / Descending</strong> to change direction.</li>
+</ol>
+<p><img src="media_en/shared/menu-sort.webp" alt="Name sort menu: name / type / category / time, with ascending / descending after the separator" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<p>The menu has <strong>6 items</strong> in two parts (above the separator you choose the key, below it the direction).</p>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Name</td><td>Sorts by the asset <strong>display name</strong></td><td>None</td><td>The list re-sorts and the toolbar button reads &quot;Name&quot;</td><td>The item carries no check mark; it sorts by the readable / display name, not the disk folder name</td></tr><tr><td>Type</td><td>Sorts by the asset&#x27;s <strong>sub-library</strong> (materials / models / textures…)</td><td>None</td><td>Assets of the same sub-library group together</td><td>Inside a type, assets keep a stable name order</td></tr><tr><td>Category</td><td>Sorts by the <strong>display name of the asset&#x27;s category</strong></td><td>None</td><td>Assets of the same category group together</td><td>It uses the category display name (Chinese / readable name), not the category id</td></tr><tr><td>Time</td><td>Sorts by the asset files&#x27; <strong>modification time</strong></td><td>None</td><td>Reorders chronologically</td><td>It is file modification time, not &quot;import time&quot;; to find the newest import, sort by time descending</td></tr><tr><td>Ascending</td><td>Small to large / earliest to latest</td><td>None</td><td>Direction becomes ascending and the button arrow points up</td><td>Direction items <strong>carry no check and no arrow icon</strong>: read the toolbar button arrow for the current direction</td></tr><tr><td>Descending</td><td>Large to small / latest to earliest</td><td>None</td><td>Direction becomes descending and the button arrow points down</td><td>As above; clicking the same item twice does not toggle, so click the other item</td></tr></tbody></table>
+<h2 id="h-3">Submenus</h2>
+<p>This menu has <strong>no second level</strong> (all 6 items apply immediately, nothing with ▶).</p>
+<h2 id="h-4">In list view you can also click column headers</h2>
+<p>After switching to list view, clicking the <strong>Name / Type / Category</strong> column headers also sorts (the time column is not in the header and needs this menu). Both routes give the same result, and the button text and check stay in sync.</p>
+<h2 id="h-5">The recycle bin behaves the same</h2>
+<p>The recycle bin page reuses the same sort button: sorting there only affects the recycle bin list, and returning to the asset page keeps the asset page&#x27;s own sorting.</p>
+<h2 id="h-6">Beginner pitfalls</h2>
+<ul>
+<li><strong>Cannot tell whether it is ascending or descending</strong>: read the <strong>arrow direction</strong> on the toolbar sort button; the <strong>Ascending / Descending</strong> items carry no check and no arrow, so do not look for one there.</li>
+<li><strong>Sorted by time but the newest is not first</strong>: the direction is ascending (old to new). Click <strong>Descending</strong>.</li>
+<li><strong>Name sorting does not match alphabetical order</strong>: names sort by display name (possibly a Chinese readable name), and Chinese order is not identical to English letter order.</li>
+<li><strong>Selected assets disappeared after changing the sort</strong>: sorting only reorders the display and never changes the selection; if it really is empty, you probably clicked blank space earlier and cleared it.</li>
+</ul>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>The tutorial version of sorting and filtering: <a href="#/en/3.3.4"><code>3.3.4</code></a>.</li>
+<li>View switching: <a href="#/en/15.4.6"><code>8.4.6</code></a>; list view context menu: <a href="#/en/15.5.19"><code>8.5.19</code></a>.</li>
+</ul>

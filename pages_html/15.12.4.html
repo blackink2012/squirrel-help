@@ -1,0 +1,41 @@
+<blockquote><p><strong>先纠正一个容易误会的地方</strong>：这一页对应的窗口，界面标题其实是「<strong>格式转换</strong>」，转换的是资产里的<strong>几何体格式</strong>（.ma / .mb / .fbx / .obj / .usd / .abc），<strong>不是图片格式</strong>。</p>
+<p>真正的「图像格式转换」是另一个窗口（快捷工具里的「图像格式转换工具」），见 <a href="#/15.14.4"><code>8.14.4</code></a>。本页按目录标题沿用「图像格式转换」，正文以实际窗口为准。</p></blockquote>
+<blockquote><p>一句话定位：<strong>对着资产里已有的几何，把它转成你勾的格式并追加进资产包；原有格式不会被删。</strong></p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>在资产网格里选中要转换的资产（可多选）。</li>
+<li>右键 →「格式转换」。</li>
+<li>弹出窗口（标题「格式转换」），第一行显示「将对 N 个资产执行：&lt;名字…&gt;」。</li>
+</ol>
+<p>前提：该资产里<strong>有可用的几何文件</strong>（ma/mb/fbx/abc/usd/obj）。纯材质、纯贴图资产没有几何，会先弹「没有可处理的资产」。</p>
+<p><img src="media/shared/dialog-format-convert.webp" alt="格式转换" loading="lazy" decoding="async"></p>
+<h2 id="h-2">控件逐项</h2>
+<table><thead><tr><th>控件</th><th>类型</th><th>作用</th><th>建议取值</th><th>填错会怎样</th></tr></thead><tbody><tr><td>Maya ASCII .ma</td><td>复选框</td><td>把资产几何转成 .ma</td><td>要看文本/排查时勾</td><td>—</td></tr><tr><td>Maya Binary .mb</td><td>复选框</td><td>转成 .mb</td><td>体积优先时勾</td><td>—</td></tr><tr><td>FBX .fbx</td><td>复选框</td><td>转成 FBX（引擎/其他 DCC 用）</td><td>交给 UE/Unity/Blender 时勾</td><td>材质/灯光不保证还原</td></tr><tr><td>Wavefront OBJ .obj</td><td>复选框</td><td>转成 OBJ</td><td>只要通用网格时勾</td><td>无动画</td></tr><tr><td>USD .usd</td><td>复选框</td><td>转成 USD</td><td>USD 管线里勾</td><td>需要 Maya 的 USD 插件</td></tr><tr><td>Alembic .abc</td><td>复选框</td><td>转成 Alembic 缓存</td><td>交付点缓存时勾</td><td>体积大、耗时</td></tr><tr><td>已存在标记</td><td>只读小字</td><td>该格式在资产里<strong>已存在</strong>时显示「（已存在：勾选将用本次转换结果替换）」</td><td>—</td><td>勾了就<strong>替换</strong>该格式文件，不是新增一份</td></tr><tr><td>部分资产已存在</td><td>只读小字</td><td>多选时，某些资产有这个格式、另一些没有</td><td>—</td><td>同上，按各自情况替换</td></tr><tr><td>取消</td><td>次按钮</td><td>关窗不转</td><td>—</td><td>—</td></tr><tr><td>开始转换</td><td>主按钮</td><td>至少勾一个格式才可点；执行转换</td><td>确认后点</td><td>转换在后台无头进程跑，见下</td></tr></tbody></table>
+<blockquote><p>底部那句「转换全部在库外临时目录完成并验证后才写进资产包，原有格式不会被删除」是关键：<strong>未勾选的格式保持原样</strong>；勾了的同名格式会被本次结果替换。</p></blockquote>
+<h2 id="h-3">转换是怎么跑的</h2>
+<ol>
+<li>点「开始转换」后弹出进度框（标题「格式转换」），显示当前处理到第几个资产、取消按钮。</li>
+<li>插件起一个独立的 <code>mayapy</code> 无头进程执行：<strong>库外临时目录</strong>产出 → 验证文件有效 → 一次性写进 <code>.zasset</code>。</li>
+<li>写回后自动 reload 索引、刷新网格，「包含格式」里会多出你勾的格式。</li>
+<li>结束后弹汇总框：「格式转换完成。成功 N 个，失败 M 个。」有失败项会附原因。</li>
+</ol>
+<h2 id="h-4">一次完整操作（把模型资产补出 FBX）</h2>
+<ol>
+<li>选中 1 个（或多个）模型资产。</li>
+<li>右键 →「格式转换」。</li>
+<li>只勾「FBX .fbx」；如果资产里已有 fbx，小字会提示「已存在」——确认要替换再勾。</li>
+<li>点「开始转换」。</li>
+<li>等进度框跑完，看汇总提示。</li>
+<li>验证：右键资产 →「资产详情」→「包含格式」里应出现 <code>fbx</code>。</li>
+</ol>
+<h2 id="h-5">风险与反悔</h2>
+<table><thead><tr><th>操作</th><th>风险</th><th>反悔</th></tr></thead><tbody><tr><td>勾了资产里<strong>已有</strong>的格式</td><td>该格式旧文件被本次转换结果<strong>替换</strong></td><td>重新从原始来源导一次；原格式不会「自动留底」</td></tr><tr><td>转换大量资产</td><td>无头进程要逐个跑，耗时较长</td><td>进度框可「取消」，已完成的资产保留结果</td></tr><tr><td>转换不改未勾格式</td><td>其它格式原样保留</td><td>—</td></tr></tbody></table>
+<h2 id="h-6">出问题怎么办</h2>
+<table><thead><tr><th>现象</th><th>原因</th><th>处理</th></tr></thead><tbody><tr><td>提示「没有可处理的资产」</td><td>资产里没有几何文件（纯材质/贴图）</td><td>这类资产无法转几何格式；图片转换用 8.14.4</td></tr><tr><td>汇总里某项失败</td><td>目标格式导出失败（插件未加载、格式不支持转换）</td><td>展开错误详情；先加载对应插件再转</td></tr><tr><td>转完网格没变化</td><td>索引未刷新</td><td>手动刷新或重建索引</td></tr><tr><td>转换卡很久</td><td>无头进程正在跑，资产大</td><td>等；或在进度框取消</td></tr><tr><td>想转图片格式</td><td>走错了窗口</td><td>用「快捷工具 → 图像格式转换工具」<a href="#/15.14.4"><code>8.14.4</code></a></td></tr></tbody></table>
+<h2 id="h-7">相关</h2>
+<ul>
+<li>真正的图像格式转换工具：<a href="#/15.14.4"><code>8.14.4</code></a></li>
+<li>导出时怎么选几何格式：<a href="#/15.10.6"><code>8.10.6</code></a></li>
+<li>支持格式总表：<a href="#/11.8.1"><code>4.8.8.1</code></a></li>
+<li>批量格式转换（无头）原理：<a href="#/10.6.3"><code>4.7.6.3</code></a></li>
+</ul>

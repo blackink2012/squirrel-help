@@ -1,0 +1,15 @@
+<p>The plug-in has three ways to drive Maya, differing only in <strong>whose scene is touched</strong> and <strong>how to iterate</strong>: headless mayapy, the bridge command channel and the in-Maya Script Editor.</p>
+<h2 id="h-1">The three paths</h2>
+<table><thead><tr><th>Path</th><th>Form</th><th>Affects the current scene</th><th>Best for</th></tr></thead><tbody><tr><td>mayapy standalone</td><td>Separate process, full Maya core, no interface</td><td>Not at all</td><td>Recomputing from scratch, batch thumbnails, batch conversion</td></tr><tr><td>Bridge command channel</td><td>Drives a running Maya through commandPort</td><td>Yes</td><td>Reading and writing the scene the user has open</td></tr><tr><td>Maya Script Editor</td><td>The user runs it manually</td><td>Yes</td><td>One-off scripts, handing a script to the user</td></tr></tbody></table>
+<h2 id="h-2">How to choose</h2>
+<ul>
+<li>Recompute from scratch → mayapy. It works in its own empty scene and cannot see the user&#x27;s window or viewport.</li>
+<li>Modify the user&#x27;s copy → the bridge command channel. Reading the current selection, current frame or current viewport requires this route.</li>
+<li>Long jobs (rendering, exporting, large imports) → run them as async commands and watch progress instead of blocking the main thread.</li>
+</ul>
+<h2 id="h-3">Boundaries and cautions</h2>
+<ul>
+<li>The standalone edition <strong>needs an online Maya</strong> for scene operations; browsing assets, searching and file-level work can happen offline.</li>
+<li>Many functions in <code>core/</code> and <code>integration/</code> self-degrade through a module-level <code>_IN_MAYA</code>, so calling them directly in a separate process <strong>does nothing and reports no error</strong>. Any call that would hit such an early return must go through a remote channel.</li>
+<li>The two channels are separate processes that cannot see each other; seeing no interface activity while using mayapy is normal.</li>
+</ul>

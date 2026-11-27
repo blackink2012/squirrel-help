@@ -1,0 +1,29 @@
+<blockquote><p>One-line summary: <strong>versions / variants / LODs are not independent assets but entries inside a master asset; right-clicking them gives two reduced menus that only act on &quot;this one copy&quot;.</strong></p></blockquote>
+<h2 id="h-1">How to get here</h2>
+<ol>
+<li>Right-click the master asset card → expand the <strong>Import ▶</strong> submenu;</li>
+<li>Click <strong>View versions</strong> / <strong>View variants</strong> / <strong>View LOD management</strong>;</li>
+<li>The asset area switches to the internal view where cards become version / variant / LOD entries;</li>
+<li><strong>Right-click</strong> an internal entry card.</li>
+</ol>
+<h2 id="h-2">Context menu of version / variant entries</h2>
+<table><thead><tr><th>Segment</th><th>Item</th><th>Description</th></tr></thead><tbody><tr><td>①</td><td>Import &lt;format&gt;</td><td>Imports <strong>only this copy</strong> (this version / variant); with a single format the row shows the format name</td></tr><tr><td>①</td><td>Add reference</td><td>Brings this copy in as a Reference</td></tr><tr><td>①</td><td>View LOD management</td><td>Appears when the entry has several LODs; switches to its LOD list</td></tr><tr><td>①</td><td>Append LOD…</td><td>Appends a new LOD to this copy</td></tr><tr><td>②</td><td>Add to favorite set ▶</td><td>It favorites the <strong>master asset</strong> (internal entries cannot be favorited themselves)</td></tr><tr><td>②</td><td>Select all / duplicate / open folder</td><td>Duplicate and open folder both act on the <strong>master asset</strong>; internal entries are never duplicated</td></tr><tr><td>③</td><td>Edit</td><td>Unavailable on the main version (gray, tagged &quot;(main version)&quot;)</td></tr><tr><td>③</td><td>Update thumbnail ▶</td><td>Capture / import; variants also have Maya playblast / render image; add / capture and add. <strong>No background render</strong></td></tr><tr><td>③</td><td>Update asset ▶</td><td>Version entries offer: replace asset / append format / append as LOD / create new version (gray on sub-versions) / add new variant… / batch add variants…; variant entries have only one <strong>Update asset</strong> row</td></tr><tr><td>③</td><td>Delete</td><td>The main version cannot be deleted (gray, stating the main version cannot be deleted)</td></tr><tr><td>④</td><td>Asset details</td><td>Opens the version browser / asset inspection window</td></tr></tbody></table>
+<h2 id="h-3">Context menu of LOD entries (even leaner)</h2>
+<table><thead><tr><th>Segment</th><th>Item</th><th>Description</th></tr></thead><tbody><tr><td>①</td><td>Import &lt;format&gt;</td><td>Imports only this LOD</td></tr><tr><td>①</td><td>Open folder</td><td>Opens the <strong>master asset</strong> folder</td></tr><tr><td>②</td><td>Set as default LOD</td><td>Appears only when this is not the default; sets this LOD as default</td></tr><tr><td>②</td><td>Rename LOD…</td><td>Renames it (only this LOD&#x27;s display name)</td></tr><tr><td>③</td><td>Append LOD…</td><td>Adds another LOD to this version</td></tr><tr><td>③</td><td>Delete this LOD</td><td>Gray when only one LOD remains (at least one must stay)</td></tr><tr><td>④</td><td>Asset details</td><td>Opens the version browser / asset inspection window</td></tr></tbody></table>
+<h2 id="h-4">Why these menus are so short</h2>
+<p>Internal entries (versions / variants / LODs) <strong>are not real assets</strong>, only a slice of the master asset. Therefore:</p>
+<table><thead><tr><th>What a normal asset can do</th><th>Why an internal entry cannot</th></tr></thead><tbody><tr><td>Move to / copy to a category</td><td>It has no directory of its own and cannot be moved; move the master asset instead</td></tr><tr><td>Edit name / category / tags</td><td>Metadata lives on the master asset</td></tr><tr><td>Delete the whole asset</td><td>Only &quot;this copy&quot; can be deleted (LODs have a minimum), and deleting the package is done on the master asset</td></tr><tr><td>Render thumbnails in the background</td><td>Background rendering works per whole package, and a single entry has none</td></tr></tbody></table>
+<p>There is a real upside: <strong>a mistake in this menu at worst changes this one copy and never the master asset&#x27;s content or location.</strong></p>
+<h2 id="h-5">Notes</h2>
+<ul>
+<li><strong>Favoriting hits the master asset</strong>: favoriting from an internal entry puts the master asset in the favorite set, not this version.</li>
+<li><strong>&quot;Set as default LOD&quot; changes master asset behavior</strong>: the default LOD is the one used on import / drag, so think before switching.</li>
+<li><strong>Deleting a variant deletes only its own geometry and thumbnail</strong>: shared textures / materials are unaffected (the confirmation states this).</li>
+<li><strong>Paste does not copy internal entries</strong>: duplicating an entry never reaches the clipboard.</li>
+</ul>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>Master asset menu: <a href="#/en/15.5.1"><code>8.5.1</code></a>; update asset / update thumbnail: <a href="#/en/15.5.16"><code>8.5.16</code></a>; import and reference: <a href="#/en/15.5.13"><code>8.5.13</code></a></li>
+<li>Version and LOD concepts: <a href="#/en/4.10.1"><code>4.1.10.1</code></a>; what a variant is: <a href="#/en/4.13.1"><code>4.1.13.1</code></a></li>
+<li>Version browser: <a href="#/en/15.11.2"><code>8.11.2</code></a>; variant management window: <a href="#/en/15.11.3"><code>8.11.3</code></a>; importing variants and version selection: <a href="#/en/15.11.5"><code>8.11.5</code></a></li>
+</ul>

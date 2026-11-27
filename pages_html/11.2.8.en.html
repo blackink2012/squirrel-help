@@ -1,0 +1,29 @@
+<blockquote><p>In one line: <strong>a safety catch that is off by default — once enabled, <code>「彻底删除」 (Delete permanently)</code> in the context menu works, and deleted files vanish immediately without entering the recycle bin and cannot be restored.</strong></p></blockquote>
+<h2 id="h-1">Where it is</h2>
+<p>Settings window → General page → the <code>「彻底删除」 (Permanent delete)</code> group (between &quot;Appearance&quot; and &quot;Thumbnails (resolution)&quot;).</p>
+<p><img src="media_en/shared/settings-permanent-delete.webp" alt="Settings → General → Permanent delete: the delete permanently item only works once this is checked" loading="lazy" decoding="async"></p>
+<h2 id="h-2">While it is off (default)</h2>
+<ul>
+<li><code>「彻底删除」 (Delete permanently)</code> in the asset / category / version context menus is <strong>greyed out</strong>, and clicking it suggests enabling it in settings;</li>
+<li>Deletion only offers &quot;move to recycle bin&quot;: files stay in the library and <strong>can be restored</strong>;</li>
+<li>The recycle bin is limited to 100 GB, and when full you must permanently delete items inside it (see <a href="#/en/15.8.3">15.8.3</a>).</li>
+</ul>
+<h2 id="h-3">Steps to enable it</h2>
+<ol>
+<li>Check <code>「启用「彻底删除」（直接删除文件，不进回收站）」 (enable permanent delete, removing files directly without the recycle bin)</code>;</li>
+<li>Clicking <code>「应用」 (Apply)</code> or <code>「确定」 (OK)</code> opens a <strong>second confirmation</strong> stating that files are removed directly, do not enter the recycle bin and cannot be restored;</li>
+<li>It takes effect immediately after confirming; back in the asset grid, <code>「彻底删除」 (Delete permanently)</code> is no longer greyed out.</li>
+</ol>
+<p><strong>Enabling and disabling both write an audit log</strong> (<code>setting / permanent_delete_enabled</code>, marked irreversible) so the change can be traced later.</p>
+<h2 id="h-4">Once it is on</h2>
+<table><thead><tr><th>Action</th><th>Behavior</th></tr></thead><tbody><tr><td>Delete → move to recycle bin</td><td>As before: goes to the recycle bin and can be restored</td></tr><tr><td>Delete → delete permanently</td><td><strong>Deletes the files on disk</strong>, skips the recycle bin; the confirmation says &quot;cannot be restored&quot;; there is no undo</td></tr><tr><td>AI-side asset deletion</td><td>Controlled separately by <code>「允许 AI 删除 / 覆盖替换资产」 (allow AI to delete or overwrite assets)</code> in AI settings and <strong>unrelated to this switch</strong> (see <a href="#/en/11.4.6">11.4.6</a>)</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Permanent delete keeps no backup, skips the recycle bin and cannot be undone. Keep this switch off for day-to-day work; enable it temporarily only when space must really be freed and the library is backed up. See <a href="#/en/4.12.4">4.12.4</a> for backups.</p></div>
+<h2 id="h-5">Common questions</h2>
+<table><thead><tr><th>Symptom</th><th>Cause / fix</th></tr></thead><tbody><tr><td><code>「彻底删除」 (Delete permanently)</code> is greyed out</td><td>This switch is off by default; enable it in settings</td></tr><tr><td>After deleting, the recycle bin is empty</td><td>You used delete permanently; only &quot;move to recycle bin&quot; goes to the recycle bin</td></tr><tr><td>Want AI to delete assets too</td><td>That is another switch: <code>AI settings → AI / MCP 通道 (AI / MCP channel) → allow AI to delete or overwrite assets</code></td></tr></tbody></table>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>Recycle bin view and context menu → <a href="#/en/15.8.3">15.8.3</a></li>
+<li>Batch delete → <a href="#/en/4.8.2">4.8.2</a></li>
+<li>AI / MCP channel (including the AI destructive-action switch) → <a href="#/en/11.4.6">11.4.6</a></li>
+<li>Other settings on the General page → <a href="#/en/11.2.1">11.2.1</a></li>
+</ul>

@@ -1,0 +1,22 @@
+<p>没有单独登记双击配置的子库不会失效，而是按 <code>double_click_preset.json</code> 的 <code>default</code> 段执行。</p>
+<p><img src="media/shared/settings-fallback.webp" alt="兜底" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>双击预设按子库分段保存。读取顺序是：先找该子库自己的段；找不到，再找 <code>default</code>；<code>default</code> 也没有，就当作「无操作」。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<ul>
+<li>出厂 <code>default</code> 段为 <code>{&quot;cmd&quot;: &quot;import&quot;, &quot;option&quot;: &quot;&quot;}</code>，即「导入 + 自动格式」。</li>
+<li>未登记的自定义子库、没有 <code>type</code> 字段的自定义顶级分类，都走这一段。</li>
+<li>已经显式登记过的子库（即使选的是「无操作」）以自身配置为准，不再回退。</li>
+</ul>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>自定义子库双击时默认执行导入，而不是毫无反应。</li>
+<li><code>option</code> 为空时，导入格式取资产第一个可用格式；资产没有任何可导入格式时，本次双击不执行。</li>
+<li>如果在设置里保存的命令不属于该子库的可选列表（例如子库改名后旧配置残留），界面会回落到「无操作」。</li>
+</ul>
+<h2 id="h-4">何时修改</h2>
+<p>希望自定义子库双击时执行特定命令，可在设置里选中该子库后直接配置；结果写入它自己的段，覆盖 <code>default</code>。</p>
+<h2 id="h-5">结果验证</h2>
+<p>新建一个自定义子库并应用设置，双击其中资产应执行「导入」；若双击无反应，先检查该子库是否被显式配成了「无操作」。</p>
+<h2 id="h-6">提示</h2>
+<p><code>default</code> 段是兜底，不要把它当成某个具体子库的配置来改；要改具体行为，请在左侧选中对应子库后修改。</p>

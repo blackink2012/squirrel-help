@@ -1,0 +1,12 @@
+<p>The documentation index is a vector copy of Maya commands, nodes, APIs and guides, stored under the knowledge base&#x27;s <code>kb/semantic</code>; it only serves Maya documentation search and is unrelated to the asset library.</p>
+<h2 id="h-1">What it contains</h2>
+<p>The local knowledge base holds about 17,000 entries typed as command, node, api, devguide or doc. The index only generates vectors for their names and descriptions; the body text is still read from the local knowledge base by <code>source</code>.</p>
+<p>The vector directory contains <code>meta.json</code> (build record), <code>names.txt</code> (entry names in row order), <code>vectors.i8</code> (int8 quantized vectors) and <code>scales.f32</code> (dequantization factors); it is 768-dimensional under the current default embedding model.</p>
+<h2 id="h-2">When it is used</h2>
+<p>Documentation search defaults to <code>auto</code>: lexical first, then semantic results are fused with lexical ones when available. When the semantic index is missing, Ollama is not running or the model is not pulled, it uses lexical only without reporting an error.</p>
+<h2 id="h-3">Rebuilding</h2>
+<p>After changing the embedding model, when dimensions do not match or entries were rebuilt on a large scale, run:</p>
+<pre><code class="language-powershell">python tools\build_semantic_index.py --model embeddinggemma-2:740m</code></pre>
+<p>The &quot;documentation vector index&quot; step of the one-click install does the same thing and only rebuilds when the model changes.</p>
+<h2 id="h-4">Notes</h2>
+<p>The documentation index and the asset index record their models separately and never replace each other; rebuilding one does not speed up the other.</p>

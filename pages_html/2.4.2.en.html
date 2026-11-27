@@ -1,0 +1,26 @@
+<p>There is no built-in one-click rollback, so keep the old installer and reinstall manually; back up the asset library and settings before rolling back.</p>
+<h2 id="h-1">Rolling back the standalone edition / EXE</h2>
+<ol>
+<li>Uninstall the current version first (user data is not deleted, see &quot;Uninstall and leftover cleanup&quot;).</li>
+<li>Run the old installer and reinstall the same components.</li>
+<li>Restart Maya (if the Maya integration is installed), then start the standalone edition and confirm the version.</li>
+</ol>
+<p>Overwriting the new version with the old installer also works, but files removed by the new version may remain; when diagnosing problems, prefer &quot;uninstall first, then install the old version&quot;.</p>
+<h2 id="h-2">Checks before rolling back</h2>
+<ul>
+<li>The Maya versions supported by the old release match your current Maya.</li>
+<li>The asset library and settings are backed up, and the license file or activation code is available.</li>
+</ul>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The version number is back at the target version.</li>
+<li>The library still loads and favorites and tags are intact.</li>
+<li>The Maya entry points and the license state are normal.</li>
+</ul>
+<h2 id="h-4">Common failures</h2>
+<ul>
+<li><strong>The old version cannot read the new library layout</strong>: the library format may have been upgraded; back up before rolling back (compatibility range to be confirmed).</li>
+<li><strong>Version mismatch</strong>: the old package does not include your Maya version, so the plug-in cannot load.</li>
+<li><strong>The license does not cover the old version</strong>: a license may be limited to a version range; reactivate or contact the licensor.</li>
+<li><strong>The runtime directory is deleted</strong>: do not delete the whole directory when replacing folders by hand; move the runtime directory out first.</li>
+</ul>

@@ -1,0 +1,17 @@
+<p>Documentation search runs lexical and semantic retrieval in parallel and fuses them with weighted RRF: lexical guarantees precision when you know the name, semantics catches you when you do not.</p>
+<h2 id="h-1">The four lexical layers</h2>
+<ol>
+<li><strong>Whole-string hit</strong>: the query appears verbatim in the original name or description, scoring highest.</li>
+<li><strong>Multi-word AND</strong>: the query is split on whitespace and every word must appear in the name, description or flag / attribute summary.</li>
+<li><strong>Synonym expansion</strong>: reads <code>kb/aliases.json</code> and maps &quot;decimate&quot; to <code>polyReduce</code> and &quot;scatter&quot; to <code>MASH_Distribute</code>.</li>
+<li><strong>Ranking</strong>: by actionability tier, then score, then IDF weighting; alias hits on the name get another half tier.</li>
+</ol>
+<h2 id="h-2">The semantic path</h2>
+<p>The query is encoded into a vector, compared by cosine similarity against about 17,000 entry vectors and fused with the lexical results. The fusion constant <code>RRF_K</code> is 20, so one rank of difference weighs little, preventing an accidental single-path hit from overriding the other path.</p>
+<p>When lexical finds nothing, semantic results are returned alone; when the query is exactly a name, that name is locked so fusion cannot push it out.</p>
+<h2 id="h-3">Fallback and diagnosis</h2>
+<ul>
+<li>Without a semantic index, with Ollama stopped or the model not pulled, it uses lexical only without reporting an error.</li>
+<li>A failing semantic call trips a circuit breaker of about 60 seconds during which retrieval falls back to lexical.</li>
+<li>Each result&#x27;s <code>match</code> says <code>keyword</code>, <code>semantic</code> or <code>both</code>, which tells you which path caused a problem.</li>
+</ul>

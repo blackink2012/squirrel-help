@@ -1,0 +1,17 @@
+<p>The category tree expands level by level, collapses as a whole, and automatically expands parents and scrolls into place when an asset is located from search or the wishlist.</p>
+<p><img src="media_en/shared/nav-collapsed.webp" alt="After collapsing, the left column becomes a narrow icon strip that still switches top-level categories" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Expanding and collapsing</h2>
+<ul>
+<li>Click the arrow in front of a category row to expand or collapse that node.</li>
+<li>Double-clicking a node with sub-categories also expands / collapses it (the native double-click is disabled and the tree decides, avoiding a double toggle under Maya).</li>
+<li>Double-clicking <code>「全部资产」 (All assets)</code> expands every top-level category at once; double-clicking again collapses them.</li>
+<li>Right-clicking a <strong>sub-library root node or top-level category node</strong>: the bottom of the menu holds <code>「全部展开」 (Expand all)</code> and <code>「全部折叠」 (Collapse all)</code>; the context menu of an ordinary category node only offers add sub-category, open folder, move to, edit and delete, without expand / collapse.</li>
+</ul>
+<h2 id="h-2">Locating</h2>
+<ul>
+<li>Ordinary locating: clicking a category selects it and loads its assets; expanding the tree never changes the selection.</li>
+<li>Clicking <code>「定位」 (Locate)</code> from AI search or the wishlist: the plug-in switches to the asset&#x27;s sub-library, expands the parent categories level by level, selects the category and scrolls the asset into view in the grid.</li>
+<li>Pressing <code>Ctrl+F</code> inside the grid scrolls the selected card to the center of the viewport.</li>
+</ul>
+<h2 id="h-3">Verify the result</h2>
+<p>When the category tree refreshes (for example after creating, deleting or moving a category), the expansion state and the current selection are kept: previously expanded nodes stay expanded and the selected category stays where it was. After a plug-in restart the previous expansions and selection are restored as well.</p>

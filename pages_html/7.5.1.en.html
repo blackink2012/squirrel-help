@@ -1,0 +1,19 @@
+<p>The image format conversion tool reads and writes through OpenCV, converting between floating-point HDR/EXR and the common 8-bit formats; converting float to 8-bit applies tone mapping automatically.</p>
+<p><img src="media_en/shared/dialog-format-convert.webp" alt="Image format conversion" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Supported formats</h2>
+<table><thead><tr><th>Format</th><th>Extension</th><th>Data mode</th><th>Notes</th></tr></thead><tbody><tr><td>Radiance HDR</td><td><code>.hdr</code></td><td>Float</td><td>High dynamic range environment image</td></tr><tr><td>OpenEXR</td><td><code>.exr</code></td><td>Float</td><td>Production-grade high dynamic range image</td></tr><tr><td>PNG</td><td><code>.png</code></td><td>8-bit</td><td>Lossless, supports an alpha channel</td></tr><tr><td>JPEG</td><td><code>.jpg</code>, <code>.jpeg</code></td><td>8-bit</td><td>Lossy compression, small files</td></tr><tr><td>TIFF</td><td><code>.tif</code>, <code>.tiff</code></td><td>Float or 8-bit</td><td>Supports several compressions</td></tr><tr><td>BMP</td><td><code>.bmp</code></td><td>8-bit</td><td>Uncompressed bitmap</td></tr><tr><td>WebP</td><td><code>.webp</code></td><td>8-bit</td><td>High compression ratio</td></tr><tr><td>TGA</td><td><code>.tga</code></td><td>8-bit</td><td>Common in games</td></tr></tbody></table>
+<h2 id="h-2">Output options</h2>
+<table><thead><tr><th>Output format</th><th>Available options</th></tr></thead><tbody><tr><td>JPEG</td><td>Quality 1–100, 95 by default</td></tr><tr><td>PNG</td><td>Compression level 0–9, 5 by default</td></tr><tr><td>TIFF</td><td>Compression NONE / LZW / DEFLATE, LZW by default</td></tr><tr><td>EXR</td><td>Compression mode, ZIP by default</td></tr><tr><td>HDR / others</td><td>No extra options</td></tr></tbody></table>
+<h2 id="h-3">Use and verify</h2>
+<ol>
+<li>Choose files or a folder in the tool and set the output format and options.</li>
+<li>Click <code>「开始转换」 (Start conversion)</code>; the log shows each file&#x27;s result.</li>
+<li>When it finishes, confirm in the output directory that the files exist, have the right extension and can be read by a Maya <code>file</code> node.</li>
+</ol>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Requires <code>opencv-python</code> and <code>numpy</code>; <code>imageio</code> is not required but improves EXR compatibility.</li>
+<li>TIFF can keep float data or output 8-bit; once TIFF is chosen, decide the compression by purpose.</li>
+<li>Converting HDR/EXR to PNG/JPEG applies Reinhard compression and 2.2 gamma, so it is only suitable for previews or thumbnails.</li>
+<li>When the full dynamic range must be kept, output <code>.exr</code> or <code>.hdr</code> again.</li>
+</ul>

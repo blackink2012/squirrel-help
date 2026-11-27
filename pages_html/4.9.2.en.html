@@ -1,0 +1,35 @@
+<p>A collection is a top-level container in the favorites panel; the default collection always exists, and other collections can be created, renamed, emptied and deleted.</p>
+<p><img src="media_en/shared/nav-favorites.webp" alt="Collection list: + next to the title creates one; the context menu offers rename / empty / delete" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Creating a collection</h2>
+<ol>
+<li>Click <code>+</code> on the right of the <code>「收藏夹」 (Favorites)</code> title (tooltip <code>「新建收藏夹」 (New collection)</code>), or right-click empty space in the list and choose <code>「新建收藏夹」 (New collection)</code>.</li>
+<li>Type a name and confirm; the new entry appears in the list and is selected.</li>
+</ol>
+<h2 id="h-2">Renaming</h2>
+<ol>
+<li>Right-click a non-default collection and choose <code>「重命名」 (Rename)</code>.</li>
+<li>Type the new name and confirm.</li>
+</ol>
+<h2 id="h-3">Emptying a collection</h2>
+<ol>
+<li>Right-click the collection and choose <code>「清空收藏夹」 (Empty collection)</code>.</li>
+<li>Confirm in the <code>「确认清空」 (Confirm empty)</code> dialog. Emptying removes only the favorite membership; the assets themselves are not deleted.</li>
+</ol>
+<h2 id="h-4">Deleting a collection</h2>
+<ol>
+<li>Right-click a non-default collection and choose <code>「删除收藏夹」 (Delete collection)</code>.</li>
+<li>Confirm in the <code>「确认删除」 (Confirm delete)</code> dialog. Only the container is deleted and the assets are unaffected; if the active collection was deleted the interface falls back to the default collection.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>The names and counts in the favorites list update immediately.</li>
+<li>The <code>collections</code> entry in <code>favorites.json</code> in the library root grows, changes or shrinks accordingly.</li>
+<li>The changes are still there after reopening the plug-in.</li>
+</ul>
+<h2 id="h-6">Tips</h2>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>The default collection offers no rename or delete entry; deleting a collection never deletes assets, but it does lose that collection&#x27;s favorite memberships.</p></div>
+<ul>
+<li>A new collection&#x27;s internal ID looks like <code>fav_xxxxxxxx</code>, and its display name can be changed at any time.</li>
+<li>On the command side use <code>collection_manage</code>: <code>op=list/create/rename/delete/clear</code>, with <code>dry_run</code> for previewing.</li>
+<li>Collections are stored per library, so after switching libraries you see that library&#x27;s own collections.</li>
+</ul>

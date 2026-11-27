@@ -1,0 +1,26 @@
+<p>Batch mapping means configuring several &quot;source → target&quot; rows in one type mapping table so one conversion covers several source materials.</p>
+<p><img src="media_en/shared/dialog-mapping-preview.webp" alt="Material attribute mapping" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>Every &quot;source type → target type&quot; pair has a matching <code>.mmap</code>, or can route through <code>openPBRSurface</code>.</li>
+<li>The scene is saved.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Add several rows to the <code>「材质类型映射配置」 (Material type mapping configuration)</code> table in <code>「材质转换工具」 (Material conversion tool)</code>.</li>
+<li>Use the dropdowns on each row to pick the source and target material types; you can also select materials in Maya and click <code>「加载源」 (Load source)</code> / <code>「加载目标」 (Load target)</code> to read their types.</li>
+<li>With only one row and <code>「源」 (Source)</code> left empty, every material is converted to that target type.</li>
+<li>Click <code>「浏览...」 (Browse...)</code> and choose the folder containing every needed <code>.mmap</code>.</li>
+<li>Select the scope and click <code>「转换选择」 (Convert selection)</code>, or click <code>「转换全部」 (Convert all)</code> to process the whole scene.</li>
+<li>To infer attribute rows automatically, configure an AI service in the mapping tool and click <code>「一键映射」 (One-click mapping)</code>, then fine-tune by hand and save as <code>.mmap</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The converted material count and applied object count in the dialog match the scene, and the failure list is empty or can be located item by item with <code>「在Maya中选中失败材质」 (Select failed materials in Maya)</code>.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li><code>「一键映射」 (One-click mapping)</code> only fills attribute rows; the type mapping table still has to be configured in the conversion tool.</li>
+<li>A multi-row configuration can be saved as an <code>.mlist</code> preset and restored later with <code>「加载预设」 (Load preset)</code>.</li>
+<li>Materials of the same type are skipped and never converted twice.</li>
+</ul>
+<h2 id="h-5">Warnings</h2>
+<p>Batch conversion creates and replaces many materials in a row, so always save the scene first; when one pair lacks a mapping those materials count as failures while the rest keep converting.</p>

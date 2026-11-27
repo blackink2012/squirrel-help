@@ -1,0 +1,41 @@
+<blockquote><p>One-line summary: <strong>the small windows through which the plug-in talks to you: feedback you submit, and the various confirmation / error / progress prompts.</strong></p></blockquote>
+<blockquote><p><strong>No screenshot yet</strong>: the <code>dialog-feedback.png</code> image has not been produced. The control tables below describe the window; the screenshot will be added when available.</p></blockquote>
+<h2 id="h-1">1. The feedback window</h2>
+<h3 id="h-2">How to open it</h3>
+<p><strong>Settings → About page → Feedback group → Send feedback.</strong></p>
+<h3 id="h-3">What every control does</h3>
+<table><thead><tr><th>Control</th><th>Effect</th><th>How to fill it</th></tr></thead><tbody><tr><td><strong>Type</strong> dropdown</td><td>Feature error / crash / licensing issue / suggestion / other</td><td>Choose the closest so it can be triaged</td></tr><tr><td><strong>Title</strong> input (placeholder &quot;one sentence describing the issue (max 120 bytes)&quot;)</td><td>One sentence stating the problem</td><td>Write &quot;what I did + what happened&quot;, not just &quot;it broke&quot;</td></tr><tr><td><strong>Details</strong> multi-line box (placeholder &quot;reproduction steps, symptoms, expected result (20–4096 bytes)&quot;)</td><td>The body</td><td>Use three parts — steps / symptoms / expectation — and the steps are the most useful</td></tr><tr><td><strong>Contact (optional)</strong> input (placeholder &quot;email / QQ / WeChat, optional&quot;)</td><td>For a follow-up</td><td>You can submit without it</td></tr><tr><td><strong>Submit feedback</strong> button</td><td>Submits</td><td>Disabled after success to prevent duplicates</td></tr><tr><td><strong>Close</strong> button</td><td>Closes the window</td><td>—</td></tr><tr><td>Bottom message line</td><td>Three outcomes: <code>submitted, id: xxx</code> / <code>currently offline, saved locally and will retry when online</code> / <code>submission failed: reason</code></td><td>Note the id for later communication</td></tr></tbody></table>
+<h3 id="h-4">A complete feedback flow</h3>
+<ol>
+<li>Reproduce the problem and note the steps and symptoms (screenshots / logs help);</li>
+<li>Settings → About page → <strong>Send feedback</strong>;</li>
+<li>Choose a type → write the title → write the details;</li>
+<li>Add contact details if you want a follow-up;</li>
+<li>Click <strong>Submit feedback</strong>;</li>
+<li>Read the message line:<ul>
+<li>submitted → note the id;</li>
+<li>offline → the content is stored locally and retried automatically once online (you need not keep the window open);</li>
+<li>failed → handle the stated reason (an unreachable service address, for example).</li>
+</ul></li>
+</ol>
+<h3 id="h-5">How to write a useful report</h3>
+<ul>
+<li><strong>Must include</strong>: what you did, what you saw, what you expected;</li>
+<li><strong>Attach when possible</strong>: log locations are in <a href="#/en/13.8.1"><code>6.8.1</code></a> and the report template in <a href="#/en/13.8.3"><code>6.8.3</code></a>;</li>
+<li><strong>No sensitive data</strong>: never paste keys / license codes into the description, and the contact field is optional.</li>
+</ul>
+<h3 id="h-6">Risks and how to undo</h3>
+<ul>
+<li>Feedback <strong>is sent to the server</strong>, and there is no &quot;withdraw&quot; once it succeeds — check the content (especially contact details) before submitting.</li>
+<li>Queued offline content is stored locally and retried when online; if you do not want it sent, do not submit before the network comes back.</li>
+</ul>
+<p><img src="media_en/shared/dialog-feedback.webp" alt="Feedback window" loading="lazy" decoding="async"></p>
+<h2 id="h-7">2. Other prompt dialogs you will meet</h2>
+<table><thead><tr><th>Dialog</th><th>When it appears</th><th>How to respond</th></tr></thead><tbody><tr><td>Information / warning / error prompts</td><td>Immediate feedback on operations (such as &quot;Maya is not connected&quot;, failure reasons)</td><td>Read the text and follow it; note any error code</td></tr><tr><td>Confirmation (Yes / No)</td><td>Before dangerous operations (delete, deactivate license, batch convert, overwrite installed skills and so on)</td><td><strong>Read what it asks before clicking Yes</strong>; clicking No does nothing</td></tr><tr><td>Progress windows</td><td>Long operations such as batch export, AI batch analysis, headless jobs and dsh installation</td><td>Most can be cancelled; cancellation stops at the next checkpoint and finished work is kept</td></tr><tr><td>Name conflict window</td><td>Import / export hits a same-named asset</td><td>Options are in <a href="#/en/15.12.5"><code>8.12.5</code></a></td></tr><tr><td>License prompt</td><td>A restricted feature is used while unlicensed / expired</td><td>It leads to the license window, see <a href="#/en/15.15.2"><code>8.15.2</code></a></td></tr><tr><td>Missing AI dependency prompt</td><td>Semantic search / AI analysis lacks dependencies</td><td>It leads to Settings → AI settings → install AI dependencies, see <a href="#/en/15.9.3"><code>8.9.3</code></a></td></tr></tbody></table>
+<h2 id="h-8">Related</h2>
+<ul>
+<li>Where the license page / software information / feedback live: <a href="#/en/15.9.10"><code>8.9.10</code></a></li>
+<li>The license window (activate / deactivate): <a href="#/en/15.15.2"><code>8.15.2</code></a></li>
+<li>The name conflict window: <a href="#/en/15.12.5"><code>8.12.5</code></a></li>
+<li>Log locations and the feedback template: <a href="#/en/13.8.1"><code>6.8.1</code></a> / <a href="#/en/13.8.3"><code>6.8.3</code></a></li>
+</ul>

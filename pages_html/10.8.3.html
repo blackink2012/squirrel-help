@@ -1,0 +1,25 @@
+<p>Maya 在渲染过程中直接退出，通常不是 Maya 本身的问题，而是渲染器内核崩溃把 Maya 一起带走了。</p>
+<h2 id="h-1">症状</h2>
+<ul>
+<li>渲染开始后 Maya 进程消失，界面无机会报错。</li>
+<li>Windows 事件日志里错误模块是渲染器自己的 dll，例如 <code>redshift-core-vc140.dll</code>、<code>vray_*.dll</code>。</li>
+<li>同一错误偏移反复出现，<code>%TEMP%</code> 下有对应的 <code>MayaCrashLog*.dmp</code>。</li>
+<li>崩溃后端口往往仍被崩溃报告器占着，表现为「在线但不应答」。</li>
+</ul>
+<h2 id="h-2">原因</h2>
+<ul>
+<li>Redshift 已知路径：<code>cmds.render</code> 最终走 <code>rsRender -render</code>，不带 <code>-blk</code> 时是异步的；同一个 Maya 进程里第 2 次渲染会与上一次收尾撞车，崩在 <code>redshift-core-vc140.dll</code>（<code>0xc0000005</code>，偏移 <code>0xf77c1f</code>）。</li>
+<li>渲染器自身的版本缺陷或 GPU 驱动问题，也会让崩溃发生在渲染器 dll 内。</li>
+</ul>
+<h2 id="h-3">解决</h2>
+<ol>
+<li>Redshift 缩略图使用插件的阻塞式通道 <code>rsRender -render -blk</code> 并抓 Render View，不要退回 <code>cmds.render</code>。</li>
+<li>需要彻底隔离风险时走进程外 <code>Render.exe</code>：Redshift / V-Ray 在 mayapy standalone 里也必须走它，因为 standalone 的 <code>cmds.render</code> 会忽略当前渲染器。</li>
+<li>不要在同一会话里连续做多次进程内 Redshift 渲染；需要批量时改用无头批渲。</li>
+<li>渲染前不要热重载插件模块，热重载后再渲染曾复现同签名崩溃。</li>
+<li>崩溃后按「崩溃后恢复」清理残留进程与端口，再重新加载场景。</li>
+</ol>
+<h2 id="h-4">结果验证</h2>
+<p>连续多次渲染不再崩溃，<code>%TEMP%</code> 下没有新增同签名 dump；事件日志中不再出现同一错误模块与偏移。</p>
+<h2 id="h-5">仍不行</h2>
+<p>记录事件日志里的错误模块、异常代码与偏移，以及最新 dump 路径，连同渲染器版本一起反馈；改用进程外 <code>Render.exe</code> 先保证出图。</p>

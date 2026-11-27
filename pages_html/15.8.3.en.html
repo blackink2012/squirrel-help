@@ -1,0 +1,43 @@
+<blockquote><p>One-line summary: <strong>deleting an asset / category / version first moves it to the recycle bin, from where it can be restored; only delete permanently really removes it from disk.</strong></p></blockquote>
+<h2 id="h-1">Remember this difference first</h2>
+<table><thead><tr><th>Operation</th><th>Where the files are</th><th>Restorable</th><th>Uses disk space</th></tr></thead><tbody><tr><td>Move to recycle bin (asset right-click <strong>Delete → Move to recycle bin</strong>)</td><td>Still in the library, moved into the recycle bin folder</td><td><strong>Yes</strong></td><td>Yes (the recycle bin is capped at 100 GB, and you must delete old entries when full)</td></tr><tr><td>Delete permanently (asset right-click <strong>Delete → Delete permanently</strong>)</td><td>Removed from disk directly, <strong>never enters the recycle bin</strong></td><td><strong>No</strong></td><td>No</td></tr><tr><td>Deleting a category or a version</td><td>Also goes to the recycle bin first</td><td>Yes</td><td>Yes</td></tr></tbody></table>
+<p>Every recycle bin record is labeled as an asset / category / version.</p>
+<p><img src="media_en/shared/window-recycle-bin.webp" alt="Recycle bin view: dark red outlined cards, used/limit at the top and the context menu entry" loading="lazy" decoding="async"></p>
+<h2 id="h-2">How to open the recycle bin</h2>
+<ol>
+<li>Look at the category tree in the left navigation: there is a separate <strong>Recycle bin</strong> entry at the <strong>bottom</strong>, followed by the entry count;</li>
+<li>Click it and the center content area switches to the recycle bin page;</li>
+<li>To return to assets, click any category (the recycle bin entry unhighlights).</li>
+</ol>
+<p>The category library and the project library each have their own recycle bin entry, and the counts are per library.</p>
+<h2 id="h-3">The recycle bin page</h2>
+<table><thead><tr><th>Element</th><th>Description</th></tr></thead><tbody><tr><td>View</td><td>Card / list, switched with the same controls as the asset grid; recycle bin cards use a <strong>dark red outline</strong> so they are instantly distinguishable</td></tr><tr><td>Sort / thumbnail size</td><td>The same three toolbar controls (view / sort / thumbnail slider); the recycle bin has no separate row of buttons</td></tr><tr><td>Entry content</td><td>Thumbnail + name + subtitle (type · size · deletion time); entries whose files are gone say &quot;File lost (record can still be removed)&quot;</td></tr><tr><td>Result text</td><td>The top shows &quot;N items · used / 100 GB limit&quot; and hints &quot;Right-click an entry: restore / delete permanently&quot;; at 90% it adds &quot;approaching the limit, consider cleaning up&quot;, and once full, deleting assets is refused with a prompt to clean up first</td></tr><tr><td>Right panel</td><td>Selecting an entry shows properties and preview <strong>read-only</strong> (thumbnail and deletion time in the notes) with every thumbnail button disabled</td></tr></tbody></table>
+<blockquote><p>The recycle bin <strong>never cleans itself</strong> and has <strong>no empty-all button</strong>: entries can only be deleted one by one with <strong>Delete permanently</strong> in the context menu.</p></blockquote>
+<h2 id="h-4">Item-by-item details of the context menu</h2>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Where it appears</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Restore</td><td>Returns this record to its original category / location</td><td>On an entry</td><td>The record leaves the recycle bin, the asset returns to its category and the list refreshes</td><td>Being able to restore means the files still exist; a failed restore shows a prompt</td></tr><tr><td>Delete permanently</td><td>Removes this record from disk</td><td>On an entry</td><td>Asks &quot;Deleting permanently cannot be undone. Continue?&quot; and deletes the files on confirm</td><td><strong>Irreversible</strong>; there is no second recycle bin</td></tr><tr><td>Open recycle bin folder</td><td>Opens the recycle bin directory in Explorer</td><td>On an entry / on blank space</td><td>Opens the library&#x27;s recycle bin folder so you can inspect files</td><td>Be careful with manual file changes; the plug-in does not sync them</td></tr></tbody></table>
+<p>Right-clicking blank space shows only <strong>Open recycle bin folder</strong>.</p>
+<h2 id="h-5">A typical operation: restore after a mistaken delete</h2>
+<ol>
+<li>Click the <strong>Recycle bin</strong> entry in the left navigation to switch to the recycle bin page;</li>
+<li>Find the record (sort by type / name; thumbnails make it easy to recognize);</li>
+<li>Right-click → <strong>Restore</strong>;</li>
+<li>The list refreshes and the entry disappears; return to its original category and the asset is there.</li>
+</ol>
+<h2 id="h-6">A typical operation: free space when the recycle bin is full</h2>
+<ol>
+<li>Confirm nothing in the recycle bin is still needed (permanent deletion cannot be undone);</li>
+<li>Right-click the entries to clear → <strong>Delete permanently</strong> (multi-select works);</li>
+<li>In the confirmation dialog click Yes;</li>
+<li>The <strong>used</strong> figure drops and disk space is released.</li>
+</ol>
+<div class="admonition warning"><div class="admonition-title">警告</div><p><strong>Delete permanently</strong> is irreversible, skips the recycle bin and has no backup (the same for entries whose files were lost). Confirm before acting; when the library holds important assets, take a library backup first (see <a href="#/en/4.12.4"><code>4.1.12.4</code></a>).</p></div>
+<h2 id="h-7">Common questions</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th></tr></thead><tbody><tr><td>A deleted asset is not in the recycle bin</td><td><strong>Delete permanently</strong> was used, or the deleted item was an internal version / variant that never goes to the recycle bin</td></tr><tr><td>Restore failed</td><td>The target category no longer exists, or the files were moved / deleted manually</td></tr><tr><td>A recycle bin entry says the file is lost</td><td>The record remains but the matching files were deleted outside; delete the record permanently to clear it</td></tr><tr><td>The recycle bin holds items but disk usage did not drop</td><td>Only <strong>Delete permanently</strong> frees space; <strong>Move to recycle bin</strong> just relocates</td></tr><tr><td>Deleting reports &quot;recycle bin full&quot;</td><td>The recycle bin is capped at 100 GB and never cleans itself; right-click old entries and <strong>Delete permanently</strong>, then delete the asset again</td></tr></tbody></table>
+<h2 id="h-8">Related</h2>
+<ul>
+<li>The recycle bin entry at the bottom left of the category tree → <a href="#/en/15.3.4.4"><code>8.3.4.4</code></a></li>
+<li>The asset right-click <strong>Delete → Move to recycle bin / Delete permanently</strong> → <a href="#/en/15.5.16"><code>8.5.16</code></a></li>
+<li>Deleting a category (with sub-categories and assets) → <a href="#/en/4.3.4"><code>4.1.3.4</code></a></li>
+<li>Batch delete → <a href="#/en/4.8.2"><code>4.1.8.2</code></a></li>
+<li>Library backup and restore → <a href="#/en/4.12.4"><code>4.1.12.4</code></a></li>
+</ul>

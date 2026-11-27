@@ -1,0 +1,29 @@
+<p><code>.mcm</code> 记录原模型的顶点数、面数、边数与材质对应关系；导入时按这些三维特征把材质赋给选中的物体。</p>
+<p><img src="media/shared/menu-context-material-mcm.webp" alt="材质资产右键：导入（MCM 匹配）" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已在 Maya 中选中要赋材质的一个或多个 mesh。</li>
+<li>资产包含 <code>.mcm</code>；建议同时包含 <code>.zmetal</code>，没有时回退到 <code>.ma/.mb</code> 的材质网络。</li>
+<li>导入后的模型拓扑与导出时一致，未做三角化、合点或增删面。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在场景中选中目标模型。</li>
+<li>右键 mcm 资产，展开「导入」，选择 <code>mcm</code>。</li>
+<li>插件先导入材质网络：有 <code>.zmetal</code> 用节点网络，只有 <code>.ma/.mb</code> 时提取其中的材质并删除带入的几何体。</li>
+<li>插件计算选中物体的顶点、面、边数，与 <code>.mcm</code> 中的 <code>match_info</code> 逐项比对。</li>
+<li>匹配成功的物体赋材质；<code>.mcm</code> 中记录了面级分配的，一并按面赋值。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>选中物体在 Hypershade 的材质属性中显示已连接的材质。</li>
+<li>脚本编辑器输出 <code>[MCMImport] MCM 匹配: N/M</code>。</li>
+<li>有面级材质时，模型不同面显示不同材质。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>未选中物体时提示「请先选择要赋予材质的物体」；选中的都不是 mesh 时提示「选中物体均无 mesh 数据」。</li>
+<li>匹配失败的物体会输出「选择物中无匹配 …，跳过」，不会赋错材质。</li>
+<li>拓扑必须完全一致；导出后改过点线面的模型无法匹配。</li>
+<li>右键「导入」列表里没有 <code>mcm</code> 时，说明资产的 <code>meta.json</code> 的 <code>formats</code> 未登记该项；扫描文件推断不会补出 mcm。</li>
+</ul>

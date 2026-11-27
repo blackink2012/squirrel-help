@@ -1,0 +1,28 @@
+<p><code>「创建环境光」 (Create environment light)</code> builds a dome light from a built-in <code>.ma</code> template and sets the HDR asset as its environment texture.</p>
+<p><img src="media_en/shared/menu-context-dome-light.webp" alt="HDR asset context menu: create environment light" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The HDR asset has <code>.hdr</code> or <code>.exr</code> files under <code>textures/</code>.</li>
+<li>The matching renderer&#x27;s <code>.ma</code> template exists under the plug-in&#x27;s <code>Assets/HDR_ligt/</code>.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the HDR asset and expand <code>「创建环境光」 (Create environment light)</code>.</li>
+<li>Choose a template; template names correspond to dome lights of different renderers.</li>
+<li>The plug-in imports the template <code>.ma</code> and looks for the texture attribute among the nodes it just created.</li>
+<li>It prepares the HDR path per the texture import policy and writes it into the file node or the light&#x27;s texture attribute.</li>
+<li>Generic node names are normalized and the selection is cleared at the end.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>A dome light appears in the Outliner with the renderer&#x27;s standard name (such as <code>aiSkyDomeLight1</code>).</li>
+<li>The light&#x27;s environment texture points at the HDR file, with the Raw color space on the file node.</li>
+<li>The environment light works in a render preview.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li><code>「创建环境光」 (Create environment light)</code> never modifies existing lights; to swap the HDR of an existing dome light use <code>「指定贴图」 (Assign texture)</code>.</li>
+<li>The template list comes from <code>Assets/HDR_ligt/</code>; when that directory is empty there is nothing to choose.</li>
+<li>Dragging an HDR into the viewport silently picks a template from the current renderer or the double-click preset, matching the double-click behavior.</li>
+<li>Where the HDR is stored is decided by the texture import policy in <code>Settings → 常规 (General)</code>.</li>
+</ul>

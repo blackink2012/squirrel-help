@@ -1,0 +1,27 @@
+<p><code>「创建材质」 (Create material)</code> builds a new material node of a chosen type from a texture asset and connects the textures automatically according to their PBR roles.</p>
+<p><img src="media_en/shared/menu-context-create-material.webp" alt="Texture asset context menu: create material" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The texture asset carries a <code>properties</code> record.</li>
+<li>The renderer plug-in for the target material type is installed; uninstalled types are unavailable in the menu.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the texture asset and expand <code>「创建材质」 (Create material)</code>.</li>
+<li>Choose a material type: <code>openPBRSurface</code>, <code>aiStandardSurface</code>, <code>VRayMtl</code>, <code>RedshiftStandardMaterial</code>, <code>RedshiftOpenPBRMaterial</code>, <code>standardSurface</code>, <code>lambert</code> and so on, as listed in <code>material_presets</code> in the current <code>config.json</code>.</li>
+<li>When the asset has several resolution directories, choose one.</li>
+<li>The plug-in creates the material node and connects base color, normal, roughness, metalness and other textures to their channels by role.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>A new material node of the chosen type appears in the Hypershade.</li>
+<li>Texture channels are connected and the file nodes point at the matching resolution inside the asset.</li>
+<li>The Script Editor reports the material name, node type and number of textures.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>This creates a new material and never modifies existing ones; to change the textures of an existing material use <code>「指定贴图」 (Assign texture)</code>.</li>
+<li>The material name is the asset name plus the last four characters of the asset ID, avoiding clashes with same-named materials in the scene.</li>
+<li>Creation fails when the textures do not match <code>properties</code>; check that the asset is a complete PBR asset.</li>
+<li>Without a chosen resolution the asset&#x27;s <code>default_resolution</code> in <code>meta.json</code> is used.</li>
+</ul>

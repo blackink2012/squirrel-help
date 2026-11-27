@@ -1,0 +1,28 @@
+<p>「应用灯光参数到选中灯光」把灯光资产的参数写入场景中已选中的灯光，不新建灯光。</p>
+<p><img src="media/shared/menu-context-light-params.webp" alt="灯光资产右键：应用灯光参数到选中灯光" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已在 Maya 中选中一个或多个灯光节点（transform 或 shape 均可）。</li>
+<li>灯光资产含 <code>.zlight</code>；没有时回退到 <code>.ma/.mb</code> 中的灯光网络。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在视口或 Outliner 中选中目标灯光。</li>
+<li>右键灯光资产，选择「应用灯光参数到选中灯光」。</li>
+<li>插件用 <code>.zlight</code> 在源渲染器下临时建一盏灯，作为参数来源。</li>
+<li>逐项把参数写入选中灯光：同类型直接写，跨类型按 <code>Assets/light_mapper_presets/</code> 的 <code>.mmap</code> 映射。</li>
+<li>应用完成后删除临时源灯，并选中被修改的灯光。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>选中灯光的颜色、强度、曝光、色温、贴图等属性与资产一致。</li>
+<li>脚本编辑器输出「已应用 N 处灯光参数」。</li>
+<li>场景中不残留临时灯光。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>未选中灯光时提示「未选中任何灯光节点」。</li>
+<li>没有可应用参数时提示「没有可应用的灯光参数」。</li>
+<li><code>.zlight</code> 不存在且 <code>.ma/.mb</code> 回退也失败时，提示「.zasset 不含 .zlight 文件，且 .ma/.mb 回退失败」。</li>
+<li>本操作只改参数，不改变场景中灯光的类型。</li>
+</ul>

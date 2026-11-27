@@ -1,0 +1,23 @@
+<p>In-place replacement puts the converted material in place of the source one: the source material is deleted, the new material is renamed back to the source name, and the shading engines are reconnected, so the material name and assignment on objects stay unchanged.</p>
+<p><img src="media_en/shared/quicktool-material-map.webp" alt="Conversion options in the material conversion tool: keep original material / copy texture connections / apply to selection automatically" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>One material conversion has completed and the mapping path is usable.</li>
+<li>The scene is saved, or you accept losing the current material changes.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>In <code>「转换选项」 (Conversion options)</code> of the material conversion tool confirm that <code>「保留原始材质」 (Keep original material)</code> is unchecked (unchecked by default).</li>
+<li>Keep <code>「复制纹理连接」 (Copy texture connections)</code> and <code>「自动应用到选择对象」 (Apply to selected objects automatically)</code> checked.</li>
+<li>Select the materials or objects and click <code>「转换选择」 (Convert selection)</code>.</li>
+<li>The tool records the source material&#x27;s connections to each <code>shadingEngine</code>, deletes the source material, renames the new material to the source name, and reconnects the new material&#x27;s <code>outColor</code> to the original shading engine input.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>Only one material remains in the Hypershade, with the same name and the target type; the original objects still use that material name and nothing is lost in the viewport; the Script Editor reports success.</p>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>To keep the old material for rollback, check <code>「保留原始材质」 (Keep original material)</code>. The new material then keeps a suffixed name (<code>_ai</code>, <code>_vr</code>, <code>_rs</code>, <code>_opb</code> or <code>_cvt</code>) and is assigned to the original objects automatically.</li>
+<li>Intermediate materials from multi-hop conversions are deleted automatically and never left in the Hypershade.</li>
+</ul>
+<h2 id="h-5">Warnings</h2>
+<p>Replacement deletes the source material node; save the scene before converting, or validate the mapping on a test material first.</p>

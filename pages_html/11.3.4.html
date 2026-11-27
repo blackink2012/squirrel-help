@@ -1,0 +1,25 @@
+<p>依赖文件导入策略决定缓存、代理、引用等关联文件在导入时是否复制到工程。</p>
+<p><img src="media/shared/settings-dep-policy.webp" alt="依赖文件导入策略" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>控制 <code>.zasset/deps/</code> 里的依赖文件在 Maya 中的落点与路径。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<table><thead><tr><th>选项</th><th>行为</th></tr></thead><tbody><tr><td>拷贝到项目</td><td>缓存与代理复制到 <code>{工程}/cache/squirrel_asset/{资产名}_{ID后4位}/</code>；引用文件复制到 <code>{工程}/references/squirrel_asset/...</code></td></tr><tr><td>当前资产目录（默认）</td><td>不复制，直接指向 <code>.zasset</code> 内的 <code>deps/</code></td></tr><tr><td>源文件目录</td><td>不改写路径，保持导出时记录的原始路径</td></tr></tbody></table>
+<ul>
+<li>预设文件当前值为 <code>asset_directory</code>；若该键缺失，代码回退为 <code>copy_to_project</code>。</li>
+</ul>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>导入几何体、场景、动画时对 Alembic、gpuCache、代理、Maya 引用、体积等基于文件的节点生效。</li>
+<li>只影响导入后的路径指向，不修改资产包内容。</li>
+<li>即使不重定向，扫描仍会执行，缺失依赖会记录在资产元数据与日志里。</li>
+<li>保存在 <code>config.json</code> 的 <code>dependency_import_policy</code>。</li>
+</ul>
+<h2 id="h-4">何时修改</h2>
+<ul>
+<li>资产要交付到其他机器、工程需要自包含：选「拷贝到项目」。</li>
+<li>单机使用、依赖文件与资产一起存放：保持「当前资产目录」。</li>
+<li>仍在原制作环境、希望继续引用原目录：选「源文件目录」。</li>
+</ul>
+<h2 id="h-5">提示</h2>
+<blockquote><p><strong>警告</strong>：「源文件目录」依赖原始绝对路径；换机后路径断开，导入会提示依赖缺失。</p></blockquote>
+<blockquote><p><strong>提示</strong>：引用文件与普通缓存的落点不同，分别进入工程的 <code>references/</code> 与 <code>cache/</code> 区域。</p></blockquote>

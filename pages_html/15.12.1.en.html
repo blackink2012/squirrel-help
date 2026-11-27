@@ -1,0 +1,37 @@
+<blockquote><p>One-line summary: <strong>rename several assets at once — add a prefix, add a suffix, or replace a piece of the name — with a preview before anything changes.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<ol>
+<li>Select the assets to rename in the grid (multi-select with Ctrl+click / Shift+click).</li>
+<li>A <strong>batch bar</strong> appears below the grid; click <strong>Batch rename</strong>.</li>
+<li>The window opens with the main button showing progress as &quot;Run rename (processed/total)&quot;.</li>
+</ol>
+<blockquote><p>With a single asset selected the batch bar usually does not appear, so use the properties panel or right-click <strong>Edit</strong> for one name; the screenshot below is a window illustration (1 asset, button reads <code>(0/1)</code>).</p></blockquote>
+<p><img src="media_en/shared/dialog-batch-rename.webp" alt="Batch rename" loading="lazy" decoding="async"></p>
+<h2 id="h-2">Item-by-item details</h2>
+<table><thead><tr><th>Control</th><th>Type</th><th>Effect</th><th>Suggested value</th><th>What filling it in wrongly does</th></tr></thead><tbody><tr><td>Rename</td><td>Dropdown</td><td>Which field to change: <code>display name (name_cn)</code> or <code>file name (name)</code></td><td>Usually <strong>display name</strong></td><td><strong>File name</strong> changes the <code>.zasset</code> directory name on disk, see the risks below</td></tr><tr><td>Add prefix</td><td>Radio (default)</td><td>Adds text before the original name</td><td>Such as <code>SM_</code></td><td>A wrong prefix needs another pass (no undo)</td></tr><tr><td>Add suffix</td><td>Radio</td><td>Adds text after the original name</td><td>Such as <code>_low</code></td><td>As above</td></tr><tr><td>Find and replace</td><td>Radio</td><td>Replaces one piece of text in the name with another</td><td>Use it to unify spelling / numbering</td><td>When <strong>Find</strong> is empty nothing is replaced (and the button is gray)</td></tr><tr><td>Input box (single)</td><td>Single-line input</td><td>The appended text in prefix / suffix mode</td><td>Short, no spaces</td><td>Empty → names do not change and the button is disabled</td></tr><tr><td>Find / Replace with</td><td>Two single-line inputs</td><td>The pair for find-and-replace mode</td><td>The find text must match exactly (case-sensitive)</td><td>Wrong case means &quot;nothing was replaced&quot;</td></tr><tr><td>Preview</td><td>List</td><td>One row per asset, &quot;old name → new name&quot;; changed rows are highlighted and unchanged rows say &quot;(unchanged)&quot;</td><td>Scan it line by line before running</td><td>Skipping it easily renames wrongly in bulk, for example prefixing assets that already have the prefix</td></tr><tr><td>Cancel</td><td>Secondary button</td><td>Closes without changing anything</td><td>—</td><td>—</td></tr><tr><td>Run rename (X/Y)</td><td>Main button</td><td>X = rows that will change, Y = total selected; clickable only when X &gt; 0</td><td>Click after checking the preview</td><td>It writes to the library immediately and <strong>cannot be undone</strong></td></tr></tbody></table>
+<h2 id="h-3">Choosing among the three modes</h2>
+<table><thead><tr><th>Desired result</th><th>Mode</th><th>Example</th></tr></thead><tbody><tr><td>Give a batch a common prefix (project / type abbreviation)</td><td>Add prefix</td><td><code>chair</code> → <code>SM_chair</code></td></tr><tr><td>Give a batch a common suffix (detail / version)</td><td>Add suffix</td><td><code>chair</code> → <code>chair_low</code></td></tr><tr><td>Replace words from an old naming rule</td><td>Find and replace</td><td>Replace <code>SM_</code> with <code>ENV_</code> in <code>SM_chair</code>, <code>SM_table</code></td></tr></tbody></table>
+<h2 id="h-4">A complete example</h2>
+<ol>
+<li>Multi-select the assets to rename (2 or more).</li>
+<li>Batch bar → <strong>Batch rename</strong>.</li>
+<li>Set <strong>Rename</strong> to <strong>display name (name_cn)</strong>.</li>
+<li>Click <strong>Add prefix</strong> and type <code>SM_</code>.</li>
+<li>Check the preview: every row should read <code>old → SM_old</code>, all highlighted.</li>
+<li>Look for assets that already carry <code>SM_</code> (they would become <code>SM_SM_xxx</code>).</li>
+<li>Click <strong>Run rename (N/N)</strong>.</li>
+<li>When done it reports &quot;Batch rename finished: N succeeded&quot;; the grid refreshes.</li>
+<li>Verify by opening the properties panel of a couple of random assets.</li>
+</ol>
+<h2 id="h-5">Risks and how to undo</h2>
+<table><thead><tr><th>Operation</th><th>Risk</th><th>Undo</th></tr></thead><tbody><tr><td>Renaming the display name (name_cn)</td><td>It only affects the UI; disk is unchanged</td><td>Batch-change it back (no undo)</td></tr><tr><td>Renaming the file name (name)</td><td><strong>It changes the <code>.zasset</code> directory name on disk</strong> and the asset path with it; external scripts or tickets that hard-code the old path break</td><td>Batch-change it back; old path references must be fixed by hand</td></tr><tr><td>Batch execution</td><td>Many at once, so a mistake must be fixed one by one</td><td>There is no undo; copy the assets or back up the library first (<a href="#/en/4.12.4"><code>4.1.12.4</code></a>)</td></tr></tbody></table>
+<blockquote><p>If you only want the interface to read better, <strong>prefer the display name</strong>; the file name involves disk paths, so be careful.</p></blockquote>
+<h2 id="h-6">Troubleshooting</h2>
+<table><thead><tr><th>Symptom</th><th>Cause</th><th>What to do</th></tr></thead><tbody><tr><td><strong>Run rename</strong> is gray</td><td>No name in the preview will change (empty input, or the find text never matched)</td><td>Check the inputs; find-and-replace is case-sensitive</td></tr><tr><td>Assets vanished after renaming the file name</td><td>The index has not caught up with the disk rename</td><td>Refresh / rebuild the index (<a href="#/en/4.12.2"><code>4.1.12.2</code></a>)</td></tr><tr><td>Duplicated prefixes in names</td><td>The batch included assets that already had the prefix</td><td>Fix it again with find-and-replace to remove the duplicate</td></tr><tr><td>Fewer successes than selected</td><td>A few assets failed to rename (file locked / permissions)</td><td>Check the <code>[BatchRename]</code> log and retry those individually</td></tr></tbody></table>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>Batch tags (another batch window): <a href="#/en/15.12.2"><code>8.12.2</code></a></li>
+<li>The user-guide version of batch rename: <a href="#/en/4.8.3"><code>4.1.8.3</code></a></li>
+<li>Name, tag and notes fields: <a href="#/en/4.6.1"><code>4.1.6.1</code></a></li>
+<li>The multi-select batch bar: <a href="#/en/15.5.21"><code>8.5.21</code></a></li>
+</ul>

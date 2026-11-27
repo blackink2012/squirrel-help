@@ -1,0 +1,24 @@
+<p>The last step is putting a library asset into Maya: double-click to import with the preset, or right-click to choose a specific format and import method.</p>
+<p><img src="media/3.4.3-1.webp" alt="Model asset context menu → Import puts the asset into the current scene" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Steps</h2>
+<ol>
+<li>Find the asset you just organized in the library and select it.</li>
+<li>Double-click the card to run that sub-library&#x27;s double-click preset; models import <code>ma</code> by default and materials import <code>zmetal</code>.</li>
+<li>To pick a format or import method, right-click the card and choose <code>「导入」 (Import)</code> plus a specific format at the top of the menu; when several formats exist, pick one from the submenu.</li>
+<li>For material assets with an object selected, right-click and choose <code>「应用材质」 (Apply material)</code> to apply the material network to the selected object.</li>
+<li>After importing, confirm the new object in the Maya viewport and Outliner; transform it directly in Maya when it needs to be moved.</li>
+</ol>
+<h2 id="h-2">Verify the result</h2>
+<ul>
+<li>A new root node appears in the Outliner and the imported model or material is visible in the viewport.</li>
+<li>After importing a material asset, the complete shading network appears in the Hypershade.</li>
+<li>After a double-click or context-menu import, the Script Editor shows the matching import log.</li>
+<li>If an import fails, the Script Editor reports the error, which helps you check the format and dependencies.</li>
+</ul>
+<h2 id="h-3">Tips</h2>
+<ul>
+<li>Models, dynamics and scenes snap to the surface under the cursor when dragged into the viewport, which is better for placement than a double-click (see 3.3.5).</li>
+<li>Images, audio, animation data and node trees behave differently from geometry assets on double-click: images create a file node, audio goes to the timeline, animation data uses hierarchy mapping and node trees import <code>ma</code>; see 3.3.1.</li>
+<li><code>.zmetal</code> records the complete material network, so it can be rebuilt even when the original Maya file is gone.</li>
+<li>If textures are missing or materials do not match, first check that the asset is complete, then see the import troubleshooting chapter.</li>
+</ul>

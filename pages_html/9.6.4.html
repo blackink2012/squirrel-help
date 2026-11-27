@@ -1,0 +1,29 @@
+<p>脚本浏览器的搜索框按空格分词，所有词必须同时匹配（AND），并支持 <code>tag:</code>、<code>risk:</code>、<code>cat:</code>、<code>unverified</code> 四种前缀过滤。</p>
+<h2 id="h-1">用途</h2>
+<p>在脚本较多时快速缩小范围，例如只看某个分类、某个标签，或只看未验证的脚本。</p>
+<h2 id="h-2">语法</h2>
+<table><thead><tr><th>写法</th><th>含义</th></tr></thead><tbody><tr><td><code>关键词</code></td><td>在名称、文件主名、用途、分类、脚本根名称、路径、标签、触发场景中做不区分大小写的子串匹配</td></tr><tr><td><code>tag:贴图</code></td><td>标签必须等于该值（不区分大小写）</td></tr><tr><td><code>risk:high</code></td><td>风险等级必须精确等于 <code>high</code></td></tr><tr><td><code>cat:qa</code></td><td>分类或脚本根名称包含该值</td></tr><tr><td><code>unverified</code></td><td>只显示没有活体验证记录的脚本</td></tr></tbody></table>
+<h2 id="h-3">示例</h2>
+<ul>
+<li><code>tag:texture risk:high</code>：带 <code>texture</code> 标签且风险为 high 的脚本。</li>
+<li><code>cat:qa unverified</code>：qa 分类中未验证的脚本。</li>
+<li><code>brick</code>：名称、用途、标签或路径中包含 <code>brick</code> 的脚本。</li>
+</ul>
+<h2 id="h-4">操作步骤</h2>
+<ol>
+<li>打开脚本浏览器。</li>
+<li>在搜索框输入一个或多个词，用空格分隔。</li>
+<li>继续追加前缀条件缩小结果；清空搜索框恢复当前分类全部脚本。</li>
+</ol>
+<h2 id="h-5">结果验证</h2>
+<ul>
+<li>列表条目随输入实时减少或恢复。</li>
+<li>状态栏不报错；若条件互斥，列表会为空。</li>
+</ul>
+<h2 id="h-6">注意事项</h2>
+<ul>
+<li>多个词是 AND 关系，不支持 OR 或取反。</li>
+<li><code>risk:</code> 只做精确匹配；<code>cat:</code> 与 <code>tag:</code> 的匹配范围不同，前者还会看脚本根名称。</li>
+<li>中文关键词可直接使用，无需加引号。</li>
+<li>搜索只在当前扫描结果内过滤，不会触发重新扫描；文件有变化请先按 <code>F5</code> 刷新。</li>
+</ul>

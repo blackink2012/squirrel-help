@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "shortcuts": [
+    {
+      "key": "Ctrl+Space",
+      "source": "squirrel_asset_manager/ui/main_window.py:2285",
+      "description": "最大化 / 还原当前区域"
+    }
+  ],
+  "mouse": [
+    {
+      "action": "双击资产缩略图",
+      "effect": "执行「双击命令」（默认导入资产）"
+    },
+    {
+      "action": "右键资产缩略图",
+      "effect": "打开资产右键菜单"
+    },
+    {
+      "action": "拖动资产到视口",
+      "effect": "导入 / 应用资产；模型可吸附到表面"
+    },
+    {
+      "action": "单击 / Ctrl+单击 / Shift+单击",
+      "effect": "单选 / 多选 / 连选"
+    },
+    {
+      "action": "Esc",
+      "effect": "关闭搜索结果或当前浮层"
+    },
+    {
+      "action": "↑ / ↓ + Enter",
+      "effect": "在搜索结果中移动并打开"
+    }
+  ]
+}

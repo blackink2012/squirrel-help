@@ -1,0 +1,34 @@
+<p>While dragging an asset the thumbnail follows the cursor; snappable assets also show a translucent indicator disc and axes at the drop point, so you can see where it will land before releasing.</p>
+<p><img src="media_en/shared/ui-preview.webp" alt="Check the thumbnail in the preview panel before releasing" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The snapping toggle is on.</li>
+<li>Every asset in the batch is a snappable type (models, dynamics, scenes, lights) and uses the same placement rule.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Hold an asset card and drag it out of the plug-in window.</li>
+<li>Move the cursor over viewport surfaces and watch the trailing thumbnail and the drop indicator.</li>
+<li>Release once the drop point and orientation look right.</li>
+</ol>
+<h2 id="h-3">What you see</h2>
+<ol>
+<li><strong>Drag thumbnail</strong>: a roughly 80×80 card thumbnail follows the cursor, with its hotspot at the image center.</li>
+<li><strong>Drop indicator</strong>: when the cursor hits a surface, a translucent square plane is drawn at the hit point with two axes inside and a white dot marking the exact drop point.</li>
+<li>Models, dynamics and scenes show local X/Z axes; lights show X/Y axes. The axis rotated onto the normal is not drawn.</li>
+<li>While a drop preview is visible the drag thumbnail fades to 25% so it does not cover the axes.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>Moving the cursor over model surfaces moves the indicator, which follows the surface orientation.</li>
+<li>The indicator hides when the cursor leaves hittable surfaces.</li>
+<li>After releasing, the asset&#x27;s orientation matches the axes shown in the preview.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>The preview is a translucent overlay on top of the viewport: it creates and deletes no scene nodes, never enters the undo stack and never changes the selection.</li>
+<li>Dragging materials, textures, HDRs, images, audio, animation data or node trees shows no drop preview, and neither does a mixed selection with different placement rules.</li>
+<li>Images and audio do not go through viewport import at all (dropping creates no nodes), so a drop preview would be meaningless.</li>
+<li>When the surface normal points almost straight down (−Y) the in-plane axes roll once abruptly; this is a singularity of the placement formula, not a drawing bug.</li>
+<li>In large scenes the preview lowers its intersection frequency automatically, favoring drag responsiveness.</li>
+</ul>

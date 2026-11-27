@@ -1,0 +1,20 @@
+<p>With <code>「AI 搜索」 (AI search)</code> checked, typing a Chinese description and pressing Enter makes the plug-in search assets with local vectors first and only ask a large model to parse the intent when needed.</p>
+<p><img src="media_en/shared/dialog-ai-search.webp" alt="AI search" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<p>An asset library is open and a local embedding model plus asset index are available. No cloud key is needed, and large models are not called during queries by default.</p>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>To limit the scope, select a category or sub-library on the left first.</li>
+<li>Check <code>「AI 搜索」 (AI search)</code> in the search bar.</li>
+<li>Type a colloquial description such as &quot;old wood weathered by sun and rain&quot; and press Enter.</li>
+<li>Wait for results. Local semantic hits are shown directly; only when local search misses and a model is configured does it parse the intent and search by keywords.</li>
+<li>Click ✕ on the right of the search box to clear the search and restore the full list of the current category.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<p>The status bar shows <code>「语义检索 N 条 · 本地嵌入 &lt;model&gt; · &lt;ms&gt; ms」 (semantic: N results · local embedding … · … ms)</code> or the number of assets found with the keywords. The result grid stays isolated and never modifies the assets.</p>
+<h2 id="h-4">Tips and warnings</h2>
+<ul>
+<li>Freshly imported assets may not be searchable until they are indexed; opening the library or the next search syncs incrementally.</li>
+<li>With a category selected the search only covers that category and never crosses libraries.</li>
+<li>When local semantics are unavailable it falls back to the previous keyword and large-model flow without aborting with an error.</li>
+</ul>

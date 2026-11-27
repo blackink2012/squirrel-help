@@ -1,0 +1,23 @@
+<p>编码命令把一组帧图拼成 GIF 或视频，输出格式由文件扩展名决定。</p>
+<p><img src="media/shared/menu-thumbnail.webp" alt="序列合成 MP4 / GIF 走同一套缩略图更新入口" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>帧文件已经存在，且文件按帧号连续命名（如 <code>frame_0001.png</code>）。</li>
+<li>输出 <code>.mp4</code> 需要 ffmpeg；插件自带 <code>bin/ffmpeg.exe</code>。输出 <code>.gif</code> 在没有 ffmpeg 时会退到 Pillow。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>调用 <code>encode_sequence</code>，用 <code>image_dir</code> 指定帧目录，或直接用 <code>files</code> 给出文件列表。</li>
+<li>指定输出文件 <code>output</code>：<code>.mp4</code>（也支持 <code>.mov</code> / <code>.mkv</code> / <code>.webm</code>）或 <code>.gif</code>。</li>
+<li>设置 <code>fps</code>（默认 24）；需要压缩 GIF 体积时用 <code>max_width</code> 把帧缩到指定宽度。</li>
+<li>帧名不统一时可用 <code>pattern</code> 指定扫描通配，默认 <code>frame_*.png</code>。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>命令返回成功且输出文件存在，用播放器打开确认帧序正确、时长符合预期。取消时半成品会被删掉，错误里会说明是 <code>NO_ENCODER</code> 还是 <code>FRAMES_NOT_SEQUENTIAL</code>。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>帧名必须统一且连续；不连续时 ffmpeg 会编出错帧序，所以命令直接报 <code>FRAMES_NOT_SEQUENTIAL</code>，不会硬编。</li>
+<li>ffmpeg 与 Pillow 都不可用时会如实报 <code>NO_ENCODER</code>，并把已抓好的帧目录给出来，不会假装成功。</li>
+<li>编码是纯文件与子进程操作，不碰 Maya，可以跑在工作线程上；仍支持进度与取消。</li>
+<li>帧率与总帧数决定成片时长；GIF 建议配合 <code>max_width</code> 控制体积，避免文件过大。</li>
+</ul>

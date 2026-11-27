@@ -1,0 +1,27 @@
+<p>双击资产缩略图时执行哪条命令，按子库分别配置，且只能单选。</p>
+<p><img src="media/shared/settings-dblclick.webp" alt="双击命令" loading="lazy" decoding="async"></p>
+<h2 id="h-1">作用</h2>
+<p>「设置 → 右键菜单」页签下半部分就是双击命令区，与右键菜单共用左侧子库列表。选中一个子库后，右侧列出该子库可用的命令，选中其中一个即可。</p>
+<h2 id="h-2">可选值与默认值</h2>
+<table><thead><tr><th>子库</th><th>可选命令</th><th>出厂设置</th></tr></thead><tbody><tr><td>材质 materials</td><td>无操作 / 导入 / 为当前选择指定材质</td><td>导入，子选项 <code>zmetal</code></td></tr><tr><td>模型 models</td><td>无操作 / 导入</td><td>导入，子选项 <code>ma</code></td></tr><tr><td>节点树 nodetree</td><td>无操作 / 导入</td><td>导入，子选项 <code>ma</code></td></tr><tr><td>灯光 lights</td><td>无操作 / 导入 / 应用灯光参数到选中灯光</td><td>导入，子选项 <code>zlight</code></td></tr><tr><td>贴图 textures</td><td>无操作 / 导入 / 导入贴图 / 创建材质 / 为当前选择指定材质 / 指定贴图到材质</td><td>创建材质，子选项 <code>openPBRSurface</code></td></tr><tr><td>场景 scenes、动态 ani</td><td>无操作 / 导入</td><td>导入，子选项 <code>ma</code></td></tr><tr><td>HDR hdr</td><td>无操作 / 导入 / 创建环境光 / 指定贴图</td><td>创建环境光，子选项 <code>aiSkyDomeLight.ma</code></td></tr><tr><td>图片 images</td><td>无操作 / 导入（通用兜底）</td><td>导入：创建 file 节点（与右键「导入为贴图」同一动作）</td></tr><tr><td>音频 audio</td><td>无操作 / 导入（通用兜底）</td><td>导入：导入到 Maya 时间轴（当前帧 = 音频首帧）</td></tr><tr><td>动画数据 animation</td><td>无操作 / 导入（通用兜底）</td><td>导入：走层级映射 + 通道选择对话框</td></tr><tr><td>自定义子库</td><td>无操作 / 导入</td><td>继承 <code>default</code>：导入，自动选格式</td></tr></tbody></table>
+<p>「图片 / 音频 / 动画数据」在设置里没有单独登记命令，所以只有「无操作 / 导入」两项；「导入」真正执行什么由子库决定（见上表）。</p>
+<p>出厂值写在 <code>Assets/preset/double_click_preset.json</code> 的 <code>cmd</code> 与 <code>option</code> 字段。</p>
+<h2 id="h-3">影响范围</h2>
+<ul>
+<li>只影响双击缩略图，不影响右键菜单中的「导入」。</li>
+<li>命令带二级操作时，下方出现「子选项:」下拉框；不带二级操作则隐藏。</li>
+<li>选择「无操作」时双击没有任何反应。</li>
+</ul>
+<h2 id="h-4">何时修改</h2>
+<p>希望双击贴图直接建材质、双击 HDR 直接创建穹顶灯，或反过来避免误双击导入。</p>
+<h2 id="h-5">操作步骤</h2>
+<ol>
+<li>打开设置，勾选「解锁全部配置」。</li>
+<li>在「右键菜单」页左侧选中子库。</li>
+<li>在下方双击命令区选中一个命令，必要时选择子选项。</li>
+<li>点「应用」或「确定」。</li>
+</ol>
+<h2 id="h-6">结果验证</h2>
+<p>回到资产网格双击同类资产，确认执行的是新命令；重开设置后配置仍在。</p>
+<h2 id="h-7">提示</h2>
+<p>该区同样受「解锁全部配置」锁定，未解锁时只能查看不能改。</p>

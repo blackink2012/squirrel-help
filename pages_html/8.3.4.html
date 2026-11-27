@@ -1,0 +1,18 @@
+<p>对话面里的助手不仅能聊天，还能调用插件注册的工具去查资产、读场景、跑脚本；这些工具通过本地底座路由到当前 Maya。</p>
+<h2 id="h-1">助手能用什么</h2>
+<ul>
+<li><strong>命令面工具</strong>：<code>squirrel_list_instances</code>、<code>squirrel_list_commands</code>、<code>squirrel_execute_command</code>、<code>squirrel_execute_batch</code>。</li>
+<li><strong>长任务</strong>：<code>squirrel_execute_async</code> 返回作业号，用 <code>squirrel_jobs</code> 查询或取消；超时未回的结果用 <code>squirrel_late_results</code> 取回。</li>
+<li><strong>兜底通道</strong>：<code>squirrel_maya_bridge</code>，底座或实例不可用时直接走 Maya 的 commandPort。</li>
+<li><strong>文档与依赖</strong>：<code>maya_docs</code> 查命令、节点与 API；<code>squirrel_ai_deps</code> 体检或安装 AI 依赖。</li>
+<li><strong>知识</strong>：随包技能束提供操作纪律与场景配方，落在 <code>&lt;dshHome&gt;/skills</code>。</li>
+</ul>
+<h2 id="h-2">实例绑定</h2>
+<p>默认绑定本对话所属的那个 Maya 实例，命令可省略实例 id。多开 Maya 时若确实要操作另一台，需显式允许跨实例，否则助手不会替你换人。</p>
+<h2 id="h-3">模型与凭据</h2>
+<p>对话用哪个模型由 dsh 自己管理，首次对话时按它的提示登录或填写 API Key；插件不接管这部分凭据。</p>
+<h2 id="h-4">边界</h2>
+<ul>
+<li>工具调用受命令风险级别约束；高危命令应先预览再执行。</li>
+<li>面板里看不到 <code>squirrel_*</code> 工具时，先确认技能已落位、底座在跑、当前 Maya 已注册；<code>dsh_status</code> 能一次列出这些状态。</li>
+</ul>

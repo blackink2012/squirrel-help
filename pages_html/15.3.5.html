@@ -1,0 +1,28 @@
+<blockquote><p>一句话定位：<strong>「项目」页签管的是「只属于当前这个 Maya 工程」的资产库 —— 它放在工程的 <code>SquirrelLib</code> 文件夹里，换工程就换一套。</strong></p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<p>左侧导航 → 点「项目」页签。切过去时插件会自动尝试加载项目库；工程里还没有这个库时，会显示「项目库未创建」。</p>
+<p><img src="media/15.3.5-1.webp" alt="「项目」页签：工程里还没有项目库时会显示「项目库未创建」，点「创建」初始化" loading="lazy" decoding="async"></p>
+<h2 id="h-2">这一页有什么</h2>
+<table><thead><tr><th>控件</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>创建</td><td>在当前 Maya 工程目录下初始化项目库</td><td>工程目录里还没有 <code>SquirrelLib</code></td><td>建出 <code>SquirrelLib</code> 文件夹与标准子库目录、写好库配置，然后自动加载</td><td>不会覆盖已有资产；工程里已经有库时点它等于重新确认目录结构</td></tr><tr><td>刷新</td><td>重新从磁盘读项目库</td><td>项目库已创建</td><td>项目分类树与资产网格按磁盘最新内容重画，并尽量保持当前选中分类</td><td>会重新扫描磁盘上的 <code>.zasset</code> 资产包（手工拷入的完整资产包刷新后可见）；散文件不会因此变成资产，仍需走导入流程</td></tr><tr><td>项目库分类树</td><td>与「分类」页签同款的树（全部资产 / 子库 / 分类 / 子分类）</td><td>项目库已加载</td><td>单击筛选、右键改分类，行为与主库一致</td><td>节点行为见 <a href="#/15.3.3"><code>8.3.3</code></a>，右键菜单见 <a href="#/15.3.4.2"><code>8.3.4.2</code></a> / <a href="#/15.3.4.3"><code>8.3.4.3</code></a></td></tr><tr><td>回收站</td><td>项目库自己的回收站</td><td>项目库已加载</td><td>打开项目库的回收站视图</td><td>与主库回收站<strong>分开</strong>，主库删的不会出现在这里</td></tr><tr><td>状态提示</td><td>显示项目库路径 / 「项目库未创建」</td><td>无</td><td>—</td><td>路径就是「工程目录 / SquirrelLib」</td></tr></tbody></table>
+<h2 id="h-3">项目库存在哪</h2>
+<ul>
+<li>路径 = <strong>当前 Maya 工程的 workspace 根目录</strong> + <code>SquirrelLib</code>。</li>
+<li>Maya 里可用 <code>cmds.workspace(q=True, rootDirectory=True)</code> 查到当前工程目录。</li>
+<li>独立版（没有 Maya 在跑）读取的是独立版当前工作目录 —— 所以独立版里项目库位置与 Maya 里可能不同，用状态提示显示的路径为准。</li>
+</ul>
+<h2 id="h-4">什么时候该用「项目」页签</h2>
+<table><thead><tr><th>场景</th><th>用哪个页签</th></tr></thead><tbody><tr><td>一批素材跨项目反复用</td><td>「分类」页签（主资产库）</td></tr><tr><td>只给当前工程用、要跟工程一起打包 / 交付</td><td>「项目」页签（项目库）</td></tr><tr><td>把常用资产单独挑出来</td><td>「收藏」页签，见 <a href="#/15.3.6"><code>8.3.6</code></a></td></tr></tbody></table>
+<p>主库与项目库的区别、以及它们与收藏的关系见 <a href="#/4.1.3"><code>4.1.1.3</code></a>。</p>
+<h2 id="h-5">小白易错点</h2>
+<ul>
+<li><strong>切过来只看到「项目库未创建」</strong>：这是正常状态（新建工程默认没有），点一下「创建」即可。</li>
+<li><strong>在项目页签导入的资产，回「分类」页签找不到</strong>：没有丢，它在项目库里。切回「项目」页签就能看到。</li>
+<li><strong>在项目页签删了资产，主库回收站里没有</strong>：两个库的回收站是分开的，去项目页签左下角的回收站找。</li>
+<li><strong>换了工程后项目库「空了」</strong>：项目库跟着工程目录走，换工程就是换库，不是数据丢了。</li>
+</ul>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>项目库使用教程见 <a href="#/4.2.2"><code>4.1.2.2</code></a>；主库与项目库的区别见 <a href="#/4.1.3"><code>4.1.1.3</code></a>。</li>
+<li>分类树节点行为与右键菜单见 <a href="#/15.3.3"><code>8.3.3</code></a>、<a href="#/15.3.4.1"><code>8.3.4.1</code></a> ~ <a href="#/15.3.4.4"><code>8.3.4.4</code></a>。</li>
+<li>回收站视图与右键菜单见 <a href="#/15.8.3"><code>8.8.3</code></a>。</li>
+</ul>

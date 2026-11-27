@@ -1,0 +1,20 @@
+<p>同版本多开或崩溃后快速重启时，Maya 会自动从默认端口退到备用段 <code>7110~7129</code>，客户端会连同备用段一起探测。</p>
+<p><img src="media/shared/menu-maya-target.webp" alt="备用端口段（7110–7129）的实例同样会出现在这个菜单里" loading="lazy" decoding="async"></p>
+<h2 id="h-1">为什么会换端口</h2>
+<p>启动块先尝试本版本默认端口。若该端口已被同版本的另一台实例占用（Maya 报 10048），就依次尝试 <code>7110~7129</code>，并把结果写进 <code>~/.squirrel_asset_manager/bridge_port.log</code>。</p>
+<p>客户端候选端口顺序为：首选年份（2026）→ 更老的年份 → 更新的年份 → 备用段。也就是说，备用段里的实例同样能被自动发现。</p>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>执行 <code>python maya_bridge.py --scan</code>，查看每个候选端口是否在线。</li>
+<li>按版本连接时用 <code>python maya_bridge.py --maya 2025</code>，它会在默认端口与备用段之间逐个探测，并用 <code>ping</code> 返回里的年份确认身份。</li>
+<li>已知具体端口时用 <code>python maya_bridge.py --port 7110 --ping</code>。</li>
+<li>客户端只认某个端口时，可设 <code>SQUIRREL_MAYA_PORT=7110</code>。</li>
+<li>排查换端口历史时查看 <code>~/.squirrel_asset_manager/bridge_port.log</code>。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p><code>--ping</code> 返回 <code>版本 | 场景</code>；<code>--doctor</code> 会逐端口列出监听、应答、PID 与判定结果。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li><code>netstat</code> 显示 LISTENING 不等于 Maya 活着：卡死实例或崩溃报告器进程也会占着端口。判定必须真投一条命令看它答不答。</li>
+<li>探针要用正常表达式（如 <code>ping</code>），不要用 <code>print</code>；<code>commandPort</code> 回传的是表达式的值，<code>print</code> 只会让调用方收到 <code>None</code>，把健康实例误判为卡死。</li>
+</ul>

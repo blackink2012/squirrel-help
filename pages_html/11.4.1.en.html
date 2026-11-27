@@ -1,0 +1,27 @@
+<p>Run the dependency check to see what is missing, then fill the gaps with the one-click install; that is the shortest path to working AI search and analysis.</p>
+<p><img src="media_en/shared/settings-ai.webp" alt="Settings → AI" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The plug-in main window is usable; the install needs a network.</li>
+<li>Installing Ollama is allowed on this machine; the one-click install uses the system package manager.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open <code>Settings → AI 设置 (AI settings)</code> and find <code>「AI 功能与依赖」 (AI features and dependencies)</code> at the top.</li>
+<li>Click <code>「AI 依赖检查」 (AI dependency check)</code>. After a few seconds a text report is generated and opened in Notepad, and the status line shows how many items are missing.</li>
+<li>Click <code>「一键安装 AI 功能与依赖」 (One-click install of AI features and dependencies)</code>. The confirmation lists the steps and expected downloads; keep <code>「同时安装图像检索」 (Also install image retrieval)</code> when image search is wanted and fill in the vision chat model name.</li>
+<li>Check <code>「强制重装（覆盖已装部分）」 (Force reinstall, overwriting installed parts)</code> to overwrite existing parts; otherwise finished steps are skipped automatically.</li>
+<li>Watch the live log in the progress window; closing the window cancels, and parts already installed are kept. After a failure, clicking again fills only the failed or missing steps.</li>
+<li>When it finishes, run <code>「AI 依赖检查」 (AI dependency check)</code> once more to confirm.</li>
+</ol>
+<h2 id="h-3">What gets installed</h2>
+<table><thead><tr><th>Step</th><th>Notes</th></tr></thead><tbody><tr><td>Install Ollama</td><td>The local AI service, about 1 GB</td></tr><tr><td>Start the Ollama service</td><td>Used for embeddings and model calls</td></tr><tr><td>Pull the embedding model</td><td><code>embeddinggemma-2:740m</code>, about 1.3 GB</td></tr><tr><td>Documentation vector index</td><td>About 23 MB, rebuilt only when the model changes</td></tr><tr><td>Asset library semantic index</td><td>The current library, optional</td></tr><tr><td>Image retrieval sidecar</td><td>Installed with image retrieval, numpy + Pillow, about 30 MB</td></tr><tr><td>Vision chat model</td><td>Pulled by the given name with image retrieval, about 5.6 GB</td></tr></tbody></table>
+<h2 id="h-4">Verify the result</h2>
+<ul>
+<li>A second check shows fewer missing items or everything ready, and the status line no longer reports missing dependencies.</li>
+<li>Natural-language search, search by image and AI analysis work.</li>
+</ul>
+<h2 id="h-5">Tips</h2>
+<blockquote><p><strong>Tip</strong>: the report is <code>%TEMP%\squirrel_asset_manager\AI依赖检查报告.txt</code> and the install log is <code>ai_install.log</code> in the same directory.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: the Ollama service must stay running for installation and use; stopping it makes AI features unavailable.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: an interrupted install does not break finished parts; click one-click install again to continue.</p></blockquote>

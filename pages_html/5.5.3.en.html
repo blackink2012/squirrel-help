@@ -1,0 +1,30 @@
+<p>Right-click a material or texture asset and choose <code>「为当前选择指定材质」 (Assign material to the current selection)</code>; the plug-in builds the material network and assigns it to the selected objects.</p>
+<p><img src="media_en/shared/menu-context-apply-material.webp" alt="Material asset context menu: assign material to the current selection" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>One or more objects are selected in Maya.</li>
+<li>The material asset contains <code>.zmetal</code>, or a <code>.ma/.mb</code> with a material network; a texture asset needs a <code>properties</code> record.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Select the target objects in the scene.</li>
+<li>Right-click the material or texture asset and choose <code>「为当前选择指定材质」 (Assign material to the current selection)</code>.</li>
+<li>The plug-in picks a path from the asset&#x27;s contents:<ul>
+<li>With <code>.zmetal</code>: rebuild the node network and assign the root material to the selection.</li>
+<li>Without <code>.zmetal</code> but with <code>.ma/.mb</code>: import the material network and assign it to the selection.</li>
+<li>Texture only: create an <code>openPBRSurface</code>, connect the texture and assign it.</li>
+</ul></li>
+<li>Wait for the assignment to finish.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The selected object&#x27;s shadingGroup points at the new material.</li>
+<li>The matching material node appears in the Hypershade.</li>
+<li>The Script Editor reports <code>「赋予材质 … → N 个物体」 (assigned material … to N objects)</code>.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>With nothing selected the material is only created, not assigned, and the log says <code>「材质已创建（无选中物体，未赋予）」 (material created; no object selected, not assigned)</code>.</li>
+<li>When an asset has several root materials only the first usable one is assigned to the whole selection; for per-face assignment use MCM.</li>
+<li>A texture asset without <code>properties</code> cannot map channels, so the assignment stops.</li>
+</ul>

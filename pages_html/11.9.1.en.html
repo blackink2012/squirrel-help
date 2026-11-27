@@ -1,0 +1,29 @@
+<p><strong>Show in main UI</strong> controls whether a sub-library or top-level category appears in the main window sidebar. Everything is shown by default.</p>
+<p><img src="media_en/shared/settings-sublibraries.webp" alt="Settings → Sub-libraries and categories" loading="lazy" decoding="async"></p>
+<p><img src="media_en/shared/settings-show-in-ui.webp" alt="Show in main UI" loading="lazy" decoding="async"></p>
+<h2 id="h-1">What it does</h2>
+<p>The checkbox sits at the top right of <strong>Settings → Sub-libraries and categories</strong>. After selecting a sub-library on the left, ticking it means the entry appears in the main window category tree; clearing it hides that entry.</p>
+<h2 id="h-2">Values and defaults</h2>
+<ul>
+<li>Values: ticked = shown, cleared = hidden.</li>
+<li>Default: all ticked. The settings file stores hidden entries as a blocklist <code>hidden_top_categories</code>, so top-level categories added to the library later appear automatically.</li>
+<li>The state is written to <code>~/.squirrel_asset_manager/app_settings.json</code>, not to <code>config.json</code>.</li>
+</ul>
+<h2 id="h-3">Scope of effect</h2>
+<ul>
+<li>It only affects sidebar entries in the main window, including the category tree and the collapsed icon strip.</li>
+<li><strong>All assets</strong> is always shown and is not affected; a hidden category can still be browsed and searched through <strong>All assets</strong>.</li>
+<li>The category tree of project libraries is not affected.</li>
+<li>The checkbox is not covered by <strong>Unlock all settings</strong>; it can be changed even while locked.</li>
+</ul>
+<h2 id="h-4">Steps</h2>
+<ol>
+<li>Open <strong>Settings → Sub-libraries and categories</strong>.</li>
+<li>Select the sub-library or top-level category on the left.</li>
+<li>Tick or clear <strong>Show in main UI</strong>.</li>
+<li>Click <strong>Apply</strong> or <strong>OK</strong>.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<p>Return to the main window: the sidebar should show or hide that entry according to the new setting.</p>
+<h2 id="h-6">When to change it</h2>
+<p>When there are many sub-libraries and the sidebar is too long, or when a sub-library is not needed by the current project. Do not use it to &quot;delete&quot; a category; no data on disk is deleted.</p>

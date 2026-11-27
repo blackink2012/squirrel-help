@@ -1,0 +1,27 @@
+<p>「添加引用」用 Maya Reference 把资产里的几何文件挂进场景，场景只保留引用关系，不复制模型数据。</p>
+<p><img src="media/shared/menu-context-reference.webp" alt="模型资产右键：添加引用" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>资产包含 ma、mb、fbx、abc、usd 或 obj 中的一种。</li>
+<li>Maya 场景已保存。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>右键资产，选择「添加引用」。</li>
+<li>只有一种可引用格式时直接执行；多种格式时在子菜单中选择格式。</li>
+<li>插件为引用创建以资产名命名的命名空间；重名时自动追加 <code>_1</code>、<code>_2</code>。</li>
+<li>ma/mb 优先取默认 LOD 的几何体，再按依赖导入策略决定引用文件位置。</li>
+<li>引用创建完成后，在 Reference Editor 中确认条目。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<ul>
+<li>Outliner 中出现带命名空间的引用节点。</li>
+<li>Reference Editor 中能看到对应引用文件与命名空间。</li>
+<li>ma/mb 的贴图路径已按贴图策略重写，引用对象显示正常。</li>
+</ul>
+<h2 id="h-4">提示</h2>
+<ul>
+<li>依赖策略为「当前资产目录」或「源文件目录」时，引用直接指向 <code>.zasset</code> 内的文件；「拷贝到项目」时复制到工程 <code>references/squirrel_asset/</code>。</li>
+<li>引用对象不能在当前场景直接改点线面；需要编辑时打开引用源文件，或在 Reference Editor 中解除引用。</li>
+<li>资产后续被替换不会自动刷新已建立的引用，需要在 Reference Editor 中重新加载。</li>
+</ul>

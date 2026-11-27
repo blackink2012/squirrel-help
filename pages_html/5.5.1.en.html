@@ -1,0 +1,27 @@
+<p><code>「转换导入」 (Convert import)</code> imports a material asset and immediately converts it to a chosen material type, so one asset fits different renderers.</p>
+<p><img src="media_en/shared/menu-context-convert.webp" alt="Material asset context menu: convert import" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The material asset is a <code>.zasset</code> with an importable material format (<code>zmetal</code> preferred).</li>
+<li>The target material type has a usable conversion path in the mapping table.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Right-click the material asset and expand <code>「转换导入」 (Convert import)</code>.</li>
+<li>The submenu lists only target types that have a conversion path and labels the renderer (for example <code>VRayMtl（VR）</code>).</li>
+<li>Click the target type; the plug-in imports the material network first, then converts each material and replaces the source ones in place.</li>
+<li>When it finishes the converted material is selected.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The material node type in the Hypershade equals the chosen target type.</li>
+<li>The original texture connections have migrated to the new material and the viewport look is broadly preserved.</li>
+<li>The Script Editor reports the number converted and the target type.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Automatic conversion only recognizes Arnold, V-Ray and Redshift; native Maya materials are not converted.</li>
+<li>Right-clicking <code>「导入」 (Import)</code> also triggers conversion: zmetal without a confirmation, and other formats ask once per batch whether to convert to the current renderer&#x27;s default material.</li>
+<li>Default materials per renderer: Arnold → <code>aiStandardSurface</code>, Redshift → <code>RedshiftStandardMaterial</code>, V-Ray → <code>VRayMtl</code>.</li>
+<li>With no mapping path the original material is kept and the log says <code>「无 … 映射路径」 (no mapping path for …)</code>; that is not a failure.</li>
+</ul>

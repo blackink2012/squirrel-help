@@ -1,0 +1,26 @@
+<p>在顶部搜索框输入名称、标签或 ID 片段，网格会在当前分类范围内即时过滤出匹配资产。</p>
+<p><img src="media/shared/search-keyword-bar.webp" alt="搜索框：输入关键词后出现内置 ✕（点它清空），右侧是「AI 搜索」勾选框" loading="lazy" decoding="async"></p>
+<h2 id="h-1">前置条件</h2>
+<ul>
+<li>已打开资产库，并在左侧分类树选中子库或分类；搜索只在这个范围内进行。</li>
+<li>未勾选「AI 搜索」。勾选后输入不会即时过滤，需要按回车执行语义搜索。</li>
+</ul>
+<h2 id="h-2">操作步骤</h2>
+<ol>
+<li>在左侧分类树选中要搜索的子库或分类。</li>
+<li>在顶部搜索框输入关键词。停止输入约 150 毫秒后网格自动刷新，不需要按回车。</li>
+<li>需要多个关键词时用空格分隔，例如 <code>metal arnold</code>；任一片段命中即算匹配。</li>
+<li>点击搜索框右侧的 ✕ 清空关键词，网格恢复当前分类的全部资产。</li>
+</ol>
+<h2 id="h-3">匹配范围</h2>
+<table><thead><tr><th>匹配对象</th><th>说明</th></tr></thead><tbody><tr><td>资产 ID</td><td>支持完整 ID 或前缀，不做全文子串匹配</td></tr><tr><td>显示名、名称</td><td>不区分大小写</td></tr><tr><td>标签</td><td>任一标签包含关键词即命中</td></tr><tr><td>材质类型、资产类型、子库</td><td>含子库显示名（如「材质」）</td></tr><tr><td>分类</td><td>含分类易读名</td></tr><tr><td>导出格式、软件、渲染器、色彩空间</td><td>字段值包含关键词即命中</td></tr></tbody></table>
+<h2 id="h-4">结果验证</h2>
+<p><img src="media/shared/search-keyword-grid.webp" alt="过滤后的网格：只保留命中资产的卡片" loading="lazy" decoding="async"></p>
+<p><img src="media/shared/search-count.webp" alt="状态栏：左侧是当前可见数 / 总数，右侧显示当前选中" loading="lazy" decoding="async"></p>
+<ul>
+<li>状态栏显示当前可见数量与总数。</li>
+<li>网格只保留命中资产；没有命中时显示空网格。</li>
+<li>点击 ✕ 后回到当前分类的完整列表。</li>
+</ul>
+<div class="admonition tip"><div class="admonition-title">提示</div><p>关键词可以与标签筛选叠加：两者同时生效时，资产需要同时满足两个条件。</p></div>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>勾选「AI 搜索」后，输入非空关键词不会触发普通过滤；要按回车，或先取消勾选。</p></div>

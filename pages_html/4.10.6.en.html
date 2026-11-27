@@ -1,0 +1,25 @@
+<p>A version can be deleted in the version browser; deleting removes the whole content of that version and cannot be undone.</p>
+<p><img src="media_en/shared/dialog-version-browser.webp" alt="Version browser" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Deleting a version</h2>
+<ol>
+<li>Double-click the asset preview on the right to open the version browser.</li>
+<li>Select the version to delete in the <code>「版本」 (Versions)</code> list on the left.</li>
+<li>Click <code>「删除此版本」 (Delete this version)</code> at the bottom.</li>
+<li>Choose yes in the <code>「确定要删除版本…」 (Delete version…?)</code> confirmation.</li>
+<li>The list and the library refresh immediately.</li>
+</ol>
+<p>The main version entry has no delete action (the button is disabled).</p>
+<h2 id="h-2">Verify the result</h2>
+<ul>
+<li>The version browser&#x27;s left column loses an item and <code>version_assets</code> in the main asset&#x27;s <code>meta.json</code> drops the matching <code>folder</code>.</li>
+<li>The <code>V{n}/</code> directory inside the main asset disappears from disk.</li>
+<li>After deleting the last version, <code>has_versions</code> and <code>version_assets</code> on the main asset are cleared.</li>
+</ul>
+<h2 id="h-3">Tips</h2>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>Deleting a version removes its geometry, materials, textures and thumbnail together, and cannot be undone; back up the whole <code>.zasset</code> first for important versions.</p></div>
+<ul>
+<li>Deleting a single LOD: select the LOD entry in the asset versions window and click <code>「删除此 LOD」 (Delete this LOD)</code>; the button is disabled when only one LOD is left (at least one must remain), and the main version itself cannot be deleted.</li>
+<li>Variants are a separate model; their delete entries are <code>「更新资产 → 更新变体 → 删除变体」 (Update asset → Update variant → Delete variant)</code> or <code>「变体管理…」 (Variant management…)</code>, see &quot;Variant management and deletion&quot;.</li>
+<li>On the command side, <code>version_manage op=remove_version</code> backs up the whole version directory to <code>squirrel_ai_undo</code> under the system temp directory before deleting and returns the <code>backup</code> path; copy that directory back into the main asset root to restore it.</li>
+<li>Versions deleted through the command can also be rolled back with <code>undo_last</code>.</li>
+</ul>

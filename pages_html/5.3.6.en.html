@@ -1,0 +1,32 @@
+<p>An HDR asset is used in the scene two ways: create a new dome light, or assign the HDR to an existing dome light.</p>
+<p><img src="media_en/shared/menu-context-hdr-import.webp" alt="HDR asset context menu: import exr (this sample is an .exr; .hdr assets say &quot;import hdr&quot;)" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>A Maya scene is open.</li>
+<li>The HDR asset has <code>.hdr</code> or <code>.exr</code> files under <code>textures/</code>.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<h3 id="h-3">Create a dome light</h3>
+<ol>
+<li>Right-click the HDR asset and expand <code>「创建环境光」 (Create environment light)</code>.</li>
+<li>Choose a light template; templates come from the <code>.ma</code> files under the plug-in&#x27;s <code>Assets/HDR_ligt/</code> and differ per renderer.</li>
+<li>The plug-in imports the template, prepares the HDR path per the texture import policy and replaces the template&#x27;s texture attribute.</li>
+</ol>
+<h3 id="h-4">Assign to an existing dome light</h3>
+<ol>
+<li>Select a dome light in the viewport or the Outliner.</li>
+<li>Right-click the HDR asset and choose <code>「指定贴图」 (Assign texture)</code>.</li>
+<li>The plug-in connects the HDR to the selected light.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<ul>
+<li>A new light appears in the Outliner, or the existing light&#x27;s texture attribute is updated.</li>
+<li>The HDR file node&#x27;s color space is Raw.</li>
+<li>The environment light works in a render preview and the background shows the matching HDR content.</li>
+</ul>
+<h2 id="h-6">Tips</h2>
+<ul>
+<li>The texture import policy decides whether the HDR is copied into the project, read from the asset directory directly or keeps its source path.</li>
+<li>Dragging an HDR straight into the viewport makes the plug-in silently choose a light template from the current renderer or the double-click preset, without a dialog.</li>
+<li>Creating an environment light clears the selection when it finishes; select the light manually to keep adjusting it.</li>
+</ul>

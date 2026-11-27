@@ -1,0 +1,29 @@
+<blockquote><p>One-line summary: <strong>the Favorites tab is a set of favorite sets: collect frequently used assets to browse separately, without changing their categories or copying files.</strong></p></blockquote>
+<h2 id="h-1">How to open it</h2>
+<p>Left navigation → click the <strong>Favorites</strong> tab. On switching, the plug-in syncs the current library&#x27;s favorites data and selects the favorite set you used last.</p>
+<p><img src="media_en/15.3.6-1.webp" alt="Favorites tab: the favorite set list (name + asset count), with a &quot;+&quot; at the top right to create a set" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What this page offers</h2>
+<table><thead><tr><th>Control</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td><strong>Favorites</strong> title plus the <strong>+</strong> button</td><td>Creates a favorite set</td><td>None</td><td>Opens an input for the name; on confirm a new row appears and is selected</td><td>The name is only a label and <strong>may repeat within one library</strong>; the plug-in tells sets apart by internal id</td></tr><tr><td>Current library hint</td><td>Shows &quot;Current library: main asset library / project library&quot;</td><td>None</td><td>—</td><td>Favorite sets are <strong>stored per library</strong>: main-library and project-library sets do not mix</td></tr><tr><td>Favorite set list</td><td>Each row reads &quot;set name (asset count)&quot;</td><td>None</td><td>Click to select; the center grid then shows only that set</td><td>The default set has a star and a bold name; other sets use a folder icon</td></tr><tr><td>Favorite set context menu</td><td>New / empty / rename / delete</td><td>See the next section</td><td>Opens a menu</td><td>Right-clicking blank space offers only <strong>New favorite set</strong></td></tr></tbody></table>
+<h2 id="h-3">Item-by-item details</h2>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>New favorite set</td><td>Creates a new set</td><td>None (present both on a list row and on blank space)</td><td>Opens an input; on confirm a new row appears and is selected</td><td>An empty name creates nothing</td></tr><tr><td>Empty favorite set</td><td>Removes every asset from this set</td><td>The set holds at least one item</td><td>Asks for confirmation (&quot;Remove all assets from favorite set …?&quot;); after confirming the count drops to 0</td><td><strong>It only removes the favorite relation and never deletes assets</strong>; assets stay in their original categories; the emptying itself has no undo, just favorite them again</td></tr><tr><td>Rename</td><td>Changes the set name</td><td>The set <strong>is not the default set</strong></td><td>Opens an input pre-filled with the old name; on confirm the list shows the new name</td><td>Only the display name changes; the assets inside are untouched</td></tr><tr><td>Delete favorite set</td><td>Deletes this set</td><td>The set <strong>is not the default set</strong></td><td>Asks for confirmation; after confirming the set disappears and selection falls back to the default set</td><td><strong>It deletes only the set itself; the assets inside are not deleted from the library</strong>; the default set cannot be deleted (but can be emptied)</td></tr></tbody></table>
+<h2 id="h-4">How to put assets in</h2>
+<p>Three ways with the same effect (all just add a &quot;favorite relation&quot;):</p>
+<ol>
+<li><strong>Drag and drop</strong>: drag an asset card onto a favorite set in the left column (the row highlights on hover) and release.</li>
+<li><strong>Star</strong>: click the star on an asset card to add or remove it from the <strong>currently selected set</strong>.</li>
+<li><strong>Context menu</strong>: right-click an asset → <strong>Add to favorite set</strong>, see <a href="#/en/15.5.14"><code>8.5.14</code></a>.</li>
+</ol>
+<h2 id="h-5">Beginner pitfalls</h2>
+<ul>
+<li><strong>Assets are missing from a favorite set</strong>: check the <strong>Current library</strong> hint — you may have switched to another library (main-library favorites are not visible in the project library).</li>
+<li><strong>Assuming assets were deleted after emptying a set</strong>: they were not. Emptying only clears the favorite relation and the assets remain in their original categories; to really delete assets use right-click <strong>Move to recycle bin</strong>, see <a href="#/en/15.5.16"><code>8.5.16</code></a>.</li>
+<li><strong>Assets disappeared after deleting a favorite set</strong>: assets are never deleted, only the set. They do not appear in the recycle bin either.</li>
+<li><strong>The default set cannot be renamed or deleted</strong>: by design, it is the fallback set; it can be emptied.</li>
+<li><strong>Editing assets on the Favorites tab seems to do nothing</strong>: on the Favorites tab the star follows the selected set, and edit / move entries still work but mind which library you are in; confirm on the Category tab afterwards.</li>
+</ul>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>Tutorials for favoriting and un-favoriting: <a href="#/en/4.9.1"><code>4.1.9.1</code></a>; adding, editing and deleting favorite sets: <a href="#/en/4.9.2"><code>4.1.9.2</code></a>.</li>
+<li><strong>Add to favorite set</strong> in the asset context menu: <a href="#/en/15.5.14"><code>8.5.14</code></a>.</li>
+<li>Navigation area overview: <a href="#/en/15.3.1"><code>8.3.1</code></a>.</li>
+</ul>

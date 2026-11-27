@@ -1,0 +1,29 @@
+<blockquote><p>一句话定位：<strong>默认关闭的一道保险 —— 打开后，右键菜单里的「彻底删除」才能用，删掉的文件直接消失、不进回收站、无法还原。</strong></p></blockquote>
+<h2 id="h-1">在哪</h2>
+<p>设置窗口 → 常规页 → 「彻底删除」分组（在「外观」和「缩略图（分辨率）」之间）。</p>
+<p><img src="media/shared/settings-permanent-delete.webp" alt="设置 → 常规 → 彻底删除：勾选后才会启用「彻底删除」" loading="lazy" decoding="async"></p>
+<h2 id="h-2">默认关闭时</h2>
+<ul>
+<li>资产 / 分类 / 版本右键菜单里的「彻底删除」是<strong>灰的</strong>，点了会提示去设置里开启；</li>
+<li>删除动作只能走「移到回收站」：文件还在库里，<strong>可以还原</strong>；</li>
+<li>回收站上限 100 GB，满了要进去逐条彻底删除（见 <a href="#/15.8.3"><code>8.8.3</code></a>）。</li>
+</ul>
+<h2 id="h-3">开启步骤</h2>
+<ol>
+<li>勾选「启用「彻底删除」（直接删除文件，不进回收站）」；</li>
+<li>点「应用」或「确定」时会弹<strong>二次确认</strong>，写明&quot;直接移除文件、不进回收站、无法还原&quot;；</li>
+<li>确认后立即生效；再回到资产网格，右键菜单里的「彻底删除」不再是灰的。</li>
+</ol>
+<p><strong>开启 / 关闭都会写入审计日志</strong>（<code>setting / permanent_delete_enabled</code>，标记不可还原），便于事后追溯。</p>
+<h2 id="h-4">开启后</h2>
+<table><thead><tr><th>操作</th><th>行为</th></tr></thead><tbody><tr><td>删除 → 移到回收站</td><td>和以前一样：进回收站，可还原</td></tr><tr><td>删除 → 彻底删除</td><td><strong>直接删磁盘文件</strong>，不进回收站；确认框写&quot;不可恢复&quot;；此操作无撤销</td></tr><tr><td>AI 侧删除资产</td><td>由 AI 设置里「允许 AI 删除 / 覆盖替换资产」那个开关单独控制，<strong>与本开关无关</strong>（见 <a href="#/11.4.6"><code>4.8.4.6</code></a>）</td></tr></tbody></table>
+<div class="admonition warning"><div class="admonition-title">警告</div><p>彻底删除没有备份、不进回收站、不可撤销。日常整理请保持这个开关关闭；只在确认要释放空间、且已做好库备份时临时开启。备份见 <a href="#/4.12.4"><code>4.1.12.4</code></a>。</p></div>
+<h2 id="h-5">常见疑问</h2>
+<table><thead><tr><th>现象</th><th>原因 / 处理</th></tr></thead><tbody><tr><td>「彻底删除」是灰的</td><td>本开关默认关闭；去设置里开启</td></tr><tr><td>删了之后回收站里没有</td><td>用的是「彻底删除」；只有「移到回收站」才进回收站</td></tr><tr><td>想让 AI 也能删资产</td><td>那是另一个开关：AI 设置 →「AI / MCP 通道」→ 允许 AI 删除 / 覆盖替换资产</td></tr></tbody></table>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>回收站视图与右键菜单 → <a href="#/15.8.3"><code>8.8.3</code></a></li>
+<li>批量删除 → <a href="#/4.8.2"><code>4.1.8.2</code></a></li>
+<li>AI / MCP 通道（含 AI 破坏性操作开关） → <a href="#/11.4.6"><code>4.8.4.6</code></a></li>
+<li>常规页其它设置 → <a href="#/11.2.1"><code>4.8.2.1</code></a></li>
+</ul>

@@ -1,0 +1,24 @@
+<p>Adding an existing library registers a ready-made library directory on disk in the library list; it never copies, moves or modifies any file inside the library.</p>
+<p><img src="media_en/shared/settings-general.webp" alt="Settings → General → Asset library management: add an asset library and register a disk directory" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Steps</h2>
+<ol>
+<li>Open the Settings window, go to the <code>「常规」 (General)</code> tab and find the <code>「资产库管理」 (Asset library management)</code> group.</li>
+<li>Click <code>「添加资产库」 (Add asset library)</code>.</li>
+<li>Pick the library root directory in the file dialog.</li>
+<li>Type a display name; the directory name is used by default.</li>
+<li>Click <code>「确定」 (OK)</code> in the Settings window to save.</li>
+<li>Go back to the <code>「分类」 (Categories)</code> page in the main window and choose that library in the dropdown to start using it.</li>
+</ol>
+<h2 id="h-2">Verify the result</h2>
+<ul>
+<li>The library appears in the settings list as &quot;name — path&quot;.</li>
+<li>The same library appears in the main window&#x27;s library dropdown.</li>
+<li>After switching, the library&#x27;s assets load and nothing in the library root was changed.</li>
+</ul>
+<h2 id="h-3">Tips</h2>
+<ul>
+<li>Adding the same path twice reports <code>「该资产库已在列表中」 (this asset library is already in the list)</code>; path comparison normalizes slashes and case.</li>
+<li>It only registers the directory and does not validate the standard structure; a library root usually contains <code>library.json</code> and sub-library directories such as <code>materials</code> and <code>models</code>.</li>
+<li>Adding does not switch to it automatically; pick it in the library dropdown.</li>
+<li>On the command side <code>library_manage op=add</code> is equivalent and only accepts an existing directory; an unregistered path is first added to <code>library_paths</code>.</li>
+</ul>

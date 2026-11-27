@@ -1,0 +1,21 @@
+<p>When this machine has no local knowledge base, or local retrieval finds nothing, the plug-in falls back to Autodesk&#x27;s official help; that guarantees &quot;you can look it up&quot;, but only page bodies, no command parameter tables.</p>
+<h2 id="h-1">Why it exists</h2>
+<p>Autodesk documentation may not be redistributed with the plug-in, so a local knowledge base can only be built on each machine. Users without one still need a way out, and the online fallback is that way.</p>
+<h2 id="h-2">How it works</h2>
+<p>The official help site exposes no public server-side search API, so the plug-in uses two stable public data sets instead: the site-wide table of contents and individual pages. Retrieval scores the table of contents by title and path, then fetches the matching page on demand and converts it to text.</p>
+<p>Result fields match the local library, and <code>source</code> is written as <code>online:&lt;product&gt;/&lt;version&gt;/&lt;language&gt;</code> so it is obvious the data is not local.</p>
+<h2 id="h-3">Cache and network</h2>
+<ul>
+<li>The table of contents is cached for 7 days and pages for 30 days under <code>~\.squirrel_asset_manager\help_cache</code>.</li>
+<li>A single request times out after 30 seconds with up to 3 retries; offline, a cached answer is still returned and marked as cached.</li>
+<li>It queries Maya&#x27;s official help by default; developer help is English only.</li>
+</ul>
+<h2 id="h-4">The switch</h2>
+<p><strong>Off by default</strong>: once enabled, query keywords are sent to Autodesk (an overseas server), so you must turn it on yourself and agree separately.</p>
+<ul>
+<li><strong>UI switch</strong>: <code>Settings → AI → 本地文档没有时，在线查询 Maya 官方帮助 (query the official Maya help online when local docs are missing)</code>. The first check opens a separate consent dialog; unchecking it at any time turns it off without a restart.</li>
+<li><strong>Environment variables</strong> (they take precedence): <code>MAYA_KB_ONLINE=1</code> (<code>true</code> / <code>yes</code> / <code>on</code>) forces it on; <code>MAYA_KB_ONLINE=0</code> (<code>false</code> / <code>off</code> / <code>no</code>) forces it off. An explicitly set environment variable is never overridden by the UI switch.</li>
+</ul>
+<p>With it off and no local library, the only answer is a missing-data notice.</p>
+<h2 id="h-5">Limits</h2>
+<p>Online results have no flag tables; use the live local help for command parameters. For stable offline lookups, build a knowledge base on this machine.</p>

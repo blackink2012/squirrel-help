@@ -1,0 +1,29 @@
+<p><strong>Read current category folders</strong> uses the real folder structure of the asset library to overwrite the sub-library and default category lists in settings.</p>
+<p><img src="media_en/shared/settings-sublibraries.webp" alt="Settings → Sub-libraries and categories" loading="lazy" decoding="async"></p>
+<p><img src="media_en/shared/settings-sync-cats.webp" alt="Read current category folders" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>An asset library is loaded. Otherwise the UI reports &quot;Please load an asset library first&quot;; when the asset manager is unavailable it reports &quot;Cannot get the asset manager&quot;.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Open <strong>Settings → Sub-libraries and categories</strong>.</li>
+<li>Click <strong>Read current category folders</strong>.</li>
+<li>Confirm in <strong>Sync confirmation</strong>. The prompt explains that the default category list will be overwritten, but no folder on disk is deleted or modified; only the configuration is updated.</li>
+<li>When syncing finishes, the UI reports &quot;Categories synced from the current asset library&quot;.</li>
+<li>Click <strong>Apply</strong> or <strong>OK</strong> to write the result back to <code>config.json</code>.</li>
+</ol>
+<h2 id="h-3">Result</h2>
+<ul>
+<li>The left sub-library list is rebuilt from the top-level categories of the current library, including custom top-level categories.</li>
+<li>All sub-categories under each top-level category (recursively) are collected into that sub-library&#x27;s default category list, using the readable category name as the display name.</li>
+<li>Syncing only changes settings data; it does not touch disk folders.</li>
+</ul>
+<h2 id="h-4">Verify the result</h2>
+<p>The left list shows the top-level categories of the current library, and the default category list on the right matches the disk structure.</p>
+<h2 id="h-5">Tips</h2>
+<ul>
+<li>Syncing rebuilds the whole list, so custom sub-library entries that do not exist in the current library disappear from the list and from the configuration after applying.</li>
+<li>If you cancel before clicking <strong>Apply</strong>, no change is saved.</li>
+<li>This action is also subject to <strong>Unlock all settings</strong>.</li>
+</ul>

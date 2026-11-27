@@ -1,0 +1,35 @@
+<p>一个 <code>.zasset</code> 是一个文件夹，元数据、几何体、材质、贴图、缩略图和依赖文件都放在里面，文件夹本身就是完整资产。</p>
+<h2 id="h-1">目录结构</h2>
+<pre><code class="language-text">MyAsset.zasset/
+├── meta.json                 # 元数据
+├── node.ma / node.mb / node.fbx / node.obj / node.usd
+├── node.zmetal               # 材质节点网络（材质/模型资产）
+├── node.zlight               # 灯光预设（灯光资产）
+├── node.mcm                  # 材质 → 模型映射
+├── textures/                 # 材质与灯光贴图
+├── deps/                     # 收集到的关联文件（可选；旧版为 associated/）
+│   ├── textures/  caches/  proxies/  volumes/
+│   ├── references/  audio/  movies/  imageplanes/  others/
+├── thumb.sicon               # 静态缩略图
+├── thumb.aicon / thumb.mp4   # 动图或视频缩略图
+├── lods.json                 # 当前 LOD 索引（lod0 = 根目录几何体）
+├── lod1/                     # LOD1 及以后的几何体
+├── variants.json             # 变体登记表（变体几何/缩略图、旧版版本与版本材质）
+├── variants/                 # 变体几何（&lt;id&gt;.ma 平铺；旧版结构为 &lt;version&gt;/lod*/）
+└── V1/ V2/ …                 # 新版本：每个都是自包含的版本资产（登记在 meta.json）</code></pre>
+<h2 id="h-2">关键文件</h2>
+<table><thead><tr><th>文件</th><th>作用</th></tr></thead><tbody><tr><td><code>meta.json</code></td><td>资产身份与索引：<code>id</code>、<code>name</code>、<code>name_cn</code>、<code>tags</code>、<code>category</code>、<code>asset_type</code>、<code>formats</code>、<code>ani</code> 等</td></tr><tr><td><code>node.&lt;ext&gt;</code></td><td>根目录几何体，等同于 <code>lod0</code>；多种格式可同时存在</td></tr><tr><td><code>node.zmetal</code> / <code>node.zlight</code></td><td>材质或灯光的节点网络，导入时重建</td></tr><tr><td><code>node.mcm</code></td><td>顶点/面/边数和面级材质指派，用于导入匹配模型</td></tr><tr><td><code>textures/</code></td><td>贴图统一平铺存放；同名同内容只留一份，同名不同内容追加序号</td></tr><tr><td><code>deps/</code></td><td>勾选「收集关联文件」时才复制；子目录按文件类型分类（旧版目录名为 <code>associated/</code>，仍可读取）</td></tr><tr><td><code>lods.json</code></td><td>当前 LOD 索引：<code>default_lod</code> 和 <code>lods</code> 列表；<code>lod0</code> 指向根几何体</td></tr><tr><td><code>variants.json</code></td><td>变体与旧版版本的登记表：<code>variants[]</code>（每个变体的几何/缩略图入口）与 <code>versions[]</code>（旧版版本的标签、LOD 列表、版本独立材质路径）</td></tr><tr><td><code>variants/</code></td><td>变体几何体：新结构平铺为 <code>variants/&lt;变体id&gt;.ma</code>（多 LOD 为 <code>variants/&lt;id&gt;_lod1.ma</code>）；旧版结构为 <code>variants/&lt;version&gt;/lod*/</code>；变体缩略图也在该目录</td></tr><tr><td><code>V1/</code>、<code>V2/</code></td><td>由「更新资产 → 创建新版本」生成的内嵌自包含版本，各自带 <code>meta.json</code>；主资产 <code>meta.json</code> 的 <code>version_assets</code> 登记这些子版本</td></tr></tbody></table>
+<h2 id="h-3">元数据里的依赖账</h2>
+<p>导出时无论是否勾选收集，都会扫描依赖并把结果写进 <code>meta.json</code>：<code>dependencies_missing</code> 记录找不到的文件，<code>dependencies_out_of_scope</code> 记录本次不打包的依赖，<code>dependencies_unresolved_tokens</code> 记录路径里无法解析的记号。<code>texture_map</code> 记录贴图原始路径到包内路径的映射，导入时据此重映射。</p>
+<h2 id="h-4">两套索引：lods.json 与 variants.json 并存</h2>
+<p><code>lods.json</code> 与 <code>variants.json</code> 是<strong>两套并用、各管一段</strong>的索引，不是「新结构取代旧结构」：</p>
+<ul>
+<li><code>lods.json</code> 管当前 LOD：<code>default_lod</code> + <code>lods</code> 列表，<code>lod0</code> 指向根目录几何，之后按 <code>lod1/</code>… 存放精度递减的几何。</li>
+<li><code>variants.json</code> 管<strong>变体</strong>与<strong>旧版版本</strong>：<ul>
+<li>变体：<code>variants[]</code> 里一条一个变体，几何平铺在 <code>variants/&lt;id&gt;.ma</code>（旧结构在 <code>variants/&lt;id&gt;/lod*/</code>），缩略图也在 <code>variants/</code> 下；</li>
+<li>旧版版本：<code>versions[]</code> 记录版本 id / 标签 / LOD 列表，几何在 <code>variants/&lt;version&gt;/lod*/</code>；这类版本的独立材质导出到 <code>variants/&lt;version&gt;/node.zmetal</code>，并写进该版本的 <code>material</code> 字段。</li>
+</ul></li>
+<li>这些<strong>现在仍在写</strong>：变体的增删（<code>core/zasset_builder.py</code> 的 <code>add_variant</code> / <code>add_variant_lod</code> / <code>remove_variant</code>）、版本独立材质（<code>core/export_orchestrator.py</code> 的 <code>_export_variant_material</code>）都会更新 <code>variants.json</code>。所以看到资产里有 <code>variants.json</code> 不是「历史遗留」，是它在用变体/旧版版本能力。</li>
+<li>「更新资产 → 创建新版本」另走一条：在主资产里建内嵌自包含的 <code>V{n}/</code>，登记在主资产 <code>meta.json</code> 的 <code>version_assets</code>，<strong>这条不写</strong> <code>variants.json</code>。</li>
+<li><code>meta.json</code> 的 <code>variant_types</code> 记录该资产含 <code>variant</code> / <code>lod</code> 哪几类内部结构；读取侧由 <code>core/asset_scope.py</code> 把内嵌 <code>V{n}/</code>、旧版 <code>variants/&lt;version&gt;/</code>、平级子 <code>.zasset</code> 三种形态统一合并，老资产不需要手工迁移。</li>
+</ul>

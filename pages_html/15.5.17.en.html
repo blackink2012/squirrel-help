@@ -1,0 +1,41 @@
+<blockquote><p>One-line summary: <strong>these are the three &quot;take a look&quot; items at the bottom of the menu</strong>: look at node connections, look at how AI reads this thumbnail, look at asset details.</p></blockquote>
+<h2 id="h-1">Item-by-item details</h2>
+<table><thead><tr><th>Menu item</th><th>Effect</th><th>Prerequisite</th><th>What happens on click</th><th>Notes</th></tr></thead><tbody><tr><td>Preview node ▶</td><td>Read-only view of the connections inside the asset&#x27;s node files</td><td>A <strong>.zmetal</strong> or <strong>named .ma</strong> node file is found in the asset</td><td>The submenu lists node files (such as <code>aiStandardSurface1.ma</code>, <code>aiStandardSurface1.zmetal</code>); clicking one opens the node editor preview</td><td>It does not import nodes into the scene; use <strong>Import</strong> for that</td></tr><tr><td>AI thumbnail analysis</td><td>Lets AI read the thumbnail and suggest category / tags / Chinese name / notes</td><td>AI dependencies are complete (local Ollama + embedding model)</td><td>Opens the AI analysis window with results and suggestions; on confirm they are written back to the asset</td><td>Without AI dependencies the feature first guides you through installation</td></tr><tr><td>Asset details</td><td>Shows this asset&#x27;s details on its own</td><td>None</td><td>Assets with versions or variants open the <strong>version browser</strong>; the rest open the <strong>asset inspection window</strong></td><td>Same path as double-clicking the preview image on the right</td></tr></tbody></table>
+<p><img src="media_en/shared/menu-preview-node.webp" alt="Preview node ▶ submenu" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What &quot;Preview node&quot; actually shows</h2>
+<p>It reads the node files in the asset and draws nodes and connections in the node editor, answering &quot;how is the network inside this material / scene wired&quot;.</p>
+<table><thead><tr><th>Files that get listed</th><th>Files that do not</th></tr></thead><tbody><tr><td><code>.zmetal</code> (material networks)</td><td>The generic <code>node.ma</code> (the default node file produced on export)</td></tr><tr><td>Named <code>.ma</code> files (such as <code>aiStandardSurface1.ma</code>, <code>place2dTexture1.ma</code>)</td><td>Textures, caches and thumbnails, which are not node files</td></tr><tr><td>.zmetal and named .ma inside variant / LOD directories (shown as <code>variants/&lt;version&gt;/&lt;file&gt;</code>)</td><td>Cases where the asset holds no node file at all (the row does not appear)</td></tr></tbody></table>
+<p>So &quot;my menu has no preview node&quot; usually means <strong>this asset has no named node file</strong> — the menu is not broken. Compare with the &quot;Conditional&quot; row in <a href="#/en/15.5.1"><code>8.5.1</code></a>.</p>
+<p>Further reading: material node preview <a href="#/en/7.1.4"><code>4.4.1.4</code></a>, previewing .ma node connections <a href="#/en/7.3.4"><code>4.4.3.4</code></a>.</p>
+<h2 id="h-3">What &quot;AI thumbnail analysis&quot; does and writes back</h2>
+<ol>
+<li>It opens the AI analysis window and hands your thumbnail to the vision model;</li>
+<li>It suggests <strong>category</strong>, <strong>tags</strong>, <strong>Chinese name (readable name)</strong> and <strong>notes</strong>;</li>
+<li>After you confirm or adjust each item and apply, the result is <strong>written into the asset metadata</strong> (the card&#x27;s name, tags and category follow).</li>
+</ol>
+<p>Prerequisites and limits:</p>
+<ul>
+<li>AI dependencies must be complete (Ollama + embedding model and so on). When missing, the plug-in offers the one-click install in <strong>Settings → AI</strong>.</li>
+<li>It analyses the <strong>thumbnail</strong>, not scene data; better thumbnails give better suggestions.</li>
+<li>It changes no geometry and no textures, only proposes metadata. To undo a write-back, change it back in the edit dialog.</li>
+</ul>
+<h2 id="h-4">Which window &quot;Asset details&quot; opens</h2>
+<table><thead><tr><th>Asset situation</th><th>What opens</th></tr></thead><tbody><tr><td>Has versions (V1/V2…) or variants</td><td>The version browser: lists all versions / variants / LODs, can import and manage</td></tr><tr><td>An ordinary single-version asset</td><td>The asset inspection window: large preview plus detail information</td></tr></tbody></table>
+<p>Two notes:</p>
+<ul>
+<li>This item is <strong>always at the very bottom</strong> of the menu, after a separator, and closes the menu.</li>
+<li>Right-clicking inside the asset inspection window reuses this menu but <strong>no longer shows Asset details</strong> (otherwise it would only open an identical window).</li>
+</ul>
+<h2 id="h-5">Notes</h2>
+<ul>
+<li><strong>Preview node is read-only</strong>: it reads files and draws connections and builds nothing in your scene; go back to <strong>Import</strong> to import.</li>
+<li><strong>AI suggestions are not always right</strong>: the model only sees the thumbnail, so check category and tag suggestions against your conventions before applying.</li>
+<li><strong>Asset details equals double-clicking the preview image</strong>: two entries, one result — use whichever is convenient.</li>
+</ul>
+<h2 id="h-6">Related</h2>
+<ul>
+<li>Import and reference: <a href="#/en/15.5.13"><code>8.5.13</code></a>; edit / update / delete: <a href="#/en/15.5.16"><code>8.5.16</code></a>; internal entry context menus: <a href="#/en/15.5.18"><code>8.5.18</code></a></li>
+<li>AI analysis window: <a href="#/en/15.13.3"><code>8.13.3</code></a>; batch analysis and applying results: <a href="#/en/8.4.3"><code>4.5.4.3</code></a></li>
+<li>Asset details window: <a href="#/en/15.11.1"><code>8.11.1</code></a>; version browser: <a href="#/en/15.11.2"><code>8.11.2</code></a></li>
+<li>Sub-library comparison table: <a href="#/en/15.5.1"><code>8.5.1</code></a></li>
+</ul>

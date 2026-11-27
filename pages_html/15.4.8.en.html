@@ -1,0 +1,26 @@
+<blockquote><p>One-line summary: <strong>the slider after the &quot;Thumbnail:&quot; label at the far right of the asset area toolbar controls card size — left for smaller cards and more per screen, right for larger cards and clearer detail.</strong></p></blockquote>
+<h2 id="h-1">Where it is</h2>
+<p>At the far right of the asset area toolbar: the text label &quot;Thumbnail:&quot; followed by a horizontal slider about 120 px wide. It is always there and needs no opening; in icon view dragging applies immediately.</p>
+<p><img src="media_en/15.4.8-1.webp" alt="The &quot;Thumbnail:&quot; slider at the far right of the asset area toolbar" loading="lazy" decoding="async"></p>
+<h2 id="h-2">What the two directions mean</h2>
+<table><thead><tr><th>Drag direction</th><th>Cards</th><th>Columns per screen</th><th>Good for</th></tr></thead><tbody><tr><td>Left (small)</td><td>Smaller</td><td>More, up to 16 columns</td><td>Scanning the library quickly for general shapes</td></tr><tr><td>Right (large)</td><td>Larger</td><td>Fewer, down to 2 columns</td><td>Inspecting thumbnail detail and comparing material texture</td></tr></tbody></table>
+<p>It defaults to about 8 columns. Internally the slider stores a &quot;level&quot;: <code>level = 10 - current columns</code>, so more columns means a lower level.</p>
+<h2 id="h-3">What happens after dragging</h2>
+<table><thead><tr><th>Observation</th><th>Description</th></tr></thead><tbody><tr><td>Cards rearrange immediately</td><td>There is a short delay while dragging, then everything rearranges at once so the UI does not stall refreshing every card mid-drag</td></tr><tr><td>A wider window adds columns first</td><td>Card size is the &quot;primary state&quot;; a wider window prefers <strong>more columns</strong> rather than stretching cards</td></tr><tr><td>The recycle bin follows</td><td>The recycle bin page reuses this slider and the level applies to its cards too</td></tr><tr><td>Restored next time</td><td>The level is saved with the interface state, so the next launch keeps the same size</td></tr></tbody></table>
+<h2 id="h-4">It is the same thing as Ctrl+wheel</h2>
+<p>In icon view, <strong>holding Ctrl and scrolling the mouse wheel</strong> also zooms cards: up to enlarge, down to shrink, with the slider moving in sync. Both change the same &quot;card size&quot;, so either works.</p>
+<h2 id="h-5">Submenus</h2>
+<p>The slider <strong>has no menu</strong> and no dropdown; it is a continuous adjustment bar.</p>
+<h2 id="h-6">Beginner pitfalls</h2>
+<ul>
+<li><strong>Dragging the slider does nothing</strong>: most likely you are in <strong>list view</strong>. List rows have a fixed height, so thumbnail size mainly shows in icon view; switch back to Icons.</li>
+<li><strong>Thumbnails are too small to read</strong>: drag right, or Ctrl+scroll up. To return to default, drag to the middle-right (about 8 columns).</li>
+<li><strong>Assuming the slider changes &quot;the thumbnail file itself&quot;</strong>: it only changes <strong>display size</strong> and never regenerates or modifies thumbnail images on disk.</li>
+<li><strong>Column count will not increase on a narrow window</strong>: the column count is also limited by window width; widen the window or collapse the side bars first.</li>
+</ul>
+<h2 id="h-7">Related</h2>
+<ul>
+<li>Icon / list view switching: <a href="#/en/15.4.6"><code>8.4.6</code></a>.</li>
+<li>Basic asset grid operations: <a href="#/en/3.3.3"><code>3.3.3</code></a>.</li>
+<li>Asset area toolbar overview: <a href="#/en/15.4.1"><code>8.4.1</code></a>.</li>
+</ul>

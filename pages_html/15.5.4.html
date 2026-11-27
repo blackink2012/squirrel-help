@@ -1,0 +1,28 @@
+<blockquote><p>一句话定位：<strong>在资产网格里右键一张灯光资产卡片时，弹出的就是这个菜单。</strong> 灯光和材质一样有两个入口：一个换场景里的灯（应用参数），一个连导入带转换。</p></blockquote>
+<h2 id="h-1">怎么打开</h2>
+<ol>
+<li>左侧「分类」页签 → 点「灯光」或它下面的任一分类；</li>
+<li>中间资产网格里<strong>右键任意灯光卡片</strong>。</li>
+</ol>
+<p><img src="media/shared/menu-sublib-lights.webp" alt="灯光资产右键菜单" loading="lazy" decoding="async"></p>
+<h2 id="h-2">菜单从上到下的顺序</h2>
+<table><thead><tr><th>段</th><th>条目</th></tr></thead><tbody><tr><td>① 子库专属</td><td>导入 ▶（zlight / ma）、添加引用、应用灯光参数到选中灯光、转换导入 ▶</td></tr><tr><td>② 收藏与选择</td><td>添加到收藏夹 ▶、全选、复制、打开文件夹</td></tr><tr><td>③ 整理</td><td>移动到 ▶、复制到 ▶</td></tr><tr><td>④ 维护</td><td>编辑、更新缩略图 ▶、更新资产 ▶、删除 ▶</td></tr><tr><td>⑤ 查看与 AI</td><td>预览节点 ▶、AI 分析缩略图</td></tr><tr><td>⑥ 最后一条</td><td>资产详情</td></tr></tbody></table>
+<p>灯光菜单里<strong>没有「格式转换」</strong>——灯光不是几何体，这一行从设计上就不给。</p>
+<h2 id="h-3">菜单逐项详解</h2>
+<table><thead><tr><th>菜单项</th><th>作用</th><th>前提</th><th>点了之后</th><th>注意</th></tr></thead><tbody><tr><td>导入 ▶</td><td>把灯光导入当前 Maya 场景</td><td>Maya 已连接；资产里有 zlight / ma</td><td>子菜单选一种格式导入；导入后按资产自身类型先建出灯</td><td>当前渲染器与灯光不同源时，会弹窗问是否转换</td></tr><tr><td>添加引用</td><td>以 Maya Reference 方式引入灯光文件</td><td>资产里含 .ma / .mb 等可引用格式</td><td>场景里多一个引用节点</td><td>资产包被移动 / 删除后引用会断</td></tr><tr><td>应用灯光参数到选中灯光</td><td>把资产里的灯光参数写到场景中<strong>选中的灯</strong>上</td><td>场景里已经选中了灯（shape 节点）</td><td>同类型精确写值、跨类型按灯光映射表转换后写；写完自动选中被改的灯</td><td>不新建灯，只改参数；改坏了按 Ctrl+Z 撤销</td></tr><tr><td>转换导入 ▶</td><td>导入并转换成指定灯光类型</td><td>资产是 .zasset</td><td>先导入再转换（或按选中类型原地重建）；完成后选中转换后的灯</td><td>见下节，第一项是「原地还原」</td></tr><tr><td>添加到收藏夹 ▶</td><td>把资产加入收藏夹</td><td>资产库已加载</td><td>子菜单列「默认收藏夹」+ 你自建的收藏夹；点一下加入、再点一下移出</td><td>多选时对全部选中的资产生效</td></tr><tr><td>全选</td><td>选中网格里当前可见的全部卡片</td><td>有卡片</td><td>全部高亮</td><td>只选当前筛选 / 搜索结果</td></tr><tr><td>复制</td><td>把资产放进剪贴板</td><td>无</td><td>内部剪贴板记录资产，同时把资产文件夹写进系统剪贴板</td><td>真正复制一份要再到目标分类空白处「粘贴」</td></tr><tr><td>打开文件夹</td><td>打开资产在磁盘上的位置</td><td>资产是 .zasset 目录</td><td>文件管理器定位到资产文件夹</td><td>只打开，不改内容</td></tr><tr><td>移动到 ▶</td><td>把资产移到别的分类</td><td>资产库已加载</td><td>级联选目标分类，资产从当前分类消失</td><td>见 <a href="#/15.5.15"><code>8.5.15</code></a></td></tr><tr><td>复制到 ▶</td><td>把资产复制一份到别的分类</td><td>资产库已加载</td><td>目标分类多出同一资产</td><td>占双份磁盘空间</td></tr><tr><td>编辑</td><td>改中文名、分类、标签、注释</td><td>无</td><td>弹「编辑资产」对话框</td><td>见 <a href="#/15.5.16"><code>8.5.16</code></a></td></tr><tr><td>更新缩略图 ▶</td><td>换掉或新增缩略图</td><td>「后台渲染」需本机有 mayapy</td><td>子菜单 7 项：截取 / 导入 / Maya拍屏 / 渲染图 / 添加 / 截取添加 / 后台渲染</td><td>拍屏 / 渲染图会先问帧模式</td></tr><tr><td>更新资产 ▶</td><td>把资产内容换成 / 扩成新的</td><td>「替换资产」等需要场景里有选中物体</td><td>替换资产 / 追加格式 / 追加为 LOD / 创建新版本 / 添加新变体… / 批量添加变体… / 变体管理…</td><td>都会写磁盘，先看清目标资产</td></tr><tr><td>删除 ▶</td><td>删掉这个资产</td><td>无</td><td>子菜单：移到回收站 / 彻底删除</td><td>「彻底删除」不可还原</td></tr><tr><td>预览节点 ▶</td><td>看资产内部的节点连接</td><td>资产里有 .zmetal 或具名 .ma</td><td>子菜单列出节点文件（样本资产：<code>aiAreaLight2.ma</code>），点一项打开节点编辑器预览</td><td>只读预览，不导入场景</td></tr><tr><td>AI 分析缩略图</td><td>让 AI 读缩略图给建议</td><td>AI 依赖已装好</td><td>打开 AI 分析窗口，确认后写回资产</td><td>见 <a href="#/15.5.17"><code>8.5.17</code></a></td></tr><tr><td>资产详情</td><td>单独看这个资产的详情</td><td>无</td><td>有版本 / 变体打开版本浏览器，否则打开资产观察窗口</td><td>与双击右侧预览图同一条链路</td></tr></tbody></table>
+<h2 id="h-4">子菜单：转换导入 ▶</h2>
+<p>灯光版的「转换导入」和材质版是两套映射（灯光用 <code>light_mapper_presets</code>），互不影响。样本资产上出现 4 项：</p>
+<table><thead><tr><th>子项</th><th>说明</th></tr></thead><tbody><tr><td>aiAreaLight（AI · 原地还原）</td><td>目标类型与资产自身类型相同 = <strong>不转换，按原样精确还原</strong>（第一项永远是源类型）</td></tr><tr><td>RedshiftPhysicalLight（RS）</td><td>转成 Redshift 的物理灯</td></tr><tr><td>VRayLightRectShape（VR）</td><td>转成 V-Ray 的矩形灯</td></tr><tr><td>areaLight</td><td>转成 Maya 原生区域光</td></tr></tbody></table>
+<p>读法：第一项带「原地还原」= 选它等于「就按我原来的类型建出来」；其余带 (RS) / (VR) 的是其它渲染器族的灯。目标列表由「源类型 → 可用目标」动态生成，换个源灯型，条数与内容都会变。</p>
+<h2 id="h-5">这个子库特有的注意点</h2>
+<ul>
+<li><strong>「应用灯光参数」和「导入」不是一回事</strong>：前者假设灯已经在场景里（你选中它），只把资产里的强度 / 颜色 / 衰减等参数刷过去；后者负责把灯建出来。</li>
+<li><strong>灯光不提供「格式转换」</strong>：灯光不是几何体，别在菜单里找它。</li>
+<li><strong>导入后仍可能被问要不要转换</strong>：即使不点「转换导入」，导入 zlight 时如果当前渲染器不一致，也会弹一次转换询问——这是「先建后问」，答「否」就保持原类型。</li>
+</ul>
+<h2 id="h-6">相关</h2>
+<ul>
+<li>公共条目详解：<a href="#/15.5.13"><code>8.5.13</code></a>、<a href="#/15.5.14"><code>8.5.14</code></a>、<a href="#/15.5.15"><code>8.5.15</code></a>、<a href="#/15.5.16"><code>8.5.16</code></a>、<a href="#/15.5.17"><code>8.5.17</code></a></li>
+<li>导入灯光：<a href="#/5.3.5"><code>4.2.3.5</code></a>；应用灯光参数：<a href="#/5.5.7"><code>4.2.5.7</code></a>；灯光分类与映射：<a href="#/7.4.2"><code>4.4.4.2</code></a></li>
+<li>子库差异总表：<a href="#/15.5.1"><code>8.5.1</code></a></li>
+</ul>

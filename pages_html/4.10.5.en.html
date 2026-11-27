@@ -1,0 +1,28 @@
+<p>Check <code>.zmetal</code> when creating a new version and the materials and textures are written into that version directory, becoming materials that belong only to that version.</p>
+<p><img src="media_en/shared/dialog-version-browser.webp" alt="Version browser" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The materials and textures for the new version are set up in Maya.</li>
+<li>The <code>「更新资产 → 创建新版本」 (Update asset → Create new version)</code> flow is about to be used.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Prepare the materials and textures the new version needs in Maya.</li>
+<li>Select the modified model.</li>
+<li>Right-click the asset, expand <code>「更新资产」 (Update asset)</code> and choose <code>「创建新版本」 (Create new version)</code>.</li>
+<li>In the export dialog that follows, check <code>.zmetal</code> (and any needed geometry formats).</li>
+<li>Click export; the materials and textures are written into that version&#x27;s <code>V{n}/</code> directory.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li><code>node.zmetal</code> appears in the version directory, along with <code>textures/</code> when there are textures.</li>
+<li>Entering that version through <code>「导入变体 / 版本」 (Import variant / version)</code> (or <code>「导入版本 / LOD」 (Import version / LOD)</code> when there are no variants) shows and imports this material.</li>
+<li>After importing, the scene uses the new version&#x27;s materials and textures, while the materials in the main asset root are unchanged.</li>
+</ul>
+<h2 id="h-4">Tips</h2>
+<ul>
+<li>Without <code>.zmetal</code> checked the version directory has no materials of its own and importing uses the main version&#x27;s materials.</li>
+<li>Textures are exported together with the material; no separate texture option is needed.</li>
+<li>Per-version materials are only produced by <code>「创建新版本」 (Create new version)</code>; a plain LOD append does not change materials.</li>
+<li>To see exactly which files a version carries, check the path card in the version browser or the asset directory.</li>
+</ul>

@@ -1,0 +1,26 @@
+<p>日常只需要增量同步：只重嵌新增、修改、删除的行；全量重建留给换模型、索引损坏或格式升级。</p>
+<p><img src="media/shared/settings-index.webp" alt="向量索引维护" loading="lazy" decoding="async"></p>
+<h2 id="h-1">自动发生的同步</h2>
+<ul>
+<li>打开或切换资产库时，后台预热当前库的文本索引，搜索不等它。</li>
+<li>检索前做一次增量同步；同一状态重复同步不碰模型。</li>
+<li>图像索引只在该库比索引新时刷新；首次以图搜图时才冷建。</li>
+</ul>
+<h2 id="h-2">手动同步</h2>
+<p>设置 → AI 设置 →「向量索引维护」组里有两个按钮：<strong>「更新向量」</strong>做增量、<strong>「重建全部向量索引」</strong>做全量；这一组的说明写着它管的是帮助库、Maya 文档库与当前资产库（文本 / 图像 / 音频 / 视频）的向量索引。</p>
+<p>也可以走命令行：</p>
+<ol>
+<li>文本索引（增量）：<code>python tools\asset_index.py --sync</code>。</li>
+<li>文本索引（全量）：<code>python tools\asset_index.py --rebuild</code>。</li>
+<li>图像索引（增量）：<code>python tools\asset_vision_encode.py sync --library &quot;&lt;库根&gt;&quot;</code>。</li>
+<li>图像索引（全量）：在上面命令后加 <code>--rebuild</code>。</li>
+<li>也可以通过命令 <code>index_sync</code> 执行，<code>kind</code> 取 <code>materials</code>、<code>images</code> 或 <code>both</code>，<code>rebuild</code> 只影响图像索引。</li>
+</ol>
+<h2 id="h-3">结果验证</h2>
+<p>同步后用 <code>asset_semantic_status</code> 或 <code>python tools\asset_index.py --status</code> 查看条数与更新时间；一致性可用 <code>--verify</code> 检查。</p>
+<h2 id="h-4">提示与警告</h2>
+<ul>
+<li>命令 <code>index_sync</code> 的 <code>rebuild</code> 只作用于图像索引；文本要全量重建请用 <code>python tools\asset_index.py --rebuild</code>。</li>
+<li>不要用图像同步的 <code>--limit</code> 做抽样，它会把索引裁成前 N 条。</li>
+<li>索引目录上有新鲜锁时，搜索会跳过同步，避免卡住；等对方写完再试。</li>
+</ul>

@@ -1,0 +1,29 @@
+<p>The thumbnail source decides how the image is produced and how fast; the capture delay only affects automatic captures of later assets in full-auto mode.</p>
+<p><img src="media_en/shared/dialog-export-left.webp" alt="Left side of the export dialog: the three thumbnail source options" loading="lazy" decoding="async"></p>
+<h2 id="h-1">Prerequisites</h2>
+<ul>
+<li>The objects to capture or playblast are visible in the viewport; single-asset mode does not isolate automatically, so isolate manually when needed.</li>
+<li>With <code>Render</code> the scene needs a renderable camera and the current renderer installed.</li>
+<li>The thumbnail edge length comes from <code>Settings → 常规 → 缩略图大小 (General → Thumbnail size)</code>, 512 pixels by default.</li>
+</ul>
+<h2 id="h-2">Steps</h2>
+<ol>
+<li>Choose one under <code>「缩略图来源」 (Thumbnail source)</code> in the left column:<ul>
+<li><code>截屏工具 (Screenshot tool)</code>: after export a screen overlay appears; drag a rectangle and <strong>release to capture</strong> (hold <code>Ctrl</code> to lock a square, <code>Esc</code> or right-click to cancel), capturing the viewport image. Fastest, but produces a still only.</li>
+<li><code>Maya 拍屏 (Maya playblast)</code>: playblasts the viewport. With animation frame mode set to current frame it produces a still; with timeline or keyframes it produces <code>thumb.mp4</code> (the first frame is also saved as a still).</li>
+<li><code>渲染图 (Render)</code>: renders with the current renderer. Highest quality and slowest; timeline or keyframes also compile <code>thumb.mp4</code>.</li>
+</ul></li>
+<li>Only full-auto mode shows the <code>「截图延迟」 (Capture delay)</code> box. It sets how many seconds to wait after each asset export before capturing: 0–60, 2 by default, <code>0</code> meaning no wait.</li>
+<li>Assets without geometry of their own, such as materials, textures and lights, can first get a carrier object placed in the scene via the <code>创建模型 (Create model)</code> or <code>创建灯光 (Create light)</code> dropdown, and then be captured.</li>
+<li>Finish the remaining format settings and click <code>「创建资产」 (Create asset)</code>.</li>
+</ol>
+<h2 id="h-3">Verify the result</h2>
+<ul>
+<li>The grid card shows the new thumbnail; a still is <code>thumb.sicon</code>, an animation or video is <code>thumb.mp4</code>.</li>
+<li>In a batch export, playblast and render thumbnails are generated after all assets are exported, so cards switch to the final image only when the progress finishes.</li>
+</ul>
+<h2 id="h-4">Tips and warnings</h2>
+<blockquote><p><strong>Tip</strong>: the first capture in full-auto mode fixes the framing and capture region for every later asset; afterwards only the target is moved to the center of the image, with no auto-framing or distance changes.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: the capture delay only applies to automatic captures with the screenshot tool; semi-auto and single asset are confirmed by you every time, so no delay is needed.</p></blockquote>
+<blockquote><p><strong>Warning</strong>: timeline plus render renders frame by frame and Maya becomes unresponsive for a while; with many assets this takes noticeably longer, so confirm the framing with a playblast first.</p></blockquote>
+<blockquote><p><strong>Tip</strong>: to change the thumbnail of an existing asset use the context menu&#x27;s <code>「更新缩略图」 (Update thumbnail)</code>; <code>「后台渲染」 (Background render)</code> is headless offscreen rendering (a separate mayapy / renderer process that does not occupy the current viewport) and is a different entry from the export thumbnail here.</p></blockquote>

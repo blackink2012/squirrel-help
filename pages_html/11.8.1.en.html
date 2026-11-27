@@ -1,0 +1,28 @@
+<p>Supported formats define which file extensions the library treats as importable asset files: one per line, each with a leading dot.</p>
+<p><img src="media_en/shared/settings-formats.webp" alt="Settings → Supported formats" loading="lazy" decoding="async"></p>
+<h2 id="h-1">What it does</h2>
+<p>The list is written to <code>asset_file_extensions</code> in <code>Assets/preset/config.json</code>. The library reads that field and uses it in two places:</p>
+<ol>
+<li>The file filter of the <strong>Import from file</strong> dialog, which then lists only these extensions.</li>
+<li>When a whole folder is collected into the library, it decides whether a root-level file counts as an asset file and takes part in grouping.</li>
+</ol>
+<h2 id="h-2">Values and defaults</h2>
+<p>One extension per line, for example <code>.ma</code> or <code>.png</code>. The factory list contains:</p>
+<p><code>.zasset</code>, <code>_zasset</code>, <code>.ma</code>, <code>.mb</code>, <code>.fbx</code>, <code>.obj</code>, <code>.abc</code>, <code>.usd</code>, <code>.usda</code>, <code>.usdc</code>, <code>.glb</code>, <code>.gltf</code>, <code>.dae</code>, <code>.ass</code>, <code>.rs</code>, <code>.proxy</code>, <code>.vrmesh</code>, <code>.vdb</code>, <code>.png</code>, <code>.jpg</code>, <code>.jpeg</code>, <code>.exr</code>, <code>.hdr</code>, <code>.tga</code>, <code>.tiff</code>, <code>.tif</code>, <code>.bmp</code>, <code>.psd</code>, <code>.sicon</code>, <code>.aicon</code>, <code>.mcm</code>, <code>.wav</code>, <code>.mp3</code>, <code>.aiff</code>, <code>.aif</code>, <code>.flac</code>, <code>.ogg</code>, <code>.m4a</code>, <code>.aac</code>, <code>.atom</code> (40 entries).</p>
+<h2 id="h-3">Scope of effect</h2>
+<ul>
+<li>It affects which file types <strong>Import from file</strong> can see, and how root-level files are recognized when a folder is collected.</li>
+<li>It does not affect the geometry and image extensions in <strong>Other configuration</strong>; those only classify files when a whole folder is collected.</li>
+<li>When a single file is collected, the sub-library type is still inferred from the built-in extension table; changing this list does not change that result.</li>
+</ul>
+<h2 id="h-4">Steps</h2>
+<ol>
+<li>Open <strong>Settings → Supported formats</strong>.</li>
+<li>Tick <strong>Unlock all settings</strong>.</li>
+<li>Add or remove extensions line by line; one per line, and do not drop the leading dot.</li>
+<li>Click <strong>Apply</strong> or <strong>OK</strong>.</li>
+</ol>
+<h2 id="h-5">Verify the result</h2>
+<p>Reopen <strong>Import from file</strong>: the file filter should include the new extension. Existing assets are not affected.</p>
+<h2 id="h-6">Tips</h2>
+<p>A wrong configuration breaks asset import. Back up <code>config.json</code> first if you are unsure.</p>

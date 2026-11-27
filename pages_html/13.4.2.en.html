@@ -1,0 +1,28 @@
+<p>Missing textures or dependencies usually mean files were not collected during packing, or that after import the paths still point at the author&#x27;s machine or a temporary directory.</p>
+<h2 id="h-1">Symptoms</h2>
+<ul>
+<li>After import the material turns black or pink, or the viewport shows a checkerboard.</li>
+<li>A <code>file</code> node&#x27;s texture path points at a drive letter or author directory that does not exist.</li>
+<li>Proxies, caches, ABC or USD references are missing and only an empty group remains.</li>
+<li>Only some textures of one asset are lost while others are fine.</li>
+</ul>
+<h2 id="h-2">Possible causes</h2>
+<table><thead><tr><th>Cause</th><th>How to tell</th><th>Action</th></tr></thead><tbody><tr><td>Associated files were not collected on export</td><td><code>textures/</code> or <code>deps/</code> is missing from the asset directory</td><td>Tick collect associated files when exporting</td></tr><tr><td>Textures originally lived outside the project</td><td>Paths point at external directories such as <code>X:/Megascans/...</code></td><td>Move the source files somewhere reachable and export again</td></tr><tr><td>A <code>.zasset</code> was copied by hand and is incomplete</td><td>The directory holds clearly fewer files</td><td>Delete it and re-obtain it through the library copy/import workflow</td></tr><tr><td>Relative paths break after import</td><td>The texture file names exist but the base path is wrong</td><td>Re-import the asset so paths resolve against the asset directory</td></tr><tr><td>Proxy type does not match</td><td>The cache/proxy node type differs from the renderer</td><td>Confirm the node for V-Ray, Redshift or USD</td></tr><tr><td>Permission or network drive issue</td><td>The file exists but cannot be read</td><td>Restore permissions, or copy the asset to a local drive first</td></tr></tbody></table>
+<h2 id="h-3">Steps</h2>
+<ol>
+<li>Open the <code>.zasset</code> and confirm the files really exist under <code>textures/</code> and <code>deps/</code>.</li>
+<li>On the export side, tick <strong>Collect associated files</strong> again and confirm the source textures, caches and proxies are accessible.</li>
+<li>Use a dependency scan to see the missing count and exact paths; fill in the source files before exporting again.</li>
+<li>Delete the hollow or incomplete asset and import it again from the library; never copy half a directory by hand.</li>
+<li>For proxy assets, make sure the object is connected to the right node before collecting: V-Ray, Redshift and USD each have their own proxy node type.</li>
+<li>If paths still point at the author&#x27;s machine after import, confirm the texture files are inside the asset directory and trigger a path rewrite once more.</li>
+</ol>
+<h2 id="h-4">Verify the result</h2>
+<p>Every <code>file</code> node path in the material exists, the viewport renders correctly, and the dependency scan reports zero missing files.</p>
+<h2 id="h-5">If it still fails</h2>
+<ul>
+<li>Use Maya&#x27;s File Path Editor to see which textures are still broken, and record the file names and expected directories.</li>
+<li>If only proxies or caches are missing, confirm the corresponding node really existed at export time instead of an empty group.</li>
+<li>Locate the problem further with 4.1.12.3 &quot;Dependency scan&quot; and 4.2.7.2 &quot;Missing dependencies&quot;.</li>
+<li>When reporting, include the missing file list, the asset directory structure and the &quot;missing N&quot; line from the export log.</li>
+</ul>
